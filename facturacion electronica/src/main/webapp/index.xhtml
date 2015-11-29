@@ -7,6 +7,10 @@
         
     </h:head>
     <h:body>
-        <h:outputText value="Hola mundo!"/>
+        <h:form id="frmMain">
+            <h:outputText id="valor" value="#{login.loguin.username}"/>
+            <p:commandButton value="Cambiar Valor" actionListener="#{login.cambiarValor()}"/>
+            <p:commandButton value="Guardar" actionListener="#{login.guardarLoguin()}"/>
+        </h:form>
     </h:body>
 </html>

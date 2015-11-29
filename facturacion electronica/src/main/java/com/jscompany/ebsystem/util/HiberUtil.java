@@ -18,6 +18,7 @@ import org.hibernate.proxy.HibernateProxy;
  */
 public class HiberUtil {
 
+    
     public static Serializable getProxyId(Object entity) {
         Serializable id = ((HibernateProxy) entity).getHibernateLazyInitializer().getIdentifier();
         return id;
@@ -136,4 +137,5 @@ public class HiberUtil {
             //System.out.println("* Sesion cerrada");
         }
     }
+    
 }
