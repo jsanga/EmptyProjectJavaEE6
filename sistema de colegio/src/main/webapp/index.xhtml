@@ -4,45 +4,142 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
+        <meta charset="UTF-8"></meta>
+        <style>
+            body {
+                width:auto;
+                    height:auto;
+              background: -webkit-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* Chrome 10+, Saf5.1+ */
+              background:    -moz-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* FF3.6+ */
+              background:     -ms-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* IE10 */
+              background:      -o-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* Opera 11.10+ */
+              background:         linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* W3C */
+            font-family: 'Raleway', sans-serif;
+            }
+            .ui-panelgrid>*>tr,
+            .ui-panelgrid .ui-panelgrid-cell {
+                border: none;
+            }
+        </style>
     </h:head>
     <h:body>
+        <script>
+            // This is called with the results from from FB.getLoginStatus().
+            function statusChangeCallback(response) {
+              console.log('statusChangeCallback');
+              console.log(response);
+              // The response object is returned with a status field that lets the
+              // app know the current login status of the person.
+              // Full docs on the response object can be found in the documentation
+              // for FB.getLoginStatus().
+              if (response.status === 'connected') {
+                // Logged into your app and Facebook.
+                testAPI();
+              } else if (response.status === 'not_authorized') {
+                // The person is logged into Facebook, but not your app.
+                document.getElementById('status').innerHTML = 'Please log ' +
+                  'into this app.';
+              } else {
+                // The person is not logged into Facebook, so we're not sure if
+                // they are logged into this app or not.
+                document.getElementById('status').innerHTML = 'Please log ' +
+                  'into Facebook.';
+              }
+            }
+
+            // This function is called when someone finishes with the Login
+            // Button.  See the onlogin handler attached to it in the sample
+            // code below.
+            function checkLoginState() {
+              FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+              });
+            }
+
+            window.fbAsyncInit = function() {
+            FB.init({
+              appId      : '146976542211',
+              cookie     : true,  // enable cookies to allow the server to access 
+                                  // the session
+              xfbml      : true,  // parse social plugins on this page
+              version    : 'v2.2' // use version 2.2
+            });
+
+            // Now that we've initialized the JavaScript SDK, we call 
+            // FB.getLoginStatus().  This function gets the state of the
+            // person visiting this page and can return one of three states to
+            // the callback you provide.  They can be:
+            //
+            // 1. Logged into your app ('connected')
+            // 2. Logged into Facebook, but not your app ('not_authorized')
+            // 3. Not logged into Facebook and can't tell if they are logged into
+            //    your app or not.
+            //
+            // These three cases are handled in the callback function.
+
+            FB.getLoginStatus(function(response) {
+              statusChangeCallback(response);
+            });
+
+            };
+
+            // Load the SDK asynchronously
+            (function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = "//connect.facebook.net/en_US/sdk.js";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+
+            // Here we run a very simple test of the Graph API after login is
+            // successful.  See statusChangeCallback() for when this call is made.
+            function testAPI() {
+              console.log('Welcome!  Fetching your information.... ');
+              FB.api('/me', function(response) {
+                console.log('Successful login for: ' + response.name);
+                document.getElementById('status').innerHTML =
+                  'Thanks for logging in, ' + response.name + '!';
+              });
+            }
+        </script>
         <h:form id="frmMain">
-            <div class="middlePage">
-            <div class="page-header">
-              <h1 class="logo">Techulus <small>Welcome to our place!</small></h1>
-            </div>
-
-            <div class="panel panel-info">
-              <div class="panel-heading">
-                <h3 class="panel-title">Please Sign In</h3>
-              </div>
-              <div class="panel-body">
-
-              <div class="row">
-
-            <div class="col-md-5" >
-            <a href="#"><img src="http://techulus.com/buttons/fb.png" /></a><br/>
-            <a href="#"><img src="http://techulus.com/buttons/tw.png" /></a><br/>
-            <a href="#"><img src="http://techulus.com/buttons/gplus.png" /></a>
-            </div>
-
-                <div class="col-md-7" style="border-left:1px solid #ccc;height:160px">
-            <fieldset>
-
-                
-
-
-            </fieldset>
-            </div>
-
-            </div>
-
-            </div>
-            </div>
-
-            <p><a href="https://github.com/arjunkomath">About</a> · Arjun</p>
-
-            </div>
+            
+            <h:panelGroup>
+                <center>
+                    <h1>
+                        <h:outputText value="Sistema Red de Colegios" style="color: #DDD6D6;"/>
+                    </h1>
+                    <p:panel header="Ventana de Ingreso" style="width: 660px;">
+                        <p:panelGrid columns="2" >
+                            <h:panelGroup>
+                                <a href="#"><img src="images/fb.png" /></a><br/>
+                                <a href="#"><img src="images/tw.png" /></a><br/>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <p:panelGrid columns="1">
+                                    <p:inputText placeholder="Username" value="#{login.loguin.username}" style="width: 300px;"/>
+                                    <p:inputText placeholder="Password" value="#{login.loguin.pass}" style="width: 300px;"/>
+                                    <p:panelGrid columns="2" style="width: 100%">
+                                        <h:panelGroup >
+                                            <p:selectBooleanCheckbox />
+                                            <h:outputText value=" Recordar datos" id="lblDatos" style="font-size: 12px;"/>
+                                        </h:panelGroup>
+                                        <p:commandButton value="Entrar" actionListener="#{login.validarUsuario()}" style="float: right; font-size: 14px; width: 100px;"/>
+                                    </p:panelGrid>
+                                    <p:commandLink value="Olvidó su contraseña?" style="font-size: 10px; float: right;"/>
+                                </p:panelGrid>
+                            </h:panelGroup>
+                        </p:panelGrid>
+                    </p:panel>
+                    <p:panel header="Facebook">
+                        <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                        </fb:login-button>
+                    </p:panel>
+                </center>
+            </h:panelGroup>
         </h:form>
+        
+        
     </h:body>
 </html>

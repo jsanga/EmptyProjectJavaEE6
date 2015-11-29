@@ -5,6 +5,7 @@
  */
 package com.jscompany.ebsystem.managedbeans;
 
+import com.jscompany.ebsystem.ejb.interfaces.usuarios.UsuariosServices;
 import com.jscompany.ebsystem.entidades.entidadesUsuarios.Loguin;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
@@ -27,17 +28,26 @@ public class Login implements Serializable{
     private Loguin loguin;
     
     @EJB(beanName = "aclService")
-    protected AclService aclServices;
+    private AclService aclServices;
+    
+    @EJB(beanName = "usuariosServices")
+    private UsuariosServices usuariosServices;
+    
+    
     
     @PostConstruct
     public void init(){
         loguin = new Loguin();
-        loguin.setUsername("Joao");
     }
     
-    public void cambiarValor(){
-        loguin.setUsername("Israel");
-        JsfUti.update("frmMain");
+    public void validarUsuario(){
+        if(loguin.getUsername()==null || loguin.getPass()==null)
+            JsfUti.messageError(null, "Error", "No ha ingresado datos.");
+        
+        if(usuariosServices.validarUsuario(loguin.getUsername(), loguin.getPass()))
+            JsfUti.messageInfo(null, "Info", "Usuario encontrado.");
+        else
+            JsfUti.messageError(null, "Error", "Usuario no encontrado.");
     }
     
     public void guardarLoguin(){
