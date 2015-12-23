@@ -6,7 +6,6 @@
 package com.jscompany.ebsystem.entidades.entidadesUsuarios;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,9 +13,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -25,13 +25,13 @@ import javax.validation.constraints.Size;
  * @author Joao Sanga
  */
 @Entity
-@Table(name = "loguin")
+@Table(name = "rol")
 @NamedQueries({
-    @NamedQuery(name = "Loguin.findAll", query = "SELECT l FROM Loguin l"),
-    @NamedQuery(name = "Loguin.findById", query = "SELECT l FROM Loguin l WHERE l.id = :id"),
-    @NamedQuery(name = "Loguin.findByUsername", query = "SELECT l FROM Loguin l WHERE l.username = :username"),
-    @NamedQuery(name = "Loguin.findByPass", query = "SELECT l FROM Loguin l WHERE l.pass = :pass")})
-public class Loguin implements Serializable {
+    @NamedQuery(name = "Rol.findAll", query = "SELECT r FROM Rol r"),
+    @NamedQuery(name = "Rol.findById", query = "SELECT r FROM Rol r WHERE r.id = :id"),
+    @NamedQuery(name = "Rol.findByRolName", query = "SELECT r FROM Rol r WHERE r.rolName = :rolName"),
+    @NamedQuery(name = "Rol.findByEstado", query = "SELECT r FROM Rol r WHERE r.estado = :estado")})
+public class Rol implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,18 +39,18 @@ public class Loguin implements Serializable {
     @Column(name = "id")
     private Long id;
     @Size(max = 100)
-    @Column(name = "username")
-    private String username;
-    @Size(max = 50)
-    @Column(name = "pass")
-    private String pass;
-    @OneToMany(mappedBy = "idLoguin", fetch = FetchType.LAZY)
-    private Collection<Persona> personaCollection;
+    @Column(name = "rol_name")
+    private String rolName;
+    @Column(name = "estado")
+    private Boolean estado;
+    @JoinColumn(name = "id_persona", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Persona idPersona;
 
-    public Loguin() {
+    public Rol() {
     }
 
-    public Loguin(Long id) {
+    public Rol(Long id) {
         this.id = id;
     }
 
@@ -62,28 +62,28 @@ public class Loguin implements Serializable {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getRolName() {
+        return rolName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setRolName(String rolName) {
+        this.rolName = rolName;
     }
 
-    public String getPass() {
-        return pass;
+    public Boolean getEstado() {
+        return estado;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
-    public Collection<Persona> getPersonaCollection() {
-        return personaCollection;
+    public Persona getIdPersona() {
+        return idPersona;
     }
 
-    public void setPersonaCollection(Collection<Persona> personaCollection) {
-        this.personaCollection = personaCollection;
+    public void setIdPersona(Persona idPersona) {
+        this.idPersona = idPersona;
     }
 
     @Override
@@ -96,10 +96,10 @@ public class Loguin implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Loguin)) {
+        if (!(object instanceof Rol)) {
             return false;
         }
-        Loguin other = (Loguin) object;
+        Rol other = (Rol) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -108,7 +108,7 @@ public class Loguin implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesUsuarios.Loguin[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.entidadesUsuarios.Rol[ id=" + id + " ]";
     }
     
 }

@@ -6,7 +6,6 @@
 package com.jscompany.ebsystem.entidades.entidadesUsuarios;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,9 +13,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -25,32 +25,30 @@ import javax.validation.constraints.Size;
  * @author Joao Sanga
  */
 @Entity
-@Table(name = "loguin")
+@Table(name = "persona_email")
 @NamedQueries({
-    @NamedQuery(name = "Loguin.findAll", query = "SELECT l FROM Loguin l"),
-    @NamedQuery(name = "Loguin.findById", query = "SELECT l FROM Loguin l WHERE l.id = :id"),
-    @NamedQuery(name = "Loguin.findByUsername", query = "SELECT l FROM Loguin l WHERE l.username = :username"),
-    @NamedQuery(name = "Loguin.findByPass", query = "SELECT l FROM Loguin l WHERE l.pass = :pass")})
-public class Loguin implements Serializable {
+    @NamedQuery(name = "PersonaEmail.findAll", query = "SELECT p FROM PersonaEmail p"),
+    @NamedQuery(name = "PersonaEmail.findById", query = "SELECT p FROM PersonaEmail p WHERE p.id = :id"),
+    @NamedQuery(name = "PersonaEmail.findByEmail", query = "SELECT p FROM PersonaEmail p WHERE p.email = :email")})
+public class PersonaEmail implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Size(max = 100)
-    @Column(name = "username")
-    private String username;
-    @Size(max = 50)
-    @Column(name = "pass")
-    private String pass;
-    @OneToMany(mappedBy = "idLoguin", fetch = FetchType.LAZY)
-    private Collection<Persona> personaCollection;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 150)
+    @Column(name = "email")
+    private String email;
+    @JoinColumn(name = "id_persona", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Persona idPersona;
 
-    public Loguin() {
+    public PersonaEmail() {
     }
 
-    public Loguin(Long id) {
+    public PersonaEmail(Long id) {
         this.id = id;
     }
 
@@ -62,28 +60,20 @@ public class Loguin implements Serializable {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public String getPass() {
-        return pass;
+    public Persona getIdPersona() {
+        return idPersona;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
-    public Collection<Persona> getPersonaCollection() {
-        return personaCollection;
-    }
-
-    public void setPersonaCollection(Collection<Persona> personaCollection) {
-        this.personaCollection = personaCollection;
+    public void setIdPersona(Persona idPersona) {
+        this.idPersona = idPersona;
     }
 
     @Override
@@ -96,10 +86,10 @@ public class Loguin implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Loguin)) {
+        if (!(object instanceof PersonaEmail)) {
             return false;
         }
-        Loguin other = (Loguin) object;
+        PersonaEmail other = (PersonaEmail) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -108,7 +98,7 @@ public class Loguin implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesUsuarios.Loguin[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.entidadesUsuarios.PersonaEmail[ id=" + id + " ]";
     }
     
 }
