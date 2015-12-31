@@ -20,6 +20,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -27,7 +28,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Joao Sanga
+ * @author JoaoIsrael
  */
 @Entity
 @Table(name = "persona")
@@ -65,19 +66,16 @@ public class Persona implements Serializable {
     @Column(name = "fecha_salida")
     @Temporal(TemporalType.DATE)
     private Date fechaSalida;
-    @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY)
-    private Collection<Profesor> profesorCollection;
-    @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY)
-    private Collection<Estudiante> estudianteCollection;
-    @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY)
-    private Collection<PersonaEmail> personaEmailCollection;
+    @JoinColumn(name = "id_loguin", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.LAZY)
+    private Loguin idLoguin;
+    @JoinColumn(name = "rol", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Rol rol;
     @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY)
     private Collection<PersonaTelefono> personaTelefonoCollection;
     @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY)
-    private Collection<Rol> rolCollection;
-    @JoinColumn(name = "id_loguin", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Loguin idLoguin;
+    private Collection<PersonaEmail> personaEmailCollection;
 
     public Persona() {
     }
@@ -142,28 +140,20 @@ public class Persona implements Serializable {
         this.fechaSalida = fechaSalida;
     }
 
-    public Collection<Profesor> getProfesorCollection() {
-        return profesorCollection;
+    public Loguin getIdLoguin() {
+        return idLoguin;
     }
 
-    public void setProfesorCollection(Collection<Profesor> profesorCollection) {
-        this.profesorCollection = profesorCollection;
+    public void setIdLoguin(Loguin idLoguin) {
+        this.idLoguin = idLoguin;
     }
 
-    public Collection<Estudiante> getEstudianteCollection() {
-        return estudianteCollection;
+    public Rol getRol() {
+        return rol;
     }
 
-    public void setEstudianteCollection(Collection<Estudiante> estudianteCollection) {
-        this.estudianteCollection = estudianteCollection;
-    }
-
-    public Collection<PersonaEmail> getPersonaEmailCollection() {
-        return personaEmailCollection;
-    }
-
-    public void setPersonaEmailCollection(Collection<PersonaEmail> personaEmailCollection) {
-        this.personaEmailCollection = personaEmailCollection;
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
     public Collection<PersonaTelefono> getPersonaTelefonoCollection() {
@@ -174,20 +164,12 @@ public class Persona implements Serializable {
         this.personaTelefonoCollection = personaTelefonoCollection;
     }
 
-    public Collection<Rol> getRolCollection() {
-        return rolCollection;
+    public Collection<PersonaEmail> getPersonaEmailCollection() {
+        return personaEmailCollection;
     }
 
-    public void setRolCollection(Collection<Rol> rolCollection) {
-        this.rolCollection = rolCollection;
-    }
-
-    public Loguin getIdLoguin() {
-        return idLoguin;
-    }
-
-    public void setIdLoguin(Loguin idLoguin) {
-        this.idLoguin = idLoguin;
+    public void setPersonaEmailCollection(Collection<PersonaEmail> personaEmailCollection) {
+        this.personaEmailCollection = personaEmailCollection;
     }
 
     @Override

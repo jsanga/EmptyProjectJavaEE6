@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Joao Sanga
+ * @author JoaoIsrael
  */
 @Entity
 @Table(name = "notificacion")

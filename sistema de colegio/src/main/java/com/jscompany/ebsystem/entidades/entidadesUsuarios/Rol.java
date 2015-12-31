@@ -6,6 +6,7 @@
 package com.jscompany.ebsystem.entidades.entidadesUsuarios;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,16 +14,15 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 /**
  *
- * @author Joao Sanga
+ * @author JoaoIsrael
  */
 @Entity
 @Table(name = "rol")
@@ -43,9 +43,8 @@ public class Rol implements Serializable {
     private String rolName;
     @Column(name = "estado")
     private Boolean estado;
-    @JoinColumn(name = "id_persona", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Persona idPersona;
+    @OneToMany(mappedBy = "rol", fetch = FetchType.LAZY)
+    private Collection<Persona> personaCollection;
 
     public Rol() {
     }
@@ -78,12 +77,12 @@ public class Rol implements Serializable {
         this.estado = estado;
     }
 
-    public Persona getIdPersona() {
-        return idPersona;
+    public Collection<Persona> getPersonaCollection() {
+        return personaCollection;
     }
 
-    public void setIdPersona(Persona idPersona) {
-        this.idPersona = idPersona;
+    public void setPersonaCollection(Collection<Persona> personaCollection) {
+        this.personaCollection = personaCollection;
     }
 
     @Override

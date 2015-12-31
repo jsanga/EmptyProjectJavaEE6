@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
-  
+  <Resource id="usuarios" type="javax.sql.DataSource">#Wed Dec 30 21:25:44 COT 2015
+jdbcDriver=org.postgresql.Driver
+password=postgres
+userName=joao
+jdbcUrl=jdbc\:postgresql\://190.57.138.220\:5432/joaoPrueba
+</Resource>
+  <Resource id="colegios" type="javax.sql.DataSource">#Wed Dec 30 21:29:30 COT 2015
+jdbcDriver=org.postgresql.Driver
+password=postgres
+userName=joao
+jdbcUrl=jdbc\:postgresql\://190.57.138.220\:5432/joaoPrueba
+</Resource>
 </resources>

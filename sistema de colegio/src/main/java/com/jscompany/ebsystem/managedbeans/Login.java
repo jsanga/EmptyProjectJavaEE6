@@ -44,8 +44,9 @@ public class Login implements Serializable{
         if(loguin.getUsername()==null || loguin.getPass()==null)
             JsfUti.messageError(null, "Error", "No ha ingresado datos.");
         
-        if(usuariosServices.validarUsuario(loguin.getUsername(), loguin.getPass()))
+        if(usuariosServices.validarUsuario(loguin.getUsername(), loguin.getPass())){
             JsfUti.messageInfo(null, "Info", "Usuario encontrado.");
+        }
         else
             JsfUti.messageError(null, "Error", "Usuario no encontrado.");
     }

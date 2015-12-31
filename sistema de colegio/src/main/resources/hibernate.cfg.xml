@@ -9,8 +9,8 @@
         <property name="hibernate.connection.username">sisapp</property>
         <property name="hibernate.connection.password">sis98</property> -->
     <!-- -->
-    <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/redColegioDB</property>
-    <property name="hibernate.connection.username">postgres</property>
+    <property name="hibernate.connection.url">jdbc:postgresql://190.57.138.220:5432/joaoPrueba</property>
+    <property name="hibernate.connection.username">joao</property>
     <property name="hibernate.connection.password">postgres</property>
     <property name="hibernate.connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</property>
     <property name="c3p0.minPoolSize">5</property>
@@ -25,6 +25,9 @@
     <property name="hibernate.default_schema">usuarios</property>
     <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
     <property name="hibernate.enable_lazy_load_no_trans">true</property>
+    <property name="hibernate.classloading.use_current_tccl_as_parent">false</property>
+    <property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
+        
     <mapping class="com.jscompany.ebsystem.entidades.entidadesUsuarios.Estudiante"/>
     <mapping class="com.jscompany.ebsystem.entidades.entidadesUsuarios.Loguin"/>
     <mapping class="com.jscompany.ebsystem.entidades.entidadesUsuarios.Notificacion"/>

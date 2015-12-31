@@ -6,7 +6,6 @@
 package com.jscompany.ebsystem.entidades.entidadesUsuarios;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,13 +15,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 /**
  *
- * @author Joao Sanga
+ * @author JoaoIsrael
  */
 @Entity
 @Table(name = "loguin")
@@ -44,8 +43,8 @@ public class Loguin implements Serializable {
     @Size(max = 50)
     @Column(name = "pass")
     private String pass;
-    @OneToMany(mappedBy = "idLoguin", fetch = FetchType.LAZY)
-    private Collection<Persona> personaCollection;
+    @OneToOne(mappedBy = "idLoguin", fetch = FetchType.LAZY)
+    private Persona persona;
 
     public Loguin() {
     }
@@ -78,12 +77,12 @@ public class Loguin implements Serializable {
         this.pass = pass;
     }
 
-    public Collection<Persona> getPersonaCollection() {
-        return personaCollection;
+    public Persona getPersona() {
+        return persona;
     }
 
-    public void setPersonaCollection(Collection<Persona> personaCollection) {
-        this.personaCollection = personaCollection;
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
 
     @Override
