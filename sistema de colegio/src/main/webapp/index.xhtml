@@ -24,36 +24,38 @@
     </h:head>
     <h:body>
         
-        <h:form id="frmMain">
-            
+        <h:form id="frmMain"> 
+            <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
             <h:panelGroup>
                 <p:growl id="growl" showDetail="true" sticky="true" redisplay="true" showSummary="true"/> 
                 <center>
-                    <h1>
-                        <h:outputText value="Sistema Red de Colegios" style="color: #DDD6D6;"/>
-                    </h1>
-                    <p:panel header="Ventana de Ingreso" style="width: 660px;">
-                        <p:panelGrid columns="2" >
-                            <h:panelGroup>
-                                <a href="#"><img src="images/fb.png" /></a><br/>
-                                <a href="#"><img src="images/tw.png" /></a><br/>
-                            </h:panelGroup>
-                            <h:panelGroup>
-                                <p:panelGrid columns="1">
-                                    <p:inputText placeholder="Username" value="#{login.loguin.username}" style="width: 300px;"/>
-                                    <p:inputText placeholder="Password" value="#{login.loguin.pass}" style="width: 300px;"/>
-                                    <p:panelGrid columns="2" style="width: 100%">
-                                        <h:panelGroup >
-                                            <p:selectBooleanCheckbox />
-                                            <h:outputText value=" Recordar datos" id="lblDatos" style="font-size: 12px;"/>
-                                        </h:panelGroup>
-                                        <p:commandButton value="Entrar" actionListener="#{login.validarUsuario()}" style="float: right; font-size: 14px; width: 100px;"/>
+                    <h:panelGroup style="margin-top: auto; margin-bottom: auto;">
+                        <h1>
+                            <h:outputText value="Sistema Red de Colegios" style="color: #DDD6D6;"/>
+                        </h1>
+                        <p:panel header="Ventana de Ingreso" style="width: 660px;">
+                            <p:panelGrid columns="2" >
+                                <h:panelGroup>                                
+                                    <a href="#"><img src="images/tw.png" /></a><br/>
+                                    <a href="#"><img src="images/fb.png" /></a><br/>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <p:panelGrid columns="1">
+                                        <p:inputText placeholder="Username" value="#{login.loguin.username}" style="width: 300px;"/>
+                                        <p:inputText placeholder="Password" value="#{login.loguin.pass}" style="width: 300px;"/>
+                                        <p:panelGrid columns="2" style="width: 100%">
+                                            <h:panelGroup >
+                                                <p:selectBooleanCheckbox />
+                                                <h:outputText value=" Recordar datos" id="lblDatos" style="font-size: 12px;"/>
+                                            </h:panelGroup>
+                                            <p:commandButton value="Entrar" actionListener="#{login.validarUsuario()}" style="float: right; font-size: 14px; width: 100px;"/>
+                                        </p:panelGrid>
+                                        <p:commandLink value="Olvidó su contraseña?" style="font-size: 10px; float: right;"/>
                                     </p:panelGrid>
-                                    <p:commandLink value="Olvidó su contraseña?" style="font-size: 10px; float: right;"/>
-                                </p:panelGrid>
-                            </h:panelGroup>
-                        </p:panelGrid>
-                    </p:panel>
+                                </h:panelGroup>
+                            </p:panelGrid>
+                        </p:panel>
+                    </h:panelGroup>
                 </center>
             </h:panelGroup>
         </h:form>
