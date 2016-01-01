@@ -8,6 +8,7 @@ package com.jscompany.ebsystem.entidades.entidadesColegios;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,6 +22,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -29,10 +32,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "asignacion_profesor")
 @NamedQueries({
-    @NamedQuery(name = "AsignacionProfesor.findAll", query = "SELECT a FROM AsignacionProfesor a"),
-    @NamedQuery(name = "AsignacionProfesor.findById", query = "SELECT a FROM AsignacionProfesor a WHERE a.id = :id"),
-    @NamedQuery(name = "AsignacionProfesor.findByProfesor", query = "SELECT a FROM AsignacionProfesor a WHERE a.profesor = :profesor"),
-    @NamedQuery(name = "AsignacionProfesor.findByEstado", query = "SELECT a FROM AsignacionProfesor a WHERE a.estado = :estado")})
+    @NamedQuery(name = "AsignacionProfesor.findAll", query = "SELECT a FROM AsignacionProfesor a")})
 public class AsignacionProfesor implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,6 +44,9 @@ public class AsignacionProfesor implements Serializable {
     private BigInteger profesor;
     @Column(name = "estado")
     private Boolean estado;
+    @Column(name = "fecha_creacion")
+    @Temporal(TemporalType.DATE)
+    private Date fechaCreacion;
     @OneToMany(mappedBy = "asignacionProfesor", fetch = FetchType.LAZY)
     private Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection;
     @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")
@@ -82,6 +85,14 @@ public class AsignacionProfesor implements Serializable {
 
     public void setEstado(Boolean estado) {
         this.estado = estado;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
     public Collection<AsignacionProfesorMaterias> getAsignacionProfesorMateriasCollection() {

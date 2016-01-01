@@ -26,10 +26,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "loguin")
 @NamedQueries({
-    @NamedQuery(name = "Loguin.findAll", query = "SELECT l FROM Loguin l"),
-    @NamedQuery(name = "Loguin.findById", query = "SELECT l FROM Loguin l WHERE l.id = :id"),
-    @NamedQuery(name = "Loguin.findByUsername", query = "SELECT l FROM Loguin l WHERE l.username = :username"),
-    @NamedQuery(name = "Loguin.findByPass", query = "SELECT l FROM Loguin l WHERE l.pass = :pass")})
+    @NamedQuery(name = "Loguin.findAll", query = "SELECT l FROM Loguin l")})
 public class Loguin implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,7 +40,7 @@ public class Loguin implements Serializable {
     @Size(max = 50)
     @Column(name = "pass")
     private String pass;
-    @OneToOne(mappedBy = "idLoguin", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "loguin", fetch = FetchType.LAZY)
     private Persona persona;
 
     public Loguin() {

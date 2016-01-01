@@ -6,7 +6,6 @@
 package com.jscompany.ebsystem.entidades.entidadesUsuarios;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -19,7 +18,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -33,14 +31,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "persona")
 @NamedQueries({
-    @NamedQuery(name = "Persona.findAll", query = "SELECT p FROM Persona p"),
-    @NamedQuery(name = "Persona.findById", query = "SELECT p FROM Persona p WHERE p.id = :id"),
-    @NamedQuery(name = "Persona.findByCedula", query = "SELECT p FROM Persona p WHERE p.cedula = :cedula"),
-    @NamedQuery(name = "Persona.findByNombres", query = "SELECT p FROM Persona p WHERE p.nombres = :nombres"),
-    @NamedQuery(name = "Persona.findByApellidos", query = "SELECT p FROM Persona p WHERE p.apellidos = :apellidos"),
-    @NamedQuery(name = "Persona.findByDireccion", query = "SELECT p FROM Persona p WHERE p.direccion = :direccion"),
-    @NamedQuery(name = "Persona.findByFechaEntrada", query = "SELECT p FROM Persona p WHERE p.fechaEntrada = :fechaEntrada"),
-    @NamedQuery(name = "Persona.findByFechaSalida", query = "SELECT p FROM Persona p WHERE p.fechaSalida = :fechaSalida")})
+    @NamedQuery(name = "Persona.findAll", query = "SELECT p FROM Persona p")})
 public class Persona implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -66,16 +57,12 @@ public class Persona implements Serializable {
     @Column(name = "fecha_salida")
     @Temporal(TemporalType.DATE)
     private Date fechaSalida;
-    @JoinColumn(name = "id_loguin", referencedColumnName = "id")
+    @JoinColumn(name = "loguin", referencedColumnName = "id")
     @OneToOne(fetch = FetchType.LAZY)
-    private Loguin idLoguin;
+    private Loguin loguin;
     @JoinColumn(name = "rol", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Rol rol;
-    @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY)
-    private Collection<PersonaTelefono> personaTelefonoCollection;
-    @OneToMany(mappedBy = "idPersona", fetch = FetchType.LAZY)
-    private Collection<PersonaEmail> personaEmailCollection;
 
     public Persona() {
     }
@@ -140,12 +127,12 @@ public class Persona implements Serializable {
         this.fechaSalida = fechaSalida;
     }
 
-    public Loguin getIdLoguin() {
-        return idLoguin;
+    public Loguin getLoguin() {
+        return loguin;
     }
 
-    public void setIdLoguin(Loguin idLoguin) {
-        this.idLoguin = idLoguin;
+    public void setLoguin(Loguin loguin) {
+        this.loguin = loguin;
     }
 
     public Rol getRol() {
@@ -154,22 +141,6 @@ public class Persona implements Serializable {
 
     public void setRol(Rol rol) {
         this.rol = rol;
-    }
-
-    public Collection<PersonaTelefono> getPersonaTelefonoCollection() {
-        return personaTelefonoCollection;
-    }
-
-    public void setPersonaTelefonoCollection(Collection<PersonaTelefono> personaTelefonoCollection) {
-        this.personaTelefonoCollection = personaTelefonoCollection;
-    }
-
-    public Collection<PersonaEmail> getPersonaEmailCollection() {
-        return personaEmailCollection;
-    }
-
-    public void setPersonaEmailCollection(Collection<PersonaEmail> personaEmailCollection) {
-        this.personaEmailCollection = personaEmailCollection;
     }
 
     @Override

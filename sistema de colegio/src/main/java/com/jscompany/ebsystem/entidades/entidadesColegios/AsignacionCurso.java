@@ -7,6 +7,7 @@ package com.jscompany.ebsystem.entidades.entidadesColegios;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +21,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -28,9 +31,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "asignacion_curso")
 @NamedQueries({
-    @NamedQuery(name = "AsignacionCurso.findAll", query = "SELECT a FROM AsignacionCurso a"),
-    @NamedQuery(name = "AsignacionCurso.findById", query = "SELECT a FROM AsignacionCurso a WHERE a.id = :id"),
-    @NamedQuery(name = "AsignacionCurso.findByEstado", query = "SELECT a FROM AsignacionCurso a WHERE a.estado = :estado")})
+    @NamedQuery(name = "AsignacionCurso.findAll", query = "SELECT a FROM AsignacionCurso a")})
 public class AsignacionCurso implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -40,6 +41,9 @@ public class AsignacionCurso implements Serializable {
     private Long id;
     @Column(name = "estado")
     private Boolean estado;
+    @Column(name = "fecha_creacion")
+    @Temporal(TemporalType.DATE)
+    private Date fechaCreacion;
     @JoinColumn(name = "colegio", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Colegio colegio;
@@ -79,6 +83,14 @@ public class AsignacionCurso implements Serializable {
 
     public void setEstado(Boolean estado) {
         this.estado = estado;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
     public Colegio getColegio() {

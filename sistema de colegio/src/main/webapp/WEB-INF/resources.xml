@@ -7,4 +7,10 @@ userName=joao
 jdbcUrl=jdbc\:postgresql\://190.57.138.220\:5432/joaoPrueba
 currentSchema=colegios
 </Resource>
+  <Resource id="usuarios" type="javax.sql.DataSource">#Fri Jan 01 01:30:28 COT 2016
+jdbcDriver=org.postgresql.Driver
+password=postgres
+userName=joao
+jdbcUrl=jdbc\:postgresql\://190.57.138.220\:5432/joaoPrueba
+</Resource>
 </resources>

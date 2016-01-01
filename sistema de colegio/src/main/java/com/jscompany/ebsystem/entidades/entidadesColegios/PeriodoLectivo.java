@@ -29,11 +29,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "periodo_lectivo")
 @NamedQueries({
-    @NamedQuery(name = "PeriodoLectivo.findAll", query = "SELECT p FROM PeriodoLectivo p"),
-    @NamedQuery(name = "PeriodoLectivo.findById", query = "SELECT p FROM PeriodoLectivo p WHERE p.id = :id"),
-    @NamedQuery(name = "PeriodoLectivo.findByFechaInicio", query = "SELECT p FROM PeriodoLectivo p WHERE p.fechaInicio = :fechaInicio"),
-    @NamedQuery(name = "PeriodoLectivo.findByFechaFin", query = "SELECT p FROM PeriodoLectivo p WHERE p.fechaFin = :fechaFin"),
-    @NamedQuery(name = "PeriodoLectivo.findByEstado", query = "SELECT p FROM PeriodoLectivo p WHERE p.estado = :estado")})
+    @NamedQuery(name = "PeriodoLectivo.findAll", query = "SELECT p FROM PeriodoLectivo p")})
 public class PeriodoLectivo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

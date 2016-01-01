@@ -7,6 +7,7 @@ package com.jscompany.ebsystem.entidades.entidadesColegios;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +20,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -27,10 +30,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "matricula")
 @NamedQueries({
-    @NamedQuery(name = "Matricula.findAll", query = "SELECT m FROM Matricula m"),
-    @NamedQuery(name = "Matricula.findById", query = "SELECT m FROM Matricula m WHERE m.id = :id"),
-    @NamedQuery(name = "Matricula.findByEstudiante", query = "SELECT m FROM Matricula m WHERE m.estudiante = :estudiante"),
-    @NamedQuery(name = "Matricula.findByEstado", query = "SELECT m FROM Matricula m WHERE m.estado = :estado")})
+    @NamedQuery(name = "Matricula.findAll", query = "SELECT m FROM Matricula m")})
 public class Matricula implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,6 +42,9 @@ public class Matricula implements Serializable {
     private BigInteger estudiante;
     @Column(name = "estado")
     private Boolean estado;
+    @Column(name = "fecha_creacion")
+    @Temporal(TemporalType.DATE)
+    private Date fechaCreacion;
     @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private AsignacionCurso asignacionCurso;
@@ -75,6 +78,14 @@ public class Matricula implements Serializable {
 
     public void setEstado(Boolean estado) {
         this.estado = estado;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
     public AsignacionCurso getAsignacionCurso() {

@@ -28,13 +28,11 @@
     <property name="hibernate.classloading.use_current_tccl_as_parent">false</property>
     <property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
         
-    <mapping class="com.jscompany.ebsystem.entidades.entidadesUsuarios.Estudiante"/>
     <mapping class="com.jscompany.ebsystem.entidades.entidadesUsuarios.Loguin"/>
     <mapping class="com.jscompany.ebsystem.entidades.entidadesUsuarios.Notificacion"/>
     <mapping class="com.jscompany.ebsystem.entidades.entidadesUsuarios.Persona"/>
     <mapping class="com.jscompany.ebsystem.entidades.entidadesUsuarios.PersonaEmail"/>
     <mapping class="com.jscompany.ebsystem.entidades.entidadesUsuarios.PersonaTelefono"/>
-    <mapping class="com.jscompany.ebsystem.entidades.entidadesUsuarios.Profesor"/>
     <mapping class="com.jscompany.ebsystem.entidades.entidadesUsuarios.Rol"/>
   </session-factory>
 </hibernate-configuration>

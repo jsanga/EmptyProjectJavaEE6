@@ -29,10 +29,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "paralelo")
 @NamedQueries({
-    @NamedQuery(name = "Paralelo.findAll", query = "SELECT p FROM Paralelo p"),
-    @NamedQuery(name = "Paralelo.findById", query = "SELECT p FROM Paralelo p WHERE p.id = :id"),
-    @NamedQuery(name = "Paralelo.findByNombre", query = "SELECT p FROM Paralelo p WHERE p.nombre = :nombre"),
-    @NamedQuery(name = "Paralelo.findByEstado", query = "SELECT p FROM Paralelo p WHERE p.estado = :estado")})
+    @NamedQuery(name = "Paralelo.findAll", query = "SELECT p FROM Paralelo p")})
 public class Paralelo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

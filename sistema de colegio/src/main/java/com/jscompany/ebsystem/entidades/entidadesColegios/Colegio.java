@@ -30,12 +30,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "colegio")
 @NamedQueries({
-    @NamedQuery(name = "Colegio.findAll", query = "SELECT c FROM Colegio c"),
-    @NamedQuery(name = "Colegio.findById", query = "SELECT c FROM Colegio c WHERE c.id = :id"),
-    @NamedQuery(name = "Colegio.findByNombre", query = "SELECT c FROM Colegio c WHERE c.nombre = :nombre"),
-    @NamedQuery(name = "Colegio.findByEstado", query = "SELECT c FROM Colegio c WHERE c.estado = :estado"),
-    @NamedQuery(name = "Colegio.findByFechaCreacion", query = "SELECT c FROM Colegio c WHERE c.fechaCreacion = :fechaCreacion"),
-    @NamedQuery(name = "Colegio.findByDireccion", query = "SELECT c FROM Colegio c WHERE c.direccion = :direccion")})
+    @NamedQuery(name = "Colegio.findAll", query = "SELECT c FROM Colegio c")})
 public class Colegio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
