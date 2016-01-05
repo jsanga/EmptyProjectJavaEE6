@@ -28,11 +28,23 @@
     <property name="hibernate.classloading.use_current_tccl_as_parent">false</property>
     <property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
         
-    <mapping class="com.jscompany.ebsystem.entidades.entidadesUsuarios.Loguin"/>
-    <mapping class="com.jscompany.ebsystem.entidades.entidadesUsuarios.Notificacion"/>
-    <mapping class="com.jscompany.ebsystem.entidades.entidadesUsuarios.Persona"/>
-    <mapping class="com.jscompany.ebsystem.entidades.entidadesUsuarios.PersonaEmail"/>
-    <mapping class="com.jscompany.ebsystem.entidades.entidadesUsuarios.PersonaTelefono"/>
-    <mapping class="com.jscompany.ebsystem.entidades.entidadesUsuarios.Rol"/>
+    <mapping class="com.jscompany.ebsystem.entidades.usuarios.Loguin"/>
+    <mapping class="com.jscompany.ebsystem.entidades.usuarios.Notificacion"/>
+    <mapping class="com.jscompany.ebsystem.entidades.usuarios.Persona"/>
+    <mapping class="com.jscompany.ebsystem.entidades.usuarios.PersonaEmail"/>
+    <mapping class="com.jscompany.ebsystem.entidades.usuarios.PersonaTelefono"/>
+    <mapping class="com.jscompany.ebsystem.entidades.usuarios.Rol"/>
+    
+    <mapping class="com.jscompany.ebsystem.entidades.colegios.AsignacionCurso"/>
+    <mapping class="com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor"/>
+    <mapping class="com.jscompany.ebsystem.entidades.colegios.AsignacionProfesorMaterias"/>
+    <mapping class="com.jscompany.ebsystem.entidades.colegios.Colegio"/>
+    <mapping class="com.jscompany.ebsystem.entidades.colegios.Curso"/>
+    <mapping class="com.jscompany.ebsystem.entidades.colegios.DesgloseNota"/>
+    <mapping class="com.jscompany.ebsystem.entidades.colegios.DetalleMateria"/>
+    <mapping class="com.jscompany.ebsystem.entidades.colegios.Materia"/>
+    <mapping class="com.jscompany.ebsystem.entidades.colegios.Matricula"/>
+    <mapping class="com.jscompany.ebsystem.entidades.colegios.Paralelo"/>
+    <mapping class="com.jscompany.ebsystem.entidades.colegios.PeriodoLectivo"/>
   </session-factory>
 </hibernate-configuration>

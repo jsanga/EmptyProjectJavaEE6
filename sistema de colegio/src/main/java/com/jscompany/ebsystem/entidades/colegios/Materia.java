@@ -3,12 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jscompany.ebsystem.entidades.entidadesColegios;
+package com.jscompany.ebsystem.entidades.colegios;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,44 +20,40 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 
 /**
  *
  * @author JoaoIsrael
  */
 @Entity
-@Table(name = "asignacion_profesor")
+@Table(name = "materia")
 @NamedQueries({
-    @NamedQuery(name = "AsignacionProfesor.findAll", query = "SELECT a FROM AsignacionProfesor a")})
-public class AsignacionProfesor implements Serializable {
+    @NamedQuery(name = "Materia.findAll", query = "SELECT m FROM Materia m")})
+public class Materia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Column(name = "profesor")
-    private BigInteger profesor;
+    @Size(max = 100)
+    @Column(name = "nombre")
+    private String nombre;
     @Column(name = "estado")
     private Boolean estado;
-    @Column(name = "fecha_creacion")
-    @Temporal(TemporalType.DATE)
-    private Date fechaCreacion;
-    @OneToMany(mappedBy = "asignacionProfesor", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "materia", fetch = FetchType.LAZY)
     private Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection;
+    @OneToMany(mappedBy = "materia", fetch = FetchType.LAZY)
+    private Collection<DetalleMateria> detalleMateriaCollection;
     @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private AsignacionCurso asignacionCurso;
-    @JoinColumn(name = "paralelo", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Paralelo paralelo;
 
-    public AsignacionProfesor() {
+    public Materia() {
     }
 
-    public AsignacionProfesor(Long id) {
+    public Materia(Long id) {
         this.id = id;
     }
 
@@ -71,12 +65,12 @@ public class AsignacionProfesor implements Serializable {
         this.id = id;
     }
 
-    public BigInteger getProfesor() {
-        return profesor;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setProfesor(BigInteger profesor) {
-        this.profesor = profesor;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public Boolean getEstado() {
@@ -87,14 +81,6 @@ public class AsignacionProfesor implements Serializable {
         this.estado = estado;
     }
 
-    public Date getFechaCreacion() {
-        return fechaCreacion;
-    }
-
-    public void setFechaCreacion(Date fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
-    }
-
     public Collection<AsignacionProfesorMaterias> getAsignacionProfesorMateriasCollection() {
         return asignacionProfesorMateriasCollection;
     }
@@ -103,20 +89,20 @@ public class AsignacionProfesor implements Serializable {
         this.asignacionProfesorMateriasCollection = asignacionProfesorMateriasCollection;
     }
 
+    public Collection<DetalleMateria> getDetalleMateriaCollection() {
+        return detalleMateriaCollection;
+    }
+
+    public void setDetalleMateriaCollection(Collection<DetalleMateria> detalleMateriaCollection) {
+        this.detalleMateriaCollection = detalleMateriaCollection;
+    }
+
     public AsignacionCurso getAsignacionCurso() {
         return asignacionCurso;
     }
 
     public void setAsignacionCurso(AsignacionCurso asignacionCurso) {
         this.asignacionCurso = asignacionCurso;
-    }
-
-    public Paralelo getParalelo() {
-        return paralelo;
-    }
-
-    public void setParalelo(Paralelo paralelo) {
-        this.paralelo = paralelo;
     }
 
     @Override
@@ -129,10 +115,10 @@ public class AsignacionProfesor implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AsignacionProfesor)) {
+        if (!(object instanceof Materia)) {
             return false;
         }
-        AsignacionProfesor other = (AsignacionProfesor) object;
+        Materia other = (Materia) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -141,7 +127,7 @@ public class AsignacionProfesor implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesColegios.AsignacionProfesor[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.entidadesColegios.Materia[ id=" + id + " ]";
     }
     
 }

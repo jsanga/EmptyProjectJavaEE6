@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jscompany.ebsystem.entidades.entidadesColegios;
+package com.jscompany.ebsystem.entidades.colegios;
 
 import java.io.Serializable;
 import java.util.Collection;

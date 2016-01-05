@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jscompany.ebsystem.entidades.entidadesColegios;
+package com.jscompany.ebsystem.entidades.usuarios;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -13,40 +13,40 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 /**
  *
  * @author JoaoIsrael
  */
 @Entity
-@Table(name = "desglose_nota")
+@Table(name = "loguin")
 @NamedQueries({
-    @NamedQuery(name = "DesgloseNota.findAll", query = "SELECT d FROM DesgloseNota d")})
-public class DesgloseNota implements Serializable {
+    @NamedQuery(name = "Loguin.findAll", query = "SELECT l FROM Loguin l")})
+public class Loguin implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "nota")
-    private Float nota;
-    @Column(name = "tipo_nota")
-    private Integer tipoNota;
-    @JoinColumn(name = "detalle_materia", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private DetalleMateria detalleMateria;
+    @Size(max = 100)
+    @Column(name = "username")
+    private String username;
+    @Size(max = 50)
+    @Column(name = "pass")
+    private String pass;
+    @OneToOne(mappedBy = "loguin", fetch = FetchType.LAZY)
+    private Persona persona;
 
-    public DesgloseNota() {
+    public Loguin() {
     }
 
-    public DesgloseNota(Long id) {
+    public Loguin(Long id) {
         this.id = id;
     }
 
@@ -58,28 +58,28 @@ public class DesgloseNota implements Serializable {
         this.id = id;
     }
 
-    public Float getNota() {
-        return nota;
+    public String getUsername() {
+        return username;
     }
 
-    public void setNota(Float nota) {
-        this.nota = nota;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public Integer getTipoNota() {
-        return tipoNota;
+    public String getPass() {
+        return pass;
     }
 
-    public void setTipoNota(Integer tipoNota) {
-        this.tipoNota = tipoNota;
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
-    public DetalleMateria getDetalleMateria() {
-        return detalleMateria;
+    public Persona getPersona() {
+        return persona;
     }
 
-    public void setDetalleMateria(DetalleMateria detalleMateria) {
-        this.detalleMateria = detalleMateria;
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
 
     @Override
@@ -92,10 +92,10 @@ public class DesgloseNota implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DesgloseNota)) {
+        if (!(object instanceof Loguin)) {
             return false;
         }
-        DesgloseNota other = (DesgloseNota) object;
+        Loguin other = (Loguin) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -104,7 +104,7 @@ public class DesgloseNota implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesColegios.DesgloseNota[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.entidadesUsuarios.Loguin[ id=" + id + " ]";
     }
     
 }

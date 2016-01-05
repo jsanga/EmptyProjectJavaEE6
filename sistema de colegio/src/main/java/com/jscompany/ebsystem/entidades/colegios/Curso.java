@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jscompany.ebsystem.entidades.entidadesColegios;
+package com.jscompany.ebsystem.entidades.colegios;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,39 +18,35 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 
 /**
  *
  * @author JoaoIsrael
  */
 @Entity
-@Table(name = "periodo_lectivo")
+@Table(name = "curso")
 @NamedQueries({
-    @NamedQuery(name = "PeriodoLectivo.findAll", query = "SELECT p FROM PeriodoLectivo p")})
-public class PeriodoLectivo implements Serializable {
+    @NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c")})
+public class Curso implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Column(name = "fecha_inicio")
-    @Temporal(TemporalType.DATE)
-    private Date fechaInicio;
-    @Column(name = "fecha_fin")
-    @Temporal(TemporalType.DATE)
-    private Date fechaFin;
+    @Size(max = 100)
+    @Column(name = "nombre")
+    private String nombre;
     @Column(name = "estado")
     private Boolean estado;
-    @OneToMany(mappedBy = "periodoLectivo", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "curso", fetch = FetchType.LAZY)
     private Collection<AsignacionCurso> asignacionCursoCollection;
 
-    public PeriodoLectivo() {
+    public Curso() {
     }
 
-    public PeriodoLectivo(Long id) {
+    public Curso(Long id) {
         this.id = id;
     }
 
@@ -63,20 +58,12 @@ public class PeriodoLectivo implements Serializable {
         this.id = id;
     }
 
-    public Date getFechaInicio() {
-        return fechaInicio;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
-        this.fechaInicio = fechaInicio;
-    }
-
-    public Date getFechaFin() {
-        return fechaFin;
-    }
-
-    public void setFechaFin(Date fechaFin) {
-        this.fechaFin = fechaFin;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
     public Boolean getEstado() {
@@ -105,10 +92,10 @@ public class PeriodoLectivo implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PeriodoLectivo)) {
+        if (!(object instanceof Curso)) {
             return false;
         }
-        PeriodoLectivo other = (PeriodoLectivo) object;
+        Curso other = (Curso) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -117,7 +104,7 @@ public class PeriodoLectivo implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesColegios.PeriodoLectivo[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.entidadesColegios.Curso[ id=" + id + " ]";
     }
     
 }

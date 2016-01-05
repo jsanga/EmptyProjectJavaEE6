@@ -3,48 +3,50 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jscompany.ebsystem.entidades.entidadesUsuarios;
+package com.jscompany.ebsystem.entidades.colegios;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 
 /**
  *
  * @author JoaoIsrael
  */
 @Entity
-@Table(name = "notificacion")
+@Table(name = "desglose_nota")
 @NamedQueries({
-    @NamedQuery(name = "Notificacion.findAll", query = "SELECT n FROM Notificacion n")})
-public class Notificacion implements Serializable {
+    @NamedQuery(name = "DesgloseNota.findAll", query = "SELECT d FROM DesgloseNota d")})
+public class DesgloseNota implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Size(max = 1000)
-    @Column(name = "notificacion")
-    private String notificacion;
-    @Column(name = "remitente")
-    private BigInteger remitente;
-    @Column(name = "destinatario")
-    private BigInteger destinatario;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "nota")
+    private Float nota;
+    @Column(name = "tipo_nota")
+    private Integer tipoNota;
+    @JoinColumn(name = "detalle_materia", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private DetalleMateria detalleMateria;
 
-    public Notificacion() {
+    public DesgloseNota() {
     }
 
-    public Notificacion(Long id) {
+    public DesgloseNota(Long id) {
         this.id = id;
     }
 
@@ -56,28 +58,28 @@ public class Notificacion implements Serializable {
         this.id = id;
     }
 
-    public String getNotificacion() {
-        return notificacion;
+    public Float getNota() {
+        return nota;
     }
 
-    public void setNotificacion(String notificacion) {
-        this.notificacion = notificacion;
+    public void setNota(Float nota) {
+        this.nota = nota;
     }
 
-    public BigInteger getRemitente() {
-        return remitente;
+    public Integer getTipoNota() {
+        return tipoNota;
     }
 
-    public void setRemitente(BigInteger remitente) {
-        this.remitente = remitente;
+    public void setTipoNota(Integer tipoNota) {
+        this.tipoNota = tipoNota;
     }
 
-    public BigInteger getDestinatario() {
-        return destinatario;
+    public DetalleMateria getDetalleMateria() {
+        return detalleMateria;
     }
 
-    public void setDestinatario(BigInteger destinatario) {
-        this.destinatario = destinatario;
+    public void setDetalleMateria(DetalleMateria detalleMateria) {
+        this.detalleMateria = detalleMateria;
     }
 
     @Override
@@ -90,10 +92,10 @@ public class Notificacion implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Notificacion)) {
+        if (!(object instanceof DesgloseNota)) {
             return false;
         }
-        Notificacion other = (Notificacion) object;
+        DesgloseNota other = (DesgloseNota) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -102,7 +104,7 @@ public class Notificacion implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesUsuarios.Notificacion[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.entidadesColegios.DesgloseNota[ id=" + id + " ]";
     }
     
 }

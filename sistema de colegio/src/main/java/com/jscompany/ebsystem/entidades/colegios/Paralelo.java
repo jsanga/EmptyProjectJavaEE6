@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jscompany.ebsystem.entidades.entidadesColegios;
+package com.jscompany.ebsystem.entidades.colegios;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -27,10 +27,10 @@ import javax.validation.constraints.Size;
  * @author JoaoIsrael
  */
 @Entity
-@Table(name = "materia")
+@Table(name = "paralelo")
 @NamedQueries({
-    @NamedQuery(name = "Materia.findAll", query = "SELECT m FROM Materia m")})
-public class Materia implements Serializable {
+    @NamedQuery(name = "Paralelo.findAll", query = "SELECT p FROM Paralelo p")})
+public class Paralelo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,18 +42,16 @@ public class Materia implements Serializable {
     private String nombre;
     @Column(name = "estado")
     private Boolean estado;
-    @OneToMany(mappedBy = "materia", fetch = FetchType.LAZY)
-    private Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection;
-    @OneToMany(mappedBy = "materia", fetch = FetchType.LAZY)
-    private Collection<DetalleMateria> detalleMateriaCollection;
+    @OneToMany(mappedBy = "paralelo", fetch = FetchType.LAZY)
+    private Collection<AsignacionProfesor> asignacionProfesorCollection;
     @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private AsignacionCurso asignacionCurso;
 
-    public Materia() {
+    public Paralelo() {
     }
 
-    public Materia(Long id) {
+    public Paralelo(Long id) {
         this.id = id;
     }
 
@@ -81,20 +79,12 @@ public class Materia implements Serializable {
         this.estado = estado;
     }
 
-    public Collection<AsignacionProfesorMaterias> getAsignacionProfesorMateriasCollection() {
-        return asignacionProfesorMateriasCollection;
+    public Collection<AsignacionProfesor> getAsignacionProfesorCollection() {
+        return asignacionProfesorCollection;
     }
 
-    public void setAsignacionProfesorMateriasCollection(Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection) {
-        this.asignacionProfesorMateriasCollection = asignacionProfesorMateriasCollection;
-    }
-
-    public Collection<DetalleMateria> getDetalleMateriaCollection() {
-        return detalleMateriaCollection;
-    }
-
-    public void setDetalleMateriaCollection(Collection<DetalleMateria> detalleMateriaCollection) {
-        this.detalleMateriaCollection = detalleMateriaCollection;
+    public void setAsignacionProfesorCollection(Collection<AsignacionProfesor> asignacionProfesorCollection) {
+        this.asignacionProfesorCollection = asignacionProfesorCollection;
     }
 
     public AsignacionCurso getAsignacionCurso() {
@@ -115,10 +105,10 @@ public class Materia implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Materia)) {
+        if (!(object instanceof Paralelo)) {
             return false;
         }
-        Materia other = (Materia) object;
+        Paralelo other = (Paralelo) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -127,7 +117,7 @@ public class Materia implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesColegios.Materia[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.entidadesColegios.Paralelo[ id=" + id + " ]";
     }
     
 }

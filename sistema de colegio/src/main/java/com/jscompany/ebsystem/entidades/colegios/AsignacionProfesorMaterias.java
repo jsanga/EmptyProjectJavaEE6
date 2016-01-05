@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jscompany.ebsystem.entidades.entidadesUsuarios;
+package com.jscompany.ebsystem.entidades.colegios;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -18,34 +18,33 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 
 /**
  *
  * @author JoaoIsrael
  */
 @Entity
-@Table(name = "persona_telefono")
+@Table(name = "asignacion_profesor_materias")
 @NamedQueries({
-    @NamedQuery(name = "PersonaTelefono.findAll", query = "SELECT p FROM PersonaTelefono p")})
-public class PersonaTelefono implements Serializable {
+    @NamedQuery(name = "AsignacionProfesorMaterias.findAll", query = "SELECT a FROM AsignacionProfesorMaterias a")})
+public class AsignacionProfesorMaterias implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Size(max = 15)
-    @Column(name = "telefono")
-    private String telefono;
-    @JoinColumn(name = "id_persona", referencedColumnName = "id")
+    @JoinColumn(name = "asignacion_profesor", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Persona idPersona;
+    private AsignacionProfesor asignacionProfesor;
+    @JoinColumn(name = "materia", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Materia materia;
 
-    public PersonaTelefono() {
+    public AsignacionProfesorMaterias() {
     }
 
-    public PersonaTelefono(Long id) {
+    public AsignacionProfesorMaterias(Long id) {
         this.id = id;
     }
 
@@ -57,20 +56,20 @@ public class PersonaTelefono implements Serializable {
         this.id = id;
     }
 
-    public String getTelefono() {
-        return telefono;
+    public AsignacionProfesor getAsignacionProfesor() {
+        return asignacionProfesor;
     }
 
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+    public void setAsignacionProfesor(AsignacionProfesor asignacionProfesor) {
+        this.asignacionProfesor = asignacionProfesor;
     }
 
-    public Persona getIdPersona() {
-        return idPersona;
+    public Materia getMateria() {
+        return materia;
     }
 
-    public void setIdPersona(Persona idPersona) {
-        this.idPersona = idPersona;
+    public void setMateria(Materia materia) {
+        this.materia = materia;
     }
 
     @Override
@@ -83,10 +82,10 @@ public class PersonaTelefono implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PersonaTelefono)) {
+        if (!(object instanceof AsignacionProfesorMaterias)) {
             return false;
         }
-        PersonaTelefono other = (PersonaTelefono) object;
+        AsignacionProfesorMaterias other = (AsignacionProfesorMaterias) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -95,7 +94,7 @@ public class PersonaTelefono implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesUsuarios.PersonaTelefono[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.entidadesColegios.AsignacionProfesorMaterias[ id=" + id + " ]";
     }
     
 }

@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jscompany.ebsystem.entidades.entidadesColegios;
+package com.jscompany.ebsystem.entidades.usuarios;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -27,31 +25,27 @@ import javax.validation.constraints.Size;
  * @author JoaoIsrael
  */
 @Entity
-@Table(name = "paralelo")
+@Table(name = "persona_telefono")
 @NamedQueries({
-    @NamedQuery(name = "Paralelo.findAll", query = "SELECT p FROM Paralelo p")})
-public class Paralelo implements Serializable {
+    @NamedQuery(name = "PersonaTelefono.findAll", query = "SELECT p FROM PersonaTelefono p")})
+public class PersonaTelefono implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Size(max = 100)
-    @Column(name = "nombre")
-    private String nombre;
-    @Column(name = "estado")
-    private Boolean estado;
-    @OneToMany(mappedBy = "paralelo", fetch = FetchType.LAZY)
-    private Collection<AsignacionProfesor> asignacionProfesorCollection;
-    @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")
+    @Size(max = 15)
+    @Column(name = "telefono")
+    private String telefono;
+    @JoinColumn(name = "id_persona", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private AsignacionCurso asignacionCurso;
+    private Persona idPersona;
 
-    public Paralelo() {
+    public PersonaTelefono() {
     }
 
-    public Paralelo(Long id) {
+    public PersonaTelefono(Long id) {
         this.id = id;
     }
 
@@ -63,36 +57,20 @@ public class Paralelo implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
-    public Boolean getEstado() {
-        return estado;
+    public Persona getIdPersona() {
+        return idPersona;
     }
 
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
-    }
-
-    public Collection<AsignacionProfesor> getAsignacionProfesorCollection() {
-        return asignacionProfesorCollection;
-    }
-
-    public void setAsignacionProfesorCollection(Collection<AsignacionProfesor> asignacionProfesorCollection) {
-        this.asignacionProfesorCollection = asignacionProfesorCollection;
-    }
-
-    public AsignacionCurso getAsignacionCurso() {
-        return asignacionCurso;
-    }
-
-    public void setAsignacionCurso(AsignacionCurso asignacionCurso) {
-        this.asignacionCurso = asignacionCurso;
+    public void setIdPersona(Persona idPersona) {
+        this.idPersona = idPersona;
     }
 
     @Override
@@ -105,10 +83,10 @@ public class Paralelo implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Paralelo)) {
+        if (!(object instanceof PersonaTelefono)) {
             return false;
         }
-        Paralelo other = (Paralelo) object;
+        PersonaTelefono other = (PersonaTelefono) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -117,7 +95,7 @@ public class Paralelo implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesColegios.Paralelo[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.entidadesUsuarios.PersonaTelefono[ id=" + id + " ]";
     }
     
 }

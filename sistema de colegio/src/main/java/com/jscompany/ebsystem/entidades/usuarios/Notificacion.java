@@ -3,19 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jscompany.ebsystem.entidades.entidadesUsuarios;
+package com.jscompany.ebsystem.entidades.usuarios;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -24,29 +23,28 @@ import javax.validation.constraints.Size;
  * @author JoaoIsrael
  */
 @Entity
-@Table(name = "loguin")
+@Table(name = "notificacion")
 @NamedQueries({
-    @NamedQuery(name = "Loguin.findAll", query = "SELECT l FROM Loguin l")})
-public class Loguin implements Serializable {
+    @NamedQuery(name = "Notificacion.findAll", query = "SELECT n FROM Notificacion n")})
+public class Notificacion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Size(max = 100)
-    @Column(name = "username")
-    private String username;
-    @Size(max = 50)
-    @Column(name = "pass")
-    private String pass;
-    @OneToOne(mappedBy = "loguin", fetch = FetchType.LAZY)
-    private Persona persona;
+    @Size(max = 1000)
+    @Column(name = "notificacion")
+    private String notificacion;
+    @Column(name = "remitente")
+    private BigInteger remitente;
+    @Column(name = "destinatario")
+    private BigInteger destinatario;
 
-    public Loguin() {
+    public Notificacion() {
     }
 
-    public Loguin(Long id) {
+    public Notificacion(Long id) {
         this.id = id;
     }
 
@@ -58,28 +56,28 @@ public class Loguin implements Serializable {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getNotificacion() {
+        return notificacion;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setNotificacion(String notificacion) {
+        this.notificacion = notificacion;
     }
 
-    public String getPass() {
-        return pass;
+    public BigInteger getRemitente() {
+        return remitente;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setRemitente(BigInteger remitente) {
+        this.remitente = remitente;
     }
 
-    public Persona getPersona() {
-        return persona;
+    public BigInteger getDestinatario() {
+        return destinatario;
     }
 
-    public void setPersona(Persona persona) {
-        this.persona = persona;
+    public void setDestinatario(BigInteger destinatario) {
+        this.destinatario = destinatario;
     }
 
     @Override
@@ -92,10 +90,10 @@ public class Loguin implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Loguin)) {
+        if (!(object instanceof Notificacion)) {
             return false;
         }
-        Loguin other = (Loguin) object;
+        Notificacion other = (Notificacion) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -104,7 +102,7 @@ public class Loguin implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesUsuarios.Loguin[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.entidadesUsuarios.Notificacion[ id=" + id + " ]";
     }
     
 }

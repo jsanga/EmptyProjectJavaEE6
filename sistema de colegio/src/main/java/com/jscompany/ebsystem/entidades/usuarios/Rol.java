@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jscompany.ebsystem.entidades.entidadesColegios;
+package com.jscompany.ebsystem.entidades.usuarios;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,38 +14,39 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 /**
  *
  * @author JoaoIsrael
  */
 @Entity
-@Table(name = "asignacion_profesor_materias")
+@Table(name = "rol")
 @NamedQueries({
-    @NamedQuery(name = "AsignacionProfesorMaterias.findAll", query = "SELECT a FROM AsignacionProfesorMaterias a")})
-public class AsignacionProfesorMaterias implements Serializable {
+    @NamedQuery(name = "Rol.findAll", query = "SELECT r FROM Rol r")})
+public class Rol implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @JoinColumn(name = "asignacion_profesor", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private AsignacionProfesor asignacionProfesor;
-    @JoinColumn(name = "materia", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Materia materia;
+    @Size(max = 100)
+    @Column(name = "rol_name")
+    private String rolName;
+    @Column(name = "estado")
+    private Boolean estado;
+    @OneToMany(mappedBy = "rol", fetch = FetchType.LAZY)
+    private Collection<Persona> personaCollection;
 
-    public AsignacionProfesorMaterias() {
+    public Rol() {
     }
 
-    public AsignacionProfesorMaterias(Long id) {
+    public Rol(Long id) {
         this.id = id;
     }
 
@@ -56,20 +58,28 @@ public class AsignacionProfesorMaterias implements Serializable {
         this.id = id;
     }
 
-    public AsignacionProfesor getAsignacionProfesor() {
-        return asignacionProfesor;
+    public String getRolName() {
+        return rolName;
     }
 
-    public void setAsignacionProfesor(AsignacionProfesor asignacionProfesor) {
-        this.asignacionProfesor = asignacionProfesor;
+    public void setRolName(String rolName) {
+        this.rolName = rolName;
     }
 
-    public Materia getMateria() {
-        return materia;
+    public Boolean getEstado() {
+        return estado;
     }
 
-    public void setMateria(Materia materia) {
-        this.materia = materia;
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public Collection<Persona> getPersonaCollection() {
+        return personaCollection;
+    }
+
+    public void setPersonaCollection(Collection<Persona> personaCollection) {
+        this.personaCollection = personaCollection;
     }
 
     @Override
@@ -82,10 +92,10 @@ public class AsignacionProfesorMaterias implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AsignacionProfesorMaterias)) {
+        if (!(object instanceof Rol)) {
             return false;
         }
-        AsignacionProfesorMaterias other = (AsignacionProfesorMaterias) object;
+        Rol other = (Rol) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -94,7 +104,7 @@ public class AsignacionProfesorMaterias implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesColegios.AsignacionProfesorMaterias[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.entidadesUsuarios.Rol[ id=" + id + " ]";
     }
     
 }

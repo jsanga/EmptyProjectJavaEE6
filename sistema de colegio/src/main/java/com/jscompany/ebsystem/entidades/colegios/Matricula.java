@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jscompany.ebsystem.entidades.entidadesUsuarios;
+package com.jscompany.ebsystem.entidades.colegios;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.math.BigInteger;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,39 +15,44 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author JoaoIsrael
  */
 @Entity
-@Table(name = "rol")
+@Table(name = "matricula")
 @NamedQueries({
-    @NamedQuery(name = "Rol.findAll", query = "SELECT r FROM Rol r")})
-public class Rol implements Serializable {
+    @NamedQuery(name = "Matricula.findAll", query = "SELECT m FROM Matricula m")})
+public class Matricula implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Size(max = 100)
-    @Column(name = "rol_name")
-    private String rolName;
+    @Column(name = "estudiante")
+    private BigInteger estudiante;
     @Column(name = "estado")
     private Boolean estado;
-    @OneToMany(mappedBy = "rol", fetch = FetchType.LAZY)
-    private Collection<Persona> personaCollection;
+    @Column(name = "fecha_creacion")
+    @Temporal(TemporalType.DATE)
+    private Date fechaCreacion;
+    @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private AsignacionCurso asignacionCurso;
 
-    public Rol() {
+    public Matricula() {
     }
 
-    public Rol(Long id) {
+    public Matricula(Long id) {
         this.id = id;
     }
 
@@ -58,12 +64,12 @@ public class Rol implements Serializable {
         this.id = id;
     }
 
-    public String getRolName() {
-        return rolName;
+    public BigInteger getEstudiante() {
+        return estudiante;
     }
 
-    public void setRolName(String rolName) {
-        this.rolName = rolName;
+    public void setEstudiante(BigInteger estudiante) {
+        this.estudiante = estudiante;
     }
 
     public Boolean getEstado() {
@@ -74,12 +80,20 @@ public class Rol implements Serializable {
         this.estado = estado;
     }
 
-    public Collection<Persona> getPersonaCollection() {
-        return personaCollection;
+    public Date getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setPersonaCollection(Collection<Persona> personaCollection) {
-        this.personaCollection = personaCollection;
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public AsignacionCurso getAsignacionCurso() {
+        return asignacionCurso;
+    }
+
+    public void setAsignacionCurso(AsignacionCurso asignacionCurso) {
+        this.asignacionCurso = asignacionCurso;
     }
 
     @Override
@@ -92,10 +106,10 @@ public class Rol implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Rol)) {
+        if (!(object instanceof Matricula)) {
             return false;
         }
-        Rol other = (Rol) object;
+        Matricula other = (Matricula) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -104,7 +118,7 @@ public class Rol implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesUsuarios.Rol[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.entidadesColegios.Matricula[ id=" + id + " ]";
     }
     
 }

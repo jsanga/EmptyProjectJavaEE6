@@ -5,8 +5,8 @@
  */
 package com.jscompany.ebsystem.managedbeans;
 
-import com.jscompany.ebsystem.ejb.interfaces.usuarios.UsuariosServices;
-import com.jscompany.ebsystem.entidades.entidadesUsuarios.Loguin;
+import com.jscompany.ebsystem.ejb.interfaces.UsuariosServices;
+import com.jscompany.ebsystem.entidades.usuarios.Loguin;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
 import java.io.Serializable;
@@ -46,6 +46,7 @@ public class Login implements Serializable{
         
         if(usuariosServices.validarUsuario(loguin.getUsername(), loguin.getPass())){
             JsfUti.messageInfo(null, "Info", "Usuario encontrado.");
+            
         }
         else
             JsfUti.messageError(null, "Error", "Usuario no encontrado.");

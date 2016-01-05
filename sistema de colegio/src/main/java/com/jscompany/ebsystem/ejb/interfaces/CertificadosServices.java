@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jscompany.ebsystem.ejb.interfaces.usuarios;
+package com.jscompany.ebsystem.ejb.interfaces;
 
 import javax.ejb.Local;
 
@@ -12,8 +12,7 @@ import javax.ejb.Local;
  * @author JoaoIsrael
  */
 @Local
-public interface UsuariosServices {
+public interface CertificadosServices {
     
-    public Boolean validarUsuario(String username, String pass);
     
 }

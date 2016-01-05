@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jscompany.ebsystem.entidades.entidadesColegios;
+package com.jscompany.ebsystem.entidades.colegios;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -19,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -28,31 +30,36 @@ import javax.persistence.TemporalType;
  * @author JoaoIsrael
  */
 @Entity
-@Table(name = "matricula")
+@Table(name = "asignacion_profesor")
 @NamedQueries({
-    @NamedQuery(name = "Matricula.findAll", query = "SELECT m FROM Matricula m")})
-public class Matricula implements Serializable {
+    @NamedQuery(name = "AsignacionProfesor.findAll", query = "SELECT a FROM AsignacionProfesor a")})
+public class AsignacionProfesor implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Column(name = "estudiante")
-    private BigInteger estudiante;
+    @Column(name = "profesor")
+    private BigInteger profesor;
     @Column(name = "estado")
     private Boolean estado;
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
+    @OneToMany(mappedBy = "asignacionProfesor", fetch = FetchType.LAZY)
+    private Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection;
     @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private AsignacionCurso asignacionCurso;
+    @JoinColumn(name = "paralelo", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Paralelo paralelo;
 
-    public Matricula() {
+    public AsignacionProfesor() {
     }
 
-    public Matricula(Long id) {
+    public AsignacionProfesor(Long id) {
         this.id = id;
     }
 
@@ -64,12 +71,12 @@ public class Matricula implements Serializable {
         this.id = id;
     }
 
-    public BigInteger getEstudiante() {
-        return estudiante;
+    public BigInteger getProfesor() {
+        return profesor;
     }
 
-    public void setEstudiante(BigInteger estudiante) {
-        this.estudiante = estudiante;
+    public void setProfesor(BigInteger profesor) {
+        this.profesor = profesor;
     }
 
     public Boolean getEstado() {
@@ -88,12 +95,28 @@ public class Matricula implements Serializable {
         this.fechaCreacion = fechaCreacion;
     }
 
+    public Collection<AsignacionProfesorMaterias> getAsignacionProfesorMateriasCollection() {
+        return asignacionProfesorMateriasCollection;
+    }
+
+    public void setAsignacionProfesorMateriasCollection(Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection) {
+        this.asignacionProfesorMateriasCollection = asignacionProfesorMateriasCollection;
+    }
+
     public AsignacionCurso getAsignacionCurso() {
         return asignacionCurso;
     }
 
     public void setAsignacionCurso(AsignacionCurso asignacionCurso) {
         this.asignacionCurso = asignacionCurso;
+    }
+
+    public Paralelo getParalelo() {
+        return paralelo;
+    }
+
+    public void setParalelo(Paralelo paralelo) {
+        this.paralelo = paralelo;
     }
 
     @Override
@@ -106,10 +129,10 @@ public class Matricula implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Matricula)) {
+        if (!(object instanceof AsignacionProfesor)) {
             return false;
         }
-        Matricula other = (Matricula) object;
+        AsignacionProfesor other = (AsignacionProfesor) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -118,7 +141,7 @@ public class Matricula implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesColegios.Matricula[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.entidadesColegios.AsignacionProfesor[ id=" + id + " ]";
     }
     
 }
