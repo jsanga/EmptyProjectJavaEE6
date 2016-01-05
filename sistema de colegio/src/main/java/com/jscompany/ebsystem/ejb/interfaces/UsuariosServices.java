@@ -5,6 +5,13 @@
  */
 package com.jscompany.ebsystem.ejb.interfaces;
 
+import com.jscompany.ebsystem.entidades.usuarios.Loguin;
+import com.jscompany.ebsystem.entidades.usuarios.Notificacion;
+import com.jscompany.ebsystem.entidades.usuarios.Persona;
+import com.jscompany.ebsystem.entidades.usuarios.PersonaEmail;
+import com.jscompany.ebsystem.entidades.usuarios.PersonaTelefono;
+import com.jscompany.ebsystem.entidades.usuarios.Rol;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -15,5 +22,13 @@ import javax.ejb.Local;
 public interface UsuariosServices {
     
     public Boolean validarUsuario(String username, String pass);
+    
+    public Loguin guardarLoguin(Loguin l);
+    
+    public Notificacion guardarNotificacion(Notificacion n);
+    
+    public Persona guardarPersona(Persona p, List<PersonaEmail> emailList, List<PersonaTelefono> telefonoList, Rol rol);
+    
+    public Rol guardarRol(Rol r);
     
 }

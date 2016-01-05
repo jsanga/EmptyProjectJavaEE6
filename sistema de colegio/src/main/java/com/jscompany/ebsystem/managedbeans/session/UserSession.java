@@ -21,27 +21,38 @@ public class UserSession implements Serializable {
 
     public static final Long serialVersionUID = 1L;
 
-    private Persona persona;
-    private Rol rolPersona;
+    private String username;
+    private String rolPersona;
+    private Boolean isLogged = false;
     
-    public UserSession(){
-    
+    public void cerrarSesion(){
+        username = null;
+        rolPersona = null;
+        isLogged = null;
     }
 
-    public Persona getPersona() {
-        return persona;
+    public String getUsername() {
+        return username;
     }
 
-    public void setPersona(Persona persona) {
-        this.persona = persona;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public Rol getRolPersona() {
+    public String getRolPersona() {
         return rolPersona;
     }
 
-    public void setRolPersona(Rol rolPersona) {
+    public void setRolPersona(String rolPersona) {
         this.rolPersona = rolPersona;
+    }
+
+    public Boolean getIsLogged() {
+        return isLogged;
+    }
+
+    public void setIsLogged(Boolean isLogged) {
+        this.isLogged = isLogged;
     }
     
 }

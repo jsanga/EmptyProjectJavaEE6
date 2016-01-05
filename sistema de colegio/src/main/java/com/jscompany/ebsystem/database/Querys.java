@@ -11,6 +11,8 @@ package com.jscompany.ebsystem.database;
  */
 public class Querys {
     
+    // Querys de usuarios
     public static String getUsuariobyUserPass = "select e from Loguin e where e.username = :user and e.pass = :pass";
+    public static String getUsuarioByUser = "select e from Persona e where e.loguin.username = :username";
     
 }

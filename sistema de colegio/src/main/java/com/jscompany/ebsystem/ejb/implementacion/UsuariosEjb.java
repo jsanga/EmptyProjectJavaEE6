@@ -9,11 +9,15 @@ import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.ejb.HibernateEjbInterceptor;
 import com.jscompany.ebsystem.ejb.interfaces.UsuariosServices;
 import com.jscompany.ebsystem.entidades.usuarios.Loguin;
+import com.jscompany.ebsystem.entidades.usuarios.Notificacion;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
+import com.jscompany.ebsystem.entidades.usuarios.PersonaEmail;
+import com.jscompany.ebsystem.entidades.usuarios.PersonaTelefono;
 import com.jscompany.ebsystem.entidades.usuarios.Rol;
 import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.faces.bean.ManagedProperty;
@@ -30,9 +34,6 @@ public class UsuariosEjb implements UsuariosServices{
     @EJB(beanName = "aclService")
     private AclService services;
     
-    @ManagedProperty(value = "#{userSession}")
-    private UserSession uSession;
-    
     private Persona persona;
     private Rol rol;
     
@@ -46,8 +47,6 @@ public class UsuariosEjb implements UsuariosServices{
             if(l!=null){
                 persona = l.getPersona();
                 rol = l.getPersona().getRol();
-                uSession.setPersona(l.getPersona());
-                uSession.setRolPersona(l.getPersona().getRol());
                 
                 switch(rol.getRolName()){
                     case "admin":
@@ -75,6 +74,26 @@ public class UsuariosEjb implements UsuariosServices{
             e.printStackTrace();
         }
         return b;
+    }
+    
+    @Override
+    public Loguin guardarLoguin(Loguin l){
+        return null;
+    }
+    
+    @Override
+    public Notificacion guardarNotificacion(Notificacion n){
+        return null;
+    }
+    
+    @Override
+    public Persona guardarPersona(Persona p, List<PersonaEmail> emailList, List<PersonaTelefono> telefonoList, Rol rol){
+        return null;
+    }
+    
+    @Override
+    public Rol guardarRol(Rol r){
+        return null;
     }
     
 }

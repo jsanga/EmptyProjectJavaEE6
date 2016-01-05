@@ -5,6 +5,7 @@
  */
 package com.jscompany.ebsystem.security;
 
+import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -30,58 +31,60 @@ public class LoginFilter implements Filter{
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {        
-        /*
-        UserSession sesion = (UserSession)((HttpServletRequest)request).getSession().getAttribute("sesionUsr");
         
-        if(sesion == null || !sesion.isLogged()){
+        UserSession sesion = (UserSession)((HttpServletRequest)request).getSession().getAttribute("userSession");
+        
+        if(sesion == null || sesion.getIsLogged() == null){
             String contextPath = ((HttpServletRequest)request).getContextPath();
             ((HttpServletResponse)response).sendRedirect(contextPath+"/faces/recursos/sinpermisos.xhtml");
         }
         else{
             String path = ((HttpServletRequest)request).getRequestURI().substring(((HttpServletRequest)request).getContextPath().length());
 
-            if(sesion.getRol().equals("admin")){
-                if (path.startsWith("/faces/usuario/") || path.startsWith("/faces/estudiante/") || path.startsWith("/faces/profesor/")) {                
+            if(sesion.getRolPersona().equals("admin")){
+                if (path.startsWith("/faces/general/") || path.startsWith("/faces/estudiante/") || path.startsWith("/faces/profesor/")) {                
                     String contextPath = ((HttpServletRequest)request).getContextPath();
-                    sesion.setLogged(false);
+                    sesion.cerrarSesion();
                     ((HttpServletResponse)response).sendRedirect(contextPath+"/faces/recursos/sinpermisos.xhtml");
+                    return;
                 }
                 else
                     chain.doFilter(request, response);
             }   
             
-            if(sesion.getRol().equals("estudiante")){
-                if (path.startsWith("/faces/usuario/") || path.startsWith("/faces/admin/") || path.startsWith("/faces/profesor/")) {                
+            if(sesion.getRolPersona().equals("estudiante")){
+                if (path.startsWith("/faces/general/") || path.startsWith("/faces/admin/") || path.startsWith("/faces/profesor/")) {                
                     String contextPath = ((HttpServletRequest)request).getContextPath();
-                    sesion.setLogged(false);
+                    sesion.cerrarSesion();
                     ((HttpServletResponse)response).sendRedirect(contextPath+"/faces/recursos/sinpermisos.xhtml");
+                    return;
                 }
                 else
                     chain.doFilter(request, response);
             }
             
-            if(sesion.getRol().equals("profesor")){    
-                if (path.startsWith("/faces/usuario/") || path.startsWith("/faces/estudiante/") || path.startsWith("/faces/admin/")) {                
+            if(sesion.getRolPersona().equals("profesor")){    
+                if (path.startsWith("/faces/general/") || path.startsWith("/faces/estudiante/") || path.startsWith("/faces/admin/")) {                
                     String contextPath = ((HttpServletRequest)request).getContextPath();
-                    sesion.setLogged(false);
+                    sesion.cerrarSesion();
                     ((HttpServletResponse)response).sendRedirect(contextPath+"/faces/recursos/sinpermisos.xhtml");
+                    return;
                 }
                 else
                     chain.doFilter(request, response);
             }
             
-            if(sesion.getRol().equals("usuario")){
+            if(sesion.getRolPersona().equals("invitado")){
                 if (path.startsWith("/faces/admin/") || path.startsWith("/faces/estudiante/") || path.startsWith("/faces/profesor/")) {                
                     String contextPath = ((HttpServletRequest)request).getContextPath();
-                    sesion.setLogged(false);
+                    sesion.cerrarSesion();
                     ((HttpServletResponse)response).sendRedirect(contextPath+"/faces/recursos/sinpermisos.xhtml");
+                    return;
                 }
                 else
                     chain.doFilter(request, response);
             }
         }
-                */
-        
     }
 
     @Override

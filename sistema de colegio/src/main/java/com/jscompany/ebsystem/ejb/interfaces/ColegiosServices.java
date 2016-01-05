@@ -5,6 +5,13 @@
  */
 package com.jscompany.ebsystem.ejb.interfaces;
 
+import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
+import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
+import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesorMaterias;
+import com.jscompany.ebsystem.entidades.colegios.Materia;
+import com.jscompany.ebsystem.entidades.colegios.Matricula;
+import com.jscompany.ebsystem.entidades.colegios.Paralelo;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -14,5 +21,8 @@ import javax.ejb.Local;
 @Local
 public interface ColegiosServices {
     
+    public AsignacionCurso crearAsignacionCurso(AsignacionCurso asignacionCurso, List<Matricula> matriculas, List<AsignacionProfesor> asignacionProfesorList, List<Materia> materias, List<Paralelo> paralelos);
+    
+    public AsignacionProfesor crearAsignacionProfesor(AsignacionProfesor asignacion, List<AsignacionProfesorMaterias> asignacionProfesorMateriasList);
     
 }
