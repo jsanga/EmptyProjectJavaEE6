@@ -67,6 +67,8 @@ public class Persona implements Serializable {
     @JoinColumn(name = "rol", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Rol rol;
+    @Column(name = "estado")
+    private Boolean estado;
     @OneToMany(mappedBy = "profesor", fetch = FetchType.LAZY)
     private Collection<AsignacionProfesor> asignacionProfesorCollection;
     @OneToMany(mappedBy = "estudiante", fetch = FetchType.LAZY)
@@ -165,6 +167,14 @@ public class Persona implements Serializable {
 
     public void setMatriculaCollection(Collection<Matricula> matriculaCollection) {
         this.matriculaCollection = matriculaCollection;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
     @Override

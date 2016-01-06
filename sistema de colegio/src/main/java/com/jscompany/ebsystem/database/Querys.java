@@ -20,4 +20,10 @@ public class Querys {
     
     // Querys de cursos
     public static String getCursosList = "select e from Curso e";
+    
+    // Querys de personas
+    public static String getPersonaList = "select e from Persona e";
+    
+    // Querys de materias
+    public static String getMateriasList = "select e from Materia e";
 }
