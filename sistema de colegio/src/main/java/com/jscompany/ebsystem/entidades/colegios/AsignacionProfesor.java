@@ -5,7 +5,6 @@
  */
 package com.jscompany.ebsystem.entidades.colegios;
 
-import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Collection;
@@ -28,12 +27,16 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author JoaoIsrael
+ * @author Joao Sanga
  */
 @Entity
-@Table(name = "asignacion_profesor", schema = "colegios")
+@Table(name = "asignacion_profesor" , schema = "colegios")
 @NamedQueries({
-    @NamedQuery(name = "AsignacionProfesor.findAll", query = "SELECT a FROM AsignacionProfesor a")})
+    @NamedQuery(name = "AsignacionProfesor.findAll", query = "SELECT a FROM AsignacionProfesor a"),
+    @NamedQuery(name = "AsignacionProfesor.findById", query = "SELECT a FROM AsignacionProfesor a WHERE a.id = :id"),
+    @NamedQuery(name = "AsignacionProfesor.findByProfesor", query = "SELECT a FROM AsignacionProfesor a WHERE a.profesor = :profesor"),
+    @NamedQuery(name = "AsignacionProfesor.findByEstado", query = "SELECT a FROM AsignacionProfesor a WHERE a.estado = :estado"),
+    @NamedQuery(name = "AsignacionProfesor.findByFechaCreacion", query = "SELECT a FROM AsignacionProfesor a WHERE a.fechaCreacion = :fechaCreacion")})
 public class AsignacionProfesor implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,9 +44,8 @@ public class AsignacionProfesor implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @JoinColumn(name = "profesor", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Persona profesor;
+    @Column(name = "profesor")
+    private BigInteger profesor;
     @Column(name = "estado")
     private Boolean estado;
     @Column(name = "fecha_creacion")
@@ -51,12 +53,12 @@ public class AsignacionProfesor implements Serializable {
     private Date fechaCreacion;
     @OneToMany(mappedBy = "asignacionProfesor", fetch = FetchType.LAZY)
     private Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection;
-    @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private AsignacionCurso asignacionCurso;
     @JoinColumn(name = "paralelo", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Paralelo paralelo;
+    @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private AsignacionCurso asignacionCurso;
 
     public AsignacionProfesor() {
     }
@@ -73,11 +75,11 @@ public class AsignacionProfesor implements Serializable {
         this.id = id;
     }
 
-    public Persona getProfesor() {
+    public BigInteger getProfesor() {
         return profesor;
     }
 
-    public void setProfesor(Persona profesor) {
+    public void setProfesor(BigInteger profesor) {
         this.profesor = profesor;
     }
 
@@ -105,20 +107,20 @@ public class AsignacionProfesor implements Serializable {
         this.asignacionProfesorMateriasCollection = asignacionProfesorMateriasCollection;
     }
 
-    public AsignacionCurso getAsignacionCurso() {
-        return asignacionCurso;
-    }
-
-    public void setAsignacionCurso(AsignacionCurso asignacionCurso) {
-        this.asignacionCurso = asignacionCurso;
-    }
-
     public Paralelo getParalelo() {
         return paralelo;
     }
 
     public void setParalelo(Paralelo paralelo) {
         this.paralelo = paralelo;
+    }
+
+    public AsignacionCurso getAsignacionCurso() {
+        return asignacionCurso;
+    }
+
+    public void setAsignacionCurso(AsignacionCurso asignacionCurso) {
+        this.asignacionCurso = asignacionCurso;
     }
 
     @Override
@@ -143,7 +145,7 @@ public class AsignacionProfesor implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesColegios.AsignacionProfesor[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor[ id=" + id + " ]";
     }
     
 }

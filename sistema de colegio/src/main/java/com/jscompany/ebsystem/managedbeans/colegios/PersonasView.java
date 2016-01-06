@@ -6,7 +6,6 @@
 package com.jscompany.ebsystem.managedbeans.colegios;
 
 import com.jscompany.ebsystem.database.Querys;
-import com.jscompany.ebsystem.entidades.colegios.Curso;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
@@ -24,7 +23,7 @@ import javax.faces.bean.ViewScoped;
  */
 @ManagedBean
 @ViewScoped
-public class CrudPersonas implements Serializable{
+public class PersonasView implements Serializable{
     
     public static final Long serialVerisonUID = 1L;
     

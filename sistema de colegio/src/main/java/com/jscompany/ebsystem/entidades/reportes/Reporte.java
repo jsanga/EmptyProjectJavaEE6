@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jscompany.ebsystem.entidades.colegios;
+package com.jscompany.ebsystem.entidades.reportes;
 
 import java.io.Serializable;
 import java.math.BigInteger;
@@ -22,41 +22,43 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 
 /**
  *
  * @author Joao Sanga
  */
 @Entity
-@Table(name = "matricula", schema = "colegios")
+@Table(name = "reporte", schema = "reportes")
 @NamedQueries({
-    @NamedQuery(name = "Matricula.findAll", query = "SELECT m FROM Matricula m"),
-    @NamedQuery(name = "Matricula.findById", query = "SELECT m FROM Matricula m WHERE m.id = :id"),
-    @NamedQuery(name = "Matricula.findByEstudiante", query = "SELECT m FROM Matricula m WHERE m.estudiante = :estudiante"),
-    @NamedQuery(name = "Matricula.findByEstado", query = "SELECT m FROM Matricula m WHERE m.estado = :estado"),
-    @NamedQuery(name = "Matricula.findByFechaCreacion", query = "SELECT m FROM Matricula m WHERE m.fechaCreacion = :fechaCreacion")})
-public class Matricula implements Serializable {
+    @NamedQuery(name = "Reporte.findAll", query = "SELECT r FROM Reporte r"),
+    @NamedQuery(name = "Reporte.findById", query = "SELECT r FROM Reporte r WHERE r.id = :id"),
+    @NamedQuery(name = "Reporte.findByFechaCreacion", query = "SELECT r FROM Reporte r WHERE r.fechaCreacion = :fechaCreacion"),
+    @NamedQuery(name = "Reporte.findByCreador", query = "SELECT r FROM Reporte r WHERE r.creador = :creador"),
+    @NamedQuery(name = "Reporte.findByUrl", query = "SELECT r FROM Reporte r WHERE r.url = :url")})
+public class Reporte implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Column(name = "estudiante")
-    private BigInteger estudiante;
-    @Column(name = "estado")
-    private Boolean estado;
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
-    @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")
+    @Column(name = "creador")
+    private BigInteger creador;
+    @Size(max = 1000)
+    @Column(name = "url")
+    private String url;
+    @JoinColumn(name = "tipo_reporte", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private AsignacionCurso asignacionCurso;
+    private TipoReporte tipoReporte;
 
-    public Matricula() {
+    public Reporte() {
     }
 
-    public Matricula(Long id) {
+    public Reporte(Long id) {
         this.id = id;
     }
 
@@ -68,22 +70,6 @@ public class Matricula implements Serializable {
         this.id = id;
     }
 
-    public BigInteger getEstudiante() {
-        return estudiante;
-    }
-
-    public void setEstudiante(BigInteger estudiante) {
-        this.estudiante = estudiante;
-    }
-
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
-    }
-
     public Date getFechaCreacion() {
         return fechaCreacion;
     }
@@ -92,12 +78,28 @@ public class Matricula implements Serializable {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public AsignacionCurso getAsignacionCurso() {
-        return asignacionCurso;
+    public BigInteger getCreador() {
+        return creador;
     }
 
-    public void setAsignacionCurso(AsignacionCurso asignacionCurso) {
-        this.asignacionCurso = asignacionCurso;
+    public void setCreador(BigInteger creador) {
+        this.creador = creador;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public TipoReporte getTipoReporte() {
+        return tipoReporte;
+    }
+
+    public void setTipoReporte(TipoReporte tipoReporte) {
+        this.tipoReporte = tipoReporte;
     }
 
     @Override
@@ -110,10 +112,10 @@ public class Matricula implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Matricula)) {
+        if (!(object instanceof Reporte)) {
             return false;
         }
-        Matricula other = (Matricula) object;
+        Reporte other = (Reporte) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -122,7 +124,7 @@ public class Matricula implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.Matricula[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.Reporte[ id=" + id + " ]";
     }
     
 }

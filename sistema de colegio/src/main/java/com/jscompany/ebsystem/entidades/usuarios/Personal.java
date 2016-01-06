@@ -6,6 +6,7 @@
 package com.jscompany.ebsystem.entidades.usuarios;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,46 +14,46 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author Joao Sanga
  */
 @Entity
-@Table(name = "loguin", schema = "usuarios")
+@Table(name = "personal", schema = "usuarios")
 @NamedQueries({
-    @NamedQuery(name = "Loguin.findAll", query = "SELECT l FROM Loguin l"),
-    @NamedQuery(name = "Loguin.findById", query = "SELECT l FROM Loguin l WHERE l.id = :id"),
-    @NamedQuery(name = "Loguin.findByUsername", query = "SELECT l FROM Loguin l WHERE l.username = :username"),
-    @NamedQuery(name = "Loguin.findByPass", query = "SELECT l FROM Loguin l WHERE l.pass = :pass"),
-    @NamedQuery(name = "Loguin.findByEstado", query = "SELECT l FROM Loguin l WHERE l.estado = :estado")})
-public class Loguin implements Serializable {
+    @NamedQuery(name = "Personal.findAll", query = "SELECT p FROM Personal p"),
+    @NamedQuery(name = "Personal.findById", query = "SELECT p FROM Personal p WHERE p.id = :id"),
+    @NamedQuery(name = "Personal.findByFechaSalida", query = "SELECT p FROM Personal p WHERE p.fechaSalida = :fechaSalida")})
+public class Personal implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Size(max = 100)
-    @Column(name = "username")
-    private String username;
-    @Size(max = 50)
-    @Column(name = "pass")
-    private String pass;
-    @Column(name = "estado")
-    private Boolean estado;
-    @OneToOne(mappedBy = "loguin", fetch = FetchType.LAZY)
+    @Column(name = "fecha_salida")
+    @Temporal(TemporalType.DATE)
+    private Date fechaSalida;
+    @JoinColumn(name = "tipo_contrato", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TipoContrato tipoContrato;
+    @JoinColumn(name = "persona", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.LAZY)
     private Persona persona;
 
-    public Loguin() {
+    public Personal() {
     }
 
-    public Loguin(Long id) {
+    public Personal(Long id) {
         this.id = id;
     }
 
@@ -64,28 +65,20 @@ public class Loguin implements Serializable {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public Date getFechaSalida() {
+        return fechaSalida;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFechaSalida(Date fechaSalida) {
+        this.fechaSalida = fechaSalida;
     }
 
-    public String getPass() {
-        return pass;
+    public TipoContrato getTipoContrato() {
+        return tipoContrato;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
+    public void setTipoContrato(TipoContrato tipoContrato) {
+        this.tipoContrato = tipoContrato;
     }
 
     public Persona getPersona() {
@@ -106,10 +99,10 @@ public class Loguin implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Loguin)) {
+        if (!(object instanceof Personal)) {
             return false;
         }
-        Loguin other = (Loguin) object;
+        Personal other = (Personal) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -118,7 +111,7 @@ public class Loguin implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.Loguin[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.Personal[ id=" + id + " ]";
     }
     
 }

@@ -13,9 +13,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -24,35 +25,32 @@ import javax.validation.constraints.Size;
  * @author Joao Sanga
  */
 @Entity
-@Table(name = "loguin", schema = "usuarios")
+@Table(name = "profesion", schema = "usuarios")
 @NamedQueries({
-    @NamedQuery(name = "Loguin.findAll", query = "SELECT l FROM Loguin l"),
-    @NamedQuery(name = "Loguin.findById", query = "SELECT l FROM Loguin l WHERE l.id = :id"),
-    @NamedQuery(name = "Loguin.findByUsername", query = "SELECT l FROM Loguin l WHERE l.username = :username"),
-    @NamedQuery(name = "Loguin.findByPass", query = "SELECT l FROM Loguin l WHERE l.pass = :pass"),
-    @NamedQuery(name = "Loguin.findByEstado", query = "SELECT l FROM Loguin l WHERE l.estado = :estado")})
-public class Loguin implements Serializable {
+    @NamedQuery(name = "Profesion.findAll", query = "SELECT p FROM Profesion p"),
+    @NamedQuery(name = "Profesion.findById", query = "SELECT p FROM Profesion p WHERE p.id = :id"),
+    @NamedQuery(name = "Profesion.findByNombreProfesion", query = "SELECT p FROM Profesion p WHERE p.nombreProfesion = :nombreProfesion"),
+    @NamedQuery(name = "Profesion.findByEstado", query = "SELECT p FROM Profesion p WHERE p.estado = :estado")})
+public class Profesion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Size(max = 100)
-    @Column(name = "username")
-    private String username;
-    @Size(max = 50)
-    @Column(name = "pass")
-    private String pass;
+    @Size(max = 150)
+    @Column(name = "nombre_profesion")
+    private String nombreProfesion;
     @Column(name = "estado")
     private Boolean estado;
-    @OneToOne(mappedBy = "loguin", fetch = FetchType.LAZY)
+    @JoinColumn(name = "persona", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Persona persona;
 
-    public Loguin() {
+    public Profesion() {
     }
 
-    public Loguin(Long id) {
+    public Profesion(Long id) {
         this.id = id;
     }
 
@@ -64,20 +62,12 @@ public class Loguin implements Serializable {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getNombreProfesion() {
+        return nombreProfesion;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
+    public void setNombreProfesion(String nombreProfesion) {
+        this.nombreProfesion = nombreProfesion;
     }
 
     public Boolean getEstado() {
@@ -106,10 +96,10 @@ public class Loguin implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Loguin)) {
+        if (!(object instanceof Profesion)) {
             return false;
         }
-        Loguin other = (Loguin) object;
+        Profesion other = (Profesion) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -118,7 +108,7 @@ public class Loguin implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.Loguin[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.Profesion[ id=" + id + " ]";
     }
     
 }

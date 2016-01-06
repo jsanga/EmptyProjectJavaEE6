@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jscompany.ebsystem.entidades.colegios;
+package com.jscompany.ebsystem.entidades.reportes;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -25,13 +26,14 @@ import javax.validation.constraints.Size;
  * @author Joao Sanga
  */
 @Entity
-@Table(name = "curso", schema = "colegios")
+@Table(name = "tipo_reporte", schema = "reportes")
 @NamedQueries({
-    @NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c"),
-    @NamedQuery(name = "Curso.findById", query = "SELECT c FROM Curso c WHERE c.id = :id"),
-    @NamedQuery(name = "Curso.findByNombre", query = "SELECT c FROM Curso c WHERE c.nombre = :nombre"),
-    @NamedQuery(name = "Curso.findByEstado", query = "SELECT c FROM Curso c WHERE c.estado = :estado")})
-public class Curso implements Serializable {
+    @NamedQuery(name = "TipoReporte.findAll", query = "SELECT t FROM TipoReporte t"),
+    @NamedQuery(name = "TipoReporte.findById", query = "SELECT t FROM TipoReporte t WHERE t.id = :id"),
+    @NamedQuery(name = "TipoReporte.findByNombre", query = "SELECT t FROM TipoReporte t WHERE t.nombre = :nombre"),
+    @NamedQuery(name = "TipoReporte.findByDescripcion", query = "SELECT t FROM TipoReporte t WHERE t.descripcion = :descripcion"),
+    @NamedQuery(name = "TipoReporte.findByColegio", query = "SELECT t FROM TipoReporte t WHERE t.colegio = :colegio")})
+public class TipoReporte implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,15 +43,18 @@ public class Curso implements Serializable {
     @Size(max = 100)
     @Column(name = "nombre")
     private String nombre;
-    @Column(name = "estado")
-    private Boolean estado;
-    @OneToMany(mappedBy = "curso", fetch = FetchType.LAZY)
-    private Collection<AsignacionCurso> asignacionCursoCollection;
+    @Size(max = 1000)
+    @Column(name = "descripcion")
+    private String descripcion;
+    @Column(name = "colegio")
+    private BigInteger colegio;
+    @OneToMany(mappedBy = "tipoReporte", fetch = FetchType.LAZY)
+    private Collection<Reporte> reporteCollection;
 
-    public Curso() {
+    public TipoReporte() {
     }
 
-    public Curso(Long id) {
+    public TipoReporte(Long id) {
         this.id = id;
     }
 
@@ -69,20 +74,28 @@ public class Curso implements Serializable {
         this.nombre = nombre;
     }
 
-    public Boolean getEstado() {
-        return estado;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public Collection<AsignacionCurso> getAsignacionCursoCollection() {
-        return asignacionCursoCollection;
+    public BigInteger getColegio() {
+        return colegio;
     }
 
-    public void setAsignacionCursoCollection(Collection<AsignacionCurso> asignacionCursoCollection) {
-        this.asignacionCursoCollection = asignacionCursoCollection;
+    public void setColegio(BigInteger colegio) {
+        this.colegio = colegio;
+    }
+
+    public Collection<Reporte> getReporteCollection() {
+        return reporteCollection;
+    }
+
+    public void setReporteCollection(Collection<Reporte> reporteCollection) {
+        this.reporteCollection = reporteCollection;
     }
 
     @Override
@@ -95,10 +108,10 @@ public class Curso implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Curso)) {
+        if (!(object instanceof TipoReporte)) {
             return false;
         }
-        Curso other = (Curso) object;
+        TipoReporte other = (TipoReporte) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -107,7 +120,7 @@ public class Curso implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.Curso[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.TipoReporte[ id=" + id + " ]";
     }
     
 }

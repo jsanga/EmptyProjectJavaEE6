@@ -23,12 +23,22 @@ import javax.persistence.Table;
 
 /**
  *
- * @author JoaoIsrael
+ * @author Joao Sanga
  */
 @Entity
 @Table(name = "detalle_materia", schema = "colegios")
 @NamedQueries({
-    @NamedQuery(name = "DetalleMateria.findAll", query = "SELECT d FROM DetalleMateria d")})
+    @NamedQuery(name = "DetalleMateria.findAll", query = "SELECT d FROM DetalleMateria d"),
+    @NamedQuery(name = "DetalleMateria.findById", query = "SELECT d FROM DetalleMateria d WHERE d.id = :id"),
+    @NamedQuery(name = "DetalleMateria.findByNota1", query = "SELECT d FROM DetalleMateria d WHERE d.nota1 = :nota1"),
+    @NamedQuery(name = "DetalleMateria.findByNota2", query = "SELECT d FROM DetalleMateria d WHERE d.nota2 = :nota2"),
+    @NamedQuery(name = "DetalleMateria.findByNota3", query = "SELECT d FROM DetalleMateria d WHERE d.nota3 = :nota3"),
+    @NamedQuery(name = "DetalleMateria.findByProm1", query = "SELECT d FROM DetalleMateria d WHERE d.prom1 = :prom1"),
+    @NamedQuery(name = "DetalleMateria.findByNota4", query = "SELECT d FROM DetalleMateria d WHERE d.nota4 = :nota4"),
+    @NamedQuery(name = "DetalleMateria.findByNota5", query = "SELECT d FROM DetalleMateria d WHERE d.nota5 = :nota5"),
+    @NamedQuery(name = "DetalleMateria.findByNota6", query = "SELECT d FROM DetalleMateria d WHERE d.nota6 = :nota6"),
+    @NamedQuery(name = "DetalleMateria.findByProm2", query = "SELECT d FROM DetalleMateria d WHERE d.prom2 = :prom2"),
+    @NamedQuery(name = "DetalleMateria.findByTotalProm", query = "SELECT d FROM DetalleMateria d WHERE d.totalProm = :totalProm")})
 public class DetalleMateria implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -186,7 +196,7 @@ public class DetalleMateria implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesColegios.DetalleMateria[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.DetalleMateria[ id=" + id + " ]";
     }
     
 }

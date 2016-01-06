@@ -22,12 +22,15 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author JoaoIsrael
+ * @author Joao Sanga
  */
 @Entity
 @Table(name = "rol", schema = "usuarios")
 @NamedQueries({
-    @NamedQuery(name = "Rol.findAll", query = "SELECT r FROM Rol r")})
+    @NamedQuery(name = "Rol.findAll", query = "SELECT r FROM Rol r"),
+    @NamedQuery(name = "Rol.findById", query = "SELECT r FROM Rol r WHERE r.id = :id"),
+    @NamedQuery(name = "Rol.findByRolName", query = "SELECT r FROM Rol r WHERE r.rolName = :rolName"),
+    @NamedQuery(name = "Rol.findByEstado", query = "SELECT r FROM Rol r WHERE r.estado = :estado")})
 public class Rol implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -104,7 +107,7 @@ public class Rol implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesUsuarios.Rol[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.Rol[ id=" + id + " ]";
     }
     
 }

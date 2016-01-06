@@ -3,20 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jscompany.ebsystem.entidades.colegios;
+package com.jscompany.ebsystem.entidades.certificados;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -25,13 +23,14 @@ import javax.validation.constraints.Size;
  * @author Joao Sanga
  */
 @Entity
-@Table(name = "curso", schema = "colegios")
+@Table(name = "tipo_certificado", schema = "certificados")
 @NamedQueries({
-    @NamedQuery(name = "Curso.findAll", query = "SELECT c FROM Curso c"),
-    @NamedQuery(name = "Curso.findById", query = "SELECT c FROM Curso c WHERE c.id = :id"),
-    @NamedQuery(name = "Curso.findByNombre", query = "SELECT c FROM Curso c WHERE c.nombre = :nombre"),
-    @NamedQuery(name = "Curso.findByEstado", query = "SELECT c FROM Curso c WHERE c.estado = :estado")})
-public class Curso implements Serializable {
+    @NamedQuery(name = "TipoCertificado.findAll", query = "SELECT t FROM TipoCertificado t"),
+    @NamedQuery(name = "TipoCertificado.findById", query = "SELECT t FROM TipoCertificado t WHERE t.id = :id"),
+    @NamedQuery(name = "TipoCertificado.findByNombre", query = "SELECT t FROM TipoCertificado t WHERE t.nombre = :nombre"),
+    @NamedQuery(name = "TipoCertificado.findByDescripcion", query = "SELECT t FROM TipoCertificado t WHERE t.descripcion = :descripcion"),
+    @NamedQuery(name = "TipoCertificado.findByColegio", query = "SELECT t FROM TipoCertificado t WHERE t.colegio = :colegio")})
+public class TipoCertificado implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,15 +40,16 @@ public class Curso implements Serializable {
     @Size(max = 100)
     @Column(name = "nombre")
     private String nombre;
-    @Column(name = "estado")
-    private Boolean estado;
-    @OneToMany(mappedBy = "curso", fetch = FetchType.LAZY)
-    private Collection<AsignacionCurso> asignacionCursoCollection;
+    @Size(max = 1000)
+    @Column(name = "descripcion")
+    private String descripcion;
+    @Column(name = "colegio")
+    private BigInteger colegio;
 
-    public Curso() {
+    public TipoCertificado() {
     }
 
-    public Curso(Long id) {
+    public TipoCertificado(Long id) {
         this.id = id;
     }
 
@@ -69,20 +69,20 @@ public class Curso implements Serializable {
         this.nombre = nombre;
     }
 
-    public Boolean getEstado() {
-        return estado;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public Collection<AsignacionCurso> getAsignacionCursoCollection() {
-        return asignacionCursoCollection;
+    public BigInteger getColegio() {
+        return colegio;
     }
 
-    public void setAsignacionCursoCollection(Collection<AsignacionCurso> asignacionCursoCollection) {
-        this.asignacionCursoCollection = asignacionCursoCollection;
+    public void setColegio(BigInteger colegio) {
+        this.colegio = colegio;
     }
 
     @Override
@@ -95,10 +95,10 @@ public class Curso implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Curso)) {
+        if (!(object instanceof TipoCertificado)) {
             return false;
         }
-        Curso other = (Curso) object;
+        TipoCertificado other = (TipoCertificado) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -107,7 +107,7 @@ public class Curso implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.Curso[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.TipoCertificado[ id=" + id + " ]";
     }
     
 }

@@ -24,12 +24,16 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author JoaoIsrael
+ * @author Joao Sanga
  */
 @Entity
 @Table(name = "periodo_lectivo", schema = "colegios")
 @NamedQueries({
-    @NamedQuery(name = "PeriodoLectivo.findAll", query = "SELECT p FROM PeriodoLectivo p")})
+    @NamedQuery(name = "PeriodoLectivo.findAll", query = "SELECT p FROM PeriodoLectivo p"),
+    @NamedQuery(name = "PeriodoLectivo.findById", query = "SELECT p FROM PeriodoLectivo p WHERE p.id = :id"),
+    @NamedQuery(name = "PeriodoLectivo.findByFechaInicio", query = "SELECT p FROM PeriodoLectivo p WHERE p.fechaInicio = :fechaInicio"),
+    @NamedQuery(name = "PeriodoLectivo.findByFechaFin", query = "SELECT p FROM PeriodoLectivo p WHERE p.fechaFin = :fechaFin"),
+    @NamedQuery(name = "PeriodoLectivo.findByEstado", query = "SELECT p FROM PeriodoLectivo p WHERE p.estado = :estado")})
 public class PeriodoLectivo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -117,7 +121,7 @@ public class PeriodoLectivo implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesColegios.PeriodoLectivo[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.PeriodoLectivo[ id=" + id + " ]";
     }
     
 }

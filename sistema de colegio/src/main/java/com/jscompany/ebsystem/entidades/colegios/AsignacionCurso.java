@@ -26,12 +26,15 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author JoaoIsrael
+ * @author Joao Sanga
  */
 @Entity
-@Table(name = "asignacion_curso", schema = "colegios")
+@Table(name = "asignacion_curso" , schema = "colegios")
 @NamedQueries({
-    @NamedQuery(name = "AsignacionCurso.findAll", query = "SELECT a FROM AsignacionCurso a")})
+    @NamedQuery(name = "AsignacionCurso.findAll", query = "SELECT a FROM AsignacionCurso a"),
+    @NamedQuery(name = "AsignacionCurso.findById", query = "SELECT a FROM AsignacionCurso a WHERE a.id = :id"),
+    @NamedQuery(name = "AsignacionCurso.findByEstado", query = "SELECT a FROM AsignacionCurso a WHERE a.estado = :estado"),
+    @NamedQuery(name = "AsignacionCurso.findByFechaCreacion", query = "SELECT a FROM AsignacionCurso a WHERE a.fechaCreacion = :fechaCreacion")})
 public class AsignacionCurso implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,23 +47,23 @@ public class AsignacionCurso implements Serializable {
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
-    @JoinColumn(name = "colegio", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Colegio colegio;
-    @JoinColumn(name = "curso", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Curso curso;
+    @OneToMany(mappedBy = "asignacionCurso", fetch = FetchType.LAZY)
+    private Collection<Materia> materiaCollection;
+    @OneToMany(mappedBy = "asignacionCurso", fetch = FetchType.LAZY)
+    private Collection<AsignacionCursoParalelos> asignacionCursoParalelosCollection;
     @JoinColumn(name = "periodo_lectivo", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private PeriodoLectivo periodoLectivo;
+    @JoinColumn(name = "curso", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Curso curso;
+    @JoinColumn(name = "colegio", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Colegio colegio;
     @OneToMany(mappedBy = "asignacionCurso", fetch = FetchType.LAZY)
     private Collection<Matricula> matriculaCollection;
     @OneToMany(mappedBy = "asignacionCurso", fetch = FetchType.LAZY)
     private Collection<AsignacionProfesor> asignacionProfesorCollection;
-    @OneToMany(mappedBy = "asignacionCurso", fetch = FetchType.LAZY)
-    private Collection<Materia> materiaCollection;
-    @OneToMany(mappedBy = "asignacionCurso", fetch = FetchType.LAZY)
-    private Collection<Paralelo> paraleloCollection;
 
     public AsignacionCurso() {
     }
@@ -93,12 +96,28 @@ public class AsignacionCurso implements Serializable {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public Colegio getColegio() {
-        return colegio;
+    public Collection<Materia> getMateriaCollection() {
+        return materiaCollection;
     }
 
-    public void setColegio(Colegio colegio) {
-        this.colegio = colegio;
+    public void setMateriaCollection(Collection<Materia> materiaCollection) {
+        this.materiaCollection = materiaCollection;
+    }
+
+    public Collection<AsignacionCursoParalelos> getAsignacionCursoParalelosCollection() {
+        return asignacionCursoParalelosCollection;
+    }
+
+    public void setAsignacionCursoParalelosCollection(Collection<AsignacionCursoParalelos> asignacionCursoParalelosCollection) {
+        this.asignacionCursoParalelosCollection = asignacionCursoParalelosCollection;
+    }
+
+    public PeriodoLectivo getPeriodoLectivo() {
+        return periodoLectivo;
+    }
+
+    public void setPeriodoLectivo(PeriodoLectivo periodoLectivo) {
+        this.periodoLectivo = periodoLectivo;
     }
 
     public Curso getCurso() {
@@ -109,12 +128,12 @@ public class AsignacionCurso implements Serializable {
         this.curso = curso;
     }
 
-    public PeriodoLectivo getPeriodoLectivo() {
-        return periodoLectivo;
+    public Colegio getColegio() {
+        return colegio;
     }
 
-    public void setPeriodoLectivo(PeriodoLectivo periodoLectivo) {
-        this.periodoLectivo = periodoLectivo;
+    public void setColegio(Colegio colegio) {
+        this.colegio = colegio;
     }
 
     public Collection<Matricula> getMatriculaCollection() {
@@ -131,22 +150,6 @@ public class AsignacionCurso implements Serializable {
 
     public void setAsignacionProfesorCollection(Collection<AsignacionProfesor> asignacionProfesorCollection) {
         this.asignacionProfesorCollection = asignacionProfesorCollection;
-    }
-
-    public Collection<Materia> getMateriaCollection() {
-        return materiaCollection;
-    }
-
-    public void setMateriaCollection(Collection<Materia> materiaCollection) {
-        this.materiaCollection = materiaCollection;
-    }
-
-    public Collection<Paralelo> getParaleloCollection() {
-        return paraleloCollection;
-    }
-
-    public void setParaleloCollection(Collection<Paralelo> paraleloCollection) {
-        this.paraleloCollection = paraleloCollection;
     }
 
     @Override
@@ -171,7 +174,7 @@ public class AsignacionCurso implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesColegios.AsignacionCurso[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.AsignacionCurso[ id=" + id + " ]";
     }
     
 }

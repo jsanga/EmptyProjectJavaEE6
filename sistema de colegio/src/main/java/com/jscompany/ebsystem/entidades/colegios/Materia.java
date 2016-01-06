@@ -24,12 +24,15 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author JoaoIsrael
+ * @author Joao Sanga
  */
 @Entity
 @Table(name = "materia", schema = "colegios")
 @NamedQueries({
-    @NamedQuery(name = "Materia.findAll", query = "SELECT m FROM Materia m")})
+    @NamedQuery(name = "Materia.findAll", query = "SELECT m FROM Materia m"),
+    @NamedQuery(name = "Materia.findById", query = "SELECT m FROM Materia m WHERE m.id = :id"),
+    @NamedQuery(name = "Materia.findByNombre", query = "SELECT m FROM Materia m WHERE m.nombre = :nombre"),
+    @NamedQuery(name = "Materia.findByEstado", query = "SELECT m FROM Materia m WHERE m.estado = :estado")})
 public class Materia implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,13 +45,13 @@ public class Materia implements Serializable {
     private String nombre;
     @Column(name = "estado")
     private Boolean estado;
-    @OneToMany(mappedBy = "materia", fetch = FetchType.LAZY)
-    private Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection;
-    @OneToMany(mappedBy = "materia", fetch = FetchType.LAZY)
-    private Collection<DetalleMateria> detalleMateriaCollection;
     @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private AsignacionCurso asignacionCurso;
+    @OneToMany(mappedBy = "materia", fetch = FetchType.LAZY)
+    private Collection<DetalleMateria> detalleMateriaCollection;
+    @OneToMany(mappedBy = "materia", fetch = FetchType.LAZY)
+    private Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection;
 
     public Materia() {
     }
@@ -81,12 +84,12 @@ public class Materia implements Serializable {
         this.estado = estado;
     }
 
-    public Collection<AsignacionProfesorMaterias> getAsignacionProfesorMateriasCollection() {
-        return asignacionProfesorMateriasCollection;
+    public AsignacionCurso getAsignacionCurso() {
+        return asignacionCurso;
     }
 
-    public void setAsignacionProfesorMateriasCollection(Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection) {
-        this.asignacionProfesorMateriasCollection = asignacionProfesorMateriasCollection;
+    public void setAsignacionCurso(AsignacionCurso asignacionCurso) {
+        this.asignacionCurso = asignacionCurso;
     }
 
     public Collection<DetalleMateria> getDetalleMateriaCollection() {
@@ -97,12 +100,12 @@ public class Materia implements Serializable {
         this.detalleMateriaCollection = detalleMateriaCollection;
     }
 
-    public AsignacionCurso getAsignacionCurso() {
-        return asignacionCurso;
+    public Collection<AsignacionProfesorMaterias> getAsignacionProfesorMateriasCollection() {
+        return asignacionProfesorMateriasCollection;
     }
 
-    public void setAsignacionCurso(AsignacionCurso asignacionCurso) {
-        this.asignacionCurso = asignacionCurso;
+    public void setAsignacionProfesorMateriasCollection(Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection) {
+        this.asignacionProfesorMateriasCollection = asignacionProfesorMateriasCollection;
     }
 
     @Override
@@ -127,7 +130,7 @@ public class Materia implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesColegios.Materia[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.Materia[ id=" + id + " ]";
     }
     
 }

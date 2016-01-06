@@ -26,15 +26,25 @@
     <property name="hibernate.enable_lazy_load_no_trans">true</property>
     <property name="hibernate.classloading.use_current_tccl_as_parent">false</property>
     <property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
-        
+      
+    <!-- Schema Usuarios -->
+    <mapping class="com.jscompany.ebsystem.entidades.usuarios.Estudiante"/>
     <mapping class="com.jscompany.ebsystem.entidades.usuarios.Loguin"/>
     <mapping class="com.jscompany.ebsystem.entidades.usuarios.Notificacion"/>
     <mapping class="com.jscompany.ebsystem.entidades.usuarios.Persona"/>
     <mapping class="com.jscompany.ebsystem.entidades.usuarios.PersonaEmail"/>
     <mapping class="com.jscompany.ebsystem.entidades.usuarios.PersonaTelefono"/>
+    <mapping class="com.jscompany.ebsystem.entidades.usuarios.Personal"/>
+    <mapping class="com.jscompany.ebsystem.entidades.usuarios.Profesion"/>
+    <mapping class="com.jscompany.ebsystem.entidades.usuarios.Profesor"/>
+    <mapping class="com.jscompany.ebsystem.entidades.usuarios.RelacionPersona"/>
     <mapping class="com.jscompany.ebsystem.entidades.usuarios.Rol"/>
+    <mapping class="com.jscompany.ebsystem.entidades.usuarios.TipoContrato"/>
+    <mapping class="com.jscompany.ebsystem.entidades.usuarios.TipoRelacionPersona"/>
     
+    <!-- Schema Colegios -->
     <mapping class="com.jscompany.ebsystem.entidades.colegios.AsignacionCurso"/>
+    <mapping class="com.jscompany.ebsystem.entidades.colegios.AsignacionCursoParalelos"/>
     <mapping class="com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor"/>
     <mapping class="com.jscompany.ebsystem.entidades.colegios.AsignacionProfesorMaterias"/>
     <mapping class="com.jscompany.ebsystem.entidades.colegios.Colegio"/>
@@ -45,5 +55,14 @@
     <mapping class="com.jscompany.ebsystem.entidades.colegios.Matricula"/>
     <mapping class="com.jscompany.ebsystem.entidades.colegios.Paralelo"/>
     <mapping class="com.jscompany.ebsystem.entidades.colegios.PeriodoLectivo"/>
+    
+    <!-- Schema Certificados -->
+    <mapping class="com.jscompany.ebsystem.entidades.certificados.Certificado"/>
+    <mapping class="com.jscompany.ebsystem.entidades.certificados.TipoCertificado"/>
+    
+    <!-- Schema Reportes -->
+    <mapping class="com.jscompany.ebsystem.entidades.reportes.Reporte"/>
+    <mapping class="com.jscompany.ebsystem.entidades.reportes.TipoReporte"/>
+    
   </session-factory>
 </hibernate-configuration>

@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="frmMain">
+            <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+            <p:commandButton value="Ingresar Usuario" update=":dlgForm" actionListener="#{personasView.nuevaPersona()}" onclick="PF('dlgCrear').show()"/>
+            <p:dataTable id="dtCursos" value="#{personasView.personaList}" var="persona">
+                <p:column headerText="Cédula" filterBy="#{persona.cedula}">
+                    <h:outputText value="#{persona.cedula}" style="text-transform: uppercase;"/>
+                </p:column>
+                <p:column headerText="Nombres" filterBy="#{persona.nombres}">
+                    <h:outputText value="#{persona.nombres}" style="text-transform: uppercase;"/>
+                </p:column>
+                <p:column headerText="Apellidos" filterBy="#{persona.apellidos}">
+                    <h:outputText value="#{persona.nombres}" style="text-transform: uppercase;"/>
+                </p:column>
+                <p:column headerText="Estado">
+                    <h:outputText value="#{persona.estado}" style="text-transform: uppercase;"/>
+                </p:column>
+                <p:column headerText="Acción">
+                    <center>
+                        <p:commandButton value="Editar" actionListener="#{personasView.editarPersona(c)}" onclick="PF('dlgEditar').show()" update=":dlgFormEdit"/>
+                        <p:commandButton value="Eliminar" actionListener="#{personasView.eliminarPersona(c)}" update="frmMain"/>
+                    </center>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        
+        <p:dialog header="Crear Usuario" id="dlgCrear" widgetVar="dlgCrear" modal="true" height="auto" width="auto" >  
+            <h:form id="dlgForm" >
+                <p:panelGrid columns="2">
+                    <h:outputText value="Cédula:"/>
+                    <p:inputText value="#{personasView.persona.cedula}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Nombres:"/>
+                    <p:inputText value="#{personasView.persona.nombres}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Apellidos:"/>
+                    <p:inputText value="#{personasView.persona.apellidos}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Dirección:"/>
+                    <p:inputText value="#{personasView.persona.direccion}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Fecha de nacimiento:"/>
+                    <p:calendar value="#{personasView.persona.fechaSalida}"/>
+                </p:panelGrid>
+                <center><p:commandButton value="Guardar Colegio" actionListener="#{personasView.guardarNuevo()}" onclick="PF('dlgCrear').hide()" update=":frmMain"/></center>
+            </h:form>
+        </p:dialog>
+        
+        <p:dialog header="Editar Usuario" id="dlgEditar" widgetVar="dlgEditar" modal="true" height="auto" width="auto" >  
+            <h:form id="dlgFormEdit" >
+                <p:panelGrid columns="2">
+                    <h:outputText value="Cédula:"/>
+                    <p:inputText value="#{personasView.persona.cedula}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Nombres:"/>
+                    <p:inputText value="#{personasView.persona.nombres}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Apellidos:"/>
+                    <p:inputText value="#{personasView.persona.apellidos}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Dirección:"/>
+                    <p:inputText value="#{personasView.persona.direccion}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Fecha de nacimiento:"/>
+                    <p:calendar value="#{personasView.persona.fechaSalida}"/>
+                </p:panelGrid>
+                <center><p:commandButton value="Terminar Edición" actionListener="#{personasView.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain"/></center>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>
+

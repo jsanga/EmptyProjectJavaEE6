@@ -5,10 +5,7 @@
  */
 package com.jscompany.ebsystem.entidades.usuarios;
 
-import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
-import com.jscompany.ebsystem.entidades.colegios.Matricula;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -21,7 +18,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -30,7 +26,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author JoaoIsrael
+ * @author Joao Sanga
  */
 @Entity
 @Table(name = "persona", schema = "usuarios")
@@ -58,22 +54,18 @@ public class Persona implements Serializable {
     @Column(name = "fecha_entrada")
     @Temporal(TemporalType.DATE)
     private Date fechaEntrada;
-    @Column(name = "fecha_salida")
+    @Column(name = "estado")
+    private Boolean estado;
+    @Column(name = "fecha_nacimiento")
     @Temporal(TemporalType.DATE)
-    private Date fechaSalida;
-    @JoinColumn(name = "loguin", referencedColumnName = "id")
-    @OneToOne(fetch = FetchType.LAZY)
-    private Loguin loguin;
+    private Date fechaNacimiento;
     @JoinColumn(name = "rol", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Rol rol;
-    @Column(name = "estado")
-    private Boolean estado;
-    @OneToMany(mappedBy = "profesor", fetch = FetchType.LAZY)
-    private Collection<AsignacionProfesor> asignacionProfesorCollection;
-    @OneToMany(mappedBy = "estudiante", fetch = FetchType.LAZY)
-    private Collection<Matricula> matriculaCollection;
-    
+    @JoinColumn(name = "loguin", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.LAZY)
+    private Loguin loguin;
+
     public Persona() {
     }
 
@@ -129,20 +121,20 @@ public class Persona implements Serializable {
         this.fechaEntrada = fechaEntrada;
     }
 
-    public Date getFechaSalida() {
-        return fechaSalida;
+    public Boolean getEstado() {
+        return estado;
     }
 
-    public void setFechaSalida(Date fechaSalida) {
-        this.fechaSalida = fechaSalida;
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
-    public Loguin getLoguin() {
-        return loguin;
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
     }
 
-    public void setLoguin(Loguin loguin) {
-        this.loguin = loguin;
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
     public Rol getRol() {
@@ -153,28 +145,12 @@ public class Persona implements Serializable {
         this.rol = rol;
     }
 
-    public Collection<AsignacionProfesor> getAsignacionProfesorCollection() {
-        return asignacionProfesorCollection;
+    public Loguin getLoguin() {
+        return loguin;
     }
 
-    public void setAsignacionProfesorCollection(Collection<AsignacionProfesor> asignacionProfesorCollection) {
-        this.asignacionProfesorCollection = asignacionProfesorCollection;
-    }
-
-    public Collection<Matricula> getMatriculaCollection() {
-        return matriculaCollection;
-    }
-
-    public void setMatriculaCollection(Collection<Matricula> matriculaCollection) {
-        this.matriculaCollection = matriculaCollection;
-    }
-
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
+    public void setLoguin(Loguin loguin) {
+        this.loguin = loguin;
     }
 
     @Override
@@ -199,7 +175,7 @@ public class Persona implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesUsuarios.Persona[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.usuarios.Persona[ id=" + id + " ]";
     }
     
 }

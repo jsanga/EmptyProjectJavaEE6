@@ -13,46 +13,36 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 
 /**
  *
  * @author Joao Sanga
  */
 @Entity
-@Table(name = "loguin", schema = "usuarios")
+@Table(name = "estudiante", schema = "usuarios")
 @NamedQueries({
-    @NamedQuery(name = "Loguin.findAll", query = "SELECT l FROM Loguin l"),
-    @NamedQuery(name = "Loguin.findById", query = "SELECT l FROM Loguin l WHERE l.id = :id"),
-    @NamedQuery(name = "Loguin.findByUsername", query = "SELECT l FROM Loguin l WHERE l.username = :username"),
-    @NamedQuery(name = "Loguin.findByPass", query = "SELECT l FROM Loguin l WHERE l.pass = :pass"),
-    @NamedQuery(name = "Loguin.findByEstado", query = "SELECT l FROM Loguin l WHERE l.estado = :estado")})
-public class Loguin implements Serializable {
+    @NamedQuery(name = "Estudiante.findAll", query = "SELECT e FROM Estudiante e"),
+    @NamedQuery(name = "Estudiante.findById", query = "SELECT e FROM Estudiante e WHERE e.id = :id")})
+public class Estudiante implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Size(max = 100)
-    @Column(name = "username")
-    private String username;
-    @Size(max = 50)
-    @Column(name = "pass")
-    private String pass;
-    @Column(name = "estado")
-    private Boolean estado;
-    @OneToOne(mappedBy = "loguin", fetch = FetchType.LAZY)
+    @JoinColumn(name = "persona", referencedColumnName = "id")
+    @OneToOne(fetch = FetchType.LAZY)
     private Persona persona;
 
-    public Loguin() {
+    public Estudiante() {
     }
 
-    public Loguin(Long id) {
+    public Estudiante(Long id) {
         this.id = id;
     }
 
@@ -62,30 +52,6 @@ public class Loguin implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
-    public Boolean getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Boolean estado) {
-        this.estado = estado;
     }
 
     public Persona getPersona() {
@@ -106,10 +72,10 @@ public class Loguin implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Loguin)) {
+        if (!(object instanceof Estudiante)) {
             return false;
         }
-        Loguin other = (Loguin) object;
+        Estudiante other = (Estudiante) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -118,7 +84,7 @@ public class Loguin implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.Loguin[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.Estudiante[ id=" + id + " ]";
     }
     
 }

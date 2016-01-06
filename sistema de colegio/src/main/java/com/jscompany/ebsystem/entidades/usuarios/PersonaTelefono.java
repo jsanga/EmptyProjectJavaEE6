@@ -22,12 +22,15 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author JoaoIsrael
+ * @author Joao Sanga
  */
 @Entity
 @Table(name = "persona_telefono", schema = "usuarios")
 @NamedQueries({
-    @NamedQuery(name = "PersonaTelefono.findAll", query = "SELECT p FROM PersonaTelefono p")})
+    @NamedQuery(name = "PersonaTelefono.findAll", query = "SELECT p FROM PersonaTelefono p"),
+    @NamedQuery(name = "PersonaTelefono.findById", query = "SELECT p FROM PersonaTelefono p WHERE p.id = :id"),
+    @NamedQuery(name = "PersonaTelefono.findByTelefono", query = "SELECT p FROM PersonaTelefono p WHERE p.telefono = :telefono"),
+    @NamedQuery(name = "PersonaTelefono.findByEstado", query = "SELECT p FROM PersonaTelefono p WHERE p.estado = :estado")})
 public class PersonaTelefono implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -38,6 +41,8 @@ public class PersonaTelefono implements Serializable {
     @Size(max = 15)
     @Column(name = "telefono")
     private String telefono;
+    @Column(name = "estado")
+    private Boolean estado;
     @JoinColumn(name = "id_persona", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Persona idPersona;
@@ -63,6 +68,14 @@ public class PersonaTelefono implements Serializable {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
     public Persona getIdPersona() {
@@ -95,7 +108,7 @@ public class PersonaTelefono implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesUsuarios.PersonaTelefono[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.PersonaTelefono[ id=" + id + " ]";
     }
     
 }

@@ -14,8 +14,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -24,12 +22,15 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author JoaoIsrael
+ * @author Joao Sanga
  */
 @Entity
 @Table(name = "paralelo", schema = "colegios")
 @NamedQueries({
-    @NamedQuery(name = "Paralelo.findAll", query = "SELECT p FROM Paralelo p")})
+    @NamedQuery(name = "Paralelo.findAll", query = "SELECT p FROM Paralelo p"),
+    @NamedQuery(name = "Paralelo.findById", query = "SELECT p FROM Paralelo p WHERE p.id = :id"),
+    @NamedQuery(name = "Paralelo.findByNombre", query = "SELECT p FROM Paralelo p WHERE p.nombre = :nombre"),
+    @NamedQuery(name = "Paralelo.findByEstado", query = "SELECT p FROM Paralelo p WHERE p.estado = :estado")})
 public class Paralelo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,10 +44,9 @@ public class Paralelo implements Serializable {
     @Column(name = "estado")
     private Boolean estado;
     @OneToMany(mappedBy = "paralelo", fetch = FetchType.LAZY)
+    private Collection<AsignacionCursoParalelos> asignacionCursoParalelosCollection;
+    @OneToMany(mappedBy = "paralelo", fetch = FetchType.LAZY)
     private Collection<AsignacionProfesor> asignacionProfesorCollection;
-    @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private AsignacionCurso asignacionCurso;
 
     public Paralelo() {
     }
@@ -79,20 +79,20 @@ public class Paralelo implements Serializable {
         this.estado = estado;
     }
 
+    public Collection<AsignacionCursoParalelos> getAsignacionCursoParalelosCollection() {
+        return asignacionCursoParalelosCollection;
+    }
+
+    public void setAsignacionCursoParalelosCollection(Collection<AsignacionCursoParalelos> asignacionCursoParalelosCollection) {
+        this.asignacionCursoParalelosCollection = asignacionCursoParalelosCollection;
+    }
+
     public Collection<AsignacionProfesor> getAsignacionProfesorCollection() {
         return asignacionProfesorCollection;
     }
 
     public void setAsignacionProfesorCollection(Collection<AsignacionProfesor> asignacionProfesorCollection) {
         this.asignacionProfesorCollection = asignacionProfesorCollection;
-    }
-
-    public AsignacionCurso getAsignacionCurso() {
-        return asignacionCurso;
-    }
-
-    public void setAsignacionCurso(AsignacionCurso asignacionCurso) {
-        this.asignacionCurso = asignacionCurso;
     }
 
     @Override
@@ -117,7 +117,7 @@ public class Paralelo implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.entidadesColegios.Paralelo[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.Paralelo[ id=" + id + " ]";
     }
     
 }
