@@ -24,7 +24,7 @@ import javax.validation.constraints.Size;
  * @author JoaoIsrael
  */
 @Entity
-@Table(name = "loguin")
+@Table(name = "loguin", schema = "usuarios")
 @NamedQueries({
     @NamedQuery(name = "Loguin.findAll", query = "SELECT l FROM Loguin l")})
 public class Loguin implements Serializable {

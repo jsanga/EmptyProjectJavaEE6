@@ -5,6 +5,7 @@
  */
 package com.jscompany.ebsystem.entidades.colegios;
 
+import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Collection;
@@ -30,7 +31,7 @@ import javax.persistence.TemporalType;
  * @author JoaoIsrael
  */
 @Entity
-@Table(name = "asignacion_profesor")
+@Table(name = "asignacion_profesor", schema = "colegios")
 @NamedQueries({
     @NamedQuery(name = "AsignacionProfesor.findAll", query = "SELECT a FROM AsignacionProfesor a")})
 public class AsignacionProfesor implements Serializable {
@@ -40,8 +41,9 @@ public class AsignacionProfesor implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Column(name = "profesor")
-    private BigInteger profesor;
+    @JoinColumn(name = "profesor", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Persona profesor;
     @Column(name = "estado")
     private Boolean estado;
     @Column(name = "fecha_creacion")
@@ -71,11 +73,11 @@ public class AsignacionProfesor implements Serializable {
         this.id = id;
     }
 
-    public BigInteger getProfesor() {
+    public Persona getProfesor() {
         return profesor;
     }
 
-    public void setProfesor(BigInteger profesor) {
+    public void setProfesor(Persona profesor) {
         this.profesor = profesor;
     }
 

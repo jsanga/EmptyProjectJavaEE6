@@ -5,7 +5,10 @@
  */
 package com.jscompany.ebsystem.entidades.usuarios;
 
+import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
+import com.jscompany.ebsystem.entidades.colegios.Matricula;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -18,6 +21,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -29,7 +33,7 @@ import javax.validation.constraints.Size;
  * @author JoaoIsrael
  */
 @Entity
-@Table(name = "persona")
+@Table(name = "persona", schema = "usuarios")
 @NamedQueries({
     @NamedQuery(name = "Persona.findAll", query = "SELECT p FROM Persona p")})
 public class Persona implements Serializable {
@@ -63,7 +67,11 @@ public class Persona implements Serializable {
     @JoinColumn(name = "rol", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Rol rol;
-
+    @OneToMany(mappedBy = "profesor", fetch = FetchType.LAZY)
+    private Collection<AsignacionProfesor> asignacionProfesorCollection;
+    @OneToMany(mappedBy = "estudiante", fetch = FetchType.LAZY)
+    private Collection<Matricula> matriculaCollection;
+    
     public Persona() {
     }
 
@@ -141,6 +149,22 @@ public class Persona implements Serializable {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    public Collection<AsignacionProfesor> getAsignacionProfesorCollection() {
+        return asignacionProfesorCollection;
+    }
+
+    public void setAsignacionProfesorCollection(Collection<AsignacionProfesor> asignacionProfesorCollection) {
+        this.asignacionProfesorCollection = asignacionProfesorCollection;
+    }
+
+    public Collection<Matricula> getMatriculaCollection() {
+        return matriculaCollection;
+    }
+
+    public void setMatriculaCollection(Collection<Matricula> matriculaCollection) {
+        this.matriculaCollection = matriculaCollection;
     }
 
     @Override

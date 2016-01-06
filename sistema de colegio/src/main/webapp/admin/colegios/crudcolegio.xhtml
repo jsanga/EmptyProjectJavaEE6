@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="frmMain">
+            <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+            <p:commandButton value="Ingresar Colegio" update=":dlgForm" actionListener="#{crudColegios.nuevoColegio()}" onclick="PF('dlgCrear').show()"/>
+            <p:dataTable id="dtColegios" value="#{crudColegios.colegiosList}" var="colegio">
+                <p:column headerText="Nombres" filterBy="#{colegio.nombre}">
+                    <h:outputText value="#{colegio.nombre}" style="text-transform: uppercase;"/>
+                </p:column>
+                <p:column headerText="Dirección" filterBy="#{colegio.direccion}">
+                    <h:outputText value="#{colegio.direccion}" style="text-transform: uppercase;"/>
+                </p:column>
+                <p:column headerText="Fecha de creación">
+                    <h:outputText value="#{colegio.fechaCreacion}" style="text-transform: uppercase;"/>
+                </p:column>
+                <p:column headerText="Estado">
+                    <h:outputText value="#{colegio.estado}" style="text-transform: uppercase;"/>
+                </p:column>
+                <p:column headerText="Acción">
+                    <center>
+                        <p:commandButton value="Editar" actionListener="#{crudColegios.editarColegio(colegio)}" onclick="PF('dlgEditar').show()" update=":dlgFormEdit"/>
+                        <p:commandButton value="Eliminar" actionListener="#{crudColegios.eliminarColegio(colegio)}" update="frmMain"/>
+                    </center>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        
+        <p:dialog header="Crear Colegio" id="dlgCrear" widgetVar="dlgCrear" modal="true" height="auto" width="auto" >  
+            <h:form id="dlgForm" >
+                <p:panelGrid columns="2">
+                    <h:outputText value="Nombre:"/>
+                    <p:inputText value="#{crudColegios.colegio.nombre}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Dirección:"/>
+                    <p:inputText value="#{crudColegios.colegio.direccion}" style="text-transform: uppercase;"/>
+                </p:panelGrid>
+                <center><p:commandButton value="Guardar Colegio" actionListener="#{crudColegios.guardarNuevo()}" onclick="PF('dlgCrear').hide()" update=":frmMain"/></center>
+            </h:form>
+        </p:dialog>
+        
+        <p:dialog header="Editar Colegio" id="dlgEditar" widgetVar="dlgEditar" modal="true" height="auto" width="auto" >  
+            <h:form id="dlgFormEdit" >
+                <p:panelGrid columns="2">
+                    <h:outputText value="Nombre:"/>
+                    <p:inputText value="#{crudColegios.colegio.nombre}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Dirección:"/>
+                    <p:inputText value="#{crudColegios.colegio.direccion}" style="text-transform: uppercase;"/>
+                </p:panelGrid>
+                <center><p:commandButton value="Terminar Edición" actionListener="#{crudColegios.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain"/></center>
+            </h:form>
+        </p:dialog>
+        
+    </h:body>
+</html>
+

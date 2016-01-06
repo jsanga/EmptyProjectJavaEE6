@@ -33,56 +33,66 @@ public class LoginFilter implements Filter{
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {        
         
         UserSession sesion = (UserSession)((HttpServletRequest)request).getSession().getAttribute("userSession");
+        String contextPath;
         
         if(sesion == null || sesion.getIsLogged() == null){
-            String contextPath = ((HttpServletRequest)request).getContextPath();
+            contextPath = ((HttpServletRequest)request).getContextPath();
             ((HttpServletResponse)response).sendRedirect(contextPath+"/faces/recursos/sinpermisos.xhtml");
         }
         else{
             String path = ((HttpServletRequest)request).getRequestURI().substring(((HttpServletRequest)request).getContextPath().length());
-
+            contextPath = ((HttpServletRequest)request).getContextPath();
+            
             if(sesion.getRolPersona().equals("admin")){
-                if (path.startsWith("/faces/general/") || path.startsWith("/faces/estudiante/") || path.startsWith("/faces/profesor/")) {                
-                    String contextPath = ((HttpServletRequest)request).getContextPath();
+                if (path.startsWith("/faces/general/") || path.startsWith("/faces/estudiante/") || path.startsWith("/faces/profesor/")) {
                     sesion.cerrarSesion();
                     ((HttpServletResponse)response).sendRedirect(contextPath+"/faces/recursos/sinpermisos.xhtml");
                     return;
+                }else{
+                    if(path.startsWith("/faces/admin/")){
+                        chain.doFilter(request, response);
+                    }else
+                        ((HttpServletResponse)response).sendRedirect(contextPath+"/faces/recursos/notexists.xhtml");
                 }
-                else
-                    chain.doFilter(request, response);
             }   
             
             if(sesion.getRolPersona().equals("estudiante")){
-                if (path.startsWith("/faces/general/") || path.startsWith("/faces/admin/") || path.startsWith("/faces/profesor/")) {                
-                    String contextPath = ((HttpServletRequest)request).getContextPath();
+                if (path.startsWith("/faces/general/") || path.startsWith("/faces/admin/") || path.startsWith("/faces/profesor/")) {  
                     sesion.cerrarSesion();
                     ((HttpServletResponse)response).sendRedirect(contextPath+"/faces/recursos/sinpermisos.xhtml");
                     return;
+                }else{
+                    if(path.startsWith("/faces/estudiante/")){
+                        chain.doFilter(request, response);
+                    }else
+                        ((HttpServletResponse)response).sendRedirect(contextPath+"/faces/recursos/notexists.xhtml");
                 }
-                else
-                    chain.doFilter(request, response);
             }
             
             if(sesion.getRolPersona().equals("profesor")){    
-                if (path.startsWith("/faces/general/") || path.startsWith("/faces/estudiante/") || path.startsWith("/faces/admin/")) {                
-                    String contextPath = ((HttpServletRequest)request).getContextPath();
+                if (path.startsWith("/faces/general/") || path.startsWith("/faces/estudiante/") || path.startsWith("/faces/admin/")) {  
                     sesion.cerrarSesion();
                     ((HttpServletResponse)response).sendRedirect(contextPath+"/faces/recursos/sinpermisos.xhtml");
                     return;
+                }else{
+                    if(path.startsWith("/faces/profesor/")){
+                        chain.doFilter(request, response);
+                    }else
+                        ((HttpServletResponse)response).sendRedirect(contextPath+"/faces/recursos/notexists.xhtml");
                 }
-                else
-                    chain.doFilter(request, response);
             }
             
             if(sesion.getRolPersona().equals("invitado")){
-                if (path.startsWith("/faces/admin/") || path.startsWith("/faces/estudiante/") || path.startsWith("/faces/profesor/")) {                
-                    String contextPath = ((HttpServletRequest)request).getContextPath();
+                if (path.startsWith("/faces/admin/") || path.startsWith("/faces/estudiante/") || path.startsWith("/faces/profesor/")) {
                     sesion.cerrarSesion();
                     ((HttpServletResponse)response).sendRedirect(contextPath+"/faces/recursos/sinpermisos.xhtml");
                     return;
+                }else{
+                    if(path.startsWith("/faces/general/")){
+                        chain.doFilter(request, response);
+                    }else
+                        ((HttpServletResponse)response).sendRedirect(contextPath+"/faces/recursos/notexists.xhtml");
                 }
-                else
-                    chain.doFilter(request, response);
             }
         }
     }

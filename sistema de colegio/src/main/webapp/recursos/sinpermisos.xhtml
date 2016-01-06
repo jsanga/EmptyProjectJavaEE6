@@ -61,10 +61,7 @@ and open the template in the editor.
             <center><img src="/colegionetworksystem/images/Error.png"/></center>
             <center><h1>Usted no tiene los permisos necesarios para ver esta página...</h1></center>
             <h:form>
-                <p:commandLink id="ajax">
-                    <center><h3>Click aquí para entrar</h3></center>
-                </p:commandLink>
-                
+                <center><h3><p:commandLink id="ajax" actionListener="#{redirectView.irLoguin()}" value="Click aquí para entrar"/></h3></center>                
             </h:form>
             <br/>
             <br/>
