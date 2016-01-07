@@ -30,13 +30,9 @@ import javax.persistence.TemporalType;
  * @author Joao Sanga
  */
 @Entity
-@Table(name = "asignacion_profesor" , schema = "colegios")
+@Table(name = "asignacion_profesor", schema = "colegios")
 @NamedQueries({
-    @NamedQuery(name = "AsignacionProfesor.findAll", query = "SELECT a FROM AsignacionProfesor a"),
-    @NamedQuery(name = "AsignacionProfesor.findById", query = "SELECT a FROM AsignacionProfesor a WHERE a.id = :id"),
-    @NamedQuery(name = "AsignacionProfesor.findByProfesor", query = "SELECT a FROM AsignacionProfesor a WHERE a.profesor = :profesor"),
-    @NamedQuery(name = "AsignacionProfesor.findByEstado", query = "SELECT a FROM AsignacionProfesor a WHERE a.estado = :estado"),
-    @NamedQuery(name = "AsignacionProfesor.findByFechaCreacion", query = "SELECT a FROM AsignacionProfesor a WHERE a.fechaCreacion = :fechaCreacion")})
+    @NamedQuery(name = "AsignacionProfesor.findAll", query = "SELECT a FROM AsignacionProfesor a")})
 public class AsignacionProfesor implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -145,7 +141,7 @@ public class AsignacionProfesor implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.usuarios.AsignacionProfesor[ id=" + id + " ]";
     }
     
 }

@@ -26,8 +26,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "tipo_contrato", schema = "usuarios")
 @NamedQueries({
-    @NamedQuery(name = "TipoContrato.findAll", query = "SELECT t FROM TipoContrato t"),
-    @NamedQuery(name = "TipoContrato.findById", query = "SELECT t FROM TipoContrato t WHERE t.id = :id")})
+    @NamedQuery(name = "TipoContrato.findAll", query = "SELECT t FROM TipoContrato t")})
 public class TipoContrato implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -93,7 +92,7 @@ public class TipoContrato implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.TipoContrato[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.usuarios.TipoContrato[ id=" + id + " ]";
     }
     
 }

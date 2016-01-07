@@ -30,9 +30,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "profesor", schema = "usuarios")
 @NamedQueries({
-    @NamedQuery(name = "Profesor.findAll", query = "SELECT p FROM Profesor p"),
-    @NamedQuery(name = "Profesor.findById", query = "SELECT p FROM Profesor p WHERE p.id = :id"),
-    @NamedQuery(name = "Profesor.findByFechaSalida", query = "SELECT p FROM Profesor p WHERE p.fechaSalida = :fechaSalida")})
+    @NamedQuery(name = "Profesor.findAll", query = "SELECT p FROM Profesor p")})
 public class Profesor implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -111,7 +109,7 @@ public class Profesor implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.Profesor[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.usuarios.Profesor[ id=" + id + " ]";
     }
     
 }

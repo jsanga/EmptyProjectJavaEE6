@@ -5,7 +5,9 @@
  */
 package com.jscompany.ebsystem.entidades.usuarios;
 
+import com.jscompany.ebsystem.entidades.colegios.Colegio;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -18,6 +20,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -58,14 +61,21 @@ public class Persona implements Serializable {
     private Boolean estado;
     @Column(name = "fecha_nacimiento")
     @Temporal(TemporalType.DATE)
-    private Date fechaNacimiento;
+    private Date fechaNacimiento;    
+    @OneToMany(mappedBy = "persona", fetch = FetchType.LAZY)
+    private Collection<PersonaEmail> personaEmailCollection;
+    @OneToMany(mappedBy = "persona", fetch = FetchType.LAZY)
+    private Collection<PersonaTelefono> personaTelefonoCollection;
     @JoinColumn(name = "rol", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Rol rol;
     @JoinColumn(name = "loguin", referencedColumnName = "id")
     @OneToOne(fetch = FetchType.LAZY)
     private Loguin loguin;
-
+    @JoinColumn(name = "colegio", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Colegio colegio;
+    
     public Persona() {
     }
 
@@ -135,6 +145,30 @@ public class Persona implements Serializable {
 
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public Colegio getColegio() {
+        return colegio;
+    }
+
+    public void setColegio(Colegio colegio) {
+        this.colegio = colegio;
+    }
+
+    public Collection<PersonaEmail> getPersonaEmailCollection() {
+        return personaEmailCollection;
+    }
+
+    public void setPersonaEmailCollection(Collection<PersonaEmail> personaEmailCollection) {
+        this.personaEmailCollection = personaEmailCollection;
+    }
+
+    public Collection<PersonaTelefono> getPersonaTelefonoCollection() {
+        return personaTelefonoCollection;
+    }
+
+    public void setPersonaTelefonoCollection(Collection<PersonaTelefono> personaTelefonoCollection) {
+        this.personaTelefonoCollection = personaTelefonoCollection;
     }
 
     public Rol getRol() {

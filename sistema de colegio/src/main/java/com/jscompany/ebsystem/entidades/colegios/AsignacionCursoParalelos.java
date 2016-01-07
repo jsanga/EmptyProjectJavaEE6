@@ -24,10 +24,9 @@ import javax.persistence.Table;
  * @author Joao Sanga
  */
 @Entity
-@Table(name = "asignacion_curso_paralelos" , schema = "colegios")
+@Table(name = "asignacion_curso_paralelos", schema = "colegios")
 @NamedQueries({
-    @NamedQuery(name = "AsignacionCursoParalelos.findAll", query = "SELECT a FROM AsignacionCursoParalelos a"),
-    @NamedQuery(name = "AsignacionCursoParalelos.findById", query = "SELECT a FROM AsignacionCursoParalelos a WHERE a.id = :id")})
+    @NamedQuery(name = "AsignacionCursoParalelos.findAll", query = "SELECT a FROM AsignacionCursoParalelos a")})
 public class AsignacionCursoParalelos implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -95,7 +94,7 @@ public class AsignacionCursoParalelos implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.AsignacionCursoParalelos[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.usuarios.AsignacionCursoParalelos[ id=" + id + " ]";
     }
     
 }

@@ -27,10 +27,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "profesion", schema = "usuarios")
 @NamedQueries({
-    @NamedQuery(name = "Profesion.findAll", query = "SELECT p FROM Profesion p"),
-    @NamedQuery(name = "Profesion.findById", query = "SELECT p FROM Profesion p WHERE p.id = :id"),
-    @NamedQuery(name = "Profesion.findByNombreProfesion", query = "SELECT p FROM Profesion p WHERE p.nombreProfesion = :nombreProfesion"),
-    @NamedQuery(name = "Profesion.findByEstado", query = "SELECT p FROM Profesion p WHERE p.estado = :estado")})
+    @NamedQuery(name = "Profesion.findAll", query = "SELECT p FROM Profesion p")})
 public class Profesion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -108,7 +105,7 @@ public class Profesion implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.Profesion[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.usuarios.Profesion[ id=" + id + " ]";
     }
     
 }

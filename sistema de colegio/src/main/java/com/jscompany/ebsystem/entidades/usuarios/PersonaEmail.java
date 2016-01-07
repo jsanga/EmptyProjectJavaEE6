@@ -27,10 +27,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "persona_email", schema = "usuarios")
 @NamedQueries({
-    @NamedQuery(name = "PersonaEmail.findAll", query = "SELECT p FROM PersonaEmail p"),
-    @NamedQuery(name = "PersonaEmail.findById", query = "SELECT p FROM PersonaEmail p WHERE p.id = :id"),
-    @NamedQuery(name = "PersonaEmail.findByEmail", query = "SELECT p FROM PersonaEmail p WHERE p.email = :email"),
-    @NamedQuery(name = "PersonaEmail.findByEstado", query = "SELECT p FROM PersonaEmail p WHERE p.estado = :estado")})
+    @NamedQuery(name = "PersonaEmail.findAll", query = "SELECT p FROM PersonaEmail p")})
 public class PersonaEmail implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,9 +41,9 @@ public class PersonaEmail implements Serializable {
     private String email;
     @Column(name = "estado")
     private Boolean estado;
-    @JoinColumn(name = "id_persona", referencedColumnName = "id")
+    @JoinColumn(name = "persona", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Persona idPersona;
+    private Persona persona;
 
     public PersonaEmail() {
     }
@@ -79,12 +76,12 @@ public class PersonaEmail implements Serializable {
         this.estado = estado;
     }
 
-    public Persona getIdPersona() {
-        return idPersona;
+    public Persona getPersona() {
+        return persona;
     }
 
-    public void setIdPersona(Persona idPersona) {
-        this.idPersona = idPersona;
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
 
     @Override
@@ -109,7 +106,7 @@ public class PersonaEmail implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.PersonaEmail[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.usuarios.PersonaEmail[ id=" + id + " ]";
     }
     
 }

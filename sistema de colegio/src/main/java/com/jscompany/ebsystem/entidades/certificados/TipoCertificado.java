@@ -23,13 +23,9 @@ import javax.validation.constraints.Size;
  * @author Joao Sanga
  */
 @Entity
-@Table(name = "tipo_certificado", schema = "certificados")
+@Table(name = "tipo_certificado")
 @NamedQueries({
-    @NamedQuery(name = "TipoCertificado.findAll", query = "SELECT t FROM TipoCertificado t"),
-    @NamedQuery(name = "TipoCertificado.findById", query = "SELECT t FROM TipoCertificado t WHERE t.id = :id"),
-    @NamedQuery(name = "TipoCertificado.findByNombre", query = "SELECT t FROM TipoCertificado t WHERE t.nombre = :nombre"),
-    @NamedQuery(name = "TipoCertificado.findByDescripcion", query = "SELECT t FROM TipoCertificado t WHERE t.descripcion = :descripcion"),
-    @NamedQuery(name = "TipoCertificado.findByColegio", query = "SELECT t FROM TipoCertificado t WHERE t.colegio = :colegio")})
+    @NamedQuery(name = "TipoCertificado.findAll", query = "SELECT t FROM TipoCertificado t")})
 public class TipoCertificado implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -107,7 +103,7 @@ public class TipoCertificado implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.TipoCertificado[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.usuarios.TipoCertificado[ id=" + id + " ]";
     }
     
 }

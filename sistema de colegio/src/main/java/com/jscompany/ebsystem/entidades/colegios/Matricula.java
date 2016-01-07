@@ -30,11 +30,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "matricula", schema = "colegios")
 @NamedQueries({
-    @NamedQuery(name = "Matricula.findAll", query = "SELECT m FROM Matricula m"),
-    @NamedQuery(name = "Matricula.findById", query = "SELECT m FROM Matricula m WHERE m.id = :id"),
-    @NamedQuery(name = "Matricula.findByEstudiante", query = "SELECT m FROM Matricula m WHERE m.estudiante = :estudiante"),
-    @NamedQuery(name = "Matricula.findByEstado", query = "SELECT m FROM Matricula m WHERE m.estado = :estado"),
-    @NamedQuery(name = "Matricula.findByFechaCreacion", query = "SELECT m FROM Matricula m WHERE m.fechaCreacion = :fechaCreacion")})
+    @NamedQuery(name = "Matricula.findAll", query = "SELECT m FROM Matricula m")})
 public class Matricula implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -122,7 +118,7 @@ public class Matricula implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.Matricula[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.usuarios.Matricula[ id=" + id + " ]";
     }
     
 }

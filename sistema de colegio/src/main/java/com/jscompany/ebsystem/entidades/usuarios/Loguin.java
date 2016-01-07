@@ -26,11 +26,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "loguin", schema = "usuarios")
 @NamedQueries({
-    @NamedQuery(name = "Loguin.findAll", query = "SELECT l FROM Loguin l"),
-    @NamedQuery(name = "Loguin.findById", query = "SELECT l FROM Loguin l WHERE l.id = :id"),
-    @NamedQuery(name = "Loguin.findByUsername", query = "SELECT l FROM Loguin l WHERE l.username = :username"),
-    @NamedQuery(name = "Loguin.findByPass", query = "SELECT l FROM Loguin l WHERE l.pass = :pass"),
-    @NamedQuery(name = "Loguin.findByEstado", query = "SELECT l FROM Loguin l WHERE l.estado = :estado")})
+    @NamedQuery(name = "Loguin.findAll", query = "SELECT l FROM Loguin l")})
 public class Loguin implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -118,7 +114,7 @@ public class Loguin implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.Loguin[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.usuarios.Loguin[ id=" + id + " ]";
     }
     
 }

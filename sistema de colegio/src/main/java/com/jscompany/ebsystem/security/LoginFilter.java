@@ -35,7 +35,7 @@ public class LoginFilter implements Filter{
         UserSession sesion = (UserSession)((HttpServletRequest)request).getSession().getAttribute("userSession");
         String contextPath;
         
-        if(sesion == null || sesion.getIsLogged() == null){
+        if(!sesion.getIsLogged()){
             contextPath = ((HttpServletRequest)request).getContextPath();
             ((HttpServletResponse)response).sendRedirect(contextPath+"/faces/recursos/sinpermisos.xhtml");
         }

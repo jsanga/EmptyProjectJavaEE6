@@ -27,10 +27,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "tipo_relacion_persona", schema = "usuarios")
 @NamedQueries({
-    @NamedQuery(name = "TipoRelacionPersona.findAll", query = "SELECT t FROM TipoRelacionPersona t"),
-    @NamedQuery(name = "TipoRelacionPersona.findById", query = "SELECT t FROM TipoRelacionPersona t WHERE t.id = :id"),
-    @NamedQuery(name = "TipoRelacionPersona.findByNombreRelacion", query = "SELECT t FROM TipoRelacionPersona t WHERE t.nombreRelacion = :nombreRelacion"),
-    @NamedQuery(name = "TipoRelacionPersona.findByEstado", query = "SELECT t FROM TipoRelacionPersona t WHERE t.estado = :estado")})
+    @NamedQuery(name = "TipoRelacionPersona.findAll", query = "SELECT t FROM TipoRelacionPersona t")})
 public class TipoRelacionPersona implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -107,7 +104,7 @@ public class TipoRelacionPersona implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.TipoRelacionPersona[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.usuarios.TipoRelacionPersona[ id=" + id + " ]";
     }
     
 }

@@ -27,10 +27,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "paralelo", schema = "colegios")
 @NamedQueries({
-    @NamedQuery(name = "Paralelo.findAll", query = "SELECT p FROM Paralelo p"),
-    @NamedQuery(name = "Paralelo.findById", query = "SELECT p FROM Paralelo p WHERE p.id = :id"),
-    @NamedQuery(name = "Paralelo.findByNombre", query = "SELECT p FROM Paralelo p WHERE p.nombre = :nombre"),
-    @NamedQuery(name = "Paralelo.findByEstado", query = "SELECT p FROM Paralelo p WHERE p.estado = :estado")})
+    @NamedQuery(name = "Paralelo.findAll", query = "SELECT p FROM Paralelo p")})
 public class Paralelo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -117,7 +114,7 @@ public class Paralelo implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.Paralelo[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.usuarios.Paralelo[ id=" + id + " ]";
     }
     
 }

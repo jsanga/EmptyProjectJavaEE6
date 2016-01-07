@@ -26,10 +26,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "desglose_nota", schema = "colegios")
 @NamedQueries({
-    @NamedQuery(name = "DesgloseNota.findAll", query = "SELECT d FROM DesgloseNota d"),
-    @NamedQuery(name = "DesgloseNota.findById", query = "SELECT d FROM DesgloseNota d WHERE d.id = :id"),
-    @NamedQuery(name = "DesgloseNota.findByNota", query = "SELECT d FROM DesgloseNota d WHERE d.nota = :nota"),
-    @NamedQuery(name = "DesgloseNota.findByTipoNota", query = "SELECT d FROM DesgloseNota d WHERE d.tipoNota = :tipoNota")})
+    @NamedQuery(name = "DesgloseNota.findAll", query = "SELECT d FROM DesgloseNota d")})
 public class DesgloseNota implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -107,7 +104,7 @@ public class DesgloseNota implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.DesgloseNota[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.usuarios.DesgloseNota[ id=" + id + " ]";
     }
     
 }

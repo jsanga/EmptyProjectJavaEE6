@@ -25,12 +25,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "notificacion", schema = "usuarios")
 @NamedQueries({
-    @NamedQuery(name = "Notificacion.findAll", query = "SELECT n FROM Notificacion n"),
-    @NamedQuery(name = "Notificacion.findById", query = "SELECT n FROM Notificacion n WHERE n.id = :id"),
-    @NamedQuery(name = "Notificacion.findByNotificacion", query = "SELECT n FROM Notificacion n WHERE n.notificacion = :notificacion"),
-    @NamedQuery(name = "Notificacion.findByRemitente", query = "SELECT n FROM Notificacion n WHERE n.remitente = :remitente"),
-    @NamedQuery(name = "Notificacion.findByDestinatario", query = "SELECT n FROM Notificacion n WHERE n.destinatario = :destinatario"),
-    @NamedQuery(name = "Notificacion.findByEstado", query = "SELECT n FROM Notificacion n WHERE n.estado = :estado")})
+    @NamedQuery(name = "Notificacion.findAll", query = "SELECT n FROM Notificacion n")})
 public class Notificacion implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -117,7 +112,7 @@ public class Notificacion implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.Notificacion[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.usuarios.Notificacion[ id=" + id + " ]";
     }
     
 }

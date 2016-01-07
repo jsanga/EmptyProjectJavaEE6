@@ -5,6 +5,7 @@
  */
 package com.jscompany.ebsystem.entidades.colegios;
 
+import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -30,12 +31,7 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "colegio", schema = "colegios")
 @NamedQueries({
-    @NamedQuery(name = "Colegio.findAll", query = "SELECT c FROM Colegio c"),
-    @NamedQuery(name = "Colegio.findById", query = "SELECT c FROM Colegio c WHERE c.id = :id"),
-    @NamedQuery(name = "Colegio.findByNombre", query = "SELECT c FROM Colegio c WHERE c.nombre = :nombre"),
-    @NamedQuery(name = "Colegio.findByEstado", query = "SELECT c FROM Colegio c WHERE c.estado = :estado"),
-    @NamedQuery(name = "Colegio.findByFechaCreacion", query = "SELECT c FROM Colegio c WHERE c.fechaCreacion = :fechaCreacion"),
-    @NamedQuery(name = "Colegio.findByDireccion", query = "SELECT c FROM Colegio c WHERE c.direccion = :direccion")})
+    @NamedQuery(name = "Colegio.findAll", query = "SELECT c FROM Colegio c")})
 public class Colegio implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -54,6 +50,8 @@ public class Colegio implements Serializable {
     @Size(max = 250)
     @Column(name = "direccion")
     private String direccion;
+    @OneToMany(mappedBy = "colegio", fetch = FetchType.LAZY)
+    private Collection<Persona> personasCollection;
     @OneToMany(mappedBy = "colegio", fetch = FetchType.LAZY)
     private Collection<AsignacionCurso> asignacionCursoCollection;
 
@@ -112,6 +110,14 @@ public class Colegio implements Serializable {
         this.asignacionCursoCollection = asignacionCursoCollection;
     }
 
+    public Collection<Persona> getPersonasCollection() {
+        return personasCollection;
+    }
+
+    public void setPersonasCollection(Collection<Persona> personasCollection) {
+        this.personasCollection = personasCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -134,7 +140,7 @@ public class Colegio implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.Colegio[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.usuarios.Colegio[ id=" + id + " ]";
     }
     
 }
