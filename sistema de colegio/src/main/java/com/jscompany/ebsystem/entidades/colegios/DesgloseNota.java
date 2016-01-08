@@ -104,7 +104,7 @@ public class DesgloseNota implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.usuarios.DesgloseNota[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.DesgloseNota[ id=" + id + " ]";
     }
     
 }

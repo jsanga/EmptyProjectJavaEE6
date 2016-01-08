@@ -36,7 +36,7 @@ public class CrudParalelos implements Serializable{
     
     @PostConstruct
     public void init(){
-        paraleloList = services.getListEntitiesByParameters(Querys.getMateriasList, new String[]{}, new Object[]{});
+        paraleloList = services.getListEntitiesByParameters(Querys.getParalelosList, new String[]{}, new Object[]{});
         if(paraleloList == null)
             paraleloList = new ArrayList();
     }
@@ -68,7 +68,7 @@ public class CrudParalelos implements Serializable{
     public void guardarNuevo(){
         if((paralelo = (Paralelo) services.saveEntity(paralelo)) != null){
             paraleloList.add(paralelo);
-            JsfUti.messageInfo(null, "Info", "Se creó el paralelo satisfactoriamente");
+            JsfUti.messageInfo(null, "Info", "Se creó el paralelo satisfactoriamente.");
         }
         else
             JsfUti.messageError(null, "Error", "Hubo un problema al crear el paralelo.");
@@ -76,7 +76,7 @@ public class CrudParalelos implements Serializable{
     
     public void guardarEdicion(){
         if(services.updateAndPersistEntity(paralelo))
-            JsfUti.messageInfo(null, "Info", "Se editó el paralelo satisfactoriamente");
+            JsfUti.messageInfo(null, "Info", "Se editó el paralelo satisfactoriamente.");
         else
             JsfUti.messageError(null, "Error", "Hubo un problema al editar el paralelo.");
     }

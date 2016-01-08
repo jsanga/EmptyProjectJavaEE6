@@ -5,6 +5,7 @@
  */
 package com.jscompany.ebsystem.entidades.modelosdedatos;
 
+import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import com.jscompany.ebsystem.entidades.usuarios.TipoRelacionPersona;
 import com.jscompany.ebsystem.services.AclService;
@@ -19,16 +20,13 @@ public class RelacionesPersona implements Serializable{
     
     public static final Long serialVerisonUID = 1L;
     
-    @EJB(beanName = "aclService")
-    private AclService services;
-    
     private Persona persona, personaEs;
     private TipoRelacionPersona tipoRelacion;
     
-    public RelacionesPersona(Long idPersona, Long idPersonaEs, TipoRelacionPersona tipoRelacion){
-        persona = (Persona) services.getEntity(Persona.class, idPersona);
-        personaEs = (Persona) services.getEntity(Persona.class, idPersonaEs);
-        this.tipoRelacion = tipoRelacion;
+    public RelacionesPersona(Persona p1, Persona p2, TipoRelacionPersona tipo){
+        persona = p1;
+        personaEs = p2;
+        tipoRelacion = tipo;
     }
 
     public Persona getPersona() {

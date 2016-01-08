@@ -104,7 +104,7 @@ public class Curso implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.usuarios.Curso[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.Curso[ id=" + id + " ]";
     }
     
 }

@@ -186,7 +186,7 @@ public class DetalleMateria implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.usuarios.DetalleMateria[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.DetalleMateria[ id=" + id + " ]";
     }
     
 }

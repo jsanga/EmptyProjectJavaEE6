@@ -118,7 +118,7 @@ public class Matricula implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.usuarios.Matricula[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.Matricula[ id=" + id + " ]";
     }
     
 }

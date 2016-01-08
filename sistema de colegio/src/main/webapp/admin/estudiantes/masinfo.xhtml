@@ -5,22 +5,21 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <title>Estudiantes</title>
+        <title>Más Info</title>
     </h:head>
     <h:body>
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
-            <p:dataTable id="dtEstudianteInfo" value="#{masInfoView.relacionesList}" var="rel">
-                <p:column headerText="Nombres" >
-                    <h:outputText value="#{rel.persona.nombres} #{rel.persona.apellidos}" style="text-transform: uppercase;"/>
-                </p:column>
-                <p:column headerText="Relación" >
-                    <h:outputText value="#{rel.tipoRelacion.nombreRelacion}" style="text-transform: uppercase;"/>
-                </p:column>
-                <p:column headerText="Apellidos" >
-                    <h:outputText value="#{rel.personaEs.nombres} #{rel.personaEs.apellidos}" style="text-transform: uppercase;"/>
-                </p:column>
-            </p:dataTable>
+            <p:panel header="Personas con las que está relacionado: #{masInfoView.persona.nombres} #{masInfoView.persona.apellidos}">
+                <p:dataTable id="dtEstudianteInfo" value="#{masInfoView.relacionesList}" var="rel">
+                    <p:column headerText="Nombres" >
+                        <h:outputText value="#{rel.personaEs.nombres} #{rel.personaEs.apellidos}" style="text-transform: uppercase;"/>
+                    </p:column>
+                    <p:column headerText="Relación" >
+                        <h:outputText value="#{rel.tipoRelacion.nombreRelacion}" style="text-transform: uppercase;"/>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
         </h:form>
     </h:body>
 </html>

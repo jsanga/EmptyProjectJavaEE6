@@ -17,9 +17,15 @@ public class Querys {
     
     // Querys de colegios
     public static String getColegiosList = "select e from Colegio e where e.estado = TRUE";
+    public static String getColegiosListNoState = "select e from Colegio e";
+    
+    // Querys de asignaciones de curso
+    public static String getAsignacionesCursoList = "select e from AsignacionCurso e where e.estado = TRUE";
+    public static String getAsignacionesCursoListNoState = "select e from AsignacionCurso e";
     
     // Querys de cursos
-    public static String getCursosList = "select e from Curso e";
+    public static String getCursosList = "select e from Curso e where e.estado = TRUE";
+    public static String getCursosListNoState = "select e from Curso e";
     
     // Querys de personas
     public static String getPersonaList = "select e from Persona e";
@@ -30,6 +36,7 @@ public class Querys {
     public static String getPersonaByCedulaAndNOTRol = "select e from Persona e where e.cedula = :cedula and e.rol != :idRol";
     public static String getProfesorByPersonaID = "select e from Profesor e where e.persona = :idPersona";
     public static String getPersonalByPersonaID = "select e from Personal e where e.persona = :idPersona";
+    public static String getPersonaByID = "select e from Persona e where e.id = :idPersona";
     public static String getEstudianteList = "select e from Estudiante e";
     public static String getRolById = "Select e from Rol e where e.id = :rolId";
     public static String getRolList = "select e from Rol e";
@@ -37,5 +44,14 @@ public class Querys {
     public static String getRelacionesByPersona = "select e from RelacionPersona e where e.persona = :idPersona";
     
     // Querys de materias
-    public static String getMateriasList = "select e from Materia e";
+    public static String getMateriasList = "select e from Materia e where e.estado = TRUE";
+    public static String getMateriasListNoState = "select e from Materia e";
+    
+    // Querys de paralelos
+    public static String getParalelosList = "select e from Paralelo e where e.estado = TRUE";
+    public static String getParalelosListNoState = "select e from Paralelo e";
+    
+    // Querys de periodos lectivos
+    public static String getPeriodosList = "select e from PeriodoLectivo e where e.estado = TRUE";
+    public static String getPeriodosListNoState = "select e from PeriodoLectivo e";
 }

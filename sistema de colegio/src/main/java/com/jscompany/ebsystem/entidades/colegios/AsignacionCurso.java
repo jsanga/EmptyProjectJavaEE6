@@ -16,6 +16,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -44,10 +46,13 @@ public class AsignacionCurso implements Serializable {
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
-    @OneToMany(mappedBy = "asignacionCurso", fetch = FetchType.LAZY)
-    private Collection<Materia> materiaCollection;
-    @OneToMany(mappedBy = "asignacionCurso", fetch = FetchType.LAZY)
-    private Collection<AsignacionCursoParalelos> asignacionCursoParalelosCollection;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "asignacion_curso_paralelos",
+        joinColumns = {@JoinColumn(name = "asignacion_curso", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "paralelo", referencedColumnName = "id")}
+    )
+    private Collection<Paralelo> paralelosCollection;
     @JoinColumn(name = "periodo_lectivo", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private PeriodoLectivo periodoLectivo;
@@ -61,6 +66,13 @@ public class AsignacionCurso implements Serializable {
     private Collection<Matricula> matriculaCollection;
     @OneToMany(mappedBy = "asignacionCurso", fetch = FetchType.LAZY)
     private Collection<AsignacionProfesor> asignacionProfesorCollection;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "asignacion_curso_materias",
+        joinColumns = {@JoinColumn(name = "asignacion_curso", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "materia", referencedColumnName = "id")}
+    )
+    private Collection<Materia> materiasCollection;
 
     public AsignacionCurso() {
     }
@@ -91,22 +103,6 @@ public class AsignacionCurso implements Serializable {
 
     public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
-    }
-
-    public Collection<Materia> getMateriaCollection() {
-        return materiaCollection;
-    }
-
-    public void setMateriaCollection(Collection<Materia> materiaCollection) {
-        this.materiaCollection = materiaCollection;
-    }
-
-    public Collection<AsignacionCursoParalelos> getAsignacionCursoParalelosCollection() {
-        return asignacionCursoParalelosCollection;
-    }
-
-    public void setAsignacionCursoParalelosCollection(Collection<AsignacionCursoParalelos> asignacionCursoParalelosCollection) {
-        this.asignacionCursoParalelosCollection = asignacionCursoParalelosCollection;
     }
 
     public PeriodoLectivo getPeriodoLectivo() {
@@ -149,6 +145,22 @@ public class AsignacionCurso implements Serializable {
         this.asignacionProfesorCollection = asignacionProfesorCollection;
     }
 
+    public Collection<Paralelo> getParalelosCollection() {
+        return paralelosCollection;
+    }
+
+    public void setParalelosCollection(Collection<Paralelo> paralelosCollection) {
+        this.paralelosCollection = paralelosCollection;
+    }
+
+    public Collection<Materia> getMateriasCollection() {
+        return materiasCollection;
+    }
+
+    public void setMateriasCollection(Collection<Materia> materiasCollection) {
+        this.materiasCollection = materiasCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -171,7 +183,7 @@ public class AsignacionCurso implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.usuarios.AsignacionCurso[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.AsignacionCurso[ id=" + id + " ]";
     }
     
 }

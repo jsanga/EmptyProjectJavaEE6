@@ -14,6 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -40,8 +41,8 @@ public class Paralelo implements Serializable {
     private String nombre;
     @Column(name = "estado")
     private Boolean estado;
-    @OneToMany(mappedBy = "paralelo", fetch = FetchType.LAZY)
-    private Collection<AsignacionCursoParalelos> asignacionCursoParalelosCollection;
+    @ManyToMany(mappedBy="paralelosCollection", fetch = FetchType.LAZY)
+    private Collection<AsignacionCurso> asignacionCursoCollection;
     @OneToMany(mappedBy = "paralelo", fetch = FetchType.LAZY)
     private Collection<AsignacionProfesor> asignacionProfesorCollection;
 
@@ -76,20 +77,20 @@ public class Paralelo implements Serializable {
         this.estado = estado;
     }
 
-    public Collection<AsignacionCursoParalelos> getAsignacionCursoParalelosCollection() {
-        return asignacionCursoParalelosCollection;
-    }
-
-    public void setAsignacionCursoParalelosCollection(Collection<AsignacionCursoParalelos> asignacionCursoParalelosCollection) {
-        this.asignacionCursoParalelosCollection = asignacionCursoParalelosCollection;
-    }
-
     public Collection<AsignacionProfesor> getAsignacionProfesorCollection() {
         return asignacionProfesorCollection;
     }
 
     public void setAsignacionProfesorCollection(Collection<AsignacionProfesor> asignacionProfesorCollection) {
         this.asignacionProfesorCollection = asignacionProfesorCollection;
+    }
+
+    public Collection<AsignacionCurso> getAsignacionCursoCollection() {
+        return asignacionCursoCollection;
+    }
+
+    public void setAsignacionCursoCollection(Collection<AsignacionCurso> asignacionCursoCollection) {
+        this.asignacionCursoCollection = asignacionCursoCollection;
     }
 
     @Override
@@ -114,7 +115,7 @@ public class Paralelo implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.usuarios.Paralelo[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.Paralelo[ id=" + id + " ]";
     }
     
 }

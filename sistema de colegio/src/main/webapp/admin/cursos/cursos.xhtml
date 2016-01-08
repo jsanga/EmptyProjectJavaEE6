@@ -15,7 +15,8 @@
                     <h:outputText value="#{curso.nombre}" style="text-transform: uppercase;"/>
                 </p:column>
                 <p:column headerText="Estado">
-                    <h:outputText value="#{curso.estado}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Activo" rendered="#{curso.estado}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Inactivo" rendered="#{!curso.estado}" style="text-transform: uppercase;"/>
                 </p:column>
                 <p:column headerText="Acción">
                     <center>
@@ -26,7 +27,7 @@
             </p:dataTable>
         </h:form>
         
-        <p:dialog header="Crear Curso" id="dlgCrear" widgetVar="dlgCrear" modal="true" height="auto" width="auto" >  
+        <p:dialog header="Crear Curso" id="dlgCrear" widgetVar="dlgCrear" modal="true" height="auto" width="auto" resizable="false">  
             <h:form id="dlgForm" >
                 <p:panelGrid columns="2">
                     <h:outputText value="Nombre:"/>
@@ -36,7 +37,7 @@
             </h:form>
         </p:dialog>
         
-        <p:dialog header="Editar Curso" id="dlgEditar" widgetVar="dlgEditar" modal="true" height="auto" width="auto" >  
+        <p:dialog header="Editar Curso" id="dlgEditar" widgetVar="dlgEditar" modal="true" height="auto" width="auto" resizable="false">  
             <h:form id="dlgFormEdit" >
                 <p:panelGrid columns="2">
                     <h:outputText value="Nombre:"/>

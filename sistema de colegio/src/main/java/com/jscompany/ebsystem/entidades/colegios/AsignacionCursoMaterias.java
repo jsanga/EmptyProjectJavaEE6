@@ -24,10 +24,10 @@ import javax.persistence.Table;
  * @author Joao Sanga
  */
 @Entity
-@Table(name = "asignacion_profesor_materias", schema = "colegios")
+@Table(name = "asignacion_curso_materias", schema = "colegios")
 @NamedQueries({
-    @NamedQuery(name = "AsignacionProfesorMaterias.findAll", query = "SELECT a FROM AsignacionProfesorMaterias a")})
-public class AsignacionProfesorMaterias implements Serializable {
+    @NamedQuery(name = "AsignacionCursoMaterias.findAll", query = "SELECT a FROM AsignacionCursoMaterias a")})
+public class AsignacionCursoMaterias implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,14 +37,14 @@ public class AsignacionProfesorMaterias implements Serializable {
     @JoinColumn(name = "materia", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Materia materia;
-    @JoinColumn(name = "asignacion_profesor", referencedColumnName = "id")
+    @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private AsignacionProfesor asignacionProfesor;
+    private AsignacionCurso asignacionCurso;
 
-    public AsignacionProfesorMaterias() {
+    public AsignacionCursoMaterias() {
     }
 
-    public AsignacionProfesorMaterias(Long id) {
+    public AsignacionCursoMaterias(Long id) {
         this.id = id;
     }
 
@@ -64,12 +64,12 @@ public class AsignacionProfesorMaterias implements Serializable {
         this.materia = materia;
     }
 
-    public AsignacionProfesor getAsignacionProfesor() {
-        return asignacionProfesor;
+    public AsignacionCurso getAsignacionCurso() {
+        return asignacionCurso;
     }
 
-    public void setAsignacionProfesor(AsignacionProfesor asignacionProfesor) {
-        this.asignacionProfesor = asignacionProfesor;
+    public void setAsignacionCurso(AsignacionCurso asignacionCurso) {
+        this.asignacionCurso = asignacionCurso;
     }
 
     @Override
@@ -82,10 +82,10 @@ public class AsignacionProfesorMaterias implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof AsignacionProfesorMaterias)) {
+        if (!(object instanceof AsignacionCursoMaterias)) {
             return false;
         }
-        AsignacionProfesorMaterias other = (AsignacionProfesorMaterias) object;
+        AsignacionCursoMaterias other = (AsignacionCursoMaterias) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -94,7 +94,7 @@ public class AsignacionProfesorMaterias implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.AsignacionProfesorMaterias[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.AsignacionCursoMaterias[ id=" + id + " ]";
     }
     
 }

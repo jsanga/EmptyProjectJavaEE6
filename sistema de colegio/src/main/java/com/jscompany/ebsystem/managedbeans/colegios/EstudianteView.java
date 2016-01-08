@@ -44,7 +44,7 @@ public class EstudianteView implements Serializable{
     
     private Estudiante estudiante;
     private List<Estudiante> estudianteList;
-    private Persona persona;
+    private Persona persona, personaTemp;
     private List<Persona> personasList, personasEncontradasList;
     private List<Colegio> colegios;
     private Colegio colegio;
@@ -66,17 +66,16 @@ public class EstudianteView implements Serializable{
     
     public void buscarPersona(){
         personasEncontradasList = new ArrayList<>();
-        Persona temp;
-        
         
         try{
-            temp = (Persona) services.getEntityByParameters(Querys.getPersonaByCedula, new String[]{"cedula"}, new Object[]{cedula});
-            if(persona.equals(temp)){
+            personaTemp = (Persona) services.getEntityByParameters(Querys.getPersonaByCedula, new String[]{"cedula"}, new Object[]{cedula});
+            if(persona.equals(personaTemp)){
+                personaTemp = null;
                 JsfUti.messageError(null, "Error", "No se puede agregar a sí mismo.");
                 return;
             }
             if(persona != null){
-                personasEncontradasList.add(temp);
+                personasEncontradasList.add(personaTemp);
                 JsfUti.messageInfo(null, "Info", "Se encontró la persona.");
             }
             else
@@ -101,7 +100,10 @@ public class EstudianteView implements Serializable{
         relacion.setPersona(BigInteger.valueOf(persona.getId()));
         relacion.setPersonaEs(BigInteger.valueOf(personaRelacionada.getId()));
         relacion.setTipoRelacion(tipoRelacion);
-        JsfUti.messageInfo(null, "Info", personaRelacionada.getNombres() + " "+ personaRelacionada.getApellidos() +" ahora es "+tipoRelacion.getNombreRelacion()+" de "+persona.getNombres()+ " "+persona.getApellidos()+".");
+        services.saveEntity(relacion);
+        JsfUti.messageInfo(null, "Info", personaRelacionada.getNombres().toUpperCase() + " "+ personaRelacionada.getApellidos().toUpperCase() +" ahora es "+tipoRelacion.getNombreRelacion()+" de "+persona.getNombres().toUpperCase()+ " "+persona.getApellidos().toUpperCase()+".");
+        personasEncontradasList = null;
+        relacion = null;
     }
     
     public void eliminarRelacion(RelacionPersona relacion){
@@ -151,10 +153,19 @@ public class EstudianteView implements Serializable{
     
     public void guardarEdicion(){
         persona.setColegio(colegio);
+        if(tipoRelacion!=null){
+            relacion = new RelacionPersona();
+            relacion.setEstado(Boolean.TRUE);
+            relacion.setPersona(BigInteger.valueOf(persona.getId()));
+            relacion.setPersonaEs(BigInteger.valueOf(personaTemp.getId()));
+            relacion.setTipoRelacion(tipoRelacion);
+        }            
         if(services.updateAndPersistEntity(persona))
             JsfUti.messageInfo(null, "Info", "Se editó la persona satisfactoriamente");
         else
             JsfUti.messageError(null, "Error", "Hubo un problema al editar la persona.");
+        personaTemp = null;
+        tipoRelacion = null;
     }
 
     public Persona getPersona() {

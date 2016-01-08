@@ -21,7 +21,8 @@
                     <h:outputText value="#{colegio.fechaCreacion}" style="text-transform: uppercase;"/>
                 </p:column>
                 <p:column headerText="Estado">
-                    <h:outputText value="#{colegio.estado}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Activo" rendered="#{colegio.estado}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Inactivo" rendered="#{!colegio.estado}" style="text-transform: uppercase;"/>
                 </p:column>
                 <p:column headerText="Acción">
                     <center>
@@ -32,7 +33,7 @@
             </p:dataTable>
         </h:form>
         
-        <p:dialog header="Crear Colegio" id="dlgCrear" widgetVar="dlgCrear" modal="true" height="auto" width="auto" >  
+        <p:dialog header="Crear Colegio" id="dlgCrear" widgetVar="dlgCrear" modal="true" height="auto" width="auto" resizable="false">  
             <h:form id="dlgForm" >
                 <p:panelGrid columns="2">
                     <h:outputText value="Nombre:"/>
@@ -44,7 +45,7 @@
             </h:form>
         </p:dialog>
         
-        <p:dialog header="Editar Colegio" id="dlgEditar" widgetVar="dlgEditar" modal="true" height="auto" width="auto" >  
+        <p:dialog header="Editar Colegio" id="dlgEditar" widgetVar="dlgEditar" modal="true" height="auto" width="auto" resizable="false">  
             <h:form id="dlgFormEdit" >
                 <p:panelGrid columns="2">
                     <h:outputText value="Nombre:"/>

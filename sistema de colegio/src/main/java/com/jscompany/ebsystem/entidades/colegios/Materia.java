@@ -14,8 +14,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -42,13 +41,12 @@ public class Materia implements Serializable {
     private String nombre;
     @Column(name = "estado")
     private Boolean estado;
-    @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private AsignacionCurso asignacionCurso;
     @OneToMany(mappedBy = "materia", fetch = FetchType.LAZY)
     private Collection<DetalleMateria> detalleMateriaCollection;
-    @OneToMany(mappedBy = "materia", fetch = FetchType.LAZY)
-    private Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection;
+    @ManyToMany(mappedBy="materiasCollection", fetch = FetchType.LAZY)
+    private Collection<AsignacionProfesor> asignacionProfesorCollection;
+    @ManyToMany(mappedBy="materiasCollection", fetch = FetchType.LAZY)
+    private Collection<AsignacionCurso> asignacionCursoCollection;
 
     public Materia() {
     }
@@ -81,14 +79,6 @@ public class Materia implements Serializable {
         this.estado = estado;
     }
 
-    public AsignacionCurso getAsignacionCurso() {
-        return asignacionCurso;
-    }
-
-    public void setAsignacionCurso(AsignacionCurso asignacionCurso) {
-        this.asignacionCurso = asignacionCurso;
-    }
-
     public Collection<DetalleMateria> getDetalleMateriaCollection() {
         return detalleMateriaCollection;
     }
@@ -97,12 +87,20 @@ public class Materia implements Serializable {
         this.detalleMateriaCollection = detalleMateriaCollection;
     }
 
-    public Collection<AsignacionProfesorMaterias> getAsignacionProfesorMateriasCollection() {
-        return asignacionProfesorMateriasCollection;
+    public Collection<AsignacionProfesor> getAsignacionProfesorCollection() {
+        return asignacionProfesorCollection;
     }
 
-    public void setAsignacionProfesorMateriasCollection(Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection) {
-        this.asignacionProfesorMateriasCollection = asignacionProfesorMateriasCollection;
+    public void setAsignacionProfesorCollection(Collection<AsignacionProfesor> asignacionProfesorCollection) {
+        this.asignacionProfesorCollection = asignacionProfesorCollection;
+    }
+
+    public Collection<AsignacionCurso> getAsignacionCursoCollection() {
+        return asignacionCursoCollection;
+    }
+
+    public void setAsignacionCursoCollection(Collection<AsignacionCurso> asignacionCursoCollection) {
+        this.asignacionCursoCollection = asignacionCursoCollection;
     }
 
     @Override
@@ -127,7 +125,7 @@ public class Materia implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.usuarios.Materia[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.Materia[ id=" + id + " ]";
     }
     
 }

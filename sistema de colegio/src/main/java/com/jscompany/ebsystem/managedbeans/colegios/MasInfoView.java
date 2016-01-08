@@ -7,6 +7,7 @@ package com.jscompany.ebsystem.managedbeans.colegios;
 
 import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.entidades.modelosdedatos.RelacionesPersona;
+import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import com.jscompany.ebsystem.entidades.usuarios.RelacionPersona;
 import com.jscompany.ebsystem.managedbeans.session.UtilSession;
 import com.jscompany.ebsystem.services.AclService;
@@ -39,25 +40,35 @@ public class MasInfoView implements Serializable{
     private Long idEstudiante;
     private List<RelacionPersona> relacionList;
     private List<RelacionesPersona> relacionesList;
+    private Persona persona, personaEs;
     
     @PostConstruct
     public void init(){
-        if(!utilSession.isNull())
-            idEstudiante = (Long) utilSession.retornarValor("idEstudiante");
-        if(idEstudiante==null){
-            JsfUti.messageError(null, "Error", "Error al cargar la información.");
-            return;
+        try{
+            if(!utilSession.isNull())
+                idEstudiante = (Long) utilSession.retornarValor("idEstudiante");
+            if(idEstudiante==null){
+                JsfUti.messageError(null, "Error", "Error al cargar la información.");
+                return;
+            }
+            utilSession.borrarDatos();
+            relacionList = services.getListEntitiesByParameters(Querys.getRelacionesByPersona, new String[]{"idPersona"}, new Object[]{idEstudiante});
+            relacionesList = new ArrayList<>();
+            this.llenarInformacion();
+        }catch(Exception e){
+            e.printStackTrace();
         }
-        utilSession.borrarDatos();
-        relacionList = services.getListEntitiesByParameters(Querys.getRelacionesByPersona, new String[]{"idPersona"}, new Object[]{idEstudiante});
-        relacionesList = new ArrayList<>();
-        this.llenarInformacion();
     }
     
     public void llenarInformacion(){
         RelacionesPersona temp;
+        Long l1, l2;
         for(RelacionPersona rp : relacionList){
-            temp = new RelacionesPersona(idEstudiante, Long.valueOf(rp.getPersonaEs()+""), rp.getTipoRelacion());
+            l1 = Long.valueOf(rp.getPersona()+"");
+            l2 = Long.valueOf(rp.getPersonaEs()+"");
+            persona = (Persona) services.getEntityByParameters(Querys.getPersonaByID, new String[]{"idPersona"}, new Object[]{l1});
+            personaEs = (Persona) services.getEntityByParameters(Querys.getPersonaByID, new String[]{"idPersona"}, new Object[]{l2});
+            temp = new RelacionesPersona(persona, personaEs, rp.getTipoRelacion());
             relacionesList.add(temp);
         }
     }
@@ -84,6 +95,14 @@ public class MasInfoView implements Serializable{
 
     public void setRelacionesList(List<RelacionesPersona> relacionesList) {
         this.relacionesList = relacionesList;
+    }
+
+    public Persona getPersona() {
+        return persona;
+    }
+
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
     
 }

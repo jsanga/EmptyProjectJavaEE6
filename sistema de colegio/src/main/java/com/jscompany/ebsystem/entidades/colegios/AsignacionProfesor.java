@@ -17,6 +17,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -47,8 +49,13 @@ public class AsignacionProfesor implements Serializable {
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
-    @OneToMany(mappedBy = "asignacionProfesor", fetch = FetchType.LAZY)
-    private Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "asignacion_profesor_materias",
+        joinColumns = {@JoinColumn(name = "asignacion_profesor", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "materia", referencedColumnName = "id")}
+    )
+    private Collection<Materia> materiasCollection;
     @JoinColumn(name = "paralelo", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Paralelo paralelo;
@@ -95,12 +102,12 @@ public class AsignacionProfesor implements Serializable {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public Collection<AsignacionProfesorMaterias> getAsignacionProfesorMateriasCollection() {
-        return asignacionProfesorMateriasCollection;
+    public Collection<Materia> getMateriasCollection() {
+        return materiasCollection;
     }
 
-    public void setAsignacionProfesorMateriasCollection(Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection) {
-        this.asignacionProfesorMateriasCollection = asignacionProfesorMateriasCollection;
+    public void setMateriasCollection(Collection<Materia> materiasCollection) {
+        this.materiasCollection = materiasCollection;
     }
 
     public Paralelo getParalelo() {
@@ -141,7 +148,7 @@ public class AsignacionProfesor implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.usuarios.AsignacionProfesor[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor[ id=" + id + " ]";
     }
     
 }

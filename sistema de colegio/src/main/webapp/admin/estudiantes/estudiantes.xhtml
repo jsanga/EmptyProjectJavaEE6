@@ -40,7 +40,7 @@
             </center>
         </h:form>
         
-        <p:dialog header="Crear Estudiante" id="dlgCrear" widgetVar="dlgCrear" modal="true" height="auto" width="auto" >  
+        <p:dialog header="Crear Estudiante" id="dlgCrear" widgetVar="dlgCrear" modal="true" height="auto" width="auto" resizable="false">  
             <h:form id="dlgForm" >
                 <p:panelGrid columns="3">
                     <h:outputText value="Cédula:"/>
@@ -71,7 +71,7 @@
             </h:form>
         </p:dialog>
         
-        <p:dialog header="Editar Estudiante" id="dlgEditar" widgetVar="dlgEditar" modal="true" height="auto" width="auto" >  
+        <p:dialog header="Editar Estudiante" id="dlgEditar" widgetVar="dlgEditar" modal="true" height="auto" width="auto" resizable="false">  
             <h:form id="dlgFormEdit" >
                 <p:tabView>
                     <p:tab title="Datos personales">
@@ -90,6 +90,7 @@
                                 <f:selectItems value="#{estudianteView.colegios}" var="col" itemValue="#{col}" itemLabel="#{col.nombre}"/>
                             </p:selectOneMenu>
                         </p:panelGrid>
+                        <center><p:commandButton value="Terminar Edición" actionListener="#{estudianteView.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain"/></center>
                     </p:tab>
                     <p:tab title="Agregar relación personal">
                         <p:panelGrid columns="3">
@@ -121,7 +122,7 @@
                         </p:panel>
                     </p:tab>
                 </p:tabView>
-                <center><p:commandButton value="Terminar Edición" actionListener="#{estudianteView.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain"/></center>
+                
             </h:form>
         </p:dialog>
     </h:body>

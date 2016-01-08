@@ -29,9 +29,9 @@
                     <h:outputText value="#{persona.rol.rolName}" style="text-transform: uppercase;"/>
                 </p:column>
                 <p:column headerText="Estado">
-                        <h:outputText value="Activo" rendered="#{persona.estado}" style="text-transform: uppercase;"/>
-                        <h:outputText value="Inactivo" rendered="#{!persona.estado}" style="text-transform: uppercase;"/>
-                    </p:column>
+                    <h:outputText value="Activo" rendered="#{persona.estado}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Inactivo" rendered="#{!persona.estado}" style="text-transform: uppercase;"/>
+                </p:column>
                 <p:column headerText="Acción">
                     <center>
                         <p:commandButton value="Editar" actionListener="#{personasView.editarPersona(persona)}" onclick="PF('dlgEditar').show()" update=":dlgFormEdit"/>
@@ -41,7 +41,7 @@
             </p:dataTable>
         </h:form>
         
-        <p:dialog header="Crear Usuario" id="dlgCrear" widgetVar="dlgCrear" modal="true" height="auto" width="auto" >  
+        <p:dialog header="Crear Usuario" id="dlgCrear" widgetVar="dlgCrear" modal="true" height="auto" width="auto" resizable="false">  
             <h:form id="dlgForm" >
                 <p:panelGrid columns="2">
                     <h:outputText value="Cédula:"/>
@@ -69,7 +69,7 @@
             </h:form>
         </p:dialog>
         
-        <p:dialog header="Editar Usuario" id="dlgEditar" widgetVar="dlgEditar" modal="true" height="auto" width="auto" >  
+        <p:dialog header="Editar Usuario" id="dlgEditar" widgetVar="dlgEditar" modal="true" height="auto" width="auto" resizable="false">  
             <h:form id="dlgFormEdit" >
                 <p:panelGrid columns="2">
                     <h:outputText value="Nombres:"/>

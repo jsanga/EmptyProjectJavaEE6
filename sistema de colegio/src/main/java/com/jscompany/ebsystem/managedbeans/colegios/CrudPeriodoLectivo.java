@@ -36,21 +36,21 @@ public class CrudPeriodoLectivo implements Serializable{
     
     @PostConstruct
     public void init(){
-        periodoList = services.getListEntitiesByParameters(Querys.getMateriasList, new String[]{}, new Object[]{});
+        periodoList = services.getListEntitiesByParameters(Querys.getPeriodosList, new String[]{}, new Object[]{});
         if(periodoList == null)
             periodoList = new ArrayList();
     }
     
-    public void nuevoParalelo(){
+    public void nuevoPeriodoLectivo(){
         this.periodo = new PeriodoLectivo();
         periodo.setEstado(Boolean.TRUE);
     }
     
-    public void editarParalelo(PeriodoLectivo c){
+    public void editarPeriodoLectivo(PeriodoLectivo c){
         this.periodo = c;
     }
     
-    public void eliminarParalelo(PeriodoLectivo c){
+    public void eliminarPeriodoLectivo(PeriodoLectivo c){
         int i=0;
         for(PeriodoLectivo cl : periodoList){
             if(cl.getFechaInicio().equals(c.getFechaInicio()) && cl.getFechaFin().equals(c.getFechaFin())){

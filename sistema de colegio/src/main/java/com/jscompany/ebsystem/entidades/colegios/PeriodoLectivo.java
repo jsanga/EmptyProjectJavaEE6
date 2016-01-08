@@ -117,7 +117,7 @@ public class PeriodoLectivo implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.usuarios.PeriodoLectivo[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.PeriodoLectivo[ id=" + id + " ]";
     }
     
 }

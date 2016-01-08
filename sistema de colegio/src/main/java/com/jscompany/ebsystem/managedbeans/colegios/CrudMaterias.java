@@ -57,18 +57,19 @@ public class CrudMaterias implements Serializable{
                 if(c.getId() != null){
                     c.setEstado(Boolean.FALSE);
                     services.updateAndPersistEntity(c); 
+                    JsfUti.messageInfo(null, "Info", "Se eliminó la materia satisfactoriamente.");
                 }
                 materiaList.remove(i);
                 break;
             }
             i++;
-        }
+        }        
     }
     
     public void guardarNuevo(){
         if((materia = (Materia) services.saveEntity(materia)) != null){
             materiaList.add(materia);
-            JsfUti.messageInfo(null, "Info", "Se creó la materia satisfactoriamente");
+            JsfUti.messageInfo(null, "Info", "Se creó la materia satisfactoriamente.");
         }
         else
             JsfUti.messageError(null, "Error", "Hubo un problema al crear la materia.");
@@ -76,7 +77,7 @@ public class CrudMaterias implements Serializable{
     
     public void guardarEdicion(){
         if(services.updateAndPersistEntity(materia))
-            JsfUti.messageInfo(null, "Info", "Se editó la materia satisfactoriamente");
+            JsfUti.messageInfo(null, "Info", "Se editó la materia satisfactoriamente.");
         else
             JsfUti.messageError(null, "Error", "Hubo un problema al editar la materia.");
     }

@@ -94,7 +94,7 @@ public class AsignacionCursoParalelos implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.usuarios.AsignacionCursoParalelos[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.AsignacionCursoParalelos[ id=" + id + " ]";
     }
     
 }
