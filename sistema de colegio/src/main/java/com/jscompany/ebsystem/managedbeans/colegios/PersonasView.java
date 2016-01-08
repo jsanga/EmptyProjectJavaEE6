@@ -40,10 +40,13 @@ public class PersonasView implements Serializable{
     private Colegio colegio;
     private String cedula;
     private Rol rol;
+    private List<Rol> rolList;
     
     @PostConstruct
     public void init(){
         personasList = new PersonasLazy();
+        colegios  = services.getListEntitiesByParameters(Querys.getColegiosList, new String[]{}, new Object[]{});
+        rolList = services.getListEntitiesByParameters(Querys.getRolList, new String[]{}, new Object[]{});
     }
     
     public void buscarPersona(){
@@ -64,19 +67,20 @@ public class PersonasView implements Serializable{
         
     }
     
-    public void nuevoPersona(){
-    
+    public void nuevaPersona(){
+        persona = new Persona();
     }
     
     public void editarPersona(Persona p){
         persona = p;
         colegio = persona.getColegio();
+        rol = persona.getRol();
     }
     
     public void eliminarPersona(Persona p){
         p.setEstado(Boolean.FALSE);
         services.updateAndPersistEntity(p);
-        JsfUti.messageInfo(null, "Info", "La persona ya no es profesor de la instituciòn.");
+        JsfUti.messageInfo(null, "Info", "La persona ha sido borrada del sistema.");
     }
     
     public void ingresarPersona(Persona p){
@@ -94,6 +98,8 @@ public class PersonasView implements Serializable{
     }
     
     public void guardarNuevo(){
+        persona.setColegio(colegio);
+        persona.setRol(rol);
         if((persona = (Persona) services.saveEntity(persona)) != null){
             JsfUti.messageInfo(null, "Info", "Se creó la persona satisfactoriamente");
         }
@@ -103,6 +109,7 @@ public class PersonasView implements Serializable{
     
     public void guardarEdicion(){
         persona.setColegio(colegio);
+        persona.setRol(rol);
         if(services.updateAndPersistEntity(persona))
             JsfUti.messageInfo(null, "Info", "Se editó la persona satisfactoriamente");
         else
@@ -155,6 +162,22 @@ public class PersonasView implements Serializable{
 
     public void setCedula(String cedula) {
         this.cedula = cedula;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+
+    public List<Rol> getRolList() {
+        return rolList;
+    }
+
+    public void setRolList(List<Rol> rolList) {
+        this.rolList = rolList;
     }
     
 }

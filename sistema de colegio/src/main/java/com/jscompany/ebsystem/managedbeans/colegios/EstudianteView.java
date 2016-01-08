@@ -7,19 +7,23 @@ package com.jscompany.ebsystem.managedbeans.colegios;
 
 import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.entidades.colegios.Colegio;
+import com.jscompany.ebsystem.entidades.modelosdedatos.RelacionesPersona;
 import com.jscompany.ebsystem.entidades.usuarios.Estudiante;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
-import com.jscompany.ebsystem.entidades.usuarios.Personal;
-import com.jscompany.ebsystem.entidades.usuarios.Profesor;
+import com.jscompany.ebsystem.entidades.usuarios.RelacionPersona;
 import com.jscompany.ebsystem.entidades.usuarios.Rol;
+import com.jscompany.ebsystem.entidades.usuarios.TipoRelacionPersona;
+import com.jscompany.ebsystem.managedbeans.session.UtilSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 /**
@@ -35,6 +39,9 @@ public class EstudianteView implements Serializable{
     @EJB(beanName = "aclService")
     private AclService services;
     
+    @ManagedProperty (value = "#{utilSession}")
+    private UtilSession utilSession;
+    
     private Estudiante estudiante;
     private List<Estudiante> estudianteList;
     private Persona persona;
@@ -43,22 +50,33 @@ public class EstudianteView implements Serializable{
     private Colegio colegio;
     private String cedula;
     private Rol rol;
+    private RelacionPersona relacion;
+    private TipoRelacionPersona tipoRelacion;
+    
+    private List<TipoRelacionPersona> tipoRelacionList;
+    
     
     @PostConstruct
     public void init(){
         rol = (Rol) services.getEntityByParameters(Querys.getRolById, new String[]{"rolId"}, new Object[]{new Long(3)});
         personasList = services.getListEntitiesByParameters(Querys.getEstudiantesList, new String[]{"rol"}, new Object[]{rol});
         colegios = services.getListEntitiesByParameters(Querys.getColegiosList, new String[]{}, new Object[]{});
+        tipoRelacionList = services.getListEntitiesByParameters(Querys.getRelacionesList, new String[]{}, new Object[]{});
     }
     
     public void buscarPersona(){
         personasEncontradasList = new ArrayList<>();
+        Persona temp;
+        
         
         try{
-            persona = (Persona) services.getEntityByParameters(Querys.getPersonaByCedula, new String[]{"cedula"}, new Object[]{cedula});
-            
+            temp = (Persona) services.getEntityByParameters(Querys.getPersonaByCedula, new String[]{"cedula"}, new Object[]{cedula});
+            if(persona.equals(temp)){
+                JsfUti.messageError(null, "Error", "No se puede agregar a sí mismo.");
+                return;
+            }
             if(persona != null){
-                personasEncontradasList.add(persona);
+                personasEncontradasList.add(temp);
                 JsfUti.messageInfo(null, "Info", "Se encontró la persona.");
             }
             else
@@ -73,6 +91,24 @@ public class EstudianteView implements Serializable{
     
     }
     
+    public void agregarRelacion(Persona personaRelacionada){
+        if(tipoRelacion==null){
+            JsfUti.messageError(null, "Error", "Debe seleccionar el tipo de relación.");
+            return;
+        }
+        relacion = new RelacionPersona();
+        relacion.setEstado(Boolean.TRUE);
+        relacion.setPersona(BigInteger.valueOf(persona.getId()));
+        relacion.setPersonaEs(BigInteger.valueOf(personaRelacionada.getId()));
+        relacion.setTipoRelacion(tipoRelacion);
+        JsfUti.messageInfo(null, "Info", personaRelacionada.getNombres() + " "+ personaRelacionada.getApellidos() +" ahora es "+tipoRelacion.getNombreRelacion()+" de "+persona.getNombres()+ " "+persona.getApellidos()+".");
+    }
+    
+    public void eliminarRelacion(RelacionPersona relacion){
+        relacion.setEstado(Boolean.FALSE);
+        services.updateAndPersistEntity(relacion);
+    }
+    
     public void editarEstudiante(Persona est){
         persona = est;
         colegio = persona.getColegio();
@@ -83,6 +119,12 @@ public class EstudianteView implements Serializable{
         services.updateAndPersistEntity(est);
         personasList.remove(est);
         JsfUti.messageInfo(null, "Info", "La persona ya no es estudiante de la instituciòn.");
+    }
+    
+    public void verMasDatos(Persona est){
+        JsfUti.redirectNewTab("/colegionetworksystem/faces/admin/estudiantes/masinfo.xhtml");
+        utilSession.instanciarParametros();
+        utilSession.agregarParametro("idEstudiante", new Long(est.getId()));
     }
     
     public void ingresarEstudiante(Persona p){
@@ -177,6 +219,38 @@ public class EstudianteView implements Serializable{
 
     public void setColegio(Colegio colegio) {
         this.colegio = colegio;
+    }
+
+    public RelacionPersona getRelacion() {
+        return relacion;
+    }
+
+    public void setRelacion(RelacionPersona relacion) {
+        this.relacion = relacion;
+    }
+
+    public TipoRelacionPersona getTipoRelacion() {
+        return tipoRelacion;
+    }
+
+    public void setTipoRelacion(TipoRelacionPersona tipoRelacion) {
+        this.tipoRelacion = tipoRelacion;
+    }
+
+    public List<TipoRelacionPersona> getTipoRelacionList() {
+        return tipoRelacionList;
+    }
+
+    public void setTipoRelacionList(List<TipoRelacionPersona> tipoRelacionList) {
+        this.tipoRelacionList = tipoRelacionList;
+    }
+
+    public UtilSession getUtilSession() {
+        return utilSession;
+    }
+
+    public void setUtilSession(UtilSession utilSession) {
+        this.utilSession = utilSession;
     }
     
 }

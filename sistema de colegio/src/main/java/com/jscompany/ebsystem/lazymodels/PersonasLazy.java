@@ -17,7 +17,7 @@ import org.hibernate.criterion.Restrictions;
 public class PersonasLazy extends BaseLazyDataModel<Persona> {
     
     public PersonasLazy() {
-        super(Persona.class);
+        super(Persona.class, "cedula");
     }
 
     @Override
@@ -32,8 +32,11 @@ public class PersonasLazy extends BaseLazyDataModel<Persona> {
         if (filters.containsKey("cedula")) {
             crit.add(Restrictions.ilike("cedula", "%" + filters.get("cedula").toString().trim() + "%"));
         }
+        if (filters.containsKey("colegio.nombre")) {
+            crit.createCriteria("colegio").add(Restrictions.ilike("nombre", "%"+ filters.get("colegio.nombre").toString().trim() +"%" ));
+        }
         if (filters.containsKey("rol.rolName")) {
-            crit.add(Restrictions.ilike("rolName", "%" + filters.get("rol.rolName").toString().trim() + "%"));
+            crit.createCriteria("rol").add(Restrictions.ilike("rolName", "%"+ filters.get("rol.rolName").toString().trim() +"%" ));
         }
         crit.add(Restrictions.le("estado", true));
     }

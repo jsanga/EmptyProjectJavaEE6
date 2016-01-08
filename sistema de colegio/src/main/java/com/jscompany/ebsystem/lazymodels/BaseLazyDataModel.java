@@ -7,6 +7,7 @@ package com.jscompany.ebsystem.lazymodels;
 
 import com.jscompany.ebsystem.entitymanager.Entitymanager;
 import com.jscompany.ebsystem.util.EntityManagerServices;
+import com.jscompany.ebsystem.util.HiberUtil;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -62,10 +63,11 @@ public class BaseLazyDataModel<T extends Object> extends LazyDataModel<T> {
         List result = null;
         Criteria cq, dcq;
         try {
-            cq = manager.getSession().createCriteria(this.getEntity(), "entity");
+            
+            cq = EntityManagerServices.getCurrentSession().createCriteria(this.getEntity(), "entity");
             this.criteriaFilterSetup(cq, filters);
             cq.setProjection(Projections.projectionList().add(Projections.rowCount()));
-            dcq = manager.getSession().createCriteria(this.getEntity(), "entity1");
+            dcq = EntityManagerServices.getCurrentSession().createCriteria(this.getEntity(), "entity1");
             this.criteriaFilterSetup(dcq, filters);
             this.criteriaSortSetup(dcq, sortField, sortOrder);
             this.criteriaPageSetup(dcq, first, pageSize);

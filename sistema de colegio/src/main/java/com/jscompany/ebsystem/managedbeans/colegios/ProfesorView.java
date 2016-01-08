@@ -50,6 +50,7 @@ public class ProfesorView implements Serializable{
         rol = (Rol) services.getEntityByParameters(Querys.getRolById, new String[]{"rolId"}, new Object[]{new Long(2)});
         personasList = services.getListEntitiesByParameters(Querys.getEstudiantesList, new String[]{"rol"}, new Object[]{rol});
         colegios = services.getListEntitiesByParameters(Querys.getColegiosList, new String[]{}, new Object[]{});
+        
     }
     
     public void buscarPersona(){
@@ -179,6 +180,13 @@ public class ProfesorView implements Serializable{
     public void setCedula(String cedula) {
         this.cedula = cedula;
     }
-    
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
     
 }

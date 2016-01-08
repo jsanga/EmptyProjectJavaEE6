@@ -32,6 +32,9 @@ public class Querys {
     public static String getPersonalByPersonaID = "select e from Personal e where e.persona = :idPersona";
     public static String getEstudianteList = "select e from Estudiante e";
     public static String getRolById = "Select e from Rol e where e.id = :rolId";
+    public static String getRolList = "select e from Rol e";
+    public static String getRelacionesList = "select e from TipoRelacionPersona e";
+    public static String getRelacionesByPersona = "select e from RelacionPersona e where e.persona = :idPersona";
     
     // Querys de materias
     public static String getMateriasList = "select e from Materia e";

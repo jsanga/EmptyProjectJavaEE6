@@ -5,13 +5,14 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Persona</title>
     </h:head>
     <h:body>
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
             <p:commandButton value="Ingresar Usuario" update=":dlgForm" actionListener="#{personasView.nuevaPersona()}" onclick="PF('dlgCrear').show()"/>
-            <p:dataTable id="dtCursos" value="#{personasView.personasList}" lazy="true" var="persona">
+            <p:dataTable id="dtCursos" value="#{personasView.personasList}" paginator="true" emptyMessage="No tiene datos"
+                         rows="10" lazy="true" var="persona" >
                 <p:column headerText="Cédula" filterBy="#{persona.cedula}">
                     <h:outputText value="#{persona.cedula}" style="text-transform: uppercase;"/>
                 </p:column>
@@ -19,15 +20,22 @@
                     <h:outputText value="#{persona.nombres}" style="text-transform: uppercase;"/>
                 </p:column>
                 <p:column headerText="Apellidos" filterBy="#{persona.apellidos}">
-                    <h:outputText value="#{persona.nombres}" style="text-transform: uppercase;"/>
+                    <h:outputText value="#{persona.apellidos}" style="text-transform: uppercase;"/>
+                </p:column>
+                <p:column headerText="Colegio" filterBy="#{persona.colegio.nombre}">
+                    <h:outputText value="#{persona.colegio.nombre}" style="text-transform: uppercase;"/>
+                </p:column>
+                <p:column headerText="Rol" filterBy="#{persona.rol.rolName}">
+                    <h:outputText value="#{persona.rol.rolName}" style="text-transform: uppercase;"/>
                 </p:column>
                 <p:column headerText="Estado">
-                    <h:outputText value="#{persona.estado}" style="text-transform: uppercase;"/>
-                </p:column>
+                        <h:outputText value="Activo" rendered="#{persona.estado}" style="text-transform: uppercase;"/>
+                        <h:outputText value="Inactivo" rendered="#{!persona.estado}" style="text-transform: uppercase;"/>
+                    </p:column>
                 <p:column headerText="Acción">
                     <center>
-                        <p:commandButton value="Editar" actionListener="#{personasView.editarPersona(c)}" onclick="PF('dlgEditar').show()" update=":dlgFormEdit"/>
-                        <p:commandButton value="Eliminar" actionListener="#{personasView.eliminarPersona(c)}" update="frmMain"/>
+                        <p:commandButton value="Editar" actionListener="#{personasView.editarPersona(persona)}" onclick="PF('dlgEditar').show()" update=":dlgFormEdit"/>
+                        <p:commandButton value="Eliminar" actionListener="#{personasView.eliminarPersona(persona)}" update="frmMain"/>
                     </center>
                 </p:column>
             </p:dataTable>
@@ -45,7 +53,17 @@
                     <h:outputText value="Dirección:"/>
                     <p:inputText value="#{personasView.persona.direccion}" style="text-transform: uppercase;"/>
                     <h:outputText value="Fecha de nacimiento:"/>
-                    <p:calendar value="#{personasView.persona.fechaSalida}"/>
+                    <p:calendar value="#{personasView.persona.fechaNacimiento}"/>
+                    <h:outputText value="Colegio:"/>
+                    <p:selectOneMenu value="#{personasView.colegio}" converter="colegioConverter" style="width: 180px;">
+                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                        <f:selectItems value="#{personasView.colegios}" var="col" itemValue="#{col}" itemLabel="#{col.nombre}"/>
+                    </p:selectOneMenu>
+                    <h:outputText value="Rol:"/>
+                    <p:selectOneMenu value="#{personasView.rol}" converter="rolConverter" style="width: 180px;">
+                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                        <f:selectItems value="#{personasView.rolList}" var="col" itemValue="#{col}" itemLabel="#{col.rolName}"/>
+                    </p:selectOneMenu>
                 </p:panelGrid>
                 <center><p:commandButton value="Guardar Colegio" actionListener="#{personasView.guardarNuevo()}" onclick="PF('dlgCrear').hide()" update=":frmMain"/></center>
             </h:form>
@@ -54,16 +72,24 @@
         <p:dialog header="Editar Usuario" id="dlgEditar" widgetVar="dlgEditar" modal="true" height="auto" width="auto" >  
             <h:form id="dlgFormEdit" >
                 <p:panelGrid columns="2">
-                    <h:outputText value="Cédula:"/>
-                    <p:inputText value="#{personasView.persona.cedula}" style="text-transform: uppercase;"/>
                     <h:outputText value="Nombres:"/>
                     <p:inputText value="#{personasView.persona.nombres}" style="text-transform: uppercase;"/>
                     <h:outputText value="Apellidos:"/>
                     <p:inputText value="#{personasView.persona.apellidos}" style="text-transform: uppercase;"/>
                     <h:outputText value="Dirección:"/>
                     <p:inputText value="#{personasView.persona.direccion}" style="text-transform: uppercase;"/>
-                    <h:outputText value="Fecha de nacimiento:"/>
-                    <p:calendar value="#{personasView.persona.fechaSalida}"/>
+                    <h:outputText value="Fecha de Nacimiento:"/>
+                    <p:calendar value="#{personasView.persona.fechaNacimiento}" navigator="true"/>
+                    <h:outputText value="Colegio:"/>
+                    <p:selectOneMenu value="#{personasView.colegio}" converter="colegioConverter" style="width: 180px;">
+                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                        <f:selectItems value="#{personasView.colegios}" var="col" itemValue="#{col}" itemLabel="#{col.nombre}"/>
+                    </p:selectOneMenu>
+                    <h:outputText value="Rol:"/>
+                    <p:selectOneMenu value="#{personasView.rol}" converter="rolConverter" style="width: 180px;">
+                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                        <f:selectItems value="#{personasView.rolList}" var="col" itemValue="#{col}" itemLabel="#{col.rolName}"/>
+                    </p:selectOneMenu>
                 </p:panelGrid>
                 <center><p:commandButton value="Terminar Edición" actionListener="#{personasView.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain"/></center>
             </h:form>
