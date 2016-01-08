@@ -6,7 +6,10 @@
 package com.jscompany.ebsystem.managedbeans.colegios;
 
 import com.jscompany.ebsystem.database.Querys;
+import com.jscompany.ebsystem.entidades.colegios.Colegio;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
+import com.jscompany.ebsystem.entidades.usuarios.Rol;
+import com.jscompany.ebsystem.lazymodels.PersonasLazy;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
 import java.io.Serializable;
@@ -31,42 +34,67 @@ public class PersonasView implements Serializable{
     private AclService services;
     
     private Persona persona;
-    private List<Persona> personaList;
+    private List<Persona> personasEncontradasList;
+    private PersonasLazy personasList;
+    private List<Colegio> colegios;
+    private Colegio colegio;
+    private String cedula;
+    private Rol rol;
     
     @PostConstruct
     public void init(){
-        personaList = services.getListEntitiesByParameters(Querys.getPersonaList, new String[]{}, new Object[]{});
-        if(personaList == null)
-            personaList = new ArrayList();
+        personasList = new PersonasLazy();
     }
     
-    public void nuevaPersona(){
-        this.persona = new Persona();
-        persona.setEstado(Boolean.TRUE);
-    }
-    
-    public void editarPersona(Persona c){
-        this.persona = c;
-    }
-    
-    public void eliminarPersona(Persona c){
-        int i=0;
-        for(Persona cl : personaList){
-            if(cl.getCedula().equals(c.getCedula())){
-                if(c.getId() != null){
-                    c.setEstado(Boolean.FALSE);
-                    services.updateAndPersistEntity(c); 
-                }
-                personaList.remove(i);
-                break;
+    public void buscarPersona(){
+        personasEncontradasList = new ArrayList<>();
+        
+        try{
+            persona = (Persona) services.getEntityByParameters(Querys.getPersonaByCedula, new String[]{"cedula"}, new Object[]{cedula});
+            
+            if(persona != null){
+                personasEncontradasList.add(persona);
+                JsfUti.messageInfo(null, "Info", "Se encontró la persona.");
             }
-            i++;
+            else
+                JsfUti.messageError(null, "Error", "No se encontró a la persona.");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+    }
+    
+    public void nuevoPersona(){
+    
+    }
+    
+    public void editarPersona(Persona p){
+        persona = p;
+        colegio = persona.getColegio();
+    }
+    
+    public void eliminarPersona(Persona p){
+        p.setEstado(Boolean.FALSE);
+        services.updateAndPersistEntity(p);
+        JsfUti.messageInfo(null, "Info", "La persona ya no es profesor de la instituciòn.");
+    }
+    
+    public void ingresarPersona(Persona p){
+        Persona temp;
+        if((temp = (Persona) services.getEntityByParameters(Querys.getPersonaByCedula, new String[]{}, new Object[]{p.getCedula()})) == null){
+            p.setRol(rol);
+            p.setEstado(Boolean.TRUE);
+            services.updateAndPersistEntity(p);
+            personasEncontradasList.remove(p);
+            cedula = "";
+            JsfUti.messageInfo(null, "Info", "La persona ha sido ingresada.");
+        }else{
+            JsfUti.messageError(null, "Error", "La persona ya ha sido ingresada, su nombre es "+temp.getNombres().toUpperCase()+" "+temp.getApellidos().toUpperCase()+".");
         }
     }
     
     public void guardarNuevo(){
         if((persona = (Persona) services.saveEntity(persona)) != null){
-            personaList.add(persona);
             JsfUti.messageInfo(null, "Info", "Se creó la persona satisfactoriamente");
         }
         else
@@ -74,6 +102,7 @@ public class PersonasView implements Serializable{
     }
     
     public void guardarEdicion(){
+        persona.setColegio(colegio);
         if(services.updateAndPersistEntity(persona))
             JsfUti.messageInfo(null, "Info", "Se editó la persona satisfactoriamente");
         else
@@ -88,12 +117,44 @@ public class PersonasView implements Serializable{
         this.persona = persona;
     }
 
-    public List<Persona> getPersonaList() {
-        return personaList;
+    public List<Persona> getPersonasEncontradasList() {
+        return personasEncontradasList;
     }
 
-    public void setPersonaList(List<Persona> personaList) {
-        this.personaList = personaList;
+    public void setPersonasEncontradasList(List<Persona> personasEncontradasList) {
+        this.personasEncontradasList = personasEncontradasList;
+    }
+
+    public PersonasLazy getPersonasList() {
+        return personasList;
+    }
+
+    public void setPersonasList(PersonasLazy personasList) {
+        this.personasList = personasList;
+    }
+
+    public List<Colegio> getColegios() {
+        return colegios;
+    }
+
+    public void setColegios(List<Colegio> colegios) {
+        this.colegios = colegios;
+    }
+
+    public Colegio getColegio() {
+        return colegio;
+    }
+
+    public void setColegio(Colegio colegio) {
+        this.colegio = colegio;
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
     }
     
 }

@@ -7,6 +7,7 @@ package com.jscompany.ebsystem.converters;
 
 import com.jscompany.ebsystem.entidades.colegios.Colegio;
 import com.jscompany.ebsystem.services.AclService;
+import com.jscompany.ebsystem.util.EntityManagerServices;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.component.UIComponent;
@@ -20,16 +21,13 @@ import javax.faces.convert.FacesConverter;
  */
 @FacesConverter("colegioConverter")
 public class ColegioConverter implements Converter, Serializable{
-    
-    @EJB(beanName = "aclService")
-    private AclService services;
-    
+        
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {        
         if(value==null||value.equals("Seleccionar"))
             return null;
         else{
-            Object temp = services.getEntity(Colegio.class, Long.parseLong(value));
+            Colegio temp = (Colegio) EntityManagerServices.aclService().getEntity(Colegio.class, Long.parseLong(value));
             return temp;
         }
     }

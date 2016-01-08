@@ -23,7 +23,7 @@ public class Querys {
     
     // Querys de personas
     public static String getPersonaList = "select e from Persona e";
-    public static String getProfesoresList = "select e from Persona e where e.rol = 2";
+    public static String getProfesoresList = "select e from Persona e where e.rol = :rol";
     public static String getEstudiantesList = "select e from Persona e where e.rol = :rol";
     public static String getPersonalList = "select e from Persona e where e.rol = 5";
     public static String getPersonaByCedula = "select e from Persona e where e.cedula = :cedula";

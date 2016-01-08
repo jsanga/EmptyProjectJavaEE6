@@ -10,7 +10,7 @@
     <h:body>
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
-            <p:commandButton value="Ingresar Estudiante" update="dlgCrear" actionListener="#{estudianteView.nuevoEstudiante()}" onclick="PF('dlgCrear').show()"/>
+            <p:commandButton value="Ingresar Estudiante" update="dlgForm" actionListener="#{estudianteView.nuevoEstudiante()}" onclick="PF('dlgCrear').show()"/>
             <center>
                 <p:dataTable id="dtEstudiantesList" value="#{estudianteView.personasList}" emptyMessage="No tiene datos" style="width: 80%;" var="persona">
                     <p:column headerText="Cédula" filterBy="#{persona.cedula}">
@@ -80,7 +80,7 @@
                     <h:outputText value="Dirección:"/>
                     <p:inputText value="#{estudianteView.persona.direccion}" style="text-transform: uppercase;"/>
                     <h:outputText value="Fecha de Nacimiento:"/>
-                    <p:calendar value="#{estudianteView.persona.fechaNacimiento}"/>
+                    <p:calendar value="#{estudianteView.persona.fechaNacimiento}" navigator="true"/>
                     <h:outputText value="Colegio:"/>
                     <p:selectOneMenu value="#{estudianteView.colegio}" converter="colegioConverter" style="width: 180px;">
                         <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />

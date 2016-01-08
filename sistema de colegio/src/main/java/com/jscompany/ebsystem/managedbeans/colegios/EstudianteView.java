@@ -49,12 +49,9 @@ public class EstudianteView implements Serializable{
         rol = (Rol) services.getEntityByParameters(Querys.getRolById, new String[]{"rolId"}, new Object[]{new Long(3)});
         personasList = services.getListEntitiesByParameters(Querys.getEstudiantesList, new String[]{"rol"}, new Object[]{rol});
         colegios = services.getListEntitiesByParameters(Querys.getColegiosList, new String[]{}, new Object[]{});
-        personasEncontradasList = new ArrayList();
     }
     
     public void buscarPersona(){
-        Profesor p;
-        Personal user;
         personasEncontradasList = new ArrayList<>();
         
         try{
@@ -78,6 +75,7 @@ public class EstudianteView implements Serializable{
     
     public void editarEstudiante(Persona est){
         persona = est;
+        colegio = persona.getColegio();
     }
     
     public void eliminarEstudiante(Persona est){
