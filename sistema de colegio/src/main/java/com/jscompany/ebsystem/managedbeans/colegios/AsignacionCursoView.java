@@ -6,6 +6,7 @@
 package com.jscompany.ebsystem.managedbeans.colegios;
 
 import com.jscompany.ebsystem.database.Querys;
+import com.jscompany.ebsystem.ejb.interfaces.ColegiosServices;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
 import com.jscompany.ebsystem.entidades.colegios.Colegio;
 import com.jscompany.ebsystem.entidades.colegios.Curso;
@@ -37,6 +38,9 @@ public class AsignacionCursoView implements Serializable{
     
     @EJB(beanName = "aclService")
     private AclService services;
+    
+    @EJB(beanName = "colegiosServices")
+    private ColegiosServices colServices;
     
     private Colegio colegio;
     private List<Colegio> colegiosList;
@@ -84,12 +88,17 @@ public class AsignacionCursoView implements Serializable{
     }
     
     public void guardarNuevo(){
-        if((asignacion = (AsignacionCurso) services.saveEntity(asignacion)) != null){
-            asignacionesList.add(asignacion);
-            JsfUti.messageInfo(null, "Info", "Se creó la asignación satisfactoriamente");
+        try{
+            
+            if(colServices.crearAsignacionCurso(asignacion, materiasList, paralelosList)!=null){
+                asignacionesList.add(asignacion);
+                JsfUti.messageInfo(null, "Info", "Se creó la asignación satisfactoriamente");
+            }
+            else
+                JsfUti.messageError(null, "Error", "Hubo un problema al crear la asignación.");
+        }catch(Exception e){
+            e.printStackTrace();
         }
-        else
-            JsfUti.messageError(null, "Error", "Hubo un problema al crear la asignación.");
     }
     
     public void guardarEdicion(){

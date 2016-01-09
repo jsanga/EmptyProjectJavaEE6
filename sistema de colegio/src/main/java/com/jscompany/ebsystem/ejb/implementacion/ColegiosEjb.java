@@ -33,8 +33,23 @@ public class ColegiosEjb implements ColegiosServices{
     protected AclService services;
     
     @Override
-    public AsignacionCurso crearAsignacionCurso(AsignacionCurso asignacionCurso, List<Matricula> matriculas, List<AsignacionProfesor> asignacionProfesorList, List<Materia> materias, List<Paralelo> paralelos){
+    public AsignacionCurso crearAsignacionCursoMatriculaAsignacionProfesor(AsignacionCurso asignacionCurso, List<Matricula> matriculas, List<AsignacionProfesor> asignacionProfesorList, List<Materia> materias, List<Paralelo> paralelos){
         return null;
+    }
+    
+    @Override
+    public AsignacionCurso crearAsignacionCurso(AsignacionCurso asignacionCurso, List<Materia> materias, List<Paralelo> paralelos){
+        AsignacionCurso asignacion;
+        try{
+            asignacion = asignacionCurso;
+            asignacion.setMateriasCollection(materias);
+            asignacion.setParalelosCollection(paralelos);
+            asignacion = (AsignacionCurso) services.saveEntity(asignacion);
+        }catch(Exception e){
+            e.printStackTrace();
+            asignacion = null;
+        }
+        return asignacion;
     }
     
     @Override

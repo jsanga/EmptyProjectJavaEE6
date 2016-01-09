@@ -21,8 +21,10 @@ import javax.ejb.Local;
 @Local
 public interface ColegiosServices {
     
-    public AsignacionCurso crearAsignacionCurso(AsignacionCurso asignacionCurso, List<Matricula> matriculas, List<AsignacionProfesor> asignacionProfesorList, List<Materia> materias, List<Paralelo> paralelos);
+    public AsignacionCurso crearAsignacionCursoMatriculaAsignacionProfesor(AsignacionCurso asignacionCurso, List<Matricula> matriculas, List<AsignacionProfesor> asignacionProfesorList, List<Materia> materias, List<Paralelo> paralelos);
     
     public AsignacionProfesor crearAsignacionProfesor(AsignacionProfesor asignacion, List<AsignacionProfesorMaterias> asignacionProfesorMateriasList);
     
+    public AsignacionCurso crearAsignacionCurso(AsignacionCurso asignacionCurso, List<Materia> materias, List<Paralelo> paralelos);
+
 }

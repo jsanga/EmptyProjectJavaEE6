@@ -54,7 +54,7 @@
                     </p:tab>
                     <p:tab title="Materias">
                         <p:dataTable id="dtMaterias" value="#{asignacionCursoView.materias}" lazy="true" var="mat" rows="5" paginator="true"
-                                     selection="#{asignacionCursoView.asignacion.materiasCollection}" rowKey="#{mat.id}" style="width: 420px;">
+                                     selection="#{asignacionCursoView.materiasList}" rowKey="#{mat.id}" style="width: 420px;">
                             <f:facet name="header">
                                 Materias
                             </f:facet>
@@ -66,7 +66,7 @@
                     </p:tab>
                     <p:tab title="Paralelos">
                         <p:dataTable id="dtParalelos" value="#{asignacionCursoView.paralelos}" lazy="true" var="par" rows="5" paginator="true"
-                                     selection="#{asignacionCursoView.asignacion.paralelosCollection}" rowKey="#{par.id}" style="width: 420px;">
+                                     selection="#{asignacionCursoView.paralelosList}" rowKey="#{par.id}" style="width: 420px;">
                             <f:facet name="header">
                                 Paralelos
                             </f:facet>
@@ -77,7 +77,7 @@
                         </p:dataTable>
                     </p:tab>
                 </p:tabView>
-                <center><p:commandButton value="Guardar Colegio" actionListener="#{asignacionCursoView.guardarNuevo()}" onclick="PF('dlgCrear').hide()" update=":frmMain"/></center>
+                <center><p:commandButton value="Guardar asignación" actionListener="#{asignacionCursoView.guardarNuevo()}" onclick="PF('dlgCrear').hide()" update=":frmMain"/></center>
             </h:form>
         </p:dialog>
         
