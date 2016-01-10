@@ -10,8 +10,8 @@
     <h:body>
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
-            <p:panel header="Personas con las que está relacionado: #{masInfoView.persona.nombres} #{masInfoView.persona.apellidos}">
-                <p:dataTable id="dtEstudianteInfo" value="#{masInfoView.relacionesList}" var="rel">
+            <p:panel header="Personas con las que está relacionado: #{masInfoEstView.persona.nombres} #{masInfoEstView.persona.apellidos}">
+                <p:dataTable id="dtEstudianteInfo" value="#{masInfoEstView.relacionesList}" var="rel">
                     <p:column headerText="Nombres" >
                         <h:outputText value="#{rel.personaEs.nombres} #{rel.personaEs.apellidos}" style="text-transform: uppercase;"/>
                     </p:column>

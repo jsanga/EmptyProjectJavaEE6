@@ -55,9 +55,10 @@ public class Login implements Serializable{
         if(usuariosServices.validarUsuario(loguin.getUsername(), loguin.getPass())){
             JsfUti.messageInfo(null, "Info", "Usuario encontrado.");
             persona = (Persona) aclServices.getEntityByParameters(Querys.getUsuarioByUser, new String[]{"username"}, new Object[]{loguin.getUsername()});
-            rol = persona.getRol();
             uSession.setUsername(loguin.getUsername());
-            uSession.setRolPersona(rol.getRolName());
+            uSession.setRolPersona(persona.getRol().getRolName());
+            uSession.setIdColegio(persona.getColegio().getId());
+            uSession.setIdPersona(persona.getId());
             uSession.setIsLogged(true);
         }
         else

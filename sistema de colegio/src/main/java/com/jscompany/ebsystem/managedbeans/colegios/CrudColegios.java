@@ -36,7 +36,7 @@ public class CrudColegios implements Serializable{
     
     @PostConstruct
     public void init(){
-        colegiosList = (List<Colegio>)services.getListEntitiesByParameters(Querys.getColegiosList, new String[]{}, new Object[]{});
+        colegiosList = (List<Colegio>)services.getListEntitiesByParameters(Querys.getColegiosListNoState, new String[]{}, new Object[]{});
         if(colegiosList == null)
             colegiosList = new ArrayList();
     }
@@ -59,7 +59,6 @@ public class CrudColegios implements Serializable{
                     c.setEstado(Boolean.FALSE);
                     services.updateAndPersistEntity(c); 
                 }
-                colegiosList.remove(i);
                 break;
             }
             i++;

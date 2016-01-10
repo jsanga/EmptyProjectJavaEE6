@@ -7,23 +7,26 @@ package com.jscompany.ebsystem.lazymodels;
 
 import com.jscompany.ebsystem.entidades.colegios.Colegio;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
+import com.jscompany.ebsystem.entidades.usuarios.Rol;
 import java.util.Map;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
 /**
  *
- * @author origami-idea
+ * @author JoaoIsrael
  */
-public class PersonasLazy extends BaseLazyDataModel<Persona> {
+public class PersonasByRolLazy extends BaseLazyDataModel<Persona> {
     
     private Colegio idColegio;
+    private Rol rol;
     
-    public PersonasLazy(Colegio idColegio) {
+    public PersonasByRolLazy(Colegio idColegio, Rol rol) {
         super(Persona.class, "cedula");
         this.idColegio = idColegio;
+        this.rol = rol;
     }
-
+    
     @Override
     public void criteriaFilterSetup(Criteria crit, Map<String, Object> filters) throws Exception {
 
@@ -39,10 +42,8 @@ public class PersonasLazy extends BaseLazyDataModel<Persona> {
         if (filters.containsKey("colegio.nombre")) {
             crit.createCriteria("colegio").add(Restrictions.ilike("nombre", "%"+ filters.get("colegio.nombre").toString().trim() +"%" ));
         }
-        if (filters.containsKey("rol.rolName")) {
-            crit.createCriteria("rol").add(Restrictions.ilike("rolName", "%"+ filters.get("rol.rolName").toString().trim() +"%" ));
-        }
         //crit.add(Restrictions.le("estado", true));
         crit.add(Restrictions.le("colegio", idColegio));
+        crit.add(Restrictions.le("rol", rol));
     }
 }

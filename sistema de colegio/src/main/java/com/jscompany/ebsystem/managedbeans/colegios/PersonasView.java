@@ -10,6 +10,7 @@ import com.jscompany.ebsystem.entidades.colegios.Colegio;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import com.jscompany.ebsystem.entidades.usuarios.Rol;
 import com.jscompany.ebsystem.lazymodels.PersonasLazy;
+import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
 import java.io.Serializable;
@@ -18,6 +19,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 /**
@@ -33,6 +35,9 @@ public class PersonasView implements Serializable{
     @EJB(beanName = "aclService")
     private AclService services;
     
+    @ManagedProperty(value = "#{userSession}")
+    private UserSession uSession;
+    
     private Persona persona;
     private List<Persona> personasEncontradasList;
     private PersonasLazy personasList;
@@ -44,7 +49,8 @@ public class PersonasView implements Serializable{
     
     @PostConstruct
     public void init(){
-        personasList = new PersonasLazy();
+        colegio = (Colegio) services.getEntity(Colegio.class, uSession.getIdColegio());
+        personasList = new PersonasLazy(colegio);
         colegios  = services.getListEntitiesByParameters(Querys.getColegiosList, new String[]{}, new Object[]{});
         rolList = services.getListEntitiesByParameters(Querys.getRolList, new String[]{}, new Object[]{});
     }
@@ -73,7 +79,6 @@ public class PersonasView implements Serializable{
     
     public void editarPersona(Persona p){
         persona = p;
-        colegio = persona.getColegio();
         rol = persona.getRol();
     }
     
@@ -178,6 +183,14 @@ public class PersonasView implements Serializable{
 
     public void setRolList(List<Rol> rolList) {
         this.rolList = rolList;
+    }
+
+    public UserSession getuSession() {
+        return uSession;
+    }
+
+    public void setuSession(UserSession uSession) {
+        this.uSession = uSession;
     }
     
 }

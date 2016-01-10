@@ -36,7 +36,7 @@ public class CrudMaterias implements Serializable{
     
     @PostConstruct
     public void init(){
-        materiaList = services.getListEntitiesByParameters(Querys.getMateriasList, new String[]{}, new Object[]{});
+        materiaList = services.getListEntitiesByParameters(Querys.getMateriasListNoState, new String[]{}, new Object[]{});
         if(materiaList == null)
             materiaList = new ArrayList();
     }
@@ -59,7 +59,6 @@ public class CrudMaterias implements Serializable{
                     services.updateAndPersistEntity(c); 
                     JsfUti.messageInfo(null, "Info", "Se eliminó la materia satisfactoriamente.");
                 }
-                materiaList.remove(i);
                 break;
             }
             i++;

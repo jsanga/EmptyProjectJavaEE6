@@ -60,6 +60,10 @@
             </h:panelGroup>
         </h:form>
         
-        
+        <p:ajaxStatus onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"  />
+
+        <p:dialog widgetVar="statusDialog" modal="true" draggable="false"  closable="false" resizable="false" showHeader="false" style="opacity: 0.6;">
+            <img src="images/spinner.gif" />
+        </p:dialog>
     </h:body>
 </html>

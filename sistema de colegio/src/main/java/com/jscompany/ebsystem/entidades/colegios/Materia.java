@@ -8,6 +8,7 @@ package com.jscompany.ebsystem.entidades.colegios;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -45,7 +46,7 @@ public class Materia implements Serializable {
     private Collection<DetalleMateria> detalleMateriaCollection;
     @ManyToMany(mappedBy="materiasCollection", fetch = FetchType.LAZY)
     private Collection<AsignacionProfesor> asignacionProfesorCollection;
-    @ManyToMany(mappedBy="materiasCollection", fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "materiasCollection")
     private Collection<AsignacionCurso> asignacionCursoCollection;
 
     public Materia() {

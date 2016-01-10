@@ -5,7 +5,9 @@
  */
 package com.jscompany.ebsystem.entidades.usuarios;
 
+import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
 import com.jscompany.ebsystem.entidades.colegios.Colegio;
+import com.jscompany.ebsystem.entidades.colegios.Matricula;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -66,6 +68,10 @@ public class Persona implements Serializable {
     private Collection<PersonaEmail> personaEmailCollection;
     @OneToMany(mappedBy = "persona", fetch = FetchType.LAZY)
     private Collection<PersonaTelefono> personaTelefonoCollection;
+    @OneToMany(mappedBy = "estudiante", fetch = FetchType.LAZY)
+    private Collection<Matricula> matriculaCollection;
+    @OneToMany(mappedBy = "profesor", fetch = FetchType.LAZY)
+    private Collection<AsignacionProfesor> asignacionProfesorCollection;
     @JoinColumn(name = "rol", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Rol rol;
@@ -185,6 +191,22 @@ public class Persona implements Serializable {
 
     public void setLoguin(Loguin loguin) {
         this.loguin = loguin;
+    }
+
+    public Collection<Matricula> getMatriculaCollection() {
+        return matriculaCollection;
+    }
+
+    public void setMatriculaCollection(Collection<Matricula> matriculaCollection) {
+        this.matriculaCollection = matriculaCollection;
+    }
+
+    public Collection<AsignacionProfesor> getAsignacionProfesorCollection() {
+        return asignacionProfesorCollection;
+    }
+
+    public void setAsignacionProfesorCollection(Collection<AsignacionProfesor> asignacionProfesorCollection) {
+        this.asignacionProfesorCollection = asignacionProfesorCollection;
     }
 
     @Override

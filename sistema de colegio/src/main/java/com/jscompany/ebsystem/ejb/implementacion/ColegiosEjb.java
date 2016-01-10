@@ -10,7 +10,6 @@ import com.jscompany.ebsystem.ejb.HibernateEjbInterceptor;
 import com.jscompany.ebsystem.ejb.interfaces.ColegiosServices;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
-import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesorMaterias;
 import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Matricula;
 import com.jscompany.ebsystem.entidades.colegios.Paralelo;
@@ -42,9 +41,10 @@ public class ColegiosEjb implements ColegiosServices{
         AsignacionCurso asignacion;
         try{
             asignacion = asignacionCurso;
+            asignacion = (AsignacionCurso) services.saveEntity(asignacion);
             asignacion.setMateriasCollection(materias);
             asignacion.setParalelosCollection(paralelos);
-            asignacion = (AsignacionCurso) services.saveEntity(asignacion);
+            services.updateAndPersistEntity(asignacion);
         }catch(Exception e){
             e.printStackTrace();
             asignacion = null;
@@ -53,7 +53,20 @@ public class ColegiosEjb implements ColegiosServices{
     }
     
     @Override
-    public AsignacionProfesor crearAsignacionProfesor(AsignacionProfesor asignacion, List<AsignacionProfesorMaterias> asignacionProfesorMateriasList){
+    public Boolean actualizarAsignacionCurso(AsignacionCurso asignacionCurso){
+        Boolean b;
+        try{
+            b = true;
+            services.updateEntity(asignacionCurso);
+        }catch(Exception e){
+            e.printStackTrace();
+            b = false;
+        }
+        return b;
+    }
+    
+    @Override
+    public AsignacionProfesor crearAsignacionProfesor(AsignacionProfesor asignacion){
         return null;
     }
     

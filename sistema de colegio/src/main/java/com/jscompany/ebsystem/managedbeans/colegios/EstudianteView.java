@@ -7,12 +7,13 @@ package com.jscompany.ebsystem.managedbeans.colegios;
 
 import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.entidades.colegios.Colegio;
-import com.jscompany.ebsystem.entidades.modelosdedatos.RelacionesPersona;
 import com.jscompany.ebsystem.entidades.usuarios.Estudiante;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import com.jscompany.ebsystem.entidades.usuarios.RelacionPersona;
 import com.jscompany.ebsystem.entidades.usuarios.Rol;
 import com.jscompany.ebsystem.entidades.usuarios.TipoRelacionPersona;
+import com.jscompany.ebsystem.lazymodels.PersonasByRolLazy;
+import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.managedbeans.session.UtilSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
@@ -42,10 +43,14 @@ public class EstudianteView implements Serializable{
     @ManagedProperty (value = "#{utilSession}")
     private UtilSession utilSession;
     
+    @ManagedProperty(value = "#{userSession}")
+    private UserSession uSession;
+    
     private Estudiante estudiante;
     private List<Estudiante> estudianteList;
     private Persona persona, personaTemp;
-    private List<Persona> personasList, personasEncontradasList;
+    private List<Persona> personasEncontradasList;
+    private PersonasByRolLazy personasList;
     private List<Colegio> colegios;
     private Colegio colegio;
     private String cedula;
@@ -58,8 +63,9 @@ public class EstudianteView implements Serializable{
     
     @PostConstruct
     public void init(){
+        colegio = (Colegio) services.getEntity(Colegio.class, uSession.getIdColegio());
         rol = (Rol) services.getEntityByParameters(Querys.getRolById, new String[]{"rolId"}, new Object[]{new Long(3)});
-        personasList = services.getListEntitiesByParameters(Querys.getEstudiantesList, new String[]{"rol"}, new Object[]{rol});
+        personasList = new PersonasByRolLazy(colegio, rol);
         colegios = services.getListEntitiesByParameters(Querys.getColegiosList, new String[]{}, new Object[]{});
         tipoRelacionList = services.getListEntitiesByParameters(Querys.getRelacionesList, new String[]{}, new Object[]{});
     }
@@ -119,7 +125,7 @@ public class EstudianteView implements Serializable{
     public void eliminarEstudiante(Persona est){
         est.setRol(null);
         services.updateAndPersistEntity(est);
-        personasList.remove(est);
+        personasList = new PersonasByRolLazy(colegio, rol);
         JsfUti.messageInfo(null, "Info", "La persona ya no es estudiante de la instituciòn.");
     }
     
@@ -130,16 +136,14 @@ public class EstudianteView implements Serializable{
     }
     
     public void ingresarEstudiante(Persona p){
-        if(!personasList.contains(p)){
-            p.setRol(rol);
-            services.updateAndPersistEntity(p);
-            personasList.add(p);
-            personasEncontradasList.remove(p);
-            cedula = "";
-            JsfUti.messageInfo(null, "Info", "La persona ahora es un estudiante de la institución.");
-        }else{
-            JsfUti.messageError(null, "Error", "La persona que se trata de ingresar ya es un estudiante de la institución.");
-        }
+        p.setRol(rol);
+        p.setColegio(colegio);
+        services.saveEntity(p);
+        personasList = new PersonasByRolLazy(colegio, rol);
+        personasEncontradasList.remove(p);
+        cedula = "";
+        JsfUti.messageInfo(null, "Info", "La persona ahora es un profesor de la institución.");
+        
     }
     
     public void guardarNuevo(){
@@ -192,11 +196,11 @@ public class EstudianteView implements Serializable{
         this.estudianteList = estudianteList;
     }
 
-    public List<Persona> getPersonasList() {
+    public PersonasByRolLazy getPersonasList() {
         return personasList;
     }
 
-    public void setPersonasList(List<Persona> personasList) {
+    public void setPersonasList(PersonasByRolLazy personasList) {
         this.personasList = personasList;
     }
 
@@ -262,6 +266,14 @@ public class EstudianteView implements Serializable{
 
     public void setUtilSession(UtilSession utilSession) {
         this.utilSession = utilSession;
+    }
+
+    public UserSession getuSession() {
+        return uSession;
+    }
+
+    public void setuSession(UserSession uSession) {
+        this.uSession = uSession;
     }
     
 }

@@ -7,7 +7,6 @@ package com.jscompany.ebsystem.ejb.interfaces;
 
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
-import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesorMaterias;
 import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Matricula;
 import com.jscompany.ebsystem.entidades.colegios.Paralelo;
@@ -23,8 +22,10 @@ public interface ColegiosServices {
     
     public AsignacionCurso crearAsignacionCursoMatriculaAsignacionProfesor(AsignacionCurso asignacionCurso, List<Matricula> matriculas, List<AsignacionProfesor> asignacionProfesorList, List<Materia> materias, List<Paralelo> paralelos);
     
-    public AsignacionProfesor crearAsignacionProfesor(AsignacionProfesor asignacion, List<AsignacionProfesorMaterias> asignacionProfesorMateriasList);
+    public AsignacionProfesor crearAsignacionProfesor(AsignacionProfesor asignacion);
     
     public AsignacionCurso crearAsignacionCurso(AsignacionCurso asignacionCurso, List<Materia> materias, List<Paralelo> paralelos);
-
+    
+    public Boolean actualizarAsignacionCurso(AsignacionCurso asignacionCurso);
+    
 }

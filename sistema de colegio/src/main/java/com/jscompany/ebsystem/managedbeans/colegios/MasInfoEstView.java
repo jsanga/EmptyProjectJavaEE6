@@ -27,7 +27,7 @@ import javax.faces.bean.ViewScoped;
  */
 @ManagedBean
 @ViewScoped
-public class MasInfoView implements Serializable{
+public class MasInfoEstView implements Serializable{
     
     public static final Long serialVerisonUID = 1L;
     

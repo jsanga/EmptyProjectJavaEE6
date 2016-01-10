@@ -36,7 +36,7 @@ public class CrudParalelos implements Serializable{
     
     @PostConstruct
     public void init(){
-        paraleloList = services.getListEntitiesByParameters(Querys.getParalelosList, new String[]{}, new Object[]{});
+        paraleloList = services.getListEntitiesByParameters(Querys.getParalelosListNoState, new String[]{}, new Object[]{});
         if(paraleloList == null)
             paraleloList = new ArrayList();
     }
@@ -58,7 +58,6 @@ public class CrudParalelos implements Serializable{
                     c.setEstado(Boolean.FALSE);
                     services.updateAndPersistEntity(c); 
                 }
-                paraleloList.remove(i);
                 break;
             }
             i++;

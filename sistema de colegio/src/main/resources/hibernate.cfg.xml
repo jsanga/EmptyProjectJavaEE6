@@ -45,7 +45,6 @@
     <!-- Schema Colegios -->
     <mapping class="com.jscompany.ebsystem.entidades.colegios.AsignacionCurso"/>
     <mapping class="com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor"/>
-    <mapping class="com.jscompany.ebsystem.entidades.colegios.AsignacionProfesorMaterias"/>
     <mapping class="com.jscompany.ebsystem.entidades.colegios.Colegio"/>
     <mapping class="com.jscompany.ebsystem.entidades.colegios.Curso"/>
     <mapping class="com.jscompany.ebsystem.entidades.colegios.DesgloseNota"/>

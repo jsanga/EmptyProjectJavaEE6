@@ -23,6 +23,8 @@ public class UserSession implements Serializable {
 
     private String username;
     private String rolPersona;
+    private Long idColegio;
+    private Long idPersona;
     private Boolean isLogged = false;
     
     public void cerrarSesion(){
@@ -53,6 +55,22 @@ public class UserSession implements Serializable {
 
     public void setIsLogged(Boolean isLogged) {
         this.isLogged = isLogged;
+    }
+
+    public Long getIdColegio() {
+        return idColegio;
+    }
+
+    public void setIdColegio(Long idColegio) {
+        this.idColegio = idColegio;
+    }
+
+    public Long getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(Long idPersona) {
+        this.idPersona = idPersona;
     }
     
 }

@@ -22,9 +22,6 @@
                 <p:column headerText="Apellidos" filterBy="#{persona.apellidos}">
                     <h:outputText value="#{persona.apellidos}" style="text-transform: uppercase;"/>
                 </p:column>
-                <p:column headerText="Colegio" filterBy="#{persona.colegio.nombre}">
-                    <h:outputText value="#{persona.colegio.nombre}" style="text-transform: uppercase;"/>
-                </p:column>
                 <p:column headerText="Rol" filterBy="#{persona.rol.rolName}">
                     <h:outputText value="#{persona.rol.rolName}" style="text-transform: uppercase;"/>
                 </p:column>
@@ -54,11 +51,6 @@
                     <p:inputText value="#{personasView.persona.direccion}" style="text-transform: uppercase;"/>
                     <h:outputText value="Fecha de nacimiento:"/>
                     <p:calendar value="#{personasView.persona.fechaNacimiento}"/>
-                    <h:outputText value="Colegio:"/>
-                    <p:selectOneMenu value="#{personasView.colegio}" converter="colegioConverter" style="width: 180px;">
-                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
-                        <f:selectItems value="#{personasView.colegios}" var="col" itemValue="#{col}" itemLabel="#{col.nombre}"/>
-                    </p:selectOneMenu>
                     <h:outputText value="Rol:"/>
                     <p:selectOneMenu value="#{personasView.rol}" converter="rolConverter" style="width: 180px;">
                         <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
@@ -80,11 +72,6 @@
                     <p:inputText value="#{personasView.persona.direccion}" style="text-transform: uppercase;"/>
                     <h:outputText value="Fecha de Nacimiento:"/>
                     <p:calendar value="#{personasView.persona.fechaNacimiento}" navigator="true"/>
-                    <h:outputText value="Colegio:"/>
-                    <p:selectOneMenu value="#{personasView.colegio}" converter="colegioConverter" style="width: 180px;">
-                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
-                        <f:selectItems value="#{personasView.colegios}" var="col" itemValue="#{col}" itemLabel="#{col.nombre}"/>
-                    </p:selectOneMenu>
                     <h:outputText value="Rol:"/>
                     <p:selectOneMenu value="#{personasView.rol}" converter="rolConverter" style="width: 180px;">
                         <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />

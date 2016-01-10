@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -48,7 +49,7 @@ public class AsignacionCurso implements Serializable {
     private Date fechaCreacion;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "asignacion_curso_paralelos",
+        name = "asignacion_curso_paralelos", schema = "colegios",
         joinColumns = {@JoinColumn(name = "asignacion_curso", referencedColumnName = "id")},
         inverseJoinColumns = {@JoinColumn(name = "paralelo", referencedColumnName = "id")}
     )
@@ -66,12 +67,17 @@ public class AsignacionCurso implements Serializable {
     private Collection<Matricula> matriculaCollection;
     @OneToMany(mappedBy = "asignacionCurso", fetch = FetchType.LAZY)
     private Collection<AsignacionProfesor> asignacionProfesorCollection;
-    @ManyToMany(fetch = FetchType.LAZY)
+    /*
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, targetEntity = Materia.class)
     @JoinTable(
         name = "asignacion_curso_materias",
         joinColumns = {@JoinColumn(name = "asignacion_curso", referencedColumnName = "id")},
         inverseJoinColumns = {@JoinColumn(name = "materia", referencedColumnName = "id")}
-    )
+    )*/
+    @JoinTable(name = "asignacion_curso_materias", schema = "colegios", joinColumns = {
+        @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "materia", referencedColumnName = "id")})
+    @ManyToMany(fetch = FetchType.LAZY)
     private Collection<Materia> materiasCollection;
 
     public AsignacionCurso() {

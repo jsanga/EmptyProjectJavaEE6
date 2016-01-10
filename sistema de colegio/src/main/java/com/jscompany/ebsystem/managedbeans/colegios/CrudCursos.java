@@ -35,7 +35,7 @@ public class CrudCursos implements Serializable{
     
     @PostConstruct
     public void init(){
-        cursosList = services.getListEntitiesByParameters(Querys.getCursosList, new String[]{}, new Object[]{});
+        cursosList = services.getListEntitiesByParameters(Querys.getCursosListNoState, new String[]{}, new Object[]{});
         if(cursosList == null)
             cursosList = new ArrayList();
     }
@@ -57,7 +57,6 @@ public class CrudCursos implements Serializable{
                     c.setEstado(Boolean.FALSE);
                     services.updateAndPersistEntity(c); 
                 }
-                cursosList.remove(i);
                 break;
             }
             i++;

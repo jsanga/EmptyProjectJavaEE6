@@ -22,22 +22,23 @@ public class Querys {
     // Querys de asignaciones de curso
     public static String getAsignacionesCursoList = "select e from AsignacionCurso e where e.estado = TRUE";
     public static String getAsignacionesCursoListNoState = "select e from AsignacionCurso e";
+    public static String getAsignacionesProfesorList = "select e from AsignacionProfesor e where e.estado = TRUE";
+    public static String getAsignacionesProfesorListNoState = "select e from AsignacionProfesor e";
     
     // Querys de cursos
     public static String getCursosList = "select e from Curso e where e.estado = TRUE";
     public static String getCursosListNoState = "select e from Curso e";
     
     // Querys de personas
-    public static String getPersonaList = "select e from Persona e";
-    public static String getProfesoresList = "select e from Persona e where e.rol = :rol";
-    public static String getEstudiantesList = "select e from Persona e where e.rol = :rol";
-    public static String getPersonalList = "select e from Persona e where e.rol = 5";
+    public static String getPersonaList = "select e from Persona e where e.estado = TRUE";
+    public static String getPersonaListNoState = "select e from Persona e";
+    public static String getPersonaListByRol = "select e from Persona e where e.rol = :rol where e.estado = TRUE";
+    public static String getPersonaListByRolNoState = "select e from Persona e where e.rol = :rol";
     public static String getPersonaByCedula = "select e from Persona e where e.cedula = :cedula";
     public static String getPersonaByCedulaAndNOTRol = "select e from Persona e where e.cedula = :cedula and e.rol != :idRol";
     public static String getProfesorByPersonaID = "select e from Profesor e where e.persona = :idPersona";
     public static String getPersonalByPersonaID = "select e from Personal e where e.persona = :idPersona";
     public static String getPersonaByID = "select e from Persona e where e.id = :idPersona";
-    public static String getEstudianteList = "select e from Estudiante e";
     public static String getRolById = "Select e from Rol e where e.id = :rolId";
     public static String getRolList = "select e from Rol e";
     public static String getRelacionesList = "select e from TipoRelacionPersona e";

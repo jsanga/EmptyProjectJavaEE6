@@ -36,7 +36,7 @@ public class CrudPeriodoLectivo implements Serializable{
     
     @PostConstruct
     public void init(){
-        periodoList = services.getListEntitiesByParameters(Querys.getPeriodosList, new String[]{}, new Object[]{});
+        periodoList = services.getListEntitiesByParameters(Querys.getPeriodosListNoState, new String[]{}, new Object[]{});
         if(periodoList == null)
             periodoList = new ArrayList();
     }
@@ -58,7 +58,6 @@ public class CrudPeriodoLectivo implements Serializable{
                     c.setEstado(Boolean.FALSE);
                     services.updateAndPersistEntity(c); 
                 }
-                periodoList.remove(i);
                 break;
             }
             i++;

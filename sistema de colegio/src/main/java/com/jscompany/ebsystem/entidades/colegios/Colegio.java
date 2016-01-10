@@ -5,6 +5,7 @@
  */
 package com.jscompany.ebsystem.entidades.colegios;
 
+import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -51,7 +52,9 @@ public class Colegio implements Serializable {
     private String direccion;
     @OneToMany(mappedBy = "colegio", fetch = FetchType.LAZY)
     private Collection<AsignacionCurso> asignacionCursoCollection;
-
+    @OneToMany(mappedBy = "colegio", fetch = FetchType.LAZY)
+    private Collection<Persona> personasCollection;
+    
     public Colegio() {
     }
 
@@ -105,6 +108,14 @@ public class Colegio implements Serializable {
 
     public void setAsignacionCursoCollection(Collection<AsignacionCurso> asignacionCursoCollection) {
         this.asignacionCursoCollection = asignacionCursoCollection;
+    }
+
+    public Collection<Persona> getPersonasCollection() {
+        return personasCollection;
+    }
+
+    public void setPersonasCollection(Collection<Persona> personasCollection) {
+        this.personasCollection = personasCollection;
     }
 
     @Override

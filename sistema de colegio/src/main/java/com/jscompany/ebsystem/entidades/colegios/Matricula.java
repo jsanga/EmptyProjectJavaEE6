@@ -5,6 +5,7 @@
  */
 package com.jscompany.ebsystem.entidades.colegios;
 
+import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
@@ -38,8 +39,7 @@ public class Matricula implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Column(name = "estudiante")
-    private BigInteger estudiante;
+    
     @Column(name = "estado")
     private Boolean estado;
     @Column(name = "fecha_creacion")
@@ -48,6 +48,9 @@ public class Matricula implements Serializable {
     @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private AsignacionCurso asignacionCurso;
+    @JoinColumn(name = "estudiante", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Persona estudiante;
 
     public Matricula() {
     }
@@ -64,11 +67,11 @@ public class Matricula implements Serializable {
         this.id = id;
     }
 
-    public BigInteger getEstudiante() {
+    public Persona getEstudiante() {
         return estudiante;
     }
 
-    public void setEstudiante(BigInteger estudiante) {
+    public void setEstudiante(Persona estudiante) {
         this.estudiante = estudiante;
     }
 

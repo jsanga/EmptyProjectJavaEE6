@@ -5,6 +5,7 @@
  */
 package com.jscompany.ebsystem.entidades.colegios;
 
+import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Collection;
@@ -42,8 +43,9 @@ public class AsignacionProfesor implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Column(name = "profesor")
-    private BigInteger profesor;
+    @JoinColumn(name = "profesor", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Persona profesor;
     @Column(name = "estado")
     private Boolean estado;
     @Column(name = "fecha_creacion")
@@ -51,7 +53,7 @@ public class AsignacionProfesor implements Serializable {
     private Date fechaCreacion;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-        name = "asignacion_profesor_materias",
+        name = "asignacion_profesor_materias", schema = "colegios",
         joinColumns = {@JoinColumn(name = "asignacion_profesor", referencedColumnName = "id")},
         inverseJoinColumns = {@JoinColumn(name = "materia", referencedColumnName = "id")}
     )
@@ -76,14 +78,6 @@ public class AsignacionProfesor implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public BigInteger getProfesor() {
-        return profesor;
-    }
-
-    public void setProfesor(BigInteger profesor) {
-        this.profesor = profesor;
     }
 
     public Boolean getEstado() {
@@ -124,6 +118,14 @@ public class AsignacionProfesor implements Serializable {
 
     public void setAsignacionCurso(AsignacionCurso asignacionCurso) {
         this.asignacionCurso = asignacionCurso;
+    }
+
+    public Persona getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(Persona profesor) {
+        this.profesor = profesor;
     }
 
     @Override

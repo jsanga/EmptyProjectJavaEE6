@@ -26,6 +26,6 @@ public class MateriasLazy extends BaseLazyDataModel<Materia> {
         if (filters.containsKey("nombre")) {
             crit.add(Restrictions.ilike("nombre", "%" + filters.get("nombre").toString().trim() + "%"));
         }
-        crit.add(Restrictions.le("estado", true));
+        //crit.add(Restrictions.le("estado", true));
     }
 }

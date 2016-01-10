@@ -15,6 +15,7 @@ import com.jscompany.ebsystem.entidades.colegios.Paralelo;
 import com.jscompany.ebsystem.entidades.colegios.PeriodoLectivo;
 import com.jscompany.ebsystem.lazymodels.MateriasLazy;
 import com.jscompany.ebsystem.lazymodels.ParalelosLazy;
+import com.jscompany.ebsystem.managedbeans.session.UtilSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
 import java.io.Serializable;
@@ -24,6 +25,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 /**
@@ -41,6 +43,9 @@ public class AsignacionCursoView implements Serializable{
     
     @EJB(beanName = "colegiosServices")
     private ColegiosServices colServices;
+    
+    @ManagedProperty (value = "#{utilSession}")
+    private UtilSession utilSession;
     
     private Colegio colegio;
     private List<Colegio> colegiosList;
@@ -85,6 +90,22 @@ public class AsignacionCursoView implements Serializable{
     
     public void eliminarAsignacion(AsignacionCurso ac){
         asignacion = ac;
+        asignacion.setEstado(Boolean.FALSE);
+        services.updateAndPersistEntity(asignacion);
+        JsfUti.messageInfo(null, "Info", "Asignación eliminada.");
+    }
+    
+    public void masInfo(AsignacionCurso ac){
+        JsfUti.redirectNewTab("/colegionetworksystem/faces/admin/cursos/masinfo.xhtml");
+        utilSession.instanciarParametros();
+        utilSession.agregarParametro("idAsigCurso", new Long(ac.getId()));
+    }
+    
+    public void activarAsignacion(AsignacionCurso ac){
+        asignacion = ac;
+        asignacion.setEstado(Boolean.TRUE);
+        services.updateAndPersistEntity(asignacion);
+                JsfUti.messageInfo(null, "Info", "Asignación habilitada.");
     }
     
     public void guardarNuevo(){
@@ -102,10 +123,14 @@ public class AsignacionCursoView implements Serializable{
     }
     
     public void guardarEdicion(){
-        if(services.updateAndPersistEntity(asignacion))
-            JsfUti.messageInfo(null, "Info", "Se editó la asignacion satisfactoriamente");
-        else
-            JsfUti.messageError(null, "Error", "Hubo un problema al editar la asignacion.");
+        try{
+            if(colServices.actualizarAsignacionCurso(asignacion))
+                JsfUti.messageInfo(null, "Info", "Se editó la asignacion satisfactoriamente");
+            else
+                JsfUti.messageError(null, "Error", "Hubo un problema al editar la asignacion.");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
     
     public Colegio getColegio() {
@@ -202,6 +227,14 @@ public class AsignacionCursoView implements Serializable{
 
     public void setParalelos(ParalelosLazy paralelos) {
         this.paralelos = paralelos;
+    }
+
+    public UtilSession getUtilSession() {
+        return utilSession;
+    }
+
+    public void setUtilSession(UtilSession utilSession) {
+        this.utilSession = utilSession;
     }
     
 }
