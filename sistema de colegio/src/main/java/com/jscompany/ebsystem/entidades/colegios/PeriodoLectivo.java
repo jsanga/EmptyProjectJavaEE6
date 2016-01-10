@@ -21,6 +21,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
 
 /**
  *
@@ -28,6 +30,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "periodo_lectivo", schema = "colegios")
+@FilterDef(name = "activos", 
+    defaultCondition = "estado = 'TRUE'")
 @NamedQueries({
     @NamedQuery(name = "PeriodoLectivo.findAll", query = "SELECT p FROM PeriodoLectivo p")})
 public class PeriodoLectivo implements Serializable {
@@ -46,6 +50,7 @@ public class PeriodoLectivo implements Serializable {
     @Column(name = "estado")
     private Boolean estado;
     @OneToMany(mappedBy = "periodoLectivo", fetch = FetchType.LAZY)
+    @Filter(name="activos")
     private Collection<AsignacionCurso> asignacionCursoCollection;
 
     public PeriodoLectivo() {

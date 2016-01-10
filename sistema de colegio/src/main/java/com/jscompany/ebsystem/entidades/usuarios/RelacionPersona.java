@@ -19,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import org.hibernate.annotations.FilterDef;
 
 /**
  *
@@ -26,6 +27,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "relacion_persona", schema = "usuarios")
+@FilterDef(name = "activos", 
+    defaultCondition = "estado = 'TRUE'")
 @NamedQueries({
     @NamedQuery(name = "RelacionPersona.findAll", query = "SELECT r FROM RelacionPersona r")})
 public class RelacionPersona implements Serializable {

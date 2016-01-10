@@ -19,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.Filter;
 
 /**
  *
@@ -41,6 +42,7 @@ public class TipoRelacionPersona implements Serializable {
     @Column(name = "estado")
     private Boolean estado;
     @OneToMany(mappedBy = "tipoRelacion", fetch = FetchType.LAZY)
+    @Filter(name="activos")
     private Collection<RelacionPersona> relacionPersonaCollection;
 
     public TipoRelacionPersona() {

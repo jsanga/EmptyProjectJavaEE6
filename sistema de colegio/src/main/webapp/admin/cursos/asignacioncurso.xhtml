@@ -36,11 +36,6 @@
                 <p:tabView>
                     <p:tab title="Asignacion">
                         <p:panelGrid columns="2">
-                            <h:outputText value="Colegio:"/>
-                            <p:selectOneMenu value="#{asignacionCursoView.asignacion.colegio}" converter="colegioConverter" style="width: 180px;">
-                                <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
-                                <f:selectItems value="#{asignacionCursoView.colegiosList}" var="col" itemValue="#{col}" itemLabel="#{col.nombre}"/>
-                            </p:selectOneMenu>
                             <h:outputText value="Curso:"/>
                             <p:selectOneMenu value="#{asignacionCursoView.asignacion.curso}" converter="cursoConverter" style="width: 180px;">
                                 <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
@@ -89,11 +84,6 @@
                 <p:tabView>
                     <p:tab title="Asignacion">
                         <p:panelGrid columns="2">
-                            <h:outputText value="Colegio:"/>
-                            <p:selectOneMenu value="#{asignacionCursoView.asignacion.colegio}" converter="colegioConverter" style="width: 180px;">
-                                <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
-                                <f:selectItems value="#{asignacionCursoView.colegiosList}" var="col" itemValue="#{col}" itemLabel="#{col.nombre}"/>
-                            </p:selectOneMenu>
                             <h:outputText value="Curso:"/>
                             <p:selectOneMenu value="#{asignacionCursoView.asignacion.curso}" converter="cursoConverter" style="width: 180px;">
                                 <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />

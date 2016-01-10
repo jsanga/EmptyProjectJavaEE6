@@ -23,6 +23,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.FilterDef;
 
 /**
  *
@@ -30,6 +31,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "matricula", schema = "colegios")
+@FilterDef(name = "activos", 
+    defaultCondition = "estado = 'TRUE'")
 @NamedQueries({
     @NamedQuery(name = "Matricula.findAll", query = "SELECT m FROM Matricula m")})
 public class Matricula implements Serializable {

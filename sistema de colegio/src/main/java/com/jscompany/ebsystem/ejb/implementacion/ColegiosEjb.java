@@ -5,7 +5,6 @@
  */
 package com.jscompany.ebsystem.ejb.implementacion;
 
-import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.ejb.HibernateEjbInterceptor;
 import com.jscompany.ebsystem.ejb.interfaces.ColegiosServices;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
@@ -13,7 +12,6 @@ import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
 import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Matricula;
 import com.jscompany.ebsystem.entidades.colegios.Paralelo;
-import com.jscompany.ebsystem.entidades.usuarios.Loguin;
 import com.jscompany.ebsystem.services.AclService;
 import java.util.List;
 import javax.ejb.EJB;
@@ -66,8 +64,30 @@ public class ColegiosEjb implements ColegiosServices{
     }
     
     @Override
-    public AsignacionProfesor crearAsignacionProfesor(AsignacionProfesor asignacion){
-        return null;
+    public AsignacionProfesor crearAsignacionProfesor(AsignacionProfesor asignacionP, List<Materia> materias){
+        AsignacionProfesor asignacion;
+        try{
+            asignacion = asignacionP;
+            asignacion = (AsignacionProfesor) services.saveEntity(asignacion);
+            asignacion.setMateriasCollection(materias);
+            services.updateAndPersistEntity(asignacion);
+        }catch(Exception e){
+            e.printStackTrace();
+            asignacion = null;
+        }
+        return asignacion;
     }
     
+    @Override
+    public Boolean actualizarAsignacionProfesor(AsignacionProfesor asignacionProfesor){
+        Boolean b;
+        try{
+            b = true;
+            services.updateEntity(asignacionProfesor);
+        }catch(Exception e){
+            e.printStackTrace();
+            b = false;
+        }
+        return b;
+    }
 }

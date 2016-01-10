@@ -22,10 +22,12 @@ public interface ColegiosServices {
     
     public AsignacionCurso crearAsignacionCursoMatriculaAsignacionProfesor(AsignacionCurso asignacionCurso, List<Matricula> matriculas, List<AsignacionProfesor> asignacionProfesorList, List<Materia> materias, List<Paralelo> paralelos);
     
-    public AsignacionProfesor crearAsignacionProfesor(AsignacionProfesor asignacion);
+    public AsignacionProfesor crearAsignacionProfesor(AsignacionProfesor asignacion, List<Materia> materias);
     
     public AsignacionCurso crearAsignacionCurso(AsignacionCurso asignacionCurso, List<Materia> materias, List<Paralelo> paralelos);
     
     public Boolean actualizarAsignacionCurso(AsignacionCurso asignacionCurso);
+    
+    public Boolean actualizarAsignacionProfesor(AsignacionProfesor asignacionProfesor);
     
 }

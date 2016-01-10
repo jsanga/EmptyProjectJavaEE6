@@ -27,6 +27,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
 
 /**
  *
@@ -34,6 +36,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "asignacion_profesor", schema = "colegios")
+@FilterDef(name = "activos", 
+    defaultCondition = "estado = 'TRUE'")
 @NamedQueries({
     @NamedQuery(name = "AsignacionProfesor.findAll", query = "SELECT a FROM AsignacionProfesor a")})
 public class AsignacionProfesor implements Serializable {
@@ -57,6 +61,7 @@ public class AsignacionProfesor implements Serializable {
         joinColumns = {@JoinColumn(name = "asignacion_profesor", referencedColumnName = "id")},
         inverseJoinColumns = {@JoinColumn(name = "materia", referencedColumnName = "id")}
     )
+    @Filter(name="activos")
     private Collection<Materia> materiasCollection;
     @JoinColumn(name = "paralelo", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)

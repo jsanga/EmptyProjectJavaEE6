@@ -18,6 +18,9 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
 
 /**
  *
@@ -25,6 +28,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "tipo_contrato", schema = "usuarios")
+@FilterDef(name = "activos", 
+    defaultCondition = "estado = 'TRUE'")
 @NamedQueries({
     @NamedQuery(name = "TipoContrato.findAll", query = "SELECT t FROM TipoContrato t")})
 public class TipoContrato implements Serializable {
@@ -34,6 +39,11 @@ public class TipoContrato implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+    @Size(max = 150)
+    @Column(name = "nombre_tipo")
+    private String nombreTipo;
+    @Column(name = "estado")
+    private Boolean estado;
     @OneToMany(mappedBy = "tipoContrato", fetch = FetchType.LAZY)
     private Collection<Profesor> profesorCollection;
     @OneToMany(mappedBy = "tipoContrato", fetch = FetchType.LAZY)
@@ -52,6 +62,22 @@ public class TipoContrato implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNombreTipo() {
+        return nombreTipo;
+    }
+
+    public void setNombreTipo(String nombreTipo) {
+        this.nombreTipo = nombreTipo;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
     public Collection<Profesor> getProfesorCollection() {

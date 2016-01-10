@@ -32,7 +32,8 @@ public class Querys {
     // Querys de personas
     public static String getPersonaList = "select e from Persona e where e.estado = TRUE";
     public static String getPersonaListNoState = "select e from Persona e";
-    public static String getPersonaListByRol = "select e from Persona e where e.rol = :rol where e.estado = TRUE";
+    public static String getPersonaListByRol = "select e from Persona e where e.rol = :rol and e.estado = TRUE";
+    public static String getPersonaListByRolAndColegio = "select e from Persona e where e.rol = :rol and e.estado = TRUE and e.colegio = :colegio";
     public static String getPersonaListByRolNoState = "select e from Persona e where e.rol = :rol";
     public static String getPersonaByCedula = "select e from Persona e where e.cedula = :cedula";
     public static String getPersonaByCedulaAndNOTRol = "select e from Persona e where e.cedula = :cedula and e.rol != :idRol";

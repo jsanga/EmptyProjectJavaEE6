@@ -28,6 +28,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
 
 /**
  *
@@ -35,6 +37,8 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "persona", schema = "usuarios")
+@FilterDef(name = "activos", 
+    defaultCondition = "estado = 'TRUE'")
 @NamedQueries({
     @NamedQuery(name = "Persona.findAll", query = "SELECT p FROM Persona p")})
 public class Persona implements Serializable {
@@ -65,12 +69,16 @@ public class Persona implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;    
     @OneToMany(mappedBy = "persona", fetch = FetchType.LAZY)
+    @Filter(name="activos")
     private Collection<PersonaEmail> personaEmailCollection;
     @OneToMany(mappedBy = "persona", fetch = FetchType.LAZY)
+    @Filter(name="activos")
     private Collection<PersonaTelefono> personaTelefonoCollection;
     @OneToMany(mappedBy = "estudiante", fetch = FetchType.LAZY)
+    @Filter(name="activos")
     private Collection<Matricula> matriculaCollection;
     @OneToMany(mappedBy = "profesor", fetch = FetchType.LAZY)
+    @Filter(name="activos")
     private Collection<AsignacionProfesor> asignacionProfesorCollection;
     @JoinColumn(name = "rol", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)

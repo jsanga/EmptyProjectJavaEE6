@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,6 +25,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
 
 /**
  *
@@ -33,6 +34,8 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "asignacion_curso", schema = "colegios")
+@FilterDef(name = "activos", 
+    defaultCondition = "estado = 'TRUE'")
 @NamedQueries({
     @NamedQuery(name = "AsignacionCurso.findAll", query = "SELECT a FROM AsignacionCurso a")})
 public class AsignacionCurso implements Serializable {
@@ -53,6 +56,7 @@ public class AsignacionCurso implements Serializable {
         joinColumns = {@JoinColumn(name = "asignacion_curso", referencedColumnName = "id")},
         inverseJoinColumns = {@JoinColumn(name = "paralelo", referencedColumnName = "id")}
     )
+    @Filter(name="activos")
     private Collection<Paralelo> paralelosCollection;
     @JoinColumn(name = "periodo_lectivo", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -64,8 +68,10 @@ public class AsignacionCurso implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Colegio colegio;
     @OneToMany(mappedBy = "asignacionCurso", fetch = FetchType.LAZY)
+    @Filter(name="activos")
     private Collection<Matricula> matriculaCollection;
     @OneToMany(mappedBy = "asignacionCurso", fetch = FetchType.LAZY)
+    @Filter(name="activos")
     private Collection<AsignacionProfesor> asignacionProfesorCollection;
     /*
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, targetEntity = Materia.class)
@@ -78,6 +84,7 @@ public class AsignacionCurso implements Serializable {
         @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "materia", referencedColumnName = "id")})
     @ManyToMany(fetch = FetchType.LAZY)
+    @Filter(name="activos")
     private Collection<Materia> materiasCollection;
 
     public AsignacionCurso() {

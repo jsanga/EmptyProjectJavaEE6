@@ -19,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.FilterDef;
 
 /**
  *
@@ -26,6 +27,8 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "persona_email", schema = "usuarios")
+@FilterDef(name = "activos", 
+    defaultCondition = "estado = 'TRUE'")
 @NamedQueries({
     @NamedQuery(name = "PersonaEmail.findAll", query = "SELECT p FROM PersonaEmail p")})
 public class PersonaEmail implements Serializable {

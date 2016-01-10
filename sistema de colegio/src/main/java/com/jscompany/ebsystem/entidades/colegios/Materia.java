@@ -21,6 +21,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
 
 /**
  *
@@ -28,6 +30,8 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "materia", schema = "colegios")
+@FilterDef(name = "activos", 
+    defaultCondition = "estado = 'TRUE'")
 @NamedQueries({
     @NamedQuery(name = "Materia.findAll", query = "SELECT m FROM Materia m")})
 public class Materia implements Serializable {
@@ -45,8 +49,10 @@ public class Materia implements Serializable {
     @OneToMany(mappedBy = "materia", fetch = FetchType.LAZY)
     private Collection<DetalleMateria> detalleMateriaCollection;
     @ManyToMany(mappedBy="materiasCollection", fetch = FetchType.LAZY)
+    @Filter(name="activos")
     private Collection<AsignacionProfesor> asignacionProfesorCollection;
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "materiasCollection")
+    @Filter(name="activos")
     private Collection<AsignacionCurso> asignacionCursoCollection;
 
     public Materia() {

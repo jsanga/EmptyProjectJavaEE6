@@ -98,19 +98,18 @@ public class AsignacionCursoView implements Serializable{
     public void masInfo(AsignacionCurso ac){
         JsfUti.redirectNewTab("/colegionetworksystem/faces/admin/cursos/masinfo.xhtml");
         utilSession.instanciarParametros();
-        utilSession.agregarParametro("idAsigCurso", new Long(ac.getId()));
+        utilSession.agregarParametro("idAsigCurso", ac.getId());
     }
     
     public void activarAsignacion(AsignacionCurso ac){
         asignacion = ac;
         asignacion.setEstado(Boolean.TRUE);
         services.updateAndPersistEntity(asignacion);
-                JsfUti.messageInfo(null, "Info", "Asignación habilitada.");
+        JsfUti.messageInfo(null, "Info", "Asignación habilitada.");
     }
     
     public void guardarNuevo(){
-        try{
-            
+        try{            
             if(colServices.crearAsignacionCurso(asignacion, materiasList, paralelosList)!=null){
                 asignacionesList.add(asignacion);
                 JsfUti.messageInfo(null, "Info", "Se creó la asignación satisfactoriamente");
