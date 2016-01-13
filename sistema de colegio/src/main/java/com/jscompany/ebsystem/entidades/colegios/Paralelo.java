@@ -8,20 +8,18 @@ package com.jscompany.ebsystem.entidades.colegios;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.FilterDef;
 
 /**
  *
@@ -29,8 +27,6 @@ import org.hibernate.annotations.FilterDef;
  */
 @Entity
 @Table(name = "paralelo", schema = "colegios")
-@FilterDef(name = "activos", 
-    defaultCondition = "estado = 'TRUE'")
 @NamedQueries({
     @NamedQuery(name = "Paralelo.findAll", query = "SELECT p FROM Paralelo p")})
 public class Paralelo implements Serializable {
@@ -45,11 +41,9 @@ public class Paralelo implements Serializable {
     private String nombre;
     @Column(name = "estado")
     private Boolean estado;
-    @ManyToMany(mappedBy="paralelosCollection", fetch = FetchType.LAZY)
-    @Filter(name="activos")
-    private Collection<AsignacionCurso> asignacionCursoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "paralelo", fetch = FetchType.LAZY)
+    private Collection<AsignacionCursoParalelos> asignacionCursoParalelosCollection;
     @OneToMany(mappedBy = "paralelo", fetch = FetchType.LAZY)
-    @Filter(name="activos")
     private Collection<AsignacionProfesor> asignacionProfesorCollection;
 
     public Paralelo() {
@@ -83,20 +77,20 @@ public class Paralelo implements Serializable {
         this.estado = estado;
     }
 
+    public Collection<AsignacionCursoParalelos> getAsignacionCursoParalelosCollection() {
+        return asignacionCursoParalelosCollection;
+    }
+
+    public void setAsignacionCursoParalelosCollection(Collection<AsignacionCursoParalelos> asignacionCursoParalelosCollection) {
+        this.asignacionCursoParalelosCollection = asignacionCursoParalelosCollection;
+    }
+
     public Collection<AsignacionProfesor> getAsignacionProfesorCollection() {
         return asignacionProfesorCollection;
     }
 
     public void setAsignacionProfesorCollection(Collection<AsignacionProfesor> asignacionProfesorCollection) {
         this.asignacionProfesorCollection = asignacionProfesorCollection;
-    }
-
-    public Collection<AsignacionCurso> getAsignacionCursoCollection() {
-        return asignacionCursoCollection;
-    }
-
-    public void setAsignacionCursoCollection(Collection<AsignacionCurso> asignacionCursoCollection) {
-        this.asignacionCursoCollection = asignacionCursoCollection;
     }
 
     @Override

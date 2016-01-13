@@ -43,7 +43,7 @@ public class PersonasByRolLazy extends BaseLazyDataModel<Persona> {
             crit.createCriteria("colegio").add(Restrictions.ilike("nombre", "%"+ filters.get("colegio.nombre").toString().trim() +"%" ));
         }
         //crit.add(Restrictions.le("estado", true));
-        crit.add(Restrictions.le("rol", rol));
-        crit.add(Restrictions.le("colegio", idColegio));        
+        crit.add(Restrictions.eq("rol", rol));
+        crit.add(Restrictions.eq("colegio", idColegio));        
     }
 }

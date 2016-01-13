@@ -11,6 +11,7 @@ import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,8 +19,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -27,8 +26,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.FilterDef;
 
 /**
  *
@@ -36,8 +33,6 @@ import org.hibernate.annotations.FilterDef;
  */
 @Entity
 @Table(name = "asignacion_profesor", schema = "colegios")
-@FilterDef(name = "activos", 
-    defaultCondition = "estado = 'TRUE'")
 @NamedQueries({
     @NamedQuery(name = "AsignacionProfesor.findAll", query = "SELECT a FROM AsignacionProfesor a")})
 public class AsignacionProfesor implements Serializable {
@@ -47,22 +42,15 @@ public class AsignacionProfesor implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @JoinColumn(name = "profesor", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(name = "profesor")
     private Persona profesor;
     @Column(name = "estado")
     private Boolean estado;
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "asignacion_profesor_materias", schema = "colegios",
-        joinColumns = {@JoinColumn(name = "asignacion_profesor", referencedColumnName = "id")},
-        inverseJoinColumns = {@JoinColumn(name = "materia", referencedColumnName = "id")}
-    )
-    @Filter(name="activos")
-    private Collection<Materia> materiasCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignacionProfesor", fetch = FetchType.LAZY)
+    private Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection;
     @JoinColumn(name = "paralelo", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Paralelo paralelo;
@@ -85,6 +73,14 @@ public class AsignacionProfesor implements Serializable {
         this.id = id;
     }
 
+    public Persona getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(Persona profesor) {
+        this.profesor = profesor;
+    }
+
     public Boolean getEstado() {
         return estado;
     }
@@ -101,12 +97,12 @@ public class AsignacionProfesor implements Serializable {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public Collection<Materia> getMateriasCollection() {
-        return materiasCollection;
+    public Collection<AsignacionProfesorMaterias> getAsignacionProfesorMateriasCollection() {
+        return asignacionProfesorMateriasCollection;
     }
 
-    public void setMateriasCollection(Collection<Materia> materiasCollection) {
-        this.materiasCollection = materiasCollection;
+    public void setAsignacionProfesorMateriasCollection(Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection) {
+        this.asignacionProfesorMateriasCollection = asignacionProfesorMateriasCollection;
     }
 
     public Paralelo getParalelo() {
@@ -123,14 +119,6 @@ public class AsignacionProfesor implements Serializable {
 
     public void setAsignacionCurso(AsignacionCurso asignacionCurso) {
         this.asignacionCurso = asignacionCurso;
-    }
-
-    public Persona getProfesor() {
-        return profesor;
-    }
-
-    public void setProfesor(Persona profesor) {
-        this.profesor = profesor;
     }
 
     @Override

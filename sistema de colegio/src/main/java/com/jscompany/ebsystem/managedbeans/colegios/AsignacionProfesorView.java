@@ -8,6 +8,8 @@ package com.jscompany.ebsystem.managedbeans.colegios;
 import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.ejb.interfaces.ColegiosServices;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
+import com.jscompany.ebsystem.entidades.colegios.AsignacionCursoMaterias;
+import com.jscompany.ebsystem.entidades.colegios.AsignacionCursoParalelos;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
 import com.jscompany.ebsystem.entidades.colegios.Colegio;
 import com.jscompany.ebsystem.entidades.colegios.Materia;
@@ -20,6 +22,7 @@ import com.jscompany.ebsystem.managedbeans.session.UtilSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -70,8 +73,8 @@ public class AsignacionProfesorView implements Serializable{
         rol = (Rol) services.getEntityByParameters(Querys.getRolById, new String[]{"rolId"}, new Object[]{new Long(2)});
         asignacionesProfList = services.getListEntitiesByParameters(Querys.getAsignacionesProfesorListNoState, new String[]{}, new Object[]{});
         asignacionesCursosList = services.getListEntitiesByParameters(Querys.getAsignacionesCursoList, new String[]{}, new Object[]{});
-        //profesoresList = new PersonasByRolLazy(colegio, rol);
-        personasListPrueba = services.getListEntitiesByParameters(Querys.getPersonaListByRolAndColegio, new String[]{"rol", "colegio"}, new Object[]{rol, colegio});
+        profesoresList = new PersonasByRolLazy(colegio, rol);
+        //personasListPrueba = services.getListEntitiesByParameters(Querys.getPersonaListByRolAndColegio, new String[]{"rol", "colegio"}, new Object[]{rol, colegio});
     }
     
     public void nuevaAsignacion(){
@@ -109,6 +112,16 @@ public class AsignacionProfesorView implements Serializable{
     }
     
     public void onRowSelect(){
+        List<AsignacionCursoMaterias> temp1 = services.getListEntitiesByParameters(Querys.getAsigCursoMaterias, new String[]{"asigCurso"}, new Object[]{asigcurso});
+        List<AsignacionCursoParalelos> temp2 = services.getListEntitiesByParameters(Querys.getAsigCursoParalelos, new String[]{"asigCurso"}, new Object[]{asigcurso});
+        paralelosList = new ArrayList<>();
+        materiasList = new ArrayList<>();
+        for(AsignacionCursoMaterias t : temp1){
+            materiasList.add(t.getMateria());
+        }
+        for(AsignacionCursoParalelos t : temp2){
+            paralelosList.add(t.getParalelo());
+        }
         JsfUti.messageInfo(null, "Info", "Curso seleccionado.");
     }
     

@@ -5,10 +5,7 @@
  */
 package com.jscompany.ebsystem.entidades.colegios;
 
-import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import java.io.Serializable;
-import java.math.BigInteger;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,56 +18,38 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
  * @author Joao Sanga
  */
 @Entity
-@Table(name = "matricula", schema = "colegios")
+@Table(name = "asignacion_curso_materias", schema = "colegios")
 @NamedQueries({
-    @NamedQuery(name = "Matricula.findAll", query = "SELECT m FROM Matricula m")})
-public class Matricula implements Serializable {
+    @NamedQuery(name = "AsignacionCursoMaterias.findAll", query = "SELECT a FROM AsignacionCursoMaterias a")})
+public class AsignacionCursoMaterias implements Serializable {
     private static final long serialVersionUID = 1L;
+    @Column(name = "estado")
+    private Boolean estado;
+    @Column(name = "fue_tomada")
+    private Boolean fueTomada;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Column(name = "estudiante")
-    private Persona estudiante;
-    @Column(name = "estado")
-    private Boolean estado;
-    @Column(name = "fecha_creacion")
-    @Temporal(TemporalType.DATE)
-    private Date fechaCreacion;
+    @JoinColumn(name = "materia", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Materia materia;
     @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private AsignacionCurso asignacionCurso;
 
-    public Matricula() {
+    public AsignacionCursoMaterias() {
     }
 
-    public Matricula(Long id) {
+    public AsignacionCursoMaterias(Long id) {
         this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Persona getEstudiante() {
-        return estudiante;
-    }
-
-    public void setEstudiante(Persona estudiante) {
-        this.estudiante = estudiante;
     }
 
     public Boolean getEstado() {
@@ -81,12 +60,28 @@ public class Matricula implements Serializable {
         this.estado = estado;
     }
 
-    public Date getFechaCreacion() {
-        return fechaCreacion;
+    public Boolean getFueTomada() {
+        return fueTomada;
     }
 
-    public void setFechaCreacion(Date fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
+    public void setFueTomada(Boolean fueTomada) {
+        this.fueTomada = fueTomada;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Materia getMateria() {
+        return materia;
+    }
+
+    public void setMateria(Materia materia) {
+        this.materia = materia;
     }
 
     public AsignacionCurso getAsignacionCurso() {
@@ -107,10 +102,10 @@ public class Matricula implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Matricula)) {
+        if (!(object instanceof AsignacionCursoMaterias)) {
             return false;
         }
-        Matricula other = (Matricula) object;
+        AsignacionCursoMaterias other = (AsignacionCursoMaterias) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -119,7 +114,7 @@ public class Matricula implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.colegios.Matricula[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.colegios.AsignacionCursoMaterias[ id=" + id + " ]";
     }
     
 }

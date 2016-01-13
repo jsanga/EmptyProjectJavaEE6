@@ -15,14 +15,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.FilterDef;
 
 /**
  *
@@ -30,8 +27,6 @@ import org.hibernate.annotations.FilterDef;
  */
 @Entity
 @Table(name = "materia", schema = "colegios")
-@FilterDef(name = "activos", 
-    defaultCondition = "estado = 'TRUE'")
 @NamedQueries({
     @NamedQuery(name = "Materia.findAll", query = "SELECT m FROM Materia m")})
 public class Materia implements Serializable {
@@ -48,12 +43,10 @@ public class Materia implements Serializable {
     private Boolean estado;
     @OneToMany(mappedBy = "materia", fetch = FetchType.LAZY)
     private Collection<DetalleMateria> detalleMateriaCollection;
-    @ManyToMany(mappedBy="materiasCollection", fetch = FetchType.LAZY)
-    @Filter(name="activos")
-    private Collection<AsignacionProfesor> asignacionProfesorCollection;
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "materiasCollection")
-    @Filter(name="activos")
-    private Collection<AsignacionCurso> asignacionCursoCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "materia", fetch = FetchType.LAZY)
+    private Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "materia", fetch = FetchType.LAZY)
+    private Collection<AsignacionCursoMaterias> asignacionCursoMateriasCollection;
 
     public Materia() {
     }
@@ -94,20 +87,20 @@ public class Materia implements Serializable {
         this.detalleMateriaCollection = detalleMateriaCollection;
     }
 
-    public Collection<AsignacionProfesor> getAsignacionProfesorCollection() {
-        return asignacionProfesorCollection;
+    public Collection<AsignacionProfesorMaterias> getAsignacionProfesorMateriasCollection() {
+        return asignacionProfesorMateriasCollection;
     }
 
-    public void setAsignacionProfesorCollection(Collection<AsignacionProfesor> asignacionProfesorCollection) {
-        this.asignacionProfesorCollection = asignacionProfesorCollection;
+    public void setAsignacionProfesorMateriasCollection(Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection) {
+        this.asignacionProfesorMateriasCollection = asignacionProfesorMateriasCollection;
     }
 
-    public Collection<AsignacionCurso> getAsignacionCursoCollection() {
-        return asignacionCursoCollection;
+    public Collection<AsignacionCursoMaterias> getAsignacionCursoMateriasCollection() {
+        return asignacionCursoMateriasCollection;
     }
 
-    public void setAsignacionCursoCollection(Collection<AsignacionCurso> asignacionCursoCollection) {
-        this.asignacionCursoCollection = asignacionCursoCollection;
+    public void setAsignacionCursoMateriasCollection(Collection<AsignacionCursoMaterias> asignacionCursoMateriasCollection) {
+        this.asignacionCursoMateriasCollection = asignacionCursoMateriasCollection;
     }
 
     @Override

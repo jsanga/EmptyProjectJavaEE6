@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,8 +17,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -25,8 +24,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.FilterDef;
 
 /**
  *
@@ -34,8 +31,6 @@ import org.hibernate.annotations.FilterDef;
  */
 @Entity
 @Table(name = "asignacion_curso", schema = "colegios")
-@FilterDef(name = "activos", 
-    defaultCondition = "estado = 'TRUE'")
 @NamedQueries({
     @NamedQuery(name = "AsignacionCurso.findAll", query = "SELECT a FROM AsignacionCurso a")})
 public class AsignacionCurso implements Serializable {
@@ -50,14 +45,8 @@ public class AsignacionCurso implements Serializable {
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "asignacion_curso_paralelos", schema = "colegios",
-        joinColumns = {@JoinColumn(name = "asignacion_curso", referencedColumnName = "id")},
-        inverseJoinColumns = {@JoinColumn(name = "paralelo", referencedColumnName = "id")}
-    )
-    @Filter(name="activos")
-    private Collection<Paralelo> paralelosCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignacionCurso", fetch = FetchType.LAZY)
+    private Collection<AsignacionCursoParalelos> asignacionCursoParalelosCollection;
     @JoinColumn(name = "periodo_lectivo", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private PeriodoLectivo periodoLectivo;
@@ -68,24 +57,11 @@ public class AsignacionCurso implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     private Colegio colegio;
     @OneToMany(mappedBy = "asignacionCurso", fetch = FetchType.LAZY)
-    @Filter(name="activos")
     private Collection<Matricula> matriculaCollection;
     @OneToMany(mappedBy = "asignacionCurso", fetch = FetchType.LAZY)
-    @Filter(name="activos")
     private Collection<AsignacionProfesor> asignacionProfesorCollection;
-    /*
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, targetEntity = Materia.class)
-    @JoinTable(
-        name = "asignacion_curso_materias",
-        joinColumns = {@JoinColumn(name = "asignacion_curso", referencedColumnName = "id")},
-        inverseJoinColumns = {@JoinColumn(name = "materia", referencedColumnName = "id")}
-    )*/
-    @JoinTable(name = "asignacion_curso_materias", schema = "colegios", joinColumns = {
-        @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "materia", referencedColumnName = "id")})
-    @ManyToMany(fetch = FetchType.LAZY)
-    @Filter(name="activos")
-    private Collection<Materia> materiasCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignacionCurso", fetch = FetchType.LAZY)
+    private Collection<AsignacionCursoMaterias> asignacionCursoMateriasCollection;
 
     public AsignacionCurso() {
     }
@@ -116,6 +92,14 @@ public class AsignacionCurso implements Serializable {
 
     public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+
+    public Collection<AsignacionCursoParalelos> getAsignacionCursoParalelosCollection() {
+        return asignacionCursoParalelosCollection;
+    }
+
+    public void setAsignacionCursoParalelosCollection(Collection<AsignacionCursoParalelos> asignacionCursoParalelosCollection) {
+        this.asignacionCursoParalelosCollection = asignacionCursoParalelosCollection;
     }
 
     public PeriodoLectivo getPeriodoLectivo() {
@@ -158,20 +142,12 @@ public class AsignacionCurso implements Serializable {
         this.asignacionProfesorCollection = asignacionProfesorCollection;
     }
 
-    public Collection<Paralelo> getParalelosCollection() {
-        return paralelosCollection;
+    public Collection<AsignacionCursoMaterias> getAsignacionCursoMateriasCollection() {
+        return asignacionCursoMateriasCollection;
     }
 
-    public void setParalelosCollection(Collection<Paralelo> paralelosCollection) {
-        this.paralelosCollection = paralelosCollection;
-    }
-
-    public Collection<Materia> getMateriasCollection() {
-        return materiasCollection;
-    }
-
-    public void setMateriasCollection(Collection<Materia> materiasCollection) {
-        this.materiasCollection = materiasCollection;
+    public void setAsignacionCursoMateriasCollection(Collection<AsignacionCursoMaterias> asignacionCursoMateriasCollection) {
+        this.asignacionCursoMateriasCollection = asignacionCursoMateriasCollection;
     }
 
     @Override

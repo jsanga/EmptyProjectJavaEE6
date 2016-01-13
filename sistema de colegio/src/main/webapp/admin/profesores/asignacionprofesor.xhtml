@@ -44,7 +44,7 @@
                 <p:tabView>
                     <p:tab title="Profesor">
                         <p:panelGrid columns="2">
-                            <p:dataTable id="dtProfesores" value="#{asignacionProfesorView.personasListPrueba}" lazy="true" var="prof" rows="5" paginator="true" selectionMode="single"
+                            <p:dataTable id="dtProfesores" value="#{asignacionProfesorView.profesoresList}" lazy="true" var="prof" rows="5" paginator="true" selectionMode="single"
                                          selection="#{asignacionProfesorView.asignacion.profesor}" rowKey="#{prof.id}" style="width: 420px;">
                             <f:facet name="header">
                                 Selecciòn de profesor

@@ -53,6 +53,9 @@
     <mapping class="com.jscompany.ebsystem.entidades.colegios.Matricula"/>
     <mapping class="com.jscompany.ebsystem.entidades.colegios.Paralelo"/>
     <mapping class="com.jscompany.ebsystem.entidades.colegios.PeriodoLectivo"/>
+    <mapping class="com.jscompany.ebsystem.entidades.colegios.AsignacionCursoMaterias"/>
+    <mapping class="com.jscompany.ebsystem.entidades.colegios.AsignacionCursoParalelos"/>
+    <mapping class="com.jscompany.ebsystem.entidades.colegios.AsignacionProfesorMaterias"/>
     
     <!-- Schema Certificados -->
     <mapping class="com.jscompany.ebsystem.entidades.certificados.Certificado"/>

@@ -40,8 +40,8 @@ public class ColegiosEjb implements ColegiosServices{
         try{
             asignacion = asignacionCurso;
             asignacion = (AsignacionCurso) services.saveEntity(asignacion);
-            asignacion.setMateriasCollection(materias);
-            asignacion.setParalelosCollection(paralelos);
+            //asignacion.set(materias);
+            //asignacion.setParalelosCollection(paralelos);
             services.updateAndPersistEntity(asignacion);
         }catch(Exception e){
             e.printStackTrace();
@@ -69,7 +69,7 @@ public class ColegiosEjb implements ColegiosServices{
         try{
             asignacion = asignacionP;
             asignacion = (AsignacionProfesor) services.saveEntity(asignacion);
-            asignacion.setMateriasCollection(materias);
+            //asignacion.setMateriasCollection(materias);
             services.updateAndPersistEntity(asignacion);
         }catch(Exception e){
             e.printStackTrace();
