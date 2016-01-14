@@ -60,8 +60,8 @@ public class AsignacionProfesorView implements Serializable{
     private AsignacionCurso asigcurso;
     private Paralelo paralelo;
     private PersonasByRolLazy profesoresList;
-    private List<Paralelo> paralelosList;
-    private List<Materia> materiasList;
+    private List<Paralelo> paralelosList, paralelosSeleccionados;
+    private List<Materia> materiasList, materiasSeleccionadas;
     private Colegio colegio;
     private Rol rol;
     
@@ -112,17 +112,21 @@ public class AsignacionProfesorView implements Serializable{
     }
     
     public void onRowSelect(){
-        List<AsignacionCursoMaterias> temp1 = services.getListEntitiesByParameters(Querys.getAsigCursoMaterias, new String[]{"asigCurso"}, new Object[]{asigcurso});
-        List<AsignacionCursoParalelos> temp2 = services.getListEntitiesByParameters(Querys.getAsigCursoParalelos, new String[]{"asigCurso"}, new Object[]{asigcurso});
-        paralelosList = new ArrayList<>();
-        materiasList = new ArrayList<>();
-        for(AsignacionCursoMaterias t : temp1){
-            materiasList.add(t.getMateria());
+        try{
+            List<AsignacionCursoMaterias> temp1 = services.getListEntitiesByParameters(Querys.getAsigCursoMaterias, new String[]{"asigCurso"}, new Object[]{asignacion.getAsignacionCurso()});
+            List<AsignacionCursoParalelos> temp2 = services.getListEntitiesByParameters(Querys.getAsigCursoParalelos, new String[]{"asigCurso"}, new Object[]{asignacion.getAsignacionCurso()});
+            paralelosList = new ArrayList<>();
+            materiasList = new ArrayList<>();
+            for(AsignacionCursoMaterias t : temp1){
+                materiasList.add(t.getMateria());
+            }
+            for(AsignacionCursoParalelos t : temp2){
+                paralelosList.add(t.getParalelo());
+            }
+            JsfUti.messageInfo(null, "Info", "Curso seleccionado.");
+        }catch(Exception e){
+            e.printStackTrace();
         }
-        for(AsignacionCursoParalelos t : temp2){
-            paralelosList.add(t.getParalelo());
-        }
-        JsfUti.messageInfo(null, "Info", "Curso seleccionado.");
     }
     
     public void onRowSelectParalelo(){
@@ -138,14 +142,23 @@ public class AsignacionProfesorView implements Serializable{
     }
     
     public void guardarNuevo(){
-        try{            
-            if(colServices.crearAsignacionProfesor(asignacion, materiasList)!=null){
+        try{        
+            if(materiasSeleccionadas.isEmpty()){
+                JsfUti.messageError(null, "Error", "Debe seleccionar alguna una materia.");
+                return;
+            }
+            if(asignacion.getParalelo() == null){
+                JsfUti.messageError(null, "Error", "Debe seleccionar un paralelo.");
+                return;
+            }
+            if(colServices.crearAsignacionProfesor(asignacion, materiasSeleccionadas)!=null){
                 asignacionesProfList.add(asignacion);
                 JsfUti.messageInfo(null, "Info", "Se creó la asignación satisfactoriamente");
             }
             else
                 JsfUti.messageError(null, "Error", "Hubo un problema al crear la asignación.");
         }catch(Exception e){
+            JsfUti.messageError(null, "Error", "Hubo un error al guardar. Recargue la página e inténtelo de nuevo.");
             e.printStackTrace();
         }
     }
@@ -247,6 +260,22 @@ public class AsignacionProfesorView implements Serializable{
 
     public void setPersonasListPrueba(List<Persona> personasListPrueba) {
         this.personasListPrueba = personasListPrueba;
+    }
+
+    public List<Paralelo> getParalelosSeleccionados() {
+        return paralelosSeleccionados;
+    }
+
+    public void setParalelosSeleccionados(List<Paralelo> paralelosSeleccionados) {
+        this.paralelosSeleccionados = paralelosSeleccionados;
+    }
+
+    public List<Materia> getMateriasSeleccionadas() {
+        return materiasSeleccionadas;
+    }
+
+    public void setMateriasSeleccionadas(List<Materia> materiasSeleccionadas) {
+        this.materiasSeleccionadas = materiasSeleccionadas;
     }
     
 }

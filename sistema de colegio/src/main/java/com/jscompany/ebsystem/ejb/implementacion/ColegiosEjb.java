@@ -9,10 +9,12 @@ import com.jscompany.ebsystem.ejb.HibernateEjbInterceptor;
 import com.jscompany.ebsystem.ejb.interfaces.ColegiosServices;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
+import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesorMaterias;
 import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Matricula;
 import com.jscompany.ebsystem.entidades.colegios.Paralelo;
 import com.jscompany.ebsystem.services.AclService;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -67,10 +69,19 @@ public class ColegiosEjb implements ColegiosServices{
     public AsignacionProfesor crearAsignacionProfesor(AsignacionProfesor asignacionP, List<Materia> materias){
         AsignacionProfesor asignacion;
         try{
+            AsignacionProfesorMaterias apm;
             asignacion = asignacionP;
+            asignacion.setEstado(Boolean.TRUE);
+            asignacion.setFechaCreacion(new Date());
             asignacion = (AsignacionProfesor) services.saveEntity(asignacion);
             //asignacion.setMateriasCollection(materias);
-            services.updateAndPersistEntity(asignacion);
+            for(Materia m : materias){
+                apm = new AsignacionProfesorMaterias();
+                apm.setAsignacionProfesor(asignacion);
+                apm.setMateria(m);
+                services.saveEntity(apm);
+            }
+            //services.updateAndPersistEntity(asignacion);
         }catch(Exception e){
             e.printStackTrace();
             asignacion = null;

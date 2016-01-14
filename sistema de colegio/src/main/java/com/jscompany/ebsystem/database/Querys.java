@@ -26,8 +26,8 @@ public class Querys {
     public static String getAsignacionesProfesorListNoState = "select e from AsignacionProfesor e";
     
     // Querys tablas intermedias
-    public static String getAsigCursoMaterias = "select e from AsignacionCursoMaterias e where e.estado = TRUE AND e.AsignacionCurso = :asigCurso";
-    public static String getAsigCursoParalelos = "select e from AsignacionCursoParalelos e where e.estado = TRUE AND e.AsignacionCurso = :asigCurso";
+    public static String getAsigCursoMaterias = "select e from AsignacionCursoMaterias e where e.estado = TRUE AND e.asignacionCurso = :asigCurso";
+    public static String getAsigCursoParalelos = "select e from AsignacionCursoParalelos e where e.estado = TRUE AND e.asignacionCurso = :asigCurso";
     
     // Querys de cursos
     public static String getCursosList = "select e from Curso e where e.estado = TRUE";

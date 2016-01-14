@@ -64,7 +64,7 @@
                     </p:tab>
                     <p:tab title="Curso">
                         <p:dataTable id="dtCursos" value="#{asignacionProfesorView.asignacionesCursosList}" var="cur" rows="5" paginator="true" selectionMode="single"
-                                     selection="#{asignacionProfesorView.asigcurso}" rowKey="#{cur.id}" style="width: 420px;">
+                                     selection="#{asignacionProfesorView.asignacion.asignacionCurso}" rowKey="#{cur.id}" style="width: 420px;">
                             <f:facet name="header">
                                 Cursos disponibles
                             </f:facet>
@@ -74,9 +74,9 @@
                             </p:column>
                         </p:dataTable>
                     </p:tab>
-                    <p:tab title="Paralelos" rendered="#{asignacionProfesorView.asigcurso!=null}">
-                        <p:dataTable id="dtParalelos" value="#{asignacionProfesorView.asigcurso.paralelosCollection}" var="par" rows="5" paginator="true" selectionMode="single"
-                                     selection="#{asignacionCuasignacionProfesorViewrsoView.paralelosList}" rowKey="#{par.id}" style="width: 420px;">
+                    <p:tab title="Paralelos" rendered="#{asignacionProfesorView.asignacion.asignacionCurso!=null}">
+                        <p:dataTable id="dtParalelos" value="#{asignacionProfesorView.paralelosList}" var="par" rows="5" paginator="true" selectionMode="single"
+                                     selection="#{asignacionProfesorView.asignacion.paralelo}" rowKey="#{par.id}" style="width: 420px;">
                             <f:facet name="header">
                                 Paralelos
                             </f:facet>
@@ -86,20 +86,21 @@
                             </p:column>
                         </p:dataTable>
                     </p:tab>
-                    <p:tab title="Materias" rendered="#{asignacionProfesorView.asigcurso!=null}">
-                        <p:dataTable id="dtMaterias" value="#{asignacionProfesorView.asigcurso.materiasCollection}" var="mat" rows="5" paginator="true" selectionMode="single"
-                                     selection="#{asignacionCuasignacionProfesorViewrsoView.paralelosList}" rowKey="#{mat.id}" style="width: 420px;">
+                    <p:tab title="Materias" rendered="#{asignacionProfesorView.asignacion.asignacionCurso!=null}">
+                        <p:dataTable id="dtMaterias" value="#{asignacionProfesorView.materiasList}" var="mat" rows="5" paginator="true"
+                                     selection="#{asignacionProfesorView.materiasSeleccionadas}" rowKey="#{mat.id}" style="width: 420px;">
                             <f:facet name="header">
                                 Materias
                             </f:facet>
                             <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelectMateria}" update="dlgForm" />
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                             <p:column headerText="Materia" filterBy="#{mat.nombre}">
                                 <h:outputText value="#{mat.nombre}" />
                             </p:column>
                         </p:dataTable>
                     </p:tab>
                 </p:tabView>
-                <center><p:commandButton value="Guardar asignación" actionListener="#{asignacionProfesorView.guardarNuevo()}" onclick="PF('dlgCrear').hide()" update=":frmMain"/></center>
+                <center><p:commandButton value="Guardar asignación" disabled="#{asignacionProfesorView.asignacion==null}" actionListener="#{asignacionProfesorView.guardarNuevo()}" onclick="PF('dlgCrear').hide()" update=":frmMain"/></center>
             </h:form>
         </p:dialog>
         
