@@ -42,7 +42,8 @@ public class AsignacionProfesor implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Column(name = "profesor")
+    @JoinColumn(name = "profesor", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Persona profesor;
     @Column(name = "estado")
     private Boolean estado;

@@ -39,7 +39,8 @@ public class Matricula implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Column(name = "estudiante")
+    @JoinColumn(name = "estudiante", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Persona estudiante;
     @Column(name = "estado")
     private Boolean estado;
