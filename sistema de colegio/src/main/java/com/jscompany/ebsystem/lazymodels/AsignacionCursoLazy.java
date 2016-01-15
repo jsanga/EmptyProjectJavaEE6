@@ -31,7 +31,13 @@ public class AsignacionCursoLazy extends BaseLazyDataModel<AsignacionCurso> {
         if (filters.containsKey("curso.nombre")) {
             crit.createCriteria("curso").add(Restrictions.ilike("nombre", "%"+ filters.get("curso.nombre").toString().trim() +"%" ));
         }
+        if (filters.containsKey("periodoLectivo.fechaInicio")) {
+            crit.createCriteria("periodoLectivo").add(Restrictions.ilike("fechaInicio", "%"+ filters.get("periodoLectivo.fechaInicio").toString().trim() +"%" ));
+        }
+        if (filters.containsKey("periodoLectivo.fechaFin")) {
+            crit.createCriteria("periodoLectivo").add(Restrictions.ilike("fechaFin", "%"+ filters.get("periodoLectivo.fechaFin").toString().trim() +"%" ));
+        }
         //crit.add(Restrictions.le("estado", true));
-        crit.add(Restrictions.le("colegio", colegio));
+        crit.add(Restrictions.eq("colegio", colegio));
     }
 }

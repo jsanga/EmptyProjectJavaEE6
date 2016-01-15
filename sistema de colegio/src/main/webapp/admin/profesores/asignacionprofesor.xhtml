@@ -11,7 +11,7 @@
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
             <p:commandButton value="Crear asignación" update=":dlgForm" actionListener="#{asignacionProfesorView.nuevaAsignacion()}" onclick="PF('dlgCrear').show()"/>
-            <p:dataTable id="dtAsignaciones" value="#{asignacionProfesorView.asignacionesProfList}" var="asignacion">
+            <p:dataTable id="dtAsignaciones" value="#{asignacionProfesorView.asignacionesProfList}" lazy="true" var="asignacion">
                 <p:column headerText="Curso" filterBy="#{asignacion.asignacionCurso.curso.nombre}">
                     <h:outputText value="#{asignacion.asignacionCurso.curso.nombre}" style="text-transform: uppercase;"/>
                 </p:column>
@@ -43,9 +43,8 @@
             <h:form id="dlgForm" >
                 <p:tabView>
                     <p:tab title="Profesor">
-                        <p:panelGrid columns="2">
-                            <p:dataTable id="dtProfesores" value="#{asignacionProfesorView.profesoresList}" lazy="true" var="prof" rows="5" paginator="true" selectionMode="single"
-                                         selection="#{asignacionProfesorView.asignacion.profesor}" rowKey="#{prof.id}" style="width: 420px;">
+                        <p:dataTable id="dtProfesores" value="#{asignacionProfesorView.profesoresList}" lazy="true" var="prof" rows="5" paginator="true" selectionMode="single"
+                                     selection="#{asignacionProfesorView.asignacion.profesor}" rowKey="#{prof.id}" style="width: 420px;">
                             <f:facet name="header">
                                 Selecciòn de profesor
                             </f:facet>
@@ -60,7 +59,6 @@
                                 <h:outputText value="#{prof.apellidos}" />
                             </p:column>
                         </p:dataTable>
-                        </p:panelGrid>
                     </p:tab>
                     <p:tab title="Curso">
                         <p:dataTable id="dtCursos" value="#{asignacionProfesorView.asignacionesCursosList}" var="cur" rows="5" paginator="true" selectionMode="single"
@@ -71,6 +69,12 @@
                             <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelect}" update="dlgForm" />
                             <p:column headerText="Curso" filterBy="#{cur.curso.nombre}">
                                 <h:outputText value="#{cur.curso.nombre}" />
+                            </p:column>
+                            <p:column headerText="Fecha de inicio" filterBy="#{cur.periodoLectivo.fechaInicio}">
+                                <h:outputText value="#{cur.periodoLectivo.fechaInicio}" />
+                            </p:column>
+                            <p:column headerText="Fecha de fin" filterBy="#{cur.periodoLectivo.fechaFin}">
+                                <h:outputText value="#{cur.periodoLectivo.fechaFin}" />
                             </p:column>
                         </p:dataTable>
                     </p:tab>
@@ -110,50 +114,61 @@
             <h:form id="dlgFormEdit" >
                 <p:tabView>
                     <p:tab title="Profesor">
-                        <p:panelGrid columns="2">
-                            <p:dataTable id="dtProfesores" value="#{asignacionProfesorView.profesoresList}" lazy="true" var="prof" rows="5" paginator="true"
-                                         selection="#{asignacionProfesorView.asignacion.profesor}" rowKey="#{prof.id}" style="width: 420px;">
-                            <f:facet name="header">
-                                Selecciòn de profesor
-                            </f:facet>
-                            <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelect}" update="dlgForm" />
-                            <p:column headerText="Nombre" filterBy="#{mat.nombre}">
-                                <h:outputText value="#{mat.nombre}" />
-                            </p:column>
-                        </p:dataTable>
-                        </p:panelGrid>
+                        <p:panel header="Profesor seleccionado: #{asignacionProfesorView.asignacion.profesor.nombres} #{asignacionProfesorView.asignacion.profesor.apellidos}">
+                            <p:dataTable id="dtProfesores" value="#{asignacionProfesorView.profesoresList}" lazy="true" var="prof" rows="5" paginator="true" selectionMode="single"
+                                     selection="#{asignacionProfesorView.asignacion.profesor}" rowKey="#{prof.id}" style="width: 420px;">
+                                <f:facet name="header">
+                                    Selecciòn de profesor
+                                </f:facet>
+                                <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelectProfesor}" update="dlgFormEdit" />
+                                <p:column headerText="Cédula" filterBy="#{prof.cedula}">
+                                    <h:outputText value="#{prof.cedula}" />
+                                </p:column>
+                                <p:column headerText="Nombres" filterBy="#{prof.nombres}">
+                                    <h:outputText value="#{prof.nombres}" />
+                                </p:column>
+                                <p:column headerText="Apellidos" filterBy="#{prof.apellidos}">
+                                    <h:outputText value="#{prof.apellidos}" />
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
                     </p:tab>
                     <p:tab title="Curso">
-                        <p:dataTable id="dtCursos" value="#{asignacionProfesorView.asignacionesCursosList}" var="cur" rows="5" paginator="true" selectionMode="single"
-                                     selection="#{asignacionProfesorView.asigcurso}" rowKey="#{cur.id}" style="width: 420px;">
-                            <f:facet name="header">
-                                Cursos disponibles
-                            </f:facet>
-                            <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelect}" update="dlgForm" />
-                            <p:column headerText="Curso" filterBy="#{cur.curso.nombre}">
-                                <h:outputText value="#{cur.curso.nombre}" />
-                            </p:column>
-                        </p:dataTable>
+                        <p:panel header="Curso seleccionado: #{asignacionProfesorView.asignacion.asignacionCurso.curso.nombre}">
+                            <p:dataTable id="dtCursos" value="#{asignacionProfesorView.asignacionesCursosList}" var="cur" rows="5" paginator="true" selectionMode="single"
+                                         selection="#{asignacionProfesorView.asignacion.asignacionCurso}" rowKey="#{cur.id}" style="width: 420px;">
+                                <f:facet name="header">
+                                    Cursos disponibles
+                                </f:facet>
+                                <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelect}" update="dlgFormEdit" />
+                                <p:column headerText="Curso" filterBy="#{cur.curso.nombre}">
+                                    <h:outputText value="#{cur.curso.nombre}" />
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
                     </p:tab>
-                    <p:tab title="Paralelos" rendered="#{asignacionProfesorView.asigcurso!=null}">
-                        <p:dataTable id="dtParalelos" value="#{asignacionProfesorView.asigcurso.paralelosCollection}" var="par" rows="5" paginator="true" selectionMode="single"
-                                     selection="#{asignacionCuasignacionProfesorViewrsoView.paralelosList}" rowKey="#{par.id}" style="width: 420px;">
-                            <f:facet name="header">
-                                Paralelos
-                            </f:facet>
-                            <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelectParalelo}" update="dlgForm" />
-                            <p:column headerText="Paralelo" filterBy="#{par.nombre}">
-                                <h:outputText value="#{par.nombre}" />
-                            </p:column>
-                        </p:dataTable>
+                    <p:tab title="Paralelos" rendered="#{asignacionProfesorView.asignacion.asignacionCurso!=null}">
+                        <p:panel header="Paralelo seleccionado: #{asignacionProfesorView.asignacion.paralelo.nombre}">
+                            <p:dataTable id="dtParalelos" value="#{asignacionProfesorView.paralelosList}" var="par" rows="5" paginator="true" selectionMode="single"
+                                         selection="#{asignacionProfesorView.asignacion.paralelo}" rowKey="#{par.id}" style="width: 420px;">
+                                <f:facet name="header">
+                                    Paralelos
+                                </f:facet>
+                                <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelectParalelo}" update="dlgForm" />
+                                <p:column headerText="Paralelo" filterBy="#{par.nombre}">
+                                    <h:outputText value="#{par.nombre}" />
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
                     </p:tab>
-                    <p:tab title="Materias" rendered="#{asignacionProfesorView.asigcurso!=null}">
-                        <p:dataTable id="dtMaterias" value="#{asignacionProfesorView.asigcurso.materiasCollection}" var="mat" rows="5" paginator="true" selectionMode="single"
-                                     selection="#{asignacionCuasignacionProfesorViewrsoView.paralelosList}" rowKey="#{mat.id}" style="width: 420px;">
+                    <p:tab title="Materias" rendered="#{asignacionProfesorView.asignacion.asignacionCurso!=null}">
+                        <p:dataTable id="dtMaterias" value="#{asignacionProfesorView.materiasList}" var="mat" rows="5" paginator="true"
+                                     selection="#{asignacionProfesorView.materiasSeleccionadas}" rowKey="#{mat.id}" style="width: 420px;">
                             <f:facet name="header">
                                 Materias
                             </f:facet>
                             <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelectMateria}" update="dlgForm" />
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
                             <p:column headerText="Materia" filterBy="#{mat.nombre}">
                                 <h:outputText value="#{mat.nombre}" />
                             </p:column>

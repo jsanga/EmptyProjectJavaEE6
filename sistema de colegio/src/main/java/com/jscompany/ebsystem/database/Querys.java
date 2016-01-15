@@ -20,7 +20,7 @@ public class Querys {
     public static String getColegiosListNoState = "select e from Colegio e";
     
     // Querys de asignaciones de curso
-    public static String getAsignacionesCursoList = "select e from AsignacionCurso e where e.estado = TRUE";
+    public static String getAsignacionesCursoList = "select e from AsignacionCurso e where e.estado = TRUE and e.colegio = :colegio";
     public static String getAsignacionesCursoListNoState = "select e from AsignacionCurso e";
     public static String getAsignacionesProfesorList = "select e from AsignacionProfesor e where e.estado = TRUE";
     public static String getAsignacionesProfesorListNoState = "select e from AsignacionProfesor e";

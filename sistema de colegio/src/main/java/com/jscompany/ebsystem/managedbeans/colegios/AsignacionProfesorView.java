@@ -16,6 +16,7 @@ import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Paralelo;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import com.jscompany.ebsystem.entidades.usuarios.Rol;
+import com.jscompany.ebsystem.lazymodels.AsignacionProfesorLazy;
 import com.jscompany.ebsystem.lazymodels.PersonasByRolLazy;
 import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.managedbeans.session.UtilSession;
@@ -60,6 +61,7 @@ public class AsignacionProfesorView implements Serializable{
     private AsignacionCurso asigcurso;
     private Paralelo paralelo;
     private PersonasByRolLazy profesoresList;
+    private AsignacionProfesorLazy asigProfList;
     private List<Paralelo> paralelosList, paralelosSeleccionados;
     private List<Materia> materiasList, materiasSeleccionadas;
     private Colegio colegio;
@@ -72,7 +74,8 @@ public class AsignacionProfesorView implements Serializable{
         colegio = (Colegio) services.getEntity(Colegio.class, uSession.getIdColegio());
         rol = (Rol) services.getEntityByParameters(Querys.getRolById, new String[]{"rolId"}, new Object[]{new Long(2)});
         asignacionesProfList = services.getListEntitiesByParameters(Querys.getAsignacionesProfesorListNoState, new String[]{}, new Object[]{});
-        asignacionesCursosList = services.getListEntitiesByParameters(Querys.getAsignacionesCursoList, new String[]{}, new Object[]{});
+        //asigProfList = new AsignacionProfesorLazy();
+        asignacionesCursosList = services.getListEntitiesByParameters(Querys.getAsignacionesCursoList, new String[]{"colegio"}, new Object[]{colegio});
         profesoresList = new PersonasByRolLazy(colegio, rol);
         //personasListPrueba = services.getListEntitiesByParameters(Querys.getPersonaListByRolAndColegio, new String[]{"rol", "colegio"}, new Object[]{rol, colegio});
     }
@@ -89,6 +92,17 @@ public class AsignacionProfesorView implements Serializable{
     
     public void editarAsignacion(AsignacionProfesor ap){
         asignacion = ap;
+        List<AsignacionCursoMaterias> temp1 = services.getListEntitiesByParameters(Querys.getAsigCursoMaterias, new String[]{"asigCurso"}, new Object[]{asignacion.getAsignacionCurso()});
+        List<AsignacionCursoParalelos> temp2 = services.getListEntitiesByParameters(Querys.getAsigCursoParalelos, new String[]{"asigCurso"}, new Object[]{asignacion.getAsignacionCurso()});
+        paralelosList = new ArrayList<>();
+        materiasList = new ArrayList<>();
+        for(AsignacionCursoMaterias t : temp1){
+            materiasList.add(t.getMateria());
+        }
+        for(AsignacionCursoParalelos t : temp2){
+            paralelosList.add(t.getParalelo());
+        }
+        JsfUti.messageInfo(null, "Info", "Curso seleccionado.");
     }
     
     public void eliminarAsignacion(AsignacionProfesor ap){
@@ -276,6 +290,14 @@ public class AsignacionProfesorView implements Serializable{
 
     public void setMateriasSeleccionadas(List<Materia> materiasSeleccionadas) {
         this.materiasSeleccionadas = materiasSeleccionadas;
+    }
+
+    public AsignacionProfesorLazy getAsigProfList() {
+        return asigProfList;
+    }
+
+    public void setAsigProfList(AsignacionProfesorLazy asigProfList) {
+        this.asigProfList = asigProfList;
     }
     
 }
