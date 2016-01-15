@@ -7,6 +7,7 @@ package com.jscompany.ebsystem.managedbeans.colegios;
 
 import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
+import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
 import com.jscompany.ebsystem.managedbeans.session.UtilSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
@@ -53,6 +54,12 @@ public class MasInfoAsigCursoView implements Serializable{
         }
     }
 
+    public void masInfoProf(AsignacionProfesor ap){
+        JsfUti.redirectNewTab("/colegionetworksystem/faces/admin/profesores/masinfo.xhtml");
+        utilSession.instanciarParametros();
+        utilSession.agregarParametro("idAsigProf", ap.getId());
+    }
+    
     public AsignacionCurso getAc() {
         return ac;
     }

@@ -46,7 +46,7 @@
                         <p:dataTable id="dtProfesores" value="#{asignacionProfesorView.profesoresList}" lazy="true" var="prof" rows="5" paginator="true" selectionMode="single"
                                      selection="#{asignacionProfesorView.asignacion.profesor}" rowKey="#{prof.id}" style="width: 420px;">
                             <f:facet name="header">
-                                Selecciòn de profesor
+                                Selección de profesor
                             </f:facet>
                             <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelectProfesor}" update="dlgForm" />
                             <p:column headerText="Cédula" filterBy="#{prof.cedula}">
@@ -60,6 +60,9 @@
                             </p:column>
                         </p:dataTable>
                     </p:tab>
+                    
+                    <!-- -->
+                    
                     <p:tab title="Curso">
                         <p:dataTable id="dtCursos" value="#{asignacionProfesorView.asignacionesCursosList}" var="cur" rows="5" paginator="true" selectionMode="single"
                                      selection="#{asignacionProfesorView.asignacion.asignacionCurso}" rowKey="#{cur.id}" style="width: 420px;">
@@ -78,6 +81,9 @@
                             </p:column>
                         </p:dataTable>
                     </p:tab>
+                    
+                    <!-- -->
+                    
                     <p:tab title="Paralelos" rendered="#{asignacionProfesorView.asignacion.asignacionCurso!=null}">
                         <p:dataTable id="dtParalelos" value="#{asignacionProfesorView.paralelosList}" var="par" rows="5" paginator="true" selectionMode="single"
                                      selection="#{asignacionProfesorView.asignacion.paralelo}" rowKey="#{par.id}" style="width: 420px;">
@@ -90,6 +96,9 @@
                             </p:column>
                         </p:dataTable>
                     </p:tab>
+                    
+                    <!-- -->
+                    
                     <p:tab title="Materias" rendered="#{asignacionProfesorView.asignacion.asignacionCurso!=null}">
                         <p:dataTable id="dtMaterias" value="#{asignacionProfesorView.materiasList}" var="mat" rows="5" paginator="true"
                                      selection="#{asignacionProfesorView.materiasSeleccionadas}" rowKey="#{mat.id}" style="width: 420px;">
@@ -118,7 +127,7 @@
                             <p:dataTable id="dtProfesores" value="#{asignacionProfesorView.profesoresList}" lazy="true" var="prof" rows="5" paginator="true" selectionMode="single"
                                      selection="#{asignacionProfesorView.asignacion.profesor}" rowKey="#{prof.id}" style="width: 420px;">
                                 <f:facet name="header">
-                                    Selecciòn de profesor
+                                    Selección de profesor
                                 </f:facet>
                                 <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelectProfesor}" update="dlgFormEdit" />
                                 <p:column headerText="Cédula" filterBy="#{prof.cedula}">
@@ -133,6 +142,9 @@
                             </p:dataTable>
                         </p:panel>
                     </p:tab>
+                    
+                    <!-- -->
+                    
                     <p:tab title="Curso">
                         <p:panel header="Curso seleccionado: #{asignacionProfesorView.asignacion.asignacionCurso.curso.nombre}">
                             <p:dataTable id="dtCursos" value="#{asignacionProfesorView.asignacionesCursosList}" var="cur" rows="5" paginator="true" selectionMode="single"
@@ -147,6 +159,9 @@
                             </p:dataTable>
                         </p:panel>
                     </p:tab>
+                    
+                    <!-- -->
+                    
                     <p:tab title="Paralelos" rendered="#{asignacionProfesorView.asignacion.asignacionCurso!=null}">
                         <p:panel header="Paralelo seleccionado: #{asignacionProfesorView.asignacion.paralelo.nombre}">
                             <p:dataTable id="dtParalelos" value="#{asignacionProfesorView.paralelosList}" var="par" rows="5" paginator="true" selectionMode="single"
@@ -161,6 +176,9 @@
                             </p:dataTable>
                         </p:panel>
                     </p:tab>
+                    
+                    <!-- -->
+                    
                     <p:tab title="Materias" rendered="#{asignacionProfesorView.asignacion.asignacionCurso!=null}">
                         <p:dataTable id="dtMaterias" value="#{asignacionProfesorView.materiasList}" var="mat" rows="5" paginator="true"
                                      selection="#{asignacionProfesorView.materiasSeleccionadas}" rowKey="#{mat.id}" style="width: 420px;">

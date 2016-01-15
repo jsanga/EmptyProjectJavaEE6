@@ -11,6 +11,7 @@ import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCursoMaterias;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCursoParalelos;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
+import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesorMaterias;
 import com.jscompany.ebsystem.entidades.colegios.Colegio;
 import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Paralelo;
@@ -102,6 +103,10 @@ public class AsignacionProfesorView implements Serializable{
         for(AsignacionCursoParalelos t : temp2){
             paralelosList.add(t.getParalelo());
         }
+        materiasSeleccionadas = new ArrayList<>();
+        for(AsignacionProfesorMaterias temp : (List<AsignacionProfesorMaterias>) services.getListEntitiesByParameters(Querys.getAsignacionProfesorMateriaByAsignacionId, new String[]{"asigProf"}, new Object[]{asignacion})){
+            materiasSeleccionadas.add(temp.getMateria());
+        }
         JsfUti.messageInfo(null, "Info", "Curso seleccionado.");
     }
     
@@ -115,7 +120,7 @@ public class AsignacionProfesorView implements Serializable{
     public void masInfo(AsignacionProfesor ap){
         JsfUti.redirectNewTab("/colegionetworksystem/faces/admin/profesores/masinfo.xhtml");
         utilSession.instanciarParametros();
-        utilSession.agregarParametro("idAsigCurso", ap.getId());
+        utilSession.agregarParametro("idAsigProf", ap.getId());
     }
     
     public void activarAsignacion(AsignacionProfesor ap){
@@ -179,7 +184,7 @@ public class AsignacionProfesorView implements Serializable{
     
     public void guardarEdicion(){
         try{
-            if(colServices.actualizarAsignacionProfesor(asignacion))
+            if(colServices.actualizarAsignacionProfesor(asignacion, materiasSeleccionadas))
                 JsfUti.messageInfo(null, "Info", "Se editó la asignacion satisfactoriamente");
             else
                 JsfUti.messageError(null, "Error", "Hubo un problema al editar la asignacion.");

@@ -34,6 +34,8 @@ public class AsignacionProfesorMaterias implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+    @Column(name = "estado")
+    private Boolean estado;
     @JoinColumn(name = "materia", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Materia materia;
@@ -70,6 +72,14 @@ public class AsignacionProfesorMaterias implements Serializable {
 
     public void setAsignacionProfesor(AsignacionProfesor asignacionProfesor) {
         this.asignacionProfesor = asignacionProfesor;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
     @Override

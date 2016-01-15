@@ -15,6 +15,7 @@ import com.jscompany.ebsystem.entidades.colegios.Paralelo;
 import com.jscompany.ebsystem.entidades.colegios.PeriodoLectivo;
 import com.jscompany.ebsystem.lazymodels.MateriasLazy;
 import com.jscompany.ebsystem.lazymodels.ParalelosLazy;
+import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.managedbeans.session.UtilSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
@@ -47,6 +48,9 @@ public class AsignacionCursoView implements Serializable{
     @ManagedProperty (value = "#{utilSession}")
     private UtilSession utilSession;
     
+    @ManagedProperty(value = "#{userSession}")
+    private UserSession uSession;
+    
     private Colegio colegio;
     private List<Colegio> colegiosList;
     private Curso curso;
@@ -62,10 +66,12 @@ public class AsignacionCursoView implements Serializable{
     
     @PostConstruct
     public void init(){
-        colegiosList = (List<Colegio>)services.getListEntitiesByParameters(Querys.getColegiosList, new String[]{}, new Object[]{});
+        if(uSession.getUsername() == null)
+            return;
+        colegio = (Colegio) services.getEntity(Colegio.class, uSession.getIdColegio());
         cursosList = services.getListEntitiesByParameters(Querys.getCursosList, new String[]{}, new Object[]{});
         periodosList =  services.getListEntitiesByParameters(Querys.getPeriodosList, new String[]{}, new Object[]{});
-        asignacionesList = services.getListEntitiesByParameters(Querys.getAsignacionesCursoListNoState, new String[]{}, new Object[]{});
+        asignacionesList = services.getListEntitiesByParameters(Querys.getAsignacionesCursoListByColegioIdNoState, new String[]{"colegio"}, new Object[]{colegio});
         //materiasList = services.getListEntitiesByParameters(Querys.getMateriasList, new String[]{}, new Object[]{});
         //paralelosList = services.getListEntitiesByParameters(Querys.getParalelosList, new String[]{}, new Object[]{});
         materias = new MateriasLazy();
@@ -214,6 +220,14 @@ public class AsignacionCursoView implements Serializable{
 
     public MateriasLazy getMaterias() {
         return materias;
+    }
+
+    public UserSession getuSession() {
+        return uSession;
+    }
+
+    public void setuSession(UserSession uSession) {
+        this.uSession = uSession;
     }
 
     public void setMaterias(MateriasLazy materias) {

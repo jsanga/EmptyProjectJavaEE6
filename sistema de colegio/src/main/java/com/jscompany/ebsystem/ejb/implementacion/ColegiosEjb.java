@@ -5,6 +5,7 @@
  */
 package com.jscompany.ebsystem.ejb.implementacion;
 
+import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.ejb.HibernateEjbInterceptor;
 import com.jscompany.ebsystem.ejb.interfaces.ColegiosServices;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
@@ -90,11 +91,29 @@ public class ColegiosEjb implements ColegiosServices{
     }
     
     @Override
-    public Boolean actualizarAsignacionProfesor(AsignacionProfesor asignacionProfesor){
+    public Boolean actualizarAsignacionProfesor(AsignacionProfesor asignacionProfesor, List<Materia> materias){
         Boolean b;
         try{
             b = true;
-            services.updateEntity(asignacionProfesor);
+            AsignacionProfesorMaterias newAsig;
+            
+            services.updateAndPersistEntity(asignacionProfesor);
+            for(AsignacionProfesorMaterias temp : asignacionProfesor.getAsignacionProfesorMateriasCollection()){
+                temp.setEstado(false);
+                services.updateAndPersistEntity(temp);
+            }
+            for(Materia m : materias){
+                AsignacionProfesorMaterias temp = (AsignacionProfesorMaterias) services.getEntityByParameters(Querys.getAsignacionProfesorMateriaByMateriaAndAsignacionIdNoState, new String[]{"asigProf", "materia"}, new Object[]{asignacionProfesor, m});
+                if(temp == null){
+                    newAsig = new AsignacionProfesorMaterias();
+                    newAsig.setAsignacionProfesor(asignacionProfesor);
+                    newAsig.setMateria(m);
+                    services.saveEntity(newAsig);
+                }else{
+                    temp.setEstado(true);
+                    services.updateAndPersistEntity(temp);
+                }                
+            }            
         }catch(Exception e){
             e.printStackTrace();
             b = false;

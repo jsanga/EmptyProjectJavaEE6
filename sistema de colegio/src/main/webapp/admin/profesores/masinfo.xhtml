@@ -1,12 +1,76 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Más Info</title>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <h:form id="frmMain">
+            <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+            <p:panel header="Asignación del profesor : #{masInfoAsigProfView.profesor.nombres} #{masInfoAsigProfView.profesor.apellidos}">
+                <p:tabView>
+                    <p:tab title="Profesor">
+                        <center>
+                            <p:panelGrid columns="2">
+                                <h:outputText value="Cédula:"/>
+                                <p:inputText value="#{masInfoAsigProfView.profesor.cedula}" style="text-transform: uppercase;" readonly="true"/>
+                                <h:outputText value="Nombres:"/>
+                                <p:inputText value="#{masInfoAsigProfView.profesor.nombres}" style="text-transform: uppercase;" readonly="true"/>
+                                <h:outputText value="Apellidos:"/>
+                                <p:inputText value="#{masInfoAsigProfView.profesor.apellidos}" style="text-transform: uppercase;" readonly="true"/>
+                                <h:outputText value="Dirección:"/>
+                                <p:inputText value="#{masInfoAsigProfView.profesor.direccion}" style="text-transform: uppercase;" readonly="true"/>
+                                <h:outputText value="Fecha de nacimiento:"/>
+                                <p:inputText value="#{masInfoAsigProfView.profesor.fechaNacimiento}" readonly="true"/>
+                                <h:outputText value="Rol:"/>
+                                <p:inputText value="#{masInfoAsigProfView.profesor.rol.rolName}" style="text-transform: uppercase;" readonly="true"/>
+                            </p:panelGrid>
+                        </center>
+                    </p:tab>
+                    
+                    <!-- -->
+                    
+                    <p:tab title="Curso">
+                        <center>
+                            <p:panelGrid columns="2">
+                                <h:outputText value="Nombre curso:"/>
+                                <p:inputText value="#{masInfoAsigProfView.curso.curso.nombre}" style="text-transform: uppercase;" readonly="true"/>
+                                <h:outputText value="Fecha de inicio:"/>
+                                <p:inputText value="#{masInfoAsigProfView.curso.periodoLectivo.fechaInicio}" style="text-transform: uppercase;" readonly="true"/>
+                                <h:outputText value="Fecha de finalización:"/>
+                                <p:inputText value="#{masInfoAsigProfView.curso.periodoLectivo.fechaFin}" style="text-transform: uppercase;" readonly="true"/>
+                            </p:panelGrid>
+                        </center>
+                    </p:tab>
+                    
+                    <!-- -->
+                    
+                    <p:tab title="Paralelo">
+                        <center>
+                            <p:panelGrid columns="2">
+                                <h:outputText value="Nombre paralelo:"/>
+                                <p:inputText value="#{masInfoAsigProfView.paralelo.nombre}" style="text-transform: uppercase;"/>
+                            </p:panelGrid>
+                        </center>
+                    </p:tab>
+                    <p:tab title="Materias designadas">
+                        <center>
+                            <p:dataTable id="dtMaterias" value="#{masInfoAsigProfView.materias}" var="mat" 
+                                         rows="5" paginator="true" style="width: 420px;">
+                                <f:facet name="header">
+                                    Materias
+                                </f:facet>
+                                <p:column headerText="Materia" >
+                                    <h:outputText value="#{mat.nombre}" />
+                                </p:column>
+                            </p:dataTable>
+                        </center>
+                    </p:tab>
+                </p:tabView>
+            </p:panel>
+        </h:form>
     </h:body>
 </html>
-
