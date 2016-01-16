@@ -9,6 +9,7 @@ import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.entidades.modelosdedatos.RelacionesPersona;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import com.jscompany.ebsystem.entidades.usuarios.RelacionPersona;
+import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.managedbeans.session.UtilSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
@@ -37,6 +38,9 @@ public class MasInfoEstView implements Serializable{
     @ManagedProperty (value = "#{utilSession}")
     private UtilSession utilSession;
     
+    @ManagedProperty(value = "#{userSession}")
+    private UserSession uSession;
+    
     private Long idEstudiante;
     private List<RelacionPersona> relacionList;
     private List<RelacionesPersona> relacionesList;
@@ -45,6 +49,8 @@ public class MasInfoEstView implements Serializable{
     @PostConstruct
     public void init(){
         try{
+            if(!uSession.getIsLogged())
+                return;
             if(!utilSession.isNull())
                 idEstudiante = (Long) utilSession.retornarValor("idEstudiante");
             if(idEstudiante==null){
@@ -103,6 +109,14 @@ public class MasInfoEstView implements Serializable{
 
     public void setPersona(Persona persona) {
         this.persona = persona;
+    }
+
+    public UserSession getuSession() {
+        return uSession;
+    }
+
+    public void setuSession(UserSession uSession) {
+        this.uSession = uSession;
     }
     
 }

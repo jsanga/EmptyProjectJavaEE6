@@ -66,8 +66,8 @@ public class AsignacionCursoView implements Serializable{
     
     @PostConstruct
     public void init(){
-        if(uSession.getUsername() == null)
-            return;
+        if(!uSession.getIsLogged())
+                return;
         colegio = (Colegio) services.getEntity(Colegio.class, uSession.getIdColegio());
         cursosList = services.getListEntitiesByParameters(Querys.getCursosList, new String[]{}, new Object[]{});
         periodosList =  services.getListEntitiesByParameters(Querys.getPeriodosList, new String[]{}, new Object[]{});

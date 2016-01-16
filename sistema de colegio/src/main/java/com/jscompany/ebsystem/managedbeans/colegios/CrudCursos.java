@@ -7,6 +7,7 @@ package com.jscompany.ebsystem.managedbeans.colegios;
 
 import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.entidades.colegios.Curso;
+import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
 import java.io.Serializable;
@@ -15,6 +16,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 /**
@@ -30,11 +32,16 @@ public class CrudCursos implements Serializable{
     @EJB(beanName = "aclService")
     private AclService services;
     
+    @ManagedProperty(value = "#{userSession}")
+    private UserSession uSession;
+    
     private Curso curso;
     private List<Curso> cursosList;
     
     @PostConstruct
     public void init(){
+        if(!uSession.getIsLogged())
+            return;
         cursosList = services.getListEntitiesByParameters(Querys.getCursosListNoState, new String[]{}, new Object[]{});
         if(cursosList == null)
             cursosList = new ArrayList();
@@ -93,6 +100,14 @@ public class CrudCursos implements Serializable{
 
     public void setCursosList(List<Curso> cursosList) {
         this.cursosList = cursosList;
+    }
+
+    public UserSession getuSession() {
+        return uSession;
+    }
+
+    public void setuSession(UserSession uSession) {
+        this.uSession = uSession;
     }
     
 }

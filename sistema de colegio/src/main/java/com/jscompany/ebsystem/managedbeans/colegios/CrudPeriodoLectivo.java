@@ -8,6 +8,7 @@ package com.jscompany.ebsystem.managedbeans.colegios;
 import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.entidades.colegios.Paralelo;
 import com.jscompany.ebsystem.entidades.colegios.PeriodoLectivo;
+import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
 import java.io.Serializable;
@@ -16,6 +17,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 /**
@@ -31,11 +33,16 @@ public class CrudPeriodoLectivo implements Serializable{
     @EJB(beanName = "aclService")
     private AclService services;
     
+    @ManagedProperty(value = "#{userSession}")
+    private UserSession uSession;
+    
     private PeriodoLectivo periodo;
     private List<PeriodoLectivo> periodoList;
     
     @PostConstruct
     public void init(){
+        if(!uSession.getIsLogged())
+            return;
         periodoList = services.getListEntitiesByParameters(Querys.getPeriodosListNoState, new String[]{}, new Object[]{});
         if(periodoList == null)
             periodoList = new ArrayList();
@@ -94,6 +101,14 @@ public class CrudPeriodoLectivo implements Serializable{
 
     public void setPeriodoList(List<PeriodoLectivo> periodoList) {
         this.periodoList = periodoList;
+    }
+
+    public UserSession getuSession() {
+        return uSession;
+    }
+
+    public void setuSession(UserSession uSession) {
+        this.uSession = uSession;
     }
     
 }

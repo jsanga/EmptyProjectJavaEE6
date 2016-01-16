@@ -8,6 +8,7 @@ package com.jscompany.ebsystem.managedbeans.colegios;
 import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
+import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.managedbeans.session.UtilSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
@@ -35,12 +36,17 @@ public class MasInfoAsigCursoView implements Serializable{
     @ManagedProperty (value = "#{utilSession}")
     private UtilSession utilSession;
     
+    @ManagedProperty(value = "#{userSession}")
+    private UserSession uSession;
+    
     private AsignacionCurso ac;
     private Long idAsigCurso;
     
     @PostConstruct
     public void init(){
         try{
+            if(!uSession.getIsLogged())
+                return;
             if(!utilSession.isNull())
                 idAsigCurso = (Long) utilSession.retornarValor("idAsigCurso");
             if(idAsigCurso==null){
@@ -82,6 +88,14 @@ public class MasInfoAsigCursoView implements Serializable{
 
     public void setIdAsigCurso(Long idAsigCurso) {
         this.idAsigCurso = idAsigCurso;
+    }
+
+    public UserSession getuSession() {
+        return uSession;
+    }
+
+    public void setuSession(UserSession uSession) {
+        this.uSession = uSession;
     }
     
 }

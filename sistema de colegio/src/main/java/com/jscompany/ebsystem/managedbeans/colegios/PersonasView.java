@@ -49,6 +49,8 @@ public class PersonasView implements Serializable{
     
     @PostConstruct
     public void init(){
+        if(!uSession.getIsLogged())
+            return;
         colegio = (Colegio) services.getEntity(Colegio.class, uSession.getIdColegio());
         personasList = new PersonasLazy(colegio);
         colegios  = services.getListEntitiesByParameters(Querys.getColegiosList, new String[]{}, new Object[]{});

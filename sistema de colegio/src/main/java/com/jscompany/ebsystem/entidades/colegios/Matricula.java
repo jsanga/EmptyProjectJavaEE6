@@ -7,7 +7,6 @@ package com.jscompany.ebsystem.entidades.colegios;
 
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -50,7 +49,10 @@ public class Matricula implements Serializable {
     @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private AsignacionCurso asignacionCurso;
-
+    @JoinColumn(name = "paralelo", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Paralelo paralelo;
+    
     public Matricula() {
     }
 
@@ -96,6 +98,14 @@ public class Matricula implements Serializable {
 
     public void setAsignacionCurso(AsignacionCurso asignacionCurso) {
         this.asignacionCurso = asignacionCurso;
+    }
+
+    public Paralelo getParalelo() {
+        return paralelo;
+    }
+
+    public void setParalelo(Paralelo paralelo) {
+        this.paralelo = paralelo;
     }
 
     @Override

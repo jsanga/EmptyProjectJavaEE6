@@ -8,6 +8,7 @@ package com.jscompany.ebsystem.managedbeans.colegios;
 import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Paralelo;
+import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
 import java.io.Serializable;
@@ -16,6 +17,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 /**
@@ -31,11 +33,16 @@ public class CrudParalelos implements Serializable{
     @EJB(beanName = "aclService")
     private AclService services;
     
+    @ManagedProperty(value = "#{userSession}")
+    private UserSession uSession;
+    
     private Paralelo paralelo;
     private List<Paralelo> paraleloList;
     
     @PostConstruct
     public void init(){
+        if(!uSession.getIsLogged())
+            return;
         paraleloList = services.getListEntitiesByParameters(Querys.getParalelosListNoState, new String[]{}, new Object[]{});
         if(paraleloList == null)
             paraleloList = new ArrayList();
@@ -94,6 +101,14 @@ public class CrudParalelos implements Serializable{
 
     public void setParaleloList(List<Paralelo> paraleloList) {
         this.paraleloList = paraleloList;
+    }
+
+    public UserSession getuSession() {
+        return uSession;
+    }
+
+    public void setuSession(UserSession uSession) {
+        this.uSession = uSession;
     }
     
 }

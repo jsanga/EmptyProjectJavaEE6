@@ -51,6 +51,8 @@ public class ProfesorView implements Serializable{
     
     @PostConstruct
     public void init(){
+        if(!uSession.getIsLogged())
+            return;
         colegio = (Colegio) services.getEntity(Colegio.class, uSession.getIdColegio());
         rol = (Rol) services.getEntityByParameters(Querys.getRolById, new String[]{"rolId"}, new Object[]{new Long(2)});
         personasList = new PersonasByRolLazy(colegio, rol);

@@ -12,6 +12,7 @@ import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesorMaterias;
 import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Paralelo;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
+import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.managedbeans.session.UtilSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
@@ -40,6 +41,9 @@ public class MasInfoAsigProfView implements Serializable{
     @ManagedProperty (value = "#{utilSession}")
     private UtilSession utilSession;
     
+    @ManagedProperty(value = "#{userSession}")
+    private UserSession uSession;
+    
     private AsignacionProfesor asignacion;
     private Persona profesor;
     private AsignacionCurso curso;
@@ -51,6 +55,8 @@ public class MasInfoAsigProfView implements Serializable{
     @PostConstruct
     public void init(){
         try{
+            if(!uSession.getIsLogged())
+                return;
             if(!utilSession.isNull())
                 idAsigProf = (Long) utilSession.retornarValor("idAsigProf");
             if(idAsigProf==null){
@@ -125,6 +131,14 @@ public class MasInfoAsigProfView implements Serializable{
 
     public void setMaterias(List<Materia> materias) {
         this.materias = materias;
+    }
+
+    public UserSession getuSession() {
+        return uSession;
+    }
+
+    public void setuSession(UserSession uSession) {
+        this.uSession = uSession;
     }
     
 }

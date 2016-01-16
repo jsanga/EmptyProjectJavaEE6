@@ -19,14 +19,15 @@ public class Querys {
     public static String getColegiosList = "select e from Colegio e where e.estado = TRUE";
     public static String getColegiosListNoState = "select e from Colegio e";
     
-    // Querys de asignaciones de curso y profesor
+    // Querys de asignaciones de curso, profesor y matriculas
     public static String getAsignacionesCursoList = "select e from AsignacionCurso e where e.estado = TRUE and e.colegio = :colegio";
     public static String getAsignacionesCursoListByColegioIdNoState = "select e from AsignacionCurso e where e.colegio = :colegio";
     public static String getAsignacionesProfesorList = "select e from AsignacionProfesor e where e.estado = TRUE";
     public static String getAsignacionProfesorMateriaByMateriaAndAsignacionIdNoState = "select e from AsignacionProfesorMaterias e where e.asignacionProfesor = :asigProf and materia = :materia";
     public static String getAsignacionProfesorMateriaByAsignacionId = "select e from AsignacionProfesorMaterias e where e.asignacionProfesor = :asigProf and e.estado = TRUE";
     public static String getAsignacionesProfesorListNoState = "select e from AsignacionProfesor e";
-    
+    public static String getMatriculasNoState = "select e from Matricula e";
+
     // Querys tablas intermedias
     public static String getAsigCursoMaterias = "select e from AsignacionCursoMaterias e where e.estado = TRUE AND e.asignacionCurso = :asigCurso";
     public static String getAsigCursoParalelos = "select e from AsignacionCursoParalelos e where e.estado = TRUE AND e.asignacionCurso = :asigCurso";
