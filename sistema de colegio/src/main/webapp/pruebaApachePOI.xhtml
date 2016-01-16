@@ -8,10 +8,14 @@
     </h:head>
     <h:body>
         <h:form id="frmMain">
-            <p:fileUpload fileUploadListener="#{pruebaLecturaExcel.handleFileUpload}" mode="advanced" dragDropSupport="false" 
-                  multiple="false" update="messages" sizeLimit="20000000" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
-
-            <p:growl id="messages" showDetail="true" />
+            <p:fileUpload fileUploadListener="#{pruebaLecturaExcel.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                            label="Seleccion"
+                            uploadLabel="Subir"
+                            cancelLabel="Cancelar"
+                            update="messages1" 
+                            multiple="true" sizeLimit="20000000" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png|pdf)$/" />
+            <p:growl id="messages1" showDetail="true"/>
+            <p:commandButton actionListener="#{pruebaLecturaExcel.mostrarMensaje}" update="frmMain" value="Click"/>
         </h:form>
     </h:body>
 </html>

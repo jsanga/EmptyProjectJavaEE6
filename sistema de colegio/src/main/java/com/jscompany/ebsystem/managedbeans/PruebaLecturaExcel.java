@@ -26,11 +26,6 @@ public class PruebaLecturaExcel implements Serializable{
     public static final Long serialVerisonUID = 1L;
     
     private UploadedFile file;
- 
-    @PostConstruct
-    public void init(){
-    
-    }
     
     public void handleFileUpload(FileUploadEvent event) {
         try{
@@ -42,6 +37,15 @@ public class PruebaLecturaExcel implements Serializable{
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+    
+    public void mostrarMensaje(){
+        if(file != null) {
+            FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+        FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
     public UploadedFile getFile() {
