@@ -12,27 +12,28 @@
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
             <p:commandButton value="Ingresar Matrícula" update="dlgForm" actionListener="#{matricular.nuevaMatricula()}" onclick="PF('dlgCrear').show()"/>
             <center>
-                <p:dataTable id="dtEstudiantesList" value="#{matricular.personasList}" emptyMessage="No tiene datos" style="width: 80%;" var="persona">
+                <p:dataTable id="dtMatriculas" value="#{matricular.matriculaList}" emptyMessage="No tiene datos" style="width: 80%;" var="matricula">
                     <p:column headerText="Cédula" filterBy="#{persona.cedula}">
-                        <h:outputText value="#{persona.cedula}" style="text-transform: uppercase;"/>
+                        <h:outputText value="#{matricula.estudiante.cedula}" style="text-transform: uppercase;"/>
                     </p:column>
                     <p:column headerText="Nombres" filterBy="#{persona.nombres}">
-                        <h:outputText value="#{persona.nombres}" style="text-transform: uppercase;"/>
+                        <h:outputText value="#{matricula.estudiante.nombres}" style="text-transform: uppercase;"/>
                     </p:column>
                     <p:column headerText="Apellidos" filterBy="#{persona.apellidos}">
-                        <h:outputText value="#{persona.apellidos}" style="text-transform: uppercase;"/>
+                        <h:outputText value="#{matricula.estudiante.apellidos}" style="text-transform: uppercase;"/>
                     </p:column>
                     <p:column headerText="Colegio" filterBy="#{persona.colegio.nombre}">
-                        <h:outputText value="#{persona.colegio.nombre}" style="text-transform: uppercase;"/>
+                        <h:outputText value="#{matricula.estudiante.colegio.nombre}" style="text-transform: uppercase;"/>
                     </p:column>
                     <p:column headerText="Estado">
-                        <h:outputText value="Activo" rendered="#{persona.estado}" style="text-transform: uppercase;"/>
-                        <h:outputText value="Inactivo" rendered="#{!persona.estado}" style="text-transform: uppercase;"/>
+                        <h:outputText value="Activo" rendered="#{matricula.estado}" style="text-transform: uppercase;"/>
+                        <h:outputText value="Inactivo" rendered="#{!matricula.estado}" style="text-transform: uppercase;"/>
                     </p:column>
                     <p:column headerText="Acción">
                         <center>
-                            <p:commandButton value="Editar" actionListener="#{matricular.editarProfesor(persona)}" onclick="PF('dlgEditar').show()" update="dlgFormEdit"/>
-                            <p:commandButton value="Eliminar" actionListener="#{matricular.eliminarProfesor(persona)}" update="dtEstudiantesList"/>
+                            <p:commandButton value="Editar" actionListener="#{matricular.editarMatricula(matricula)}" onclick="PF('dlgEditar').show()" update="dlgFormEdit"/>
+                            <p:commandButton value="Eliminar" rendered="#{matricula.estado}" actionListener="#{matricular.eliminarMatricula(matricula)}" update="dtMatriculas"/>
+                            <p:commandButton value="Habilitar" rendered="#{!matricula.estado}" actionListener="#{matricular.habilitarMatricula(matricula)}" update="dtMatriculas"/>
                         </center>
                     </p:column>
                 </p:dataTable>
@@ -42,11 +43,11 @@
         <p:dialog header="Crear Matrícula" id="dlgCrear" widgetVar="dlgCrear" modal="true" height="auto" width="auto" resizable="false">  
             <h:form id="dlgForm" >
                 <p:tabView>
-                    <p:tab title="Profesor">
+                    <p:tab title="Estudiante">
                         <p:dataTable id="dtProfesores" value="#{matricular.estudiantesList}" lazy="true" var="est" rows="5" paginator="true" selectionMode="single"
                                      selection="#{matricular.matricula.estudiante}" rowKey="#{est.id}" style="width: 420px;">
                             <f:facet name="header">
-                                Selección de profesor
+                                Selección de estudiante
                             </f:facet>
                             <p:ajax event="rowSelect" listener="#{matricular.onRowSelectEstudiante}" update="dlgForm" />
                             <p:column headerText="Cédula" filterBy="#{est.cedula}">
@@ -84,9 +85,9 @@
                     
                     <!-- -->
                     
-                    <p:tab title="Paralelos" rendered="#{matricular.asignacion.asignacionCurso!=null}">
+                    <p:tab title="Paralelos">
                         <p:dataTable id="dtParalelos" value="#{matricular.paralelosList}" var="par" rows="5" paginator="true" selectionMode="single"
-                                     selection="#{matricular.asignacion.paralelo}" rowKey="#{par.id}" style="width: 420px;">
+                                     selection="#{matricular.matricula.paralelo}" rowKey="#{par.id}" style="width: 420px;">
                             <f:facet name="header">
                                 Paralelos
                             </f:facet>
@@ -104,44 +105,69 @@
         <p:dialog header="Editar Matrícula" id="dlgEditar" widgetVar="dlgEditar" modal="true" height="auto" width="auto" resizable="false">  
             <h:form id="dlgFormEdit" >
                 <p:tabView>
-                    <p:tab title="Profesor">
-                        <p:dataTable id="dtProfesores" value="#{matricular.profesoresList}" lazy="true" var="prof" rows="5" paginator="true" selectionMode="single"
-                                     selection="#{matricular.asignacion.profesor}" rowKey="#{prof.id}" style="width: 420px;">
-                            <f:facet name="header">
-                                Selección de profesor
-                            </f:facet>
-                            <p:ajax event="rowSelect" listener="#{matricular.onRowSelectProfesor}" update="dlgForm" />
-                            <p:column headerText="Cédula" filterBy="#{prof.cedula}">
-                                <h:outputText value="#{prof.cedula}" />
-                            </p:column>
-                            <p:column headerText="Nombres" filterBy="#{prof.nombres}">
-                                <h:outputText value="#{prof.nombres}" />
-                            </p:column>
-                            <p:column headerText="Apellidos" filterBy="#{prof.apellidos}">
-                                <h:outputText value="#{prof.apellidos}" />
-                            </p:column>
-                        </p:dataTable>
+                    <p:tab title="Estudiante">
+                        <p:panel header="Estudiante: #{matricular.matricula.estudiante.nombres} #{matricular.matricula.estudiante.apellidos}">
+                            <center>
+                                <p:dataTable id="dtProfesores" value="#{matricular.estudiantesList}" lazy="true" var="est" rows="5" paginator="true" selectionMode="single"
+                                             selection="#{matricular.matricula.estudiante}" rowKey="#{est.id}" style="width: 420px;">
+                                    <f:facet name="header">
+                                        Selección de estudiante
+                                    </f:facet>
+                                    <p:ajax event="rowSelect" listener="#{matricular.onRowSelectEstudiante}" update="dlgForm" />
+                                    <p:column headerText="Cédula" filterBy="#{est.cedula}">
+                                        <h:outputText value="#{est.cedula}" />
+                                    </p:column>
+                                    <p:column headerText="Nombres" filterBy="#{est.nombres}">
+                                        <h:outputText value="#{est.nombres}" />
+                                    </p:column>
+                                    <p:column headerText="Apellidos" filterBy="#{est.apellidos}">
+                                        <h:outputText value="#{est.apellidos}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </center>
+                        </p:panel>
                     </p:tab>
                     
                     <!-- -->
                     
                     <p:tab title="Curso">
-                        <p:dataTable id="dtCursos" value="#{matricular.asignacionesCursosList}" var="cur" rows="5" paginator="true" selectionMode="single"
-                                     selection="#{matricular.asignacion.asignacionCurso}" rowKey="#{cur.id}" style="width: 420px;">
-                            <f:facet name="header">
-                                Cursos disponibles
-                            </f:facet>
-                            <p:ajax event="rowSelect" listener="#{matricular.onRowSelect}" update="dlgForm" />
-                            <p:column headerText="Curso" filterBy="#{cur.curso.nombre}">
-                                <h:outputText value="#{cur.curso.nombre}" />
-                            </p:column>
-                            <p:column headerText="Fecha de inicio" filterBy="#{cur.periodoLectivo.fechaInicio}">
-                                <h:outputText value="#{cur.periodoLectivo.fechaInicio}" />
-                            </p:column>
-                            <p:column headerText="Fecha de fin" filterBy="#{cur.periodoLectivo.fechaFin}">
-                                <h:outputText value="#{cur.periodoLectivo.fechaFin}" />
-                            </p:column>
-                        </p:dataTable>
+                        <p:panel header="Curso: #{matricular.matricula.asignacionCurso.curso.nombre}, periodo: #{matricular.matricula.asignacionCurso.periodoLectivo.fechaInicio} - #{matricular.matricula.asignacionCurso.periodoLectivo.fechaFin}">
+                            <center>
+                                <p:dataTable id="dtCursos" value="#{matricular.asignacionesCursosList}" var="cur" rows="5" paginator="true" selectionMode="single"
+                                             selection="#{matricular.matricula.asignacionCurso}" rowKey="#{cur.id}" style="width: 420px;">
+                                    <f:facet name="header">
+                                        Cursos disponibles
+                                    </f:facet>
+                                    <p:ajax event="rowSelect" listener="#{matricular.onRowSelect}" update="dlgForm" />
+                                    <p:column headerText="Curso" filterBy="#{cur.curso.nombre}">
+                                        <h:outputText value="#{cur.curso.nombre}" />
+                                    </p:column>
+                                    <p:column headerText="Fecha de inicio" filterBy="#{cur.periodoLectivo.fechaInicio}">
+                                        <h:outputText value="#{cur.periodoLectivo.fechaInicio}" />
+                                    </p:column>
+                                    <p:column headerText="Fecha de fin" filterBy="#{cur.periodoLectivo.fechaFin}">
+                                        <h:outputText value="#{cur.periodoLectivo.fechaFin}" />
+                                    </p:column>
+                                </p:dataTable>
+                            </center>
+                        </p:panel>
+                    </p:tab>
+                    
+                    <!-- -->
+                    
+                    <p:tab title="Paralelos">
+                        <p:panel header="Paralelo: #{matricular.matricula.paralelo.nombre}">
+                            <p:dataTable id="dtParalelos" value="#{matricular.paralelosList}" var="par" rows="5" paginator="true" selectionMode="single"
+                                         selection="#{matricular.matricula.paralelo}" rowKey="#{par.id}" style="width: 420px;">
+                                <f:facet name="header">
+                                    Paralelos
+                                </f:facet>
+                                <p:ajax event="rowSelect" listener="#{matricular.onRowSelectParalelo}" update="dlgForm" />
+                                <p:column headerText="Paralelo" filterBy="#{par.nombre}">
+                                    <h:outputText value="#{par.nombre}" />
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
                     </p:tab>
                 </p:tabView>
                 

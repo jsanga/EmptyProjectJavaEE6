@@ -26,6 +26,7 @@ public class PruebaLecturaExcel implements Serializable{
     public static final Long serialVerisonUID = 1L;
     
     private UploadedFile file;
+    private String version = FacesContext.class.getPackage().getImplementationVersion();
     
     public void handleFileUpload(FileUploadEvent event) {
         try{
@@ -54,6 +55,14 @@ public class PruebaLecturaExcel implements Serializable{
 
     public void setFile(UploadedFile file) {
         this.file = file;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
     }
     
 }

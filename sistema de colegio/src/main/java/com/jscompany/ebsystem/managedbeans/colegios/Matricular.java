@@ -6,6 +6,7 @@
 package com.jscompany.ebsystem.managedbeans.colegios;
 
 import com.jscompany.ebsystem.database.Querys;
+import com.jscompany.ebsystem.ejb.interfaces.ColegiosServices;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCursoParalelos;
 import com.jscompany.ebsystem.entidades.colegios.Colegio;
@@ -19,6 +20,7 @@ import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -45,6 +47,9 @@ public class Matricular implements Serializable{
     @ManagedProperty(value = "#{userSession}")
     private UserSession uSession;
     
+    @EJB(beanName = "colegiosServices")
+    private ColegiosServices colServices;
+    
     private Matricula matricula;
     private List<Matricula> matriculaList;
     private List<AsignacionCurso> asignacionesCursosList;
@@ -65,6 +70,7 @@ public class Matricular implements Serializable{
             colegio = (Colegio) services.getEntity(Colegio.class, uSession.getIdColegio());
             rol = (Rol) services.getEntityByParameters(Querys.getRolById, new String[]{"rolId"}, new Object[]{new Long(3)});
             estudiantesList = new PersonasByRolLazy(colegio, rol);
+            matriculaList = services.getListEntitiesByParameters(Querys.getMatriculasNoState, new String[]{}, new Object[]{});
             asignacionesCursosList = services.getListEntitiesByParameters(Querys.getAsignacionesCursoList, new String[]{"colegio"}, new Object[]{colegio});
         }catch(Exception e){
             e.printStackTrace();
@@ -73,11 +79,16 @@ public class Matricular implements Serializable{
     
     public void nuevaMatricula(){
         matricula = new Matricula();
+        matricula.setFechaCreacion(new Date());
         matricula.setEstado(Boolean.TRUE);
     }
     
     public void onRowSelectEstudiante(){
-        JsfUti.messageInfo(null, "Info", "Profesor seleccionado.");
+        JsfUti.messageInfo(null, "Info", "Estudiante seleccionado.");
+    }
+    
+    public void onRowSelectParalelo(){
+        JsfUti.messageInfo(null, "Info", "Paralelo seleccionado.");
     }
     
     public void onRowSelect(){
@@ -92,7 +103,46 @@ public class Matricular implements Serializable{
             e.printStackTrace();
         }
     }
-
+    
+    public void guardarNuevo(){
+        try{            
+            if(services.saveEntity(matricula)!=null){
+                matriculaList.add(matricula);
+                JsfUti.messageInfo(null, "Info", "Se creó la matrícula satisfactoriamente");
+            }
+            else
+                JsfUti.messageError(null, "Error", "Hubo un problema al crear la matrícula.");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void editarMatricula(Matricula matricula){
+        this.matricula = matricula;
+    }
+    
+    public void eliminarMatricula(Matricula matricula){
+        try{
+            this.matricula = matricula;
+            this.matricula.setEstado(Boolean.FALSE);
+            services.updateAndPersistEntity(this.matricula);
+            JsfUti.messageInfo(null, "Info", "Matrícula eliminada.");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void habilitarMatricula(Matricula matricula){
+        try{
+            this.matricula = matricula;
+            this.matricula.setEstado(Boolean.TRUE);
+            services.updateAndPersistEntity(this.matricula);
+            JsfUti.messageInfo(null, "Info", "Matrícula habilitada.");
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
     public UtilSession getUtilSession() {
         return utilSession;
     }

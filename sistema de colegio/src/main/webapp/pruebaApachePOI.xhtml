@@ -16,6 +16,7 @@
                             multiple="true" sizeLimit="20000000" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png|pdf)$/" />
             <p:growl id="messages1" showDetail="true"/>
             <p:commandButton actionListener="#{pruebaLecturaExcel.mostrarMensaje}" update="frmMain" value="Click"/>
+            <h:outputText value="#{pruebaLecturaExcel.version}"/>
         </h:form>
     </h:body>
 </html>
