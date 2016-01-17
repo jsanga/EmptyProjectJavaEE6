@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="frmMain">
+            <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+            <p:dataTable id="dtAsignaciones" value="#{calificarProfesorView.asignacionesProfList}" rows="5" 
+                         emptyMessage="No tiene datos" paginator="true" var="asignacion">
+                <p:column headerText="Curso">
+                    <h:outputText value="#{asignacion.asignacionCurso.curso.nombre}" style="text-transform: uppercase;"/>
+                </p:column>
+                <p:column headerText="Periodo lectivo" >
+                    <h:outputText value="#{asignacion.asignacionCurso.periodoLectivo.fechaInicio} #{asignacion.asignacionCurso.periodoLectivo.fechaFin}" style="text-transform: uppercase;"/>
+                </p:column>
+                <p:column headerText="Acción">
+                    <center>
+                        <p:commandButton value="Calificar" actionListener="#{calificarProfesorView.setAsignacion(asignacion)}" update="dlgFormEdit" />
+                    </center>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        
+        
+        
+        <p:dialog header="Seleccione la materia a calificar" id="dlgEditar" widgetVar="dlgEditar" modal="true" height="auto" width="auto" resizable="false">  
+            <h:form id="dlgFormEdit" >
+                
+                <p:dataTable id="dtProfesores" value="#{calificarProfesorView.materiasList}" var="mat" rows="5" paginator="true" style="width: 420px;">
+                    <f:facet name="header">
+                        Selección de Materia
+                    </f:facet>
+                    <p:column headerText="Nombre" filterBy="#{mat.nombre}">
+                        <h:outputText value="#{mat.nombre}" />
+                    </p:column>
+                    <p:column headerText="Acción">
+                        <p:commandButton value="Calificar" actionListener="#{calificarProfesorView.calificarMateria(mat)}" onclick="PF('dlgEditar').hide()" update=":frmMain"/>
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>
+
