@@ -18,6 +18,7 @@ public class Querys {
     // Querys de colegios
     public static String getColegiosList = "select e from Colegio e where e.estado = TRUE";
     public static String getColegiosListNoState = "select e from Colegio e";
+    public static String getTipoColegioList = "select e from TipoColegio e where e.estado = TRUE";
     
     // Querys de asignaciones de curso, profesor y matriculas
     public static String getAsignacionesCursoList = "select e from AsignacionCurso e where e.estado = TRUE and e.colegio = :colegio";

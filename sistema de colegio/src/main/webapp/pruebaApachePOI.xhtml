@@ -13,7 +13,7 @@
                             uploadLabel="Subir"
                             cancelLabel="Cancelar"
                             update="messages1" 
-                            multiple="true" sizeLimit="20000000" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png|pdf)$/" />
+                            multiple="true" sizeLimit="20000000" fileLimit="1" allowTypes="/(\.|\/)(xls|xlsx)$/" />
             <p:growl id="messages1" showDetail="true"/>
             <p:commandButton actionListener="#{pruebaLecturaExcel.mostrarMensaje}" update="frmMain" value="Click"/>
             <h:outputText value="#{pruebaLecturaExcel.version}"/>

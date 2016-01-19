@@ -15,6 +15,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -49,6 +51,9 @@ public class Colegio implements Serializable {
     @Size(max = 250)
     @Column(name = "direccion")
     private String direccion;
+    @JoinColumn(name = "tipo_colegio", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TipoColegio tipoColegio;
     @OneToMany(mappedBy = "colegio", fetch = FetchType.LAZY)
     private Collection<AsignacionCurso> asignacionCursoCollection;
 
@@ -105,6 +110,14 @@ public class Colegio implements Serializable {
 
     public void setAsignacionCursoCollection(Collection<AsignacionCurso> asignacionCursoCollection) {
         this.asignacionCursoCollection = asignacionCursoCollection;
+    }
+
+    public TipoColegio getTipoColegio() {
+        return tipoColegio;
+    }
+
+    public void setTipoColegio(TipoColegio tipoColegio) {
+        this.tipoColegio = tipoColegio;
     }
 
     @Override

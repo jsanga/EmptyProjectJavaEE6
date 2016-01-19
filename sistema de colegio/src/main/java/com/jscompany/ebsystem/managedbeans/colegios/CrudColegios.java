@@ -7,6 +7,7 @@ package com.jscompany.ebsystem.managedbeans.colegios;
 
 import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.entidades.colegios.Colegio;
+import com.jscompany.ebsystem.entidades.colegios.TipoColegio;
 import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
@@ -38,6 +39,7 @@ public class CrudColegios implements Serializable{
     
     private List<Colegio> colegiosList;
     private Colegio colegio;
+    private List<TipoColegio> tipos;
     
     @PostConstruct
     public void init(){
@@ -46,6 +48,7 @@ public class CrudColegios implements Serializable{
         colegiosList = (List<Colegio>)services.getListEntitiesByParameters(Querys.getColegiosListNoState, new String[]{}, new Object[]{});
         if(colegiosList == null)
             colegiosList = new ArrayList();
+        tipos = (List<TipoColegio>)services.getListEntitiesByParameters(Querys.getTipoColegioList, new String[]{}, new Object[]{});
     }
     
     public void nuevoColegio(){
@@ -110,6 +113,14 @@ public class CrudColegios implements Serializable{
 
     public void setuSession(UserSession uSession) {
         this.uSession = uSession;
+    }
+
+    public List<TipoColegio> getTipos() {
+        return tipos;
+    }
+
+    public void setTipos(List<TipoColegio> tipos) {
+        this.tipos = tipos;
     }
     
 }

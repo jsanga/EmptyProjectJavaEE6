@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -39,6 +40,9 @@ public class DesgloseNota implements Serializable {
     private Float nota;
     @Column(name = "tipo_nota")
     private Integer tipoNota;
+    @Size(max = 150)
+    @Column(name = "descripcion")
+    private String descripcion;
     @JoinColumn(name = "detalle_materia", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private DetalleMateria detalleMateria;
@@ -80,6 +84,14 @@ public class DesgloseNota implements Serializable {
 
     public void setDetalleMateria(DetalleMateria detalleMateria) {
         this.detalleMateria = detalleMateria;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     @Override

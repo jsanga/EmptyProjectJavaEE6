@@ -10,25 +10,12 @@
     <h:body>
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
-            <p:commandButton value="Ingresar Estudiante" update="dlgForm" actionListener="#{estudianteView.nuevoEstudiante()}" onclick="PF('dlgCrear').show()"/>
             <center>
                 <p:dataTable id="dtEstudiantesList" value="#{estudianteView.personasList}" emptyMessage="No tiene datos" style="width: 80%;" var="persona">
-                    <p:column headerText="Cédula" filterBy="#{persona.cedula}">
-                        <h:outputText value="#{persona.cedula}" style="text-transform: uppercase;"/>
+                    <p:column headerText="Nombres" >
+                        <h:outputText value="#{persona.nombres} #{persona.apellidos}" style="text-transform: uppercase;"/>
                     </p:column>
-                    <p:column headerText="Nombres" filterBy="#{persona.nombres}">
-                        <h:outputText value="#{persona.nombres}" style="text-transform: uppercase;"/>
-                    </p:column>
-                    <p:column headerText="Apellidos" filterBy="#{persona.apellidos}">
-                        <h:outputText value="#{persona.apellidos}" style="text-transform: uppercase;"/>
-                    </p:column>
-                    <p:column headerText="Colegio" filterBy="#{persona.colegio.nombre}">
-                        <h:outputText value="#{persona.colegio.nombre}" style="text-transform: uppercase;"/>
-                    </p:column>
-                    <p:column headerText="Estado">
-                        <h:outputText value="Activo" rendered="#{persona.estado}" style="text-transform: uppercase;"/>
-                        <h:outputText value="Inactivo" rendered="#{!persona.estado}" style="text-transform: uppercase;"/>
-                    </p:column>
+                    
                     <p:column headerText="Acción">
                         <center>
                             <p:commandButton value="Editar" actionListener="#{estudianteView.editarEstudiante(persona)}" onclick="PF('dlgEditar').show()" update="dlgFormEdit"/>

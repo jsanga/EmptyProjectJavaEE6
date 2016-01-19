@@ -64,7 +64,7 @@ public class CalificarProfesorView implements Serializable{
         profesor = (Persona) services.getEntityByParameters(Querys.getUsuarioByUser, new String[]{"username"}, new Object[]{uSession.getUsername()});
         colegio = (Colegio) services.getEntity(Colegio.class, uSession.getIdColegio());
         rol = (Rol) services.getEntityByParameters(Querys.getRolById, new String[]{"rolId"}, new Object[]{new Long(2)});
-        asignacionesProfList = services.getListEntitiesByParameters(Querys.getAsignacionesProfesorList, new String[]{"profesor"}, new Object[]{profesor});
+        asignacionesProfList = services.getListEntitiesByParameters(Querys.getAsignacionesProfesorListByProfesorId, new String[]{"profesor"}, new Object[]{profesor});
         
     }
     
@@ -107,7 +107,7 @@ public class CalificarProfesorView implements Serializable{
     public void setAsignacion(AsignacionProfesor asignacion) {
         this.asignacion = asignacion;
         materiasList = new ArrayList<>();
-        middleList = services.getListEntitiesByParameters(Querys.getAsignacionProfesorMateriaByAsignacionId, new String[]{"idAsigProf"}, new Object[]{this.asignacion});
+        middleList = services.getListEntitiesByParameters(Querys.getAsignacionProfesorMateriaByAsignacionId, new String[]{"asigProf"}, new Object[]{this.asignacion});
         for(AsignacionProfesorMaterias temp : middleList){
             materiasList.add(temp.getMateria());
         }

@@ -63,6 +63,9 @@ public class Persona implements Serializable {
     @Column(name = "fecha_entrada")
     @Temporal(TemporalType.DATE)
     private Date fechaEntrada;
+    @Size(max = 100)
+    @Column(name = "sexo")
+    private String sexo;
     @Column(name = "estado")
     private Boolean estado;
     @Column(name = "fecha_nacimiento")
@@ -215,6 +218,14 @@ public class Persona implements Serializable {
 
     public void setAsignacionProfesorCollection(Collection<AsignacionProfesor> asignacionProfesorCollection) {
         this.asignacionProfesorCollection = asignacionProfesorCollection;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
     }
 
     @Override

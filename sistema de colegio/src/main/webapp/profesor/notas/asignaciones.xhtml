@@ -20,7 +20,7 @@
                 </p:column>
                 <p:column headerText="Acción">
                     <center>
-                        <p:commandButton value="Calificar" actionListener="#{calificarProfesorView.setAsignacion(asignacion)}" update="dlgFormEdit" />
+                        <p:commandButton value="Calificar" actionListener="#{calificarProfesorView.setAsignacion(asignacion)}" oncomplete="PF('dlgMateria').show()" update="dlgFormEdit" />
                     </center>
                 </p:column>
             </p:dataTable>
@@ -28,7 +28,7 @@
         
         
         
-        <p:dialog header="Seleccione la materia a calificar" id="dlgEditar" widgetVar="dlgEditar" modal="true" height="auto" width="auto" resizable="false">  
+        <p:dialog header="Seleccione la materia a calificar" id="dlgMateria" widgetVar="dlgMateria" modal="true" height="auto" width="auto" resizable="false">  
             <h:form id="dlgFormEdit" >
                 
                 <p:dataTable id="dtProfesores" value="#{calificarProfesorView.materiasList}" var="mat" rows="5" paginator="true" style="width: 420px;">
@@ -39,7 +39,7 @@
                         <h:outputText value="#{mat.nombre}" />
                     </p:column>
                     <p:column headerText="Acción">
-                        <p:commandButton value="Calificar" actionListener="#{calificarProfesorView.calificarMateria(mat)}" onclick="PF('dlgEditar').hide()" update=":frmMain"/>
+                        <p:commandButton value="Calificar" actionListener="#{calificarProfesorView.calificarMateria(mat)}" onclick="PF('dlgMateria').hide()" update=":frmMain"/>
                     </p:column>
                 </p:dataTable>
             </h:form>

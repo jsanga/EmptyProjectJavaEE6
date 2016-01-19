@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -40,6 +41,11 @@
                     <p:inputText value="#{crudColegios.colegio.nombre}" style="text-transform: uppercase;"/>
                     <h:outputText value="Dirección:"/>
                     <p:inputText value="#{crudColegios.colegio.direccion}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Tipo de Colegio:"/>
+                    <p:selectOneMenu value="#{crudColegios.colegio.tipoColegio}" converter="tipoColegioConverter" style="width: 180px;">
+                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                        <f:selectItems value="#{crudColegios.tipos}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.nombreTipo}"/>
+                    </p:selectOneMenu>
                 </p:panelGrid>
                 <center><p:commandButton value="Guardar Colegio" actionListener="#{crudColegios.guardarNuevo()}" onclick="PF('dlgCrear').hide()" update=":frmMain"/></center>
             </h:form>
@@ -52,6 +58,11 @@
                     <p:inputText value="#{crudColegios.colegio.nombre}" style="text-transform: uppercase;"/>
                     <h:outputText value="Dirección:"/>
                     <p:inputText value="#{crudColegios.colegio.direccion}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Tipo de Colegio:"/>
+                    <p:selectOneMenu value="#{crudColegios.colegio.tipoColegio}" converter="tipoColegioConverter" style="width: 180px;">
+                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                        <f:selectItems value="#{crudColegios.tipos}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.nombreTipo}"/>
+                    </p:selectOneMenu>
                 </p:panelGrid>
                 <center><p:commandButton value="Terminar Edición" actionListener="#{crudColegios.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain"/></center>
             </h:form>
