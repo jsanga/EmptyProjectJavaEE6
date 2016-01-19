@@ -65,7 +65,7 @@ public class MasInfoAsigProfView implements Serializable{
             }
             utilSession.borrarDatos();
             asignacion = (AsignacionProfesor) services.getEntity(AsignacionProfesor.class, idAsigProf);
-            profesor = asignacion.getProfesor();
+            profesor = asignacion.getProfesor().getPersona();
             curso = asignacion.getAsignacionCurso();
             paralelo = asignacion.getParalelo();
             materias = new ArrayList<>();

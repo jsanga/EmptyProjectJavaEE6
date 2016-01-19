@@ -77,12 +77,6 @@ public class Persona implements Serializable {
     @OneToMany(mappedBy = "persona", fetch = FetchType.LAZY)
     @Filter(name="activos")
     private Collection<PersonaTelefono> personaTelefonoCollection;
-    @OneToMany(mappedBy = "estudiante", fetch = FetchType.LAZY)
-    @Filter(name="activos")
-    private Collection<Matricula> matriculaCollection;
-    @OneToMany(mappedBy = "profesor", fetch = FetchType.LAZY)
-    @Filter(name="activos")
-    private Collection<AsignacionProfesor> asignacionProfesorCollection;
     @JoinColumn(name = "rol", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Rol rol;
@@ -92,6 +86,12 @@ public class Persona implements Serializable {
     @JoinColumn(name = "colegio", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Colegio colegio;
+    @OneToOne(mappedBy = "persona", fetch = FetchType.LAZY)
+    private Estudiante estudiante;
+    @OneToOne(mappedBy = "persona", fetch = FetchType.LAZY)
+    private Profesor profesor;
+    @OneToOne(mappedBy = "persona", fetch = FetchType.LAZY)
+    private Personal personal;
     
     public Persona() {
     }
@@ -204,22 +204,6 @@ public class Persona implements Serializable {
         this.loguin = loguin;
     }
 
-    public Collection<Matricula> getMatriculaCollection() {
-        return matriculaCollection;
-    }
-
-    public void setMatriculaCollection(Collection<Matricula> matriculaCollection) {
-        this.matriculaCollection = matriculaCollection;
-    }
-
-    public Collection<AsignacionProfesor> getAsignacionProfesorCollection() {
-        return asignacionProfesorCollection;
-    }
-
-    public void setAsignacionProfesorCollection(Collection<AsignacionProfesor> asignacionProfesorCollection) {
-        this.asignacionProfesorCollection = asignacionProfesorCollection;
-    }
-
     public String getSexo() {
         return sexo;
     }
@@ -251,6 +235,30 @@ public class Persona implements Serializable {
     @Override
     public String toString() {
         return "com.jscompany.ebsystem.entidades.usuarios.Persona[ id=" + id + " ]";
+    }
+
+    public Estudiante getEstudiante() {
+        return estudiante;
+    }
+
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
+    }
+
+    public Profesor getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(Profesor profesor) {
+        this.profesor = profesor;
+    }
+
+    public Personal getPersonal() {
+        return personal;
+    }
+
+    public void setPersonal(Personal personal) {
+        this.personal = personal;
     }
     
 }

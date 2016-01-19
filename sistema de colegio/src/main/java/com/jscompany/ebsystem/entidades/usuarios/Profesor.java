@@ -5,9 +5,13 @@
  */
 package com.jscompany.ebsystem.entidades.usuarios;
 
+import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
+import com.jscompany.ebsystem.entidades.colegios.DetalleMateria;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,10 +22,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.Filter;
 
 /**
  *
@@ -47,7 +53,12 @@ public class Profesor implements Serializable {
     @JoinColumn(name = "persona", referencedColumnName = "id")
     @OneToOne(fetch = FetchType.LAZY)
     private Persona persona;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "profesor", fetch = FetchType.LAZY)
+    private Collection<DetalleMateria> detalleMateriaCollection;
+    @OneToMany(mappedBy = "profesor", fetch = FetchType.LAZY)
+    @Filter(name="activos")
+    private Collection<AsignacionProfesor> asignacionProfesorCollection;
+    
     public Profesor() {
     }
 
@@ -87,6 +98,14 @@ public class Profesor implements Serializable {
         this.persona = persona;
     }
 
+    public Collection<AsignacionProfesor> getAsignacionProfesorCollection() {
+        return asignacionProfesorCollection;
+    }
+
+    public void setAsignacionProfesorCollection(Collection<AsignacionProfesor> asignacionProfesorCollection) {
+        this.asignacionProfesorCollection = asignacionProfesorCollection;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -110,6 +129,14 @@ public class Profesor implements Serializable {
     @Override
     public String toString() {
         return "com.jscompany.ebsystem.entidades.usuarios.Profesor[ id=" + id + " ]";
+    }
+
+    public Collection<DetalleMateria> getDetalleMateriaCollection() {
+        return detalleMateriaCollection;
+    }
+
+    public void setDetalleMateriaCollection(Collection<DetalleMateria> detalleMateriaCollection) {
+        this.detalleMateriaCollection = detalleMateriaCollection;
     }
     
 }

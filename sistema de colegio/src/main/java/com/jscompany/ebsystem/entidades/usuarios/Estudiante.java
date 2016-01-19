@@ -5,8 +5,12 @@
  */
 package com.jscompany.ebsystem.entidades.usuarios;
 
+import com.jscompany.ebsystem.entidades.colegios.DetalleMateria;
+import com.jscompany.ebsystem.entidades.colegios.Matricula;
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,8 +20,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.Filter;
 
 /**
  *
@@ -37,7 +43,12 @@ public class Estudiante implements Serializable {
     @JoinColumn(name = "persona", referencedColumnName = "id")
     @OneToOne(fetch = FetchType.LAZY)
     private Persona persona;
-
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudiante", fetch = FetchType.LAZY)
+    private Collection<DetalleMateria> detalleMateriaCollection;
+    @OneToMany(mappedBy = "estudiante", fetch = FetchType.LAZY)
+    @Filter(name="activos")
+    private Collection<Matricula> matriculaCollection;
+    
     public Estudiante() {
     }
 
@@ -68,6 +79,14 @@ public class Estudiante implements Serializable {
         return hash;
     }
 
+    public Collection<Matricula> getMatriculaCollection() {
+        return matriculaCollection;
+    }
+
+    public void setMatriculaCollection(Collection<Matricula> matriculaCollection) {
+        this.matriculaCollection = matriculaCollection;
+    }
+
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -84,6 +103,14 @@ public class Estudiante implements Serializable {
     @Override
     public String toString() {
         return "com.jscompany.ebsystem.entidades.usuarios.Estudiante[ id=" + id + " ]";
+    }
+
+    public Collection<DetalleMateria> getDetalleMateriaCollection() {
+        return detalleMateriaCollection;
+    }
+
+    public void setDetalleMateriaCollection(Collection<DetalleMateria> detalleMateriaCollection) {
+        this.detalleMateriaCollection = detalleMateriaCollection;
     }
     
 }

@@ -64,7 +64,7 @@ public class CalificarProfesorView implements Serializable{
         profesor = (Persona) services.getEntityByParameters(Querys.getUsuarioByUser, new String[]{"username"}, new Object[]{uSession.getUsername()});
         colegio = (Colegio) services.getEntity(Colegio.class, uSession.getIdColegio());
         rol = (Rol) services.getEntityByParameters(Querys.getRolById, new String[]{"rolId"}, new Object[]{new Long(2)});
-        asignacionesProfList = services.getListEntitiesByParameters(Querys.getAsignacionesProfesorListByProfesorId, new String[]{"profesor"}, new Object[]{profesor});
+        asignacionesProfList = services.getListEntitiesByParameters(Querys.getAsignacionesProfesorListByProfesorId, new String[]{"profesor"}, new Object[]{profesor.getProfesor()});
         
     }
     

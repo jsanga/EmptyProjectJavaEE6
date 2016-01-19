@@ -29,8 +29,10 @@ public class Querys {
     public static String getAsignacionProfesorMateriaByAsignacionId = "select e from AsignacionProfesorMaterias e where e.asignacionProfesor = :asigProf and e.estado = TRUE";
     public static String getAsignacionesProfesorListNoState = "select e from AsignacionProfesor e";
     public static String getMatriculasNoState = "select e from Matricula e";
-    public static String getMatriculasByAsigProfAndMat = "select e from Matricula e";
-
+    public static String getMatriculasByAsigCurAndParalelo = "select e from Matricula e where e.asignacionCurso = :asigCur and e.paralelo = :paralelo";
+    public static String getDetalleMateriaListByProfId = "select e from DetalleMateria e";
+    public static String getDetalleMateriaByProfEstMat = "select e from DetalleMateria e where e.materia = :materia and e.profesor = :profesor and e.estudiante = :estudiante";
+    
     // Querys tablas intermedias
     public static String getAsigCursoMaterias = "select e from AsignacionCursoMaterias e where e.estado = TRUE AND e.asignacionCurso = :asigCurso";
     public static String getAsigCursoParalelos = "select e from AsignacionCursoParalelos e where e.estado = TRUE AND e.asignacionCurso = :asigCurso";

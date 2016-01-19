@@ -5,7 +5,10 @@
  */
 package com.jscompany.ebsystem.entidades.colegios;
 
+import com.jscompany.ebsystem.entidades.usuarios.Estudiante;
+import com.jscompany.ebsystem.entidades.usuarios.Profesor;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -55,6 +58,12 @@ public class DetalleMateria implements Serializable {
     private Float prom2;
     @Column(name = "total_prom")
     private Float totalProm;
+    @JoinColumn(name = "profesor", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Profesor profesor;
+    @JoinColumn(name = "estudiante", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Estudiante estudiante;
     @OneToMany(mappedBy = "detalleMateria", fetch = FetchType.LAZY)
     private Collection<DesgloseNota> desgloseNotaCollection;
     @JoinColumn(name = "materia", referencedColumnName = "id")
@@ -187,6 +196,22 @@ public class DetalleMateria implements Serializable {
     @Override
     public String toString() {
         return "com.jscompany.ebsystem.entidades.colegios.DetalleMateria[ id=" + id + " ]";
+    }
+
+    public Profesor getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(Profesor profesor) {
+        this.profesor = profesor;
+    }
+
+    public Estudiante getEstudiante() {
+        return estudiante;
+    }
+
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
     }
     
 }

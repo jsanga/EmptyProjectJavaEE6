@@ -6,8 +6,8 @@
 package com.jscompany.ebsystem.entidades.colegios;
 
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
+import com.jscompany.ebsystem.entidades.usuarios.Profesor;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -44,7 +44,7 @@ public class AsignacionProfesor implements Serializable {
     private Long id;
     @JoinColumn(name = "profesor", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Persona profesor;
+    private Profesor profesor;
     @Column(name = "estado")
     private Boolean estado;
     @Column(name = "fecha_creacion")
@@ -74,11 +74,11 @@ public class AsignacionProfesor implements Serializable {
         this.id = id;
     }
 
-    public Persona getProfesor() {
+    public Profesor getProfesor() {
         return profesor;
     }
 
-    public void setProfesor(Persona profesor) {
+    public void setProfesor(Profesor profesor) {
         this.profesor = profesor;
     }
 

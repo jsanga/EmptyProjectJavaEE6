@@ -5,8 +5,9 @@
  */
 package com.jscompany.ebsystem.managedbeans.colegios;
 
-import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
+import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
+import com.jscompany.ebsystem.entidades.colegios.DetalleMateria;
 import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Matricula;
 import com.jscompany.ebsystem.managedbeans.session.UserSession;
@@ -44,6 +45,9 @@ public class CalificarMateria implements Serializable{
     private Long idAsignacionProf, idMateria;
     private Materia materia;
     private AsignacionProfesor asignacionProfesor;
+    private List<DetalleMateria> detalleMateriaList;
+    private DetalleMateria detMateria;
+    private String tipoNota;
     
     @PostConstruct
     public void init(){
@@ -55,7 +59,26 @@ public class CalificarMateria implements Serializable{
             JsfUti.messageError(null, "Error", "Error al cargar la información.");
             return;
         }
+        materia = (Materia) services.getEntity(Materia.class, idMateria);
+        asignacionProfesor = (AsignacionProfesor) services.getEntity(AsignacionProfesor.class, idAsignacionProf);
+        matriculasList = services.getListEntitiesByParameters(Querys.getMatriculasByAsigCurAndParalelo, new String[]{"asigCur", "paralelo"}, new Object[]{asignacionProfesor.getAsignacionCurso(), asignacionProfesor.getParalelo()});
+        this.llenarDetalleMateriaList();
+        //detalleMateriaList = services.getEntityByParameters(Querys.getAsigCursoMaterias, par, val);
+        utilSession.borrarDatos();
         //matriculasList = services.getListEntitiesByParameters(Querys.getMatriculasNoState, par, val);
+        
+    }
+    
+    public void llenarDetalleMateriaList(){
+        for(Matricula temp : matriculasList){
+            detMateria = (DetalleMateria) services.getEntityByParameters(Querys.getDetalleMateriaByProfEstMat, new String[]{"materia", "profesor", "estudiante"}, new Object[]{materia, asignacionProfesor.getProfesor(), temp.getEstudiante()});
+            if(detMateria==null){
+                detMateria = new DetalleMateria();
+                detMateria.setEstudiante(temp.getEstudiante());
+                detMateria.setProfesor(asignacionProfesor.getProfesor());
+                detMateria.setMateria(materia);
+            }
+        }
     }
 
     public UserSession getuSession() {
@@ -96,6 +119,30 @@ public class CalificarMateria implements Serializable{
 
     public void setAsignacionProfesor(AsignacionProfesor asignacionProfesor) {
         this.asignacionProfesor = asignacionProfesor;
+    }
+
+    public List<DetalleMateria> getDetalleMateriaList() {
+        return detalleMateriaList;
+    }
+
+    public void setDetalleMateriaList(List<DetalleMateria> detalleMateriaList) {
+        this.detalleMateriaList = detalleMateriaList;
+    }
+
+    public DetalleMateria getDetMateria() {
+        return detMateria;
+    }
+
+    public void setDetMateria(DetalleMateria detMateria) {
+        this.detMateria = detMateria;
+    }
+
+    public String getTipoNota() {
+        return tipoNota;
+    }
+
+    public void setTipoNota(String tipoNota) {
+        this.tipoNota = tipoNota;
     }
     
 }
