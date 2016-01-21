@@ -5,6 +5,7 @@
  */
 package com.jscompany.ebsystem.entidades.reportes;
 
+import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
@@ -42,14 +43,23 @@ public class Reporte implements Serializable {
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
-    @Column(name = "creador")
-    private BigInteger creador;
+    @JoinColumn(name = "usuario_creador", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Persona usuarioCreador;
+    @Column(name = "estado")
+    private Boolean estado;
     @Size(max = 1000)
     @Column(name = "url")
     private String url;
     @JoinColumn(name = "tipo_reporte", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private TipoReporte tipoReporte;
+    @Size(max = 100)
+    @Column(name = "nombre")
+    private String nombre;
+     @Size(max = 1000)
+    @Column(name = "descripcion")
+    private String descripcion;
 
     public Reporte() {
     }
@@ -74,12 +84,12 @@ public class Reporte implements Serializable {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public BigInteger getCreador() {
-        return creador;
+    public Persona getUsuarioCreador() {
+        return usuarioCreador;
     }
 
-    public void setCreador(BigInteger creador) {
-        this.creador = creador;
+    public void setUsuarioCreador(Persona usuarioCreador) {
+        this.usuarioCreador = usuarioCreador;
     }
 
     public String getUrl() {
@@ -90,12 +100,36 @@ public class Reporte implements Serializable {
         this.url = url;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
     public TipoReporte getTipoReporte() {
         return tipoReporte;
     }
 
     public void setTipoReporte(TipoReporte tipoReporte) {
         this.tipoReporte = tipoReporte;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
     }
 
     @Override

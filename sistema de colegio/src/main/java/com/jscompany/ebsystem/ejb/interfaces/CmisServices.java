@@ -6,15 +6,13 @@
 package com.jscompany.ebsystem.ejb.interfaces;
 
 import com.jscompany.ebsystem.util.CmisUtil;
-import javax.ejb.Local;
 
 /**
  *
- * @author JoaoIsrael
+ * @author Joao Sanga
  */
-@Local
-public interface CertificadosServices {
+public interface CmisServices {
     
-    
+    public CmisUtil obtenerAlfrescoShareEngine();
     
 }

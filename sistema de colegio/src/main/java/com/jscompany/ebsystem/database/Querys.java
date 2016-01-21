@@ -70,4 +70,12 @@ public class Querys {
     // Querys de periodos lectivos
     public static String getPeriodosList = "select e from PeriodoLectivo e where e.estado = TRUE";
     public static String getPeriodosListNoState = "select e from PeriodoLectivo e";
+    
+    // Querys de certificados
+    public static String getCertificadosListByColegio = "select e from Certificado e where e.tipoCertificado.colegio = :colegio and e.estado = TRUE";
+    public static String getCertificadosListByColegioNoState = "select e from PeriodoLectivo e where e.tipoCertificado.colegio = :colegio ";
+
+    // Querys de certificados
+    
+    
 }

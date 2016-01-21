@@ -5,8 +5,9 @@
  */
 package com.jscompany.ebsystem.entidades.reportes;
 
+import com.jscompany.ebsystem.entidades.certificados.Certificado;
+import com.jscompany.ebsystem.entidades.colegios.Colegio;
 import java.io.Serializable;
-import java.math.BigInteger;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -15,11 +16,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -36,16 +38,13 @@ public class TipoReporte implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Size(max = 100)
-    @Column(name = "nombre")
-    private String nombre;
-    @Size(max = 1000)
-    @Column(name = "descripcion")
-    private String descripcion;
-    @Column(name = "colegio")
-    private BigInteger colegio;
+    @JoinColumn(name = "colegio", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Colegio colegio;
     @OneToMany(mappedBy = "tipoReporte", fetch = FetchType.LAZY)
     private Collection<Reporte> reporteCollection;
+    @OneToMany(mappedBy = "tipoCertificado", fetch = FetchType.LAZY)
+    private Collection<Certificado> certificadoCollection;
 
     public TipoReporte() {
     }
@@ -62,27 +61,11 @@ public class TipoReporte implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public BigInteger getColegio() {
+    public Colegio getColegio() {
         return colegio;
     }
 
-    public void setColegio(BigInteger colegio) {
+    public void setColegio(Colegio colegio) {
         this.colegio = colegio;
     }
 
@@ -92,6 +75,14 @@ public class TipoReporte implements Serializable {
 
     public void setReporteCollection(Collection<Reporte> reporteCollection) {
         this.reporteCollection = reporteCollection;
+    }
+
+    public Collection<Certificado> getCertificadoCollection() {
+        return certificadoCollection;
+    }
+
+    public void setCertificadoCollection(Collection<Certificado> certificadoCollection) {
+        this.certificadoCollection = certificadoCollection;
     }
 
     @Override

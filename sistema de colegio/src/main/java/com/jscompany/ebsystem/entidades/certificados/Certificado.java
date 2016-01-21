@@ -5,15 +5,19 @@
  */
 package com.jscompany.ebsystem.entidades.certificados;
 
+import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -39,13 +43,23 @@ public class Certificado implements Serializable {
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
-    @Column(name = "usuario_creador")
-    private BigInteger usuarioCreador;
-    @Column(name = "tipo_certificado")
-    private BigInteger tipoCertificado;
+    @JoinColumn(name = "usuario_creador", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Persona usuarioCreador;
+    @Column(name = "estado")
+    private Boolean estado;
+    @JoinColumn(name = "tipo_certificado", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TipoCertificado tipoCertificado;
     @Size(max = 1000)
     @Column(name = "url")
     private String url;
+    @Size(max = 100)
+    @Column(name = "nombre")
+    private String nombre;
+     @Size(max = 1000)
+    @Column(name = "descripcion")
+    private String descripcion;
 
     public Certificado() {
     }
@@ -70,19 +84,27 @@ public class Certificado implements Serializable {
         this.fechaCreacion = fechaCreacion;
     }
 
-    public BigInteger getUsuarioCreador() {
+    public Persona getUsuarioCreador() {
         return usuarioCreador;
     }
 
-    public void setUsuarioCreador(BigInteger usuarioCreador) {
+    public void setUsuarioCreador(Persona usuarioCreador) {
         this.usuarioCreador = usuarioCreador;
     }
 
-    public BigInteger getTipoCertificado() {
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public TipoCertificado getTipoCertificado() {
         return tipoCertificado;
     }
 
-    public void setTipoCertificado(BigInteger tipoCertificado) {
+    public void setTipoCertificado(TipoCertificado tipoCertificado) {
         this.tipoCertificado = tipoCertificado;
     }
 
@@ -92,6 +114,22 @@ public class Certificado implements Serializable {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     @Override

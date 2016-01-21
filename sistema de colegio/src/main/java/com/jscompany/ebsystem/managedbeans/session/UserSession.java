@@ -31,6 +31,8 @@ public class UserSession implements Serializable {
         username = null;
         rolPersona = null;
         isLogged = null;
+        idColegio = null;
+        idPersona = null;
     }
 
     public String getUsername() {

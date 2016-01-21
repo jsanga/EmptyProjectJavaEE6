@@ -6,12 +6,14 @@
 package com.jscompany.ebsystem.managedbeans;
 
 import com.jscompany.ebsystem.database.Querys;
+import com.jscompany.ebsystem.ejb.interfaces.CmisServices;
 import com.jscompany.ebsystem.ejb.interfaces.UsuariosServices;
 import com.jscompany.ebsystem.entidades.usuarios.Loguin;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import com.jscompany.ebsystem.entidades.usuarios.Rol;
 import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.services.AclService;
+import com.jscompany.ebsystem.util.CmisUtil;
 import com.jscompany.ebsystem.util.JsfUti;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
@@ -30,9 +32,13 @@ public class Login implements Serializable{
     
     public static final Long serialVerisonUID = 1L;
     
+    @EJB(beanName = "cmisEngine")
+    private CmisServices cmisServices;
+    
     private Loguin loguin;
     private Persona persona;
     private Rol rol;
+    private CmisUtil cmis;
     
     @EJB(beanName = "aclService")
     private AclService aclServices;
@@ -45,7 +51,13 @@ public class Login implements Serializable{
     
     @PostConstruct
     public void init(){
-        loguin = new Loguin();
+        try{
+            cmis = cmisServices.obtenerAlfrescoShareEngine();
+            loguin = new Loguin();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
     }
     
     public void validarUsuario(){

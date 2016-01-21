@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Estudiantes</title>
+    </h:head>
+    <h:body>
+        <h:form id="frmMain">
+            <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+            
+            <center>
+                <p:dataTable id="dtEstudiantesList" value="#{certificadoView.certificadosList}" emptyMessage="No tiene datos" style="width: 80%;" var="certificado">
+                    <p:column headerText="Nombre" filterBy="#{persona.cedula}">
+                        <h:outputText value="#{certificado.nombre}" style="text-transform: uppercase;"/>
+                    </p:column>
+                    <p:column headerText="Descripcion" filterBy="#{persona.nombres}">
+                        <h:outputText value="#{certificado.descripcion}" style="text-transform: uppercase;"/>
+                    </p:column>
+                    <p:column headerText="Acción">
+                        <center>
+                            <p:commandButton value="Crear Certificado" actionListener="#{certificadoView.crearCertificado(certificado)}" onclick="PF('dlgEditar').show()" update="dlgFormEdit"/>
+                        </center>
+                    </p:column>
+                </p:dataTable>
+            </center>
+        </h:form>
+        
+    </h:body>
+</html>
+
