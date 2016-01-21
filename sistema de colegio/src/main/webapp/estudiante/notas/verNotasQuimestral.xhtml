@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="frmMain">
+            <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+            <center>
+                <p:panelGrid style="width:100%;">
+                    <f:facet name="header">
+                        <p:row>
+                            <p:column style="font-weight: bold; width: 30%;">Materia</p:column>
+                            <p:column style="font-weight: bold; width: 35%;">Quimestre 1</p:column>
+                            <p:column style="font-weight: bold; width: 35%;">Quimestre 2</p:column>
+
+
+                        </p:row>
+
+                    </f:facet>
+
+                </p:panelGrid>
+
+                <p:panelGrid style="width:100%; " >
+                    <f:facet name="header" >
+                        <p:row >
+                            <p:column style=" width: 30%;">Nombre Materia</p:column>
+                            <p:column style=" width: 8.75%; font-size: 70%;">Nota 1</p:column>
+                            <p:column style=" width: 8.75%; font-size: 70%;">Nota 2</p:column>
+                            <p:column style="width: 8.75%; font-size: 70%;">Nota 3</p:column>
+                            <p:column style="width: 8.75%; font-size: 70%;">Examen</p:column>
+                            <p:column style=" width: 8.75%; font-size: 70%;">Nota 1</p:column>
+                            <p:column style=" width: 8.75%; font-size: 70%;">Nota 2</p:column>
+                            <p:column style=" width: 8.75%; font-size: 70%;">Nota 3</p:column>
+                            <p:column style=" width: 8.75%; font-size: 70%;">Examen</p:column>
+                        </p:row>
+                    </f:facet>
+                </p:panelGrid>
+                <p:dataGrid var="mat" value="#{verNotasView.detalleMateriaList}" layout="grid" columns="1"
+                            rows="6" id="materias"
+                            >
+
+                    <p:panelGrid style="width:100%;">
+                        <div style=" width: 30%; float: left;">
+                            <h:outputText value="#{mat.materia.nombre}"/>
+                        </div>
+                        <div style=" width: 70%; float: left;">
+                            <p:inputText style=" width: 10.5%; margin-left: 0.45%; " value="#{mat.nota1}"/>
+                            <p:inputText style=" width: 10.5%; margin-left: 0.45%;" value="#{mat.nota2}"/>
+                            <p:inputText style=" width: 10.5%; margin-left: 0.45%;" value="#{mat.nota3}"/>
+                            <p:inputText style=" width: 10.5%; margin-left: 0.45%;" value="#{mat.prom1}"/>
+                            <p:inputText style=" width: 10.5%; margin-left: 0.45%;" value="#{mat.nota4}"/>
+                            <p:inputText style=" width: 10.5%; margin-left: 0.45%;" value="#{mat.nota5}"/>
+                            <p:inputText style=" width: 10.5%; margin-left: 0.45%;" value="#{mat.nota6}"/>
+                            <p:inputText style=" width: 10.5%; margin-left: 0.45%;" value="#{mat.prom2}"/>
+                        </div>                        
+                    </p:panelGrid>
+                </p:dataGrid>
+                <p:commandButton value="Regresar" />
+                
+            </center>
+        </h:form>
+        
+    </h:body>
+</html>
+

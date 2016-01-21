@@ -70,7 +70,12 @@ public class CalificarProfesorView implements Serializable{
     
     public void calificarMateria(Materia mat){
         materiaACalificar = mat;
-        JsfUti.redirectNewTab("/colegionetworksystem/faces/profesor/notas/calificarMateria.xhtml");
+        if(colegio.getTipoCalificacion().getId().equals(new Long(1)))
+            JsfUti.redirectNewTab("/colegionetworksystem/faces/profesor/notas/calificarMateriaSemestral.xhtml");
+        if(colegio.getTipoCalificacion().getId().equals(new Long(2)))
+            JsfUti.redirectNewTab("/colegionetworksystem/faces/profesor/notas/calificarMateriaQuimestral.xhtml");
+        if(colegio.getTipoCalificacion().getId().equals(new Long(3)))
+            JsfUti.redirectNewTab("/colegionetworksystem/faces/profesor/notas/calificarMateriaTrimestral.xhtml");
         utilSession.instanciarParametros();
         utilSession.agregarParametro("idAsignacionProfesor", new Long(asignacion.getId()));
         utilSession.agregarParametro("idMateria", new Long(materiaACalificar.getId()));

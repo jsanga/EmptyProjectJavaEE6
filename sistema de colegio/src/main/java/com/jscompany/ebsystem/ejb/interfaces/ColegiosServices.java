@@ -7,6 +7,7 @@ package com.jscompany.ebsystem.ejb.interfaces;
 
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
+import com.jscompany.ebsystem.entidades.colegios.DetalleMateria;
 import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Matricula;
 import com.jscompany.ebsystem.entidades.colegios.Paralelo;
@@ -29,5 +30,7 @@ public interface ColegiosServices {
     public Boolean actualizarAsignacionCurso(AsignacionCurso asignacion);
     
     public Boolean actualizarAsignacionProfesor(AsignacionProfesor asignacionProfesor, List<Materia> materias);
+    
+    public Boolean guardarNotas(List<DetalleMateria> detalleMateriaList);
     
 }

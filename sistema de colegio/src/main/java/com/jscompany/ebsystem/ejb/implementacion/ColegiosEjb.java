@@ -11,6 +11,7 @@ import com.jscompany.ebsystem.ejb.interfaces.ColegiosServices;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesorMaterias;
+import com.jscompany.ebsystem.entidades.colegios.DetalleMateria;
 import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Matricula;
 import com.jscompany.ebsystem.entidades.colegios.Paralelo;
@@ -113,6 +114,24 @@ public class ColegiosEjb implements ColegiosServices{
                     temp.setEstado(true);
                     services.updateAndPersistEntity(temp);
                 }                
+            }            
+        }catch(Exception e){
+            e.printStackTrace();
+            b = false;
+        }
+        return b;
+    }
+    
+    @Override
+    public Boolean guardarNotas(List<DetalleMateria> detalleMateriaList){
+        Boolean b;
+        try{
+            b = true;
+            for(DetalleMateria temp : detalleMateriaList){
+                if(temp.getId()==null)
+                    services.saveEntity(temp);
+                else
+                    services.updateAndPersistEntity(temp);
             }            
         }catch(Exception e){
             e.printStackTrace();

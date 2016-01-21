@@ -24,6 +24,7 @@ public class Querys {
     public static String getAsignacionesCursoList = "select e from AsignacionCurso e where e.estado = TRUE and e.colegio = :colegio";
     public static String getAsignacionesCursoListByColegioIdNoState = "select e from AsignacionCurso e where e.colegio = :colegio";
     public static String getAsignacionesProfesorList = "select e from AsignacionProfesor e where e.estado = TRUE";
+    public static String getAsignacionesProfesorByAsignacionCursoAndParaleloList = "select e from AsignacionProfesor e where e.asignacionCurso = :asigCurso and e.paralelo = :paralelo";
     public static String getAsignacionesProfesorListByProfesorId = "select e from AsignacionProfesor e where e.estado = TRUE and e.profesor = :profesor";
     public static String getAsignacionProfesorMateriaByMateriaAndAsignacionIdNoState = "select e from AsignacionProfesorMaterias e where e.asignacionProfesor = :asigProf and materia = :materia";
     public static String getAsignacionProfesorMateriaByAsignacionId = "select e from AsignacionProfesorMaterias e where e.asignacionProfesor = :asigProf and e.estado = TRUE";
@@ -32,6 +33,7 @@ public class Querys {
     public static String getMatriculasByAsigCurAndParalelo = "select e from Matricula e where e.asignacionCurso = :asigCur and e.paralelo = :paralelo";
     public static String getDetalleMateriaListByProfId = "select e from DetalleMateria e";
     public static String getDetalleMateriaByProfEstMat = "select e from DetalleMateria e where e.materia = :materia and e.profesor = :profesor and e.estudiante = :estudiante";
+    public static String getMatriculasByEstudianteNoState = "select e from Matricula e where e.estudiante = :estudiante";
     
     // Querys tablas intermedias
     public static String getAsigCursoMaterias = "select e from AsignacionCursoMaterias e where e.estado = TRUE AND e.asignacionCurso = :asigCurso";

@@ -6,6 +6,7 @@
 package com.jscompany.ebsystem.managedbeans.colegios;
 
 import com.jscompany.ebsystem.database.Querys;
+import com.jscompany.ebsystem.ejb.interfaces.ColegiosServices;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
 import com.jscompany.ebsystem.entidades.colegios.DetalleMateria;
 import com.jscompany.ebsystem.entidades.colegios.Materia;
@@ -15,6 +16,7 @@ import com.jscompany.ebsystem.managedbeans.session.UtilSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -41,6 +43,9 @@ public class CalificarMateria implements Serializable{
     @ManagedProperty (value = "#{utilSession}")
     private UtilSession utilSession;
     
+    @EJB(beanName = "colegiosServices")
+    private ColegiosServices colServices;
+    
     private List<Matricula> matriculasList;
     private Long idAsignacionProf, idMateria;
     private Materia materia;
@@ -53,20 +58,30 @@ public class CalificarMateria implements Serializable{
     public void init(){
         if(!uSession.getIsLogged())
             return;
-        idAsignacionProf = (Long) utilSession.retornarValor("idAsignacionProfesor");
-        idMateria = (Long) utilSession.retornarValor("idMateria");
-        if(idAsignacionProf == null || idMateria == null){
+        if(utilSession.isNull() || utilSession.estaVacio()){
             JsfUti.messageError(null, "Error", "Error al cargar la información.");
             return;
         }
+        idAsignacionProf = (Long) utilSession.retornarValor("idAsignacionProfesor");
+        idMateria = (Long) utilSession.retornarValor("idMateria");
+        
         materia = (Materia) services.getEntity(Materia.class, idMateria);
         asignacionProfesor = (AsignacionProfesor) services.getEntity(AsignacionProfesor.class, idAsignacionProf);
         matriculasList = services.getListEntitiesByParameters(Querys.getMatriculasByAsigCurAndParalelo, new String[]{"asigCur", "paralelo"}, new Object[]{asignacionProfesor.getAsignacionCurso(), asignacionProfesor.getParalelo()});
+        detalleMateriaList = new ArrayList<>();
         this.llenarDetalleMateriaList();
         //detalleMateriaList = services.getEntityByParameters(Querys.getAsigCursoMaterias, par, val);
         utilSession.borrarDatos();
         //matriculasList = services.getListEntitiesByParameters(Querys.getMatriculasNoState, par, val);
         
+    }
+    
+    public void guardarNotas(){
+        if(colServices.guardarNotas(detalleMateriaList)){
+            JsfUti.messageInfo(null, "Info", "Notas guardadas/actualizadas satisfactoriamente.");
+        }else{
+            JsfUti.messageError(null, "Error", "Hubo un problema al guardar/actualizar las notas. Refresque la página e inténtelo de nuevo.");
+        }
     }
     
     public void llenarDetalleMateriaList(){
@@ -78,6 +93,7 @@ public class CalificarMateria implements Serializable{
                 detMateria.setProfesor(asignacionProfesor.getProfesor());
                 detMateria.setMateria(materia);
             }
+            detalleMateriaList.add(detMateria);
         }
     }
 

@@ -54,6 +54,9 @@ public class Colegio implements Serializable {
     @JoinColumn(name = "tipo_colegio", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private TipoColegio tipoColegio;
+    @JoinColumn(name = "tipo_calificacion", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private TipoCalificacion tipoCalificacion;
     @OneToMany(mappedBy = "colegio", fetch = FetchType.LAZY)
     private Collection<AsignacionCurso> asignacionCursoCollection;
 
@@ -118,6 +121,14 @@ public class Colegio implements Serializable {
 
     public void setTipoColegio(TipoColegio tipoColegio) {
         this.tipoColegio = tipoColegio;
+    }
+
+    public TipoCalificacion getTipoCalificacion() {
+        return tipoCalificacion;
+    }
+
+    public void setTipoCalificacion(TipoCalificacion tipoCalificacion) {
+        this.tipoCalificacion = tipoCalificacion;
     }
 
     @Override
