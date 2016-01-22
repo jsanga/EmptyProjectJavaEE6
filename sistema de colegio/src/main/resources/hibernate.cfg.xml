@@ -58,6 +58,7 @@
     <mapping class="com.jscompany.ebsystem.entidades.colegios.AsignacionProfesorMaterias"/>
     <mapping class="com.jscompany.ebsystem.entidades.colegios.TipoColegio"/>
     <mapping class="com.jscompany.ebsystem.entidades.colegios.TipoCalificacion"/>
+    <mapping class="com.jscompany.ebsystem.entidades.colegios.Region"/>
     
     <!-- Schema Certificados -->
     <mapping class="com.jscompany.ebsystem.entidades.certificados.Certificado"/>

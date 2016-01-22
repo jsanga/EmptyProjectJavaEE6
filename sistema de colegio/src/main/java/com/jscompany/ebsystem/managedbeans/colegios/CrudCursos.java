@@ -57,6 +57,7 @@ public class CrudCursos implements Serializable{
     }
     
     public void eliminarCurso(Curso c){
+        /*
         int i=0;
         for(Curso cl : cursosList){
             if(cl.getNombre().equals(c.getNombre())){
@@ -67,7 +68,20 @@ public class CrudCursos implements Serializable{
                 break;
             }
             i++;
-        }
+        }*/
+        c.setEstado(Boolean.FALSE);
+        if(services.updateAndPersistEntity(c))
+            JsfUti.messageInfo(null, "Info", "Se deshabilitó el curso satisfactoriamente");
+        else
+            JsfUti.messageError(null, "Error", "Hubo un problema al deshabilitar el curso.");
+    }
+    
+    public void habilitarCurso(Curso c){
+        c.setEstado(Boolean.TRUE);
+       if(services.updateAndPersistEntity(c))
+            JsfUti.messageInfo(null, "Info", "Se habilitó el curso satisfactoriamente");
+        else
+            JsfUti.messageError(null, "Error", "Hubo un problema al habilitar el curso.");
     }
     
     public void guardarNuevo(){

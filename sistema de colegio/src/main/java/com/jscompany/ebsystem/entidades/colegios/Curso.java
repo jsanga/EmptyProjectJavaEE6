@@ -38,6 +38,9 @@ public class Curso implements Serializable {
     @Size(max = 100)
     @Column(name = "nombre")
     private String nombre;
+    @Size(max = 1000)
+    @Column(name = "especializacion")
+    private String especializacion;
     @Column(name = "estado")
     private Boolean estado;
     @OneToMany(mappedBy = "curso", fetch = FetchType.LAZY)
@@ -59,7 +62,10 @@ public class Curso implements Serializable {
     }
 
     public String getNombre() {
-        return nombre;
+        if(nombre!=null)
+            return nombre.toUpperCase();
+        else
+            return nombre;
     }
 
     public void setNombre(String nombre) {
@@ -80,6 +86,17 @@ public class Curso implements Serializable {
 
     public void setAsignacionCursoCollection(Collection<AsignacionCurso> asignacionCursoCollection) {
         this.asignacionCursoCollection = asignacionCursoCollection;
+    }
+
+    public String getEspecializacion() {
+        if(especializacion!=null)
+            return especializacion.toUpperCase();
+        else
+            return especializacion;
+    }
+
+    public void setEspecializacion(String especializacion) {
+        this.especializacion = especializacion;
     }
 
     @Override

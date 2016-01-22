@@ -19,6 +19,7 @@ public class Querys {
     public static String getColegiosList = "select e from Colegio e where e.estado = TRUE";
     public static String getColegiosListNoState = "select e from Colegio e";
     public static String getTipoColegioList = "select e from TipoColegio e where e.estado = TRUE";
+    public static String getColegiosByTipoList = "select e from Colegio e where e.estado = TRUE and e.tipoColegio = :tipo";
     
     // Querys de asignaciones de curso, profesor y matriculas
     public static String getAsignacionesCursoList = "select e from AsignacionCurso e where e.estado = TRUE and e.colegio = :colegio";
@@ -36,7 +37,8 @@ public class Querys {
     public static String getMatriculasByEstudianteNoState = "select e from Matricula e where e.estudiante = :estudiante";
     
     // Querys tablas intermedias
-    public static String getAsigCursoMaterias = "select e from AsignacionCursoMaterias e where e.estado = TRUE AND e.asignacionCurso = :asigCurso";
+    public static String getAsigCursoMaterias = "select e from AsignacionCursoMaterias e where e.estado = TRUE AND e.asignacionCurso = :asigCurso and e.fueTomada = FALSE";
+    public static String getAsigCursoMateriasByAsigCursoAndMateria = "select e from AsignacionCursoMaterias e where e.estado = TRUE AND e.asignacionCurso = :asigCurso and e.materia = :idMateria";
     public static String getAsigCursoParalelos = "select e from AsignacionCursoParalelos e where e.estado = TRUE AND e.asignacionCurso = :asigCurso";
     
     // Querys de cursos

@@ -10,18 +10,24 @@
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
             <p:commandButton value="Ingresar Curso" update=":dlgForm" actionListener="#{crudCursos.nuevoCurso()}" onclick="PF('dlgCrear').show()"/>
-            <p:dataTable id="dtCursos" value="#{crudCursos.cursosList}" var="curso">
-                <p:column headerText="Nombres" filterBy="#{curso.nombre}">
+            <p:dataTable id="dtCursos" value="#{crudCursos.cursosList}"
+                          rows="10" paginator="true" var="curso" >
+                <p:column headerText="Nombres" filterBy="#{curso.nombre}" width="25%">
                     <h:outputText value="#{curso.nombre}" style="text-transform: uppercase;"/>
                 </p:column>
-                <p:column headerText="Estado">
+                <p:column headerText="Especialización" filterBy="#{asignacion.curso.especializacion}" width="35%">
+                    <h:outputText value="#{curso.especializacion}" style="text-transform: uppercase;" rendered="#{curso.especializacion!=null}"/>
+                    <h:outputText value="No tiene" style="text-transform: uppercase;" rendered="#{curso.especializacion==null}"/>
+                </p:column>
+                <p:column headerText="Estado" width="15%">
                     <h:outputText value="Activo" rendered="#{curso.estado}" style="text-transform: uppercase;"/>
                     <h:outputText value="Inactivo" rendered="#{!curso.estado}" style="text-transform: uppercase;"/>
                 </p:column>
-                <p:column headerText="Acción">
+                <p:column headerText="Acción" width="25%">
                     <center>
                         <p:commandButton value="Editar" actionListener="#{crudCursos.editarCurso(curso)}" onclick="PF('dlgEditar').show()" update=":dlgFormEdit"/>
-                        <p:commandButton value="Eliminar" actionListener="#{crudCursos.eliminarCurso(curso)}" update="frmMain"/>
+                        <p:commandButton value="Eliminar" actionListener="#{crudCursos.eliminarCurso(curso)}" update="frmMain" rendered="#{curso.estado}"/>
+                        <p:commandButton value="Habilitar" actionListener="#{crudCursos.habilitarCurso(curso)}" update="frmMain" rendered="#{!curso.estado}"/>
                     </center>
                 </p:column>
             </p:dataTable>
@@ -32,6 +38,8 @@
                 <p:panelGrid columns="2">
                     <h:outputText value="Nombre:"/>
                     <p:inputText value="#{crudCursos.curso.nombre}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Especialización"/>
+                    <p:inputText placeholder="No tiene" value="#{crudCursos.curso.especializacion}" style="text-transform: uppercase;"/>
                 </p:panelGrid>
                 <center><p:commandButton value="Guardar Colegio" actionListener="#{crudCursos.guardarNuevo()}" onclick="PF('dlgCrear').hide()" update=":frmMain"/></center>
             </h:form>
@@ -42,6 +50,8 @@
                 <p:panelGrid columns="2">
                     <h:outputText value="Nombre:"/>
                     <p:inputText value="#{crudCursos.curso.nombre}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Especialización"/>
+                    <p:inputText placeholder="No tiene" value="#{crudCursos.curso.especializacion}" style="text-transform: uppercase;"/>
                 </p:panelGrid>
                 <center><p:commandButton value="Terminar Edición" actionListener="#{crudCursos.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain"/></center>
             </h:form>

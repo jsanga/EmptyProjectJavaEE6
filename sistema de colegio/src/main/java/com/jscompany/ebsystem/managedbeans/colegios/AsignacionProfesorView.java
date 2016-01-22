@@ -170,7 +170,7 @@ public class AsignacionProfesorView implements Serializable{
                 JsfUti.messageError(null, "Error", "Debe seleccionar un paralelo.");
                 return;
             }
-            if(colServices.crearAsignacionProfesor(asignacion, materiasSeleccionadas)!=null){
+            if(colServices.crearAsignacionProfesor(asignacion, asigcurso, materiasSeleccionadas)!=null){
                 asignacionesProfList.add(asignacion);
                 JsfUti.messageInfo(null, "Info", "Se creó la asignación satisfactoriamente");
             }

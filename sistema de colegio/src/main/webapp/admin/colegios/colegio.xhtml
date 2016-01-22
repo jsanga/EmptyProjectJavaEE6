@@ -11,24 +11,32 @@
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
             <p:commandButton value="Ingresar Colegio" update=":dlgForm" actionListener="#{crudColegios.nuevoColegio()}" onclick="PF('dlgCrear').show()"/>
-            <p:dataTable id="dtColegios" value="#{crudColegios.colegiosList}" var="colegio">
-                <p:column headerText="Nombres" filterBy="#{colegio.nombre}">
+            <p:dataTable id="dtColegios" value="#{crudColegios.colegiosList}"
+                         var="colegio" rows="10" paginator="true">
+                <p:column headerText="Nombres" filterBy="#{colegio.nombre}" width="20%">
                     <h:outputText value="#{colegio.nombre}" style="text-transform: uppercase;"/>
                 </p:column>
-                <p:column headerText="Dirección" filterBy="#{colegio.direccion}">
+                <p:column headerText="Dirección" filterBy="#{colegio.direccion}" width="25%">
                     <h:outputText value="#{colegio.direccion}" style="text-transform: uppercase;"/>
                 </p:column>
-                <p:column headerText="Fecha de creación">
+                <p:column headerText="Fecha de creación" width="10%">
                     <h:outputText value="#{colegio.fechaCreacion}" style="text-transform: uppercase;"/>
                 </p:column>
-                <p:column headerText="Estado">
+                <p:column headerText="Tipo" width="8%" filterBy="#{colegio.tipoColegio.nombreTipo}">
+                    <h:outputText value="#{colegio.tipoColegio.nombreTipo}" style="text-transform: uppercase;"/>
+                </p:column>
+                <p:column headerText="Región" width="12%" filterBy="#{colegio.region.nombre}">
+                    <h:outputText value="#{colegio.region.nombre}" style="text-transform: uppercase;"/>
+                </p:column>
+                <p:column headerText="Estado" width="8%">
                     <h:outputText value="Activo" rendered="#{colegio.estado}" style="text-transform: uppercase;"/>
                     <h:outputText value="Inactivo" rendered="#{!colegio.estado}" style="text-transform: uppercase;"/>
                 </p:column>
                 <p:column headerText="Acción">
                     <center>
                         <p:commandButton value="Editar" actionListener="#{crudColegios.editarColegio(colegio)}" onclick="PF('dlgEditar').show()" update=":dlgFormEdit"/>
-                        <p:commandButton value="Eliminar" actionListener="#{crudColegios.eliminarColegio(colegio)}" update="frmMain"/>
+                        <p:commandButton value="Eliminar" actionListener="#{crudColegios.eliminarColegio(colegio)}" update="frmMain" rendered="#{colegio.estado}"/>
+                        <p:commandButton value="Habilitar" actionListener="#{crudColegios.habilitarColegio(colegio)}" update="frmMain" rendered="#{!colegio.estado}"/>
                     </center>
                 </p:column>
             </p:dataTable>
@@ -36,7 +44,7 @@
         
         <p:dialog header="Crear Colegio" id="dlgCrear" widgetVar="dlgCrear" modal="true" height="auto" width="auto" resizable="false">  
             <h:form id="dlgForm" >
-                <p:panelGrid columns="2">
+                <p:panelGrid columns="2" id="panelData">
                     <h:outputText value="Nombre:"/>
                     <p:inputText value="#{crudColegios.colegio.nombre}" style="text-transform: uppercase;"/>
                     <h:outputText value="Dirección:"/>
@@ -45,6 +53,12 @@
                     <p:selectOneMenu value="#{crudColegios.colegio.tipoColegio}" converter="tipoColegioConverter" style="width: 180px;">
                         <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
                         <f:selectItems value="#{crudColegios.tipos}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.nombreTipo}"/>
+                        <p:ajax update="panelData"/>
+                    </p:selectOneMenu>
+                    <h:outputText value="Colegio Matriz:" />
+                    <p:selectOneMenu value="#{crudColegios.colegioMatriz}" converter="colegioConverter" style="width: 180px;" disabled="#{crudColegios.colegio.tipoColegio.id==1}">
+                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                        <f:selectItems value="#{crudColegios.colegiosMatrizList}" var="cole" itemValue="#{cole}" itemLabel="#{cole.nombre}"/>
                     </p:selectOneMenu>
                 </p:panelGrid>
                 <center><p:commandButton value="Guardar Colegio" actionListener="#{crudColegios.guardarNuevo()}" onclick="PF('dlgCrear').hide()" update=":frmMain"/></center>
@@ -62,6 +76,12 @@
                     <p:selectOneMenu value="#{crudColegios.colegio.tipoColegio}" converter="tipoColegioConverter" style="width: 180px;">
                         <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
                         <f:selectItems value="#{crudColegios.tipos}" var="tipo" itemValue="#{tipo}" itemLabel="#{tipo.nombreTipo}"/>
+                        <p:ajax update="dlgFormEdit"/>
+                    </p:selectOneMenu>
+                    <h:outputText value="Colegio Matriz:" />
+                    <p:selectOneMenu value="#{crudColegios.colegioMatriz}" converter="colegioConverter" style="width: 180px;" disabled="#{crudColegios.colegio.tipoColegio.id==1}">
+                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                        <f:selectItems value="#{crudColegios.colegiosMatrizList}" var="cole" itemValue="#{cole}" itemLabel="#{cole.nombre}"/>
                     </p:selectOneMenu>
                 </p:panelGrid>
                 <center><p:commandButton value="Terminar Edición" actionListener="#{crudColegios.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain"/></center>

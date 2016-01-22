@@ -84,6 +84,7 @@ public class AsignacionCursoView implements Serializable{
         asignacion = new AsignacionCurso();
         asignacion.setEstado(Boolean.TRUE);
         asignacion.setFechaCreacion(new Date());
+        asignacion.setColegio(colegio);
     }
     
     public void agregarMaterias(AsignacionCurso ac){

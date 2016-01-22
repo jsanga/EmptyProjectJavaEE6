@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -15,8 +16,15 @@
                             update="messages1" 
                             multiple="true" sizeLimit="20000000" fileLimit="1" allowTypes="/(\.|\/)(xls|xlsx)$/" />
             <p:growl id="messages1" showDetail="true"/>
-            <p:commandButton actionListener="#{pruebaLecturaExcel.mostrarMensaje}" update="frmMain" value="Click"/>
+            <p:commandButton actionListener="#{pruebaLecturaExcel.leerEstudiante}" update="frmMain" value="Click"/>
             <h:outputText value="#{pruebaLecturaExcel.version}"/>
+            <p:panelGrid columns="2" id="panelData">
+                <h:outputText value="Elija el colegio:" />
+                <p:selectOneMenu value="#{pruebaLecturaExcel.colegio}" converter="colegioConverter" style="width: 180px;">
+                    <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                    <f:selectItems value="#{pruebaLecturaExcel.colegiosList}" var="cole" itemValue="#{cole}" itemLabel="#{cole.nombre}"/>
+                </p:selectOneMenu>
+            </p:panelGrid>
         </h:form>
     </h:body>
 </html>

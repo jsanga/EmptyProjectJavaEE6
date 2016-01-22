@@ -6,6 +6,7 @@
 package com.jscompany.ebsystem.entidades.colegios;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -51,12 +52,17 @@ public class Colegio implements Serializable {
     @Size(max = 250)
     @Column(name = "direccion")
     private String direccion;
+    @Column(name = "colegio_matriz")
+    private BigInteger colegioMatriz;
     @JoinColumn(name = "tipo_colegio", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private TipoColegio tipoColegio;
     @JoinColumn(name = "tipo_calificacion", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private TipoCalificacion tipoCalificacion;
+    @JoinColumn(name = "region", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Region region;
     @OneToMany(mappedBy = "colegio", fetch = FetchType.LAZY)
     private Collection<AsignacionCurso> asignacionCursoCollection;
 
@@ -129,6 +135,22 @@ public class Colegio implements Serializable {
 
     public void setTipoCalificacion(TipoCalificacion tipoCalificacion) {
         this.tipoCalificacion = tipoCalificacion;
+    }
+
+    public Region getRegion() {
+        return region;
+    }
+
+    public void setRegion(Region region) {
+        this.region = region;
+    }
+
+    public BigInteger getColegioMatriz() {
+        return colegioMatriz;
+    }
+
+    public void setColegioMatriz(BigInteger colegioMatriz) {
+        this.colegioMatriz = colegioMatriz;
     }
 
     @Override

@@ -5,6 +5,7 @@
 package com.jscompany.ebsystem.util;
 
 import java.io.ByteArrayInputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -32,10 +33,11 @@ import org.apache.chemistry.opencmis.commons.enums.BindingType;
 
 /**
  *
- * @author Max
+ * @author Joao Israel
  */
-public class CmisUtil {
+public class CmisUtil implements Serializable{
 
+    private static final long serialVersionUID = 1L;
     private Session sesionAlfresco;
     private String urlServidor;
 

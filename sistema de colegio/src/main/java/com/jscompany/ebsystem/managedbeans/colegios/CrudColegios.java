@@ -12,6 +12,7 @@ import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +39,9 @@ public class CrudColegios implements Serializable{
     private UserSession uSession;
     
     private List<Colegio> colegiosList;
-    private Colegio colegio;
+    private List<Colegio> colegiosMatrizList;
+    private Colegio colegio, colegioMatriz;
+    private TipoColegio tipoCol;
     private List<TipoColegio> tipos;
     
     @PostConstruct
@@ -49,6 +52,7 @@ public class CrudColegios implements Serializable{
         if(colegiosList == null)
             colegiosList = new ArrayList();
         tipos = (List<TipoColegio>)services.getListEntitiesByParameters(Querys.getTipoColegioList, new String[]{}, new Object[]{});
+        colegiosMatrizList = services.getListEntitiesByParameters(Querys.getColegiosByTipoList, new String[]{"tipo"}, new Object[]{tipos.get(1)});
     }
     
     public void nuevoColegio(){
@@ -62,33 +66,74 @@ public class CrudColegios implements Serializable{
     }
     
     public void eliminarColegio(Colegio c){
-        int i=0;
-        for(Colegio cl : colegiosList){
-            if(cl.getNombre().equals(c.getNombre()) && cl.getDireccion().equals(c.getDireccion())){
-                if(c.getId() != null){
-                    c.setEstado(Boolean.FALSE);
-                    services.updateAndPersistEntity(c); 
-                }
-                break;
-            }
-            i++;
-        }
+        c.setEstado(Boolean.FALSE);
+        if(services.updateAndPersistEntity(c))
+            JsfUti.messageInfo(null, "Info", "Se deshabilitó el colegio satisfactoriamente");
+        else
+            JsfUti.messageError(null, "Error", "Hubo un problema al deshabilitar el colegio.");
+    }
+    
+    public void habilitarColegio(Colegio c){
+        c.setEstado(Boolean.TRUE);
+        if(services.updateAndPersistEntity(c))
+            JsfUti.messageInfo(null, "Info", "Se habilitó el colegio satisfactoriamente");
+        else
+            JsfUti.messageError(null, "Error", "Hubo un problema al habiitar el colegio.");
     }
     
     public void guardarNuevo(){
-        if((colegio = (Colegio) services.saveEntity(colegio)) != null){
-            colegiosList.add(colegio);
-            JsfUti.messageInfo(null, "Info", "Se creó el colegio satisfactoriamente");
+        if(colegio.getTipoColegio() == null){
+            JsfUti.messageError(null, "Error", "El colegio debe tener un tipo antes de ser creado.");
+            return;
         }
-        else
-            JsfUti.messageError(null, "Error", "Hubo un problema al crear el colegio.");
+        if(colegio.getTipoColegio().getId() != 1){
+            if(colegioMatriz!=null){
+                colegio.setColegioMatriz(BigInteger.valueOf(colegioMatriz.getId()));
+                if((colegio = (Colegio) services.saveEntity(colegio)) != null){
+                    colegiosList.add(colegio);
+                    JsfUti.messageInfo(null, "Info", "Se creó el colegio satisfactoriamente");
+                }
+                else
+                    JsfUti.messageError(null, "Error", "Hubo un problema al crear el colegio.");
+            }else{
+                JsfUti.messageError(null, "Error", "Debe seleccionar un colegio matriz.");
+            }
+        }else{
+            if((colegio = (Colegio) services.saveEntity(colegio)) != null){
+                colegiosList.add(colegio);
+                JsfUti.messageInfo(null, "Info", "Se creó el colegio satisfactoriamente");
+            }
+            else
+                JsfUti.messageError(null, "Error", "Hubo un problema al crear el colegio.");
+        }        
     }
     
     public void guardarEdicion(){
-        if(services.updateAndPersistEntity(colegio))
-            JsfUti.messageInfo(null, "Info", "Se editó el colegio satisfactoriamente");
-        else
-            JsfUti.messageError(null, "Error", "Hubo un problema al editar el colegio.");
+        if(colegio.getTipoColegio() == null){
+            JsfUti.messageError(null, "Error", "El colegio debe tener un tipo antes de ser editado.");
+            return;
+        }
+        if(colegio.getTipoColegio().getId() != 1){
+            if(colegioMatriz!=null){
+                colegio.setColegioMatriz(BigInteger.valueOf(colegioMatriz.getId()));
+                if(services.updateAndPersistEntity(colegio)){
+                    colegiosList.add(colegio);
+                    JsfUti.messageInfo(null, "Info", "Se editó el colegio satisfactoriamente");
+                }
+                else
+                    JsfUti.messageError(null, "Error", "Hubo un problema al editar el colegio.");
+            }else{
+                JsfUti.messageError(null, "Error", "Debe seleccionar un colegio matriz.");
+            }
+        }else{
+            if( services.updateAndPersistEntity(colegio)){
+                colegiosList.add(colegio);
+                JsfUti.messageInfo(null, "Info", "Se editó el colegio satisfactoriamente");
+            }
+            else
+                JsfUti.messageError(null, "Error", "Hubo un problema al editar el colegio.");
+        }
+        
     }
 
     public List<Colegio> getColegiosList() {
@@ -121,6 +166,30 @@ public class CrudColegios implements Serializable{
 
     public void setTipos(List<TipoColegio> tipos) {
         this.tipos = tipos;
+    }
+
+    public List<Colegio> getColegiosMatrizList() {
+        return colegiosMatrizList;
+    }
+
+    public void setColegiosMatrizList(List<Colegio> colegiosMatrizList) {
+        this.colegiosMatrizList = colegiosMatrizList;
+    }
+
+    public Colegio getColegioMatriz() {
+        return colegioMatriz;
+    }
+
+    public void setColegioMatriz(Colegio colegioMatriz) {
+        this.colegioMatriz = colegioMatriz;
+    }
+
+    public TipoColegio getTipoCol() {
+        return tipoCol;
+    }
+
+    public void setTipoCol(TipoColegio tipoCol) {
+        this.tipoCol = tipoCol;
     }
     
 }

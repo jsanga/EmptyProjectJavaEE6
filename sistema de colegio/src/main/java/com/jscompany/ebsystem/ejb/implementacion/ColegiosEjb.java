@@ -9,6 +9,8 @@ import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.ejb.HibernateEjbInterceptor;
 import com.jscompany.ebsystem.ejb.interfaces.ColegiosServices;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
+import com.jscompany.ebsystem.entidades.colegios.AsignacionCursoMaterias;
+import com.jscompany.ebsystem.entidades.colegios.AsignacionCursoParalelos;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesorMaterias;
 import com.jscompany.ebsystem.entidades.colegios.DetalleMateria;
@@ -41,12 +43,30 @@ public class ColegiosEjb implements ColegiosServices{
     @Override
     public AsignacionCurso crearAsignacionCurso(AsignacionCurso asignacionCurso, List<Materia> materias, List<Paralelo> paralelos){
         AsignacionCurso asignacion;
+        AsignacionCursoMaterias acm;
+        AsignacionCursoParalelos acp;
         try{
             asignacion = asignacionCurso;
             asignacion = (AsignacionCurso) services.saveEntity(asignacion);
+            for(Materia m : materias){
+                acm = new AsignacionCursoMaterias();
+                acm.setAsignacionCurso(asignacion);
+                acm.setMateria(m);
+                acm.setFueTomada(Boolean.FALSE);
+                acm.setEstado(Boolean.TRUE);
+                services.saveEntity(acm);
+            }
+            for(Paralelo p : paralelos){
+                acp = new AsignacionCursoParalelos();
+                acp.setAsignacionCurso(asignacion);
+                acp.setParalelo(p);
+                acp.setMaxCupo(30);
+                acp.setEstado(Boolean.TRUE);
+                services.saveEntity(acp);
+            }
             //asignacion.set(materias);
             //asignacion.setParalelosCollection(paralelos);
-            services.updateAndPersistEntity(asignacion);
+            //services.updateAndPersistEntity(asignacion);
         }catch(Exception e){
             e.printStackTrace();
             asignacion = null;
@@ -68,8 +88,9 @@ public class ColegiosEjb implements ColegiosServices{
     }
     
     @Override
-    public AsignacionProfesor crearAsignacionProfesor(AsignacionProfesor asignacionP, List<Materia> materias){
+    public AsignacionProfesor crearAsignacionProfesor(AsignacionProfesor asignacionP, AsignacionCurso acurso, List<Materia> materias){
         AsignacionProfesor asignacion;
+        AsignacionCursoMaterias acm;
         try{
             AsignacionProfesorMaterias apm;
             asignacion = asignacionP;
@@ -78,6 +99,8 @@ public class ColegiosEjb implements ColegiosServices{
             asignacion = (AsignacionProfesor) services.saveEntity(asignacion);
             //asignacion.setMateriasCollection(materias);
             for(Materia m : materias){
+                acm = (AsignacionCursoMaterias) services.getEntityByParameters(Querys.getAsigCursoMateriasByAsigCursoAndMateria, new String[]{"asigCurso","idMateria"}, new Object[]{acurso, m});
+                acm.setFueTomada(Boolean.TRUE);
                 apm = new AsignacionProfesorMaterias();
                 apm.setAsignacionProfesor(asignacion);
                 apm.setMateria(m);

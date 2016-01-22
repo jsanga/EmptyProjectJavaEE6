@@ -8,19 +8,20 @@ package com.jscompany.ebsystem.ejb.implementacion;
 import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.ejb.HibernateEjbInterceptor;
 import com.jscompany.ebsystem.ejb.interfaces.UsuariosServices;
+import com.jscompany.ebsystem.entidades.colegios.Colegio;
+import com.jscompany.ebsystem.entidades.usuarios.Estudiante;
 import com.jscompany.ebsystem.entidades.usuarios.Loguin;
 import com.jscompany.ebsystem.entidades.usuarios.Notificacion;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import com.jscompany.ebsystem.entidades.usuarios.PersonaEmail;
 import com.jscompany.ebsystem.entidades.usuarios.PersonaTelefono;
 import com.jscompany.ebsystem.entidades.usuarios.Rol;
-import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.faces.bean.ManagedProperty;
 import javax.interceptor.Interceptors;
 
 /**
@@ -79,6 +80,33 @@ public class UsuariosEjb implements UsuariosServices{
     @Override
     public Loguin guardarLoguin(Loguin l){
         return null;
+    }
+    
+    @Override
+    public Integer guardarPersonasEstudiantesExcel(List<Persona> personas, Rol rol, Colegio colegio){
+        Integer b;
+        try{
+            b = 0;
+            Estudiante est;
+            Persona p;
+            for(Persona temp : personas){
+                p = (Persona) services.getEntityByParameters(Querys.getPersonaByCedula, new String[]{"cedula"}, new Object[]{temp.getCedula()});
+                if(p==null){
+                    temp.setColegio(colegio);
+                    temp.setRol(rol);
+                    temp.setFechaEntrada(new Date());
+                    temp = (Persona) services.saveEntity(temp);
+                    est = new Estudiante();
+                    est.setPersona(temp);
+                    services.saveEntity(est);
+                    b++;
+                }           
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            b = 0;
+        }
+        return b;
     }
     
     @Override

@@ -5,6 +5,7 @@
  */
 package com.jscompany.ebsystem.ejb.interfaces;
 
+import com.jscompany.ebsystem.entidades.colegios.Colegio;
 import com.jscompany.ebsystem.entidades.usuarios.Loguin;
 import com.jscompany.ebsystem.entidades.usuarios.Notificacion;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
@@ -30,5 +31,7 @@ public interface UsuariosServices {
     public Persona guardarPersona(Persona p, List<PersonaEmail> emailList, List<PersonaTelefono> telefonoList, Rol rol);
     
     public Rol guardarRol(Rol r);
+    
+    public Integer guardarPersonasEstudiantesExcel(List<Persona> personas, Rol rol, Colegio colegio);
     
 }
