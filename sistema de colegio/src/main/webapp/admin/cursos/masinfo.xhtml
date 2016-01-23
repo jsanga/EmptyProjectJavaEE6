@@ -33,6 +33,11 @@
                                 <p:column headerText="Nombre" filterBy="#{mat.materia.nombre}">
                                     <h:outputText value="#{mat.materia.nombre}" style="text-transform: uppercase;"/>
                                 </p:column>
+                                <p:column headerText="Asignada a profesor" >
+                                    <h:outputText value="No ha sido tomada" rendered="#{!mat.fueTomada}" style="text-transform: uppercase;"/>
+                                    <h:outputText value="Ya fue tomada" rendered="#{mat.fueTomada}" style="text-transform: uppercase;"/>
+                                </p:column>
+                                
                                 <p:column headerText="Estado">
                                     <h:outputText value="Activo" rendered="#{mat.estado}" style="text-transform: uppercase;"/>
                                     <h:outputText value="Inactivo" rendered="#{!mat.estado}" style="text-transform: uppercase;"/>
@@ -51,6 +56,9 @@
                                 </p:column>
                                 <p:column headerText="Cupo disponible">
                                     <h:outputText value="#{par.cupoDisponible}" style="text-transform: uppercase;"/>
+                                </p:column>
+                                <p:column headerText="Cupo màximo">
+                                    <h:outputText value="#{par.maxCupo}" style="text-transform: uppercase;"/>
                                 </p:column>
                                 <p:column headerText="Estado">
                                     <h:outputText value="Activo" rendered="#{par.estado}" style="text-transform: uppercase;"/>
