@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="matriculaPorEstudiante" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="14bf9495-4dac-4483-a3f3-9727623b9c8b">
+	<property name="ireport.zoom" value="1.771561000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="periodoLectivo" class="java.lang.String"/>
+	<parameter name="nombresEst" class="java.lang.String"/>
+	<parameter name="idMatricula" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="67" splitType="Stretch">
+			<staticText>
+				<reportElement x="82" y="0" width="412" height="27" uuid="60414c3a-7e19-488d-bce4-ab2d99b1da4c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUBSISTEMA DE EDUCACIÓN FISCOMISIONAL SEMIPRESENCIAL DEL ECUADOR  "MONSEÑOR LENONIDAS PROAÑO"]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="27" width="412" height="20" uuid="b56afae9-0f59-43a4-b566-a38862fc825c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIDAD EDUCATIVA "CHIMBORAZO" PCEI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="47" width="206" height="20" uuid="8877e1a8-6051-41ff-a3af-7e234021079b"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[AÑO LECTIVO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="299" y="47" width="195" height="20" uuid="b337386b-7157-42cc-a4c0-c0ba4778ddd3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{periodoLectivo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="68" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="555" height="68" uuid="78f0da02-776a-4a24-a055-468e427fa897"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["De conformidad con lo prescrito en el Art. 197 del Reglamento General de la Ley Orgánica de Educación Intercultural y demás normas vigentes, certifica que el/la estudiante "+$P{nombresEst}+" del " +$P{periodoLectivo}+", obtuvo las siguientes calificaciones durante el presente año lectivo:"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="191" splitType="Stretch">
+			<staticText>
+				<reportElement x="82" y="0" width="186" height="20" uuid="9046e9c5-e7af-4c8c-9765-6c01c9f22c7b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CALIFICACIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="268" y="0" width="65" height="20" uuid="a357327c-dc59-4279-9d46-b5557ed34450"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NÚMERO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="333" y="0" width="99" height="20" uuid="2ba4e2aa-b0d8-4f00-8f47-c42b45038f7a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[LETRAS]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
