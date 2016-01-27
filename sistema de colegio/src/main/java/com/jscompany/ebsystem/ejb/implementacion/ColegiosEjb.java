@@ -61,12 +61,10 @@ public class ColegiosEjb implements ColegiosServices{
                 acp.setAsignacionCurso(asignacion);
                 acp.setParalelo(p);
                 acp.setMaxCupo(30);
+                acp.setCupoDisponible(30);
                 acp.setEstado(Boolean.TRUE);
                 services.saveEntity(acp);
             }
-            //asignacion.set(materias);
-            //asignacion.setParalelosCollection(paralelos);
-            //services.updateAndPersistEntity(asignacion);
         }catch(Exception e){
             e.printStackTrace();
             asignacion = null;
@@ -75,11 +73,53 @@ public class ColegiosEjb implements ColegiosServices{
     }
     
     @Override
-    public Boolean actualizarAsignacionCurso(AsignacionCurso asignacionCurso){
+    public Boolean actualizarAsignacionCurso(AsignacionCurso asignacionCurso, List<Materia> materias, List<Paralelo> paralelos){
         Boolean b;
         try{
             b = true;
+            AsignacionCursoMaterias asigCM;
+            AsignacionCursoParalelos asigCP;
+            
             services.updateEntity(asignacionCurso);
+            for(AsignacionCursoMaterias acm : asignacionCurso.getAsignacionCursoMateriasCollection()){
+                acm.setEstado(false);
+                services.updateAndPersistEntity(acm);
+            }
+            for(AsignacionCursoParalelos acp : asignacionCurso.getAsignacionCursoParalelosCollection()){
+                acp.setEstado(false);
+                services.updateAndPersistEntity(acp);
+            }
+            for(Materia m : materias){
+                asigCM = (AsignacionCursoMaterias) services.getEntityByParameters(Querys.getAsigCursoMateriasByAsigCursoAndMateriaNoState, new String[]{"asignacionCurso", "idMateria"}, new Object[]{asignacionCurso, m});
+                if(asigCM == null){
+                    asigCM = new AsignacionCursoMaterias();
+                    asigCM.setFueTomada(false);
+                    asigCM.setEstado(true);
+                    asigCM.setAsignacionCurso(asignacionCurso);
+                    asigCM.setMateria(m);
+                    services.saveEntity(asigCM);
+                }else{
+                    asigCM.setEstado(true);
+                    services.updateAndPersistEntity(asigCM);
+                }
+            }
+            for(Paralelo p : paralelos){
+                asigCP = (AsignacionCursoParalelos) services.getEntityByParameters(Querys.getAsigCursoParalelosByAsigCursoAndParaleloNoState, new String[]{"asignacionCurso", "idParalelo"}, new Object[]{asignacionCurso, p});
+                if(asigCP == null){
+                
+
+                    asigCP = new AsignacionCursoParalelos();
+                    asigCP.setCupoDisponible(30);
+                    asigCP.setAsignacionCurso(asignacionCurso);
+                    asigCP.setEstado(true);
+                    asigCP.setMaxCupo(30);
+                    asigCP.setParalelo(p);
+                    services.saveEntity(asigCP);
+                }else{
+                    asigCP.setEstado(true);
+                    services.updateAndPersistEntity(asigCP);
+                }
+            }
         }catch(Exception e){
             e.printStackTrace();
             b = false;

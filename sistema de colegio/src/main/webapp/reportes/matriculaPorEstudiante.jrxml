@@ -2,89 +2,142 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="matriculaPorEstudiante" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="14bf9495-4dac-4483-a3f3-9727623b9c8b">
 	<property name="ireport.zoom" value="1.771561000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="323"/>
 	<parameter name="periodoLectivo" class="java.lang.String"/>
 	<parameter name="nombresEst" class="java.lang.String"/>
 	<parameter name="idMatricula" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\origami-idea\\Documents\\GitHub\\EmptyProjectJavaEE6\\sistema de colegio\\src\\main\\webapp\\reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="nombreCurso" class="java.lang.String"/>
+	<parameter name="nombreParalelo" class="java.lang.String"/>
+	<parameter name="nombreCat" class="java.lang.String"/>
+	<parameter name="numMatricula" class="java.lang.String"/>
+	<parameter name="fechaMatricula" class="java.lang.String"/>
+	<parameter name="numCertificado" class="java.lang.String"/>
+	<parameter name="fecha" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="67" splitType="Stretch">
+		<band height="802" splitType="Stretch">
 			<staticText>
-				<reportElement x="82" y="0" width="412" height="27" uuid="60414c3a-7e19-488d-bce4-ab2d99b1da4c"/>
+				<reportElement x="55" y="14" width="462" height="42" uuid="60414c3a-7e19-488d-bce4-ab2d99b1da4c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SUBSISTEMA DE EDUCACIÓN FISCOMISIONAL SEMIPRESENCIAL DEL ECUADOR  "MONSEÑOR LENONIDAS PROAÑO"]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="82" y="27" width="412" height="20" uuid="b56afae9-0f59-43a4-b566-a38862fc825c"/>
+				<reportElement x="82" y="56" width="412" height="20" uuid="b56afae9-0f59-43a4-b566-a38862fc825c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[UNIDAD EDUCATIVA "CHIMBORAZO" PCEI]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="82" y="47" width="206" height="20" uuid="8877e1a8-6051-41ff-a3af-7e234021079b"/>
+				<reportElement x="82" y="76" width="412" height="12" uuid="107594ff-07ca-458f-ae7f-037d02c175ac"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Acuerdo ministerial N° 1544]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="88" width="412" height="12" uuid="653b43a9-d1a2-4a02-a894-2221ad975e82"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Av. CANONIGO RAMOS Y AUGUSTO TORRES  TELEFAX: 2306538]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="100" width="412" height="12" uuid="37f66551-510b-4315-9f57-8c112f16dacb"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RIOBAMBA - ECUADOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="133" width="412" height="32" uuid="be158c5d-e6bb-41c2-a4ac-c0400ea23fb1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COPIA DE MATRÍCULA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="82" y="169" width="206" height="20" uuid="8877e1a8-6051-41ff-a3af-7e234021079b"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<text><![CDATA[AÑO LECTIVO:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="299" y="47" width="195" height="20" uuid="b337386b-7157-42cc-a4c0-c0ba4778ddd3"/>
+				<reportElement x="299" y="169" width="195" height="20" uuid="b337386b-7157-42cc-a4c0-c0ba4778ddd3"/>
 				<textElement verticalAlignment="Middle">
 					<font size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{periodoLectivo}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="82" y="223" width="412" height="20" uuid="38226908-3d0c-4723-ba13-c9f5636b08f8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15"/>
+				</textElement>
+				<text><![CDATA[CERTIFICO QUE:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="0" y="300" width="555" height="68" uuid="78f0da02-776a-4a24-a055-468e427fa897"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["El(la) señor(ita) "+$P{nombresEst}+" previo a los requisitos se matriculó en el  " +$P{nombreCurso}+" "+$P{nombreParalelo}+", centro de atención tutorial " + $P{nombreCat} +" con el número de certificado "+$P{numCertificado}+" el " +$P{fechaMatricula} +" del libro respectivo Registro en el Sistema Informático No. "+$P{numMatricula} +"."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="408" width="555" height="20" uuid="36ec9a01-ee48-42b1-b287-c77f13fde1de"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA["Riobamba, "+${fecha}]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="52" y="648" width="211" height="20" uuid="0c8c5dfc-47b3-48ac-b4bb-95120906452a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[DR. ROBERTO AVALOS T.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="299" y="648" width="211" height="20" uuid="efb5fd23-eb3d-446f-a165-0dceb0cece92"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[LIC. TERESA LATORRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="52" y="668" width="211" height="20" uuid="ad8fede7-f7d3-42f3-bbf6-f1f5235eb5bc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Rector]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="299" y="668" width="211" height="20" uuid="738c9bcd-6e72-4889-a669-7221ad6e0da7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Secretaria]]></text>
+			</staticText>
+			<line>
+				<reportElement x="52" y="646" width="211" height="1" uuid="4bc7c7dd-1ee1-49a1-b762-9bdddefa7aca"/>
+			</line>
+			<line>
+				<reportElement x="299" y="647" width="211" height="1" uuid="4ccae63f-ac2a-4443-93b4-986bcf176079"/>
+			</line>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="68" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="0" width="555" height="68" uuid="78f0da02-776a-4a24-a055-468e427fa897"/>
-				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["De conformidad con lo prescrito en el Art. 197 del Reglamento General de la Ley Orgánica de Educación Intercultural y demás normas vigentes, certifica que el/la estudiante "+$P{nombresEst}+" del " +$P{periodoLectivo}+", obtuvo las siguientes calificaciones durante el presente año lectivo:"]]></textFieldExpression>
-			</textField>
-		</band>
+		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="191" splitType="Stretch">
-			<staticText>
-				<reportElement x="82" y="0" width="186" height="20" uuid="9046e9c5-e7af-4c8c-9765-6c01c9f22c7b"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[CALIFICACIÓN]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="268" y="0" width="65" height="20" uuid="a357327c-dc59-4279-9d46-b5557ed34450"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[NÚMERO]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="333" y="0" width="99" height="20" uuid="2ba4e2aa-b0d8-4f00-8f47-c42b45038f7a"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[LETRAS]]></text>
-			</staticText>
-		</band>
+		<band splitType="Stretch"/>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</summary>
 </jasperReport>

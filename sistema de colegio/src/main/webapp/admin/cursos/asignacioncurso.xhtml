@@ -56,6 +56,11 @@
                                 <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
                                 <f:selectItems value="#{asignacionCursoView.periodosList}" var="col2" itemValue="#{col2}" itemLabel="#{col2.fechaInicio} - #{col2.fechaFin}"/>
                             </p:selectOneMenu>
+                            <h:outputText value="Jornada:"/>
+                            <p:selectOneMenu value="#{asignacionCursoView.asignacion.jornada}" converter="jornadaConverter" style="width: 180px;">
+                                <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                                <f:selectItems value="#{asignacionCursoView.jornadasList}" var="col3" itemValue="#{col3}" itemLabel="#{col3.nombreJornada}"/>
+                            </p:selectOneMenu>
                         </p:panelGrid>
                     </p:tab>
                     <p:tab title="Materias">
@@ -104,11 +109,16 @@
                                 <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
                                 <f:selectItems value="#{asignacionCursoView.periodosList}" var="col2" itemValue="#{col2}" itemLabel="#{col2.fechaInicio} - #{col2.fechaFin}"/>
                             </p:selectOneMenu>
+                            <h:outputText value="Jornada:"/>
+                            <p:selectOneMenu value="#{asignacionCursoView.asignacion.jornada}" converter="jornadaConverter" style="width: 180px;">
+                                <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                                <f:selectItems value="#{asignacionCursoView.jornadasList}" var="col3" itemValue="#{col3}" itemLabel="#{col3.nombreJornada}"/>
+                            </p:selectOneMenu>
                         </p:panelGrid>
                     </p:tab>
                     <p:tab title="Materias">
                         <p:dataTable id="dtMateriasEdit" value="#{asignacionCursoView.materias}" lazy="true" var="mat" rows="5" paginator="true"
-                                     selection="#{asignacionCursoView.asignacion.materiasCollection}" rowKey="#{mat.id}" style="width: 420px;">
+                                     selection="#{asignacionCursoView.matListSelect}" rowKey="#{mat.id}" style="width: 420px;">
                             <f:facet name="header">
                                 Materias
                             </f:facet>
@@ -120,7 +130,7 @@
                     </p:tab>
                     <p:tab title="Paralelos">
                         <p:dataTable id="dtParalelosEdit" value="#{asignacionCursoView.paralelos}" lazy="true" var="par" rows="5" paginator="true"
-                                     selection="#{asignacionCursoView.asignacion.paralelosCollection}" rowKey="#{par.id}" style="width: 420px;">
+                                     selection="#{asignacionCursoView.parListSelect}" rowKey="#{par.id}" style="width: 420px;">
                             <f:facet name="header">
                                 Paralelos
                             </f:facet>

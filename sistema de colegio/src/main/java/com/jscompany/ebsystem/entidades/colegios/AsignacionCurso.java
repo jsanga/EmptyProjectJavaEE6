@@ -56,6 +56,9 @@ public class AsignacionCurso implements Serializable {
     @JoinColumn(name = "colegio", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Colegio colegio;
+    @JoinColumn(name = "jornada", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Jornada jornada;
     @OneToMany(mappedBy = "asignacionCurso", fetch = FetchType.LAZY)
     private Collection<Matricula> matriculaCollection;
     @OneToMany(mappedBy = "asignacionCurso", fetch = FetchType.LAZY)
@@ -148,6 +151,14 @@ public class AsignacionCurso implements Serializable {
 
     public void setAsignacionCursoMateriasCollection(Collection<AsignacionCursoMaterias> asignacionCursoMateriasCollection) {
         this.asignacionCursoMateriasCollection = asignacionCursoMateriasCollection;
+    }
+
+    public Jornada getJornada() {
+        return jornada;
+    }
+
+    public void setJornada(Jornada jornada) {
+        this.jornada = jornada;
     }
 
     @Override

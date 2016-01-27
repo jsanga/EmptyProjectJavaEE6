@@ -20,6 +20,7 @@ public class Querys {
     public static String getColegiosListNoState = "select e from Colegio e";
     public static String getTipoColegioList = "select e from TipoColegio e where e.estado = TRUE";
     public static String getColegiosByTipoList = "select e from Colegio e where e.estado = TRUE and e.tipoColegio = :tipo";
+    public static String getJornadasList = "select e from Jornada e where e.estado = TRUE";
     
     // Querys de asignaciones de curso, profesor y matriculas
     public static String getAsignacionesCursoList = "select e from AsignacionCurso e where e.estado = TRUE and e.colegio = :colegio";
@@ -39,7 +40,9 @@ public class Querys {
     // Querys tablas intermedias
     public static String getAsigCursoMaterias = "select e from AsignacionCursoMaterias e where e.estado = TRUE AND e.asignacionCurso = :asigCurso and e.fueTomada = FALSE";
     public static String getAsigCursoMateriasByAsigCursoAndMateria = "select e from AsignacionCursoMaterias e where e.estado = TRUE AND e.asignacionCurso = :asigCurso and e.materia = :idMateria";
+    public static String getAsigCursoMateriasByAsigCursoAndMateriaNoState = "select e from AsignacionCursoMaterias e where e.asignacionCurso = :asigCurso and e.materia = :idMateria";
     public static String getAsigCursoParalelos = "select e from AsignacionCursoParalelos e where e.estado = TRUE AND e.asignacionCurso = :asigCurso";
+    public static String getAsigCursoParalelosByAsigCursoAndParaleloNoState = "select e from AsignacionCursoParalelos e where e.asignacionCurso = :asigCurso and e.paralelo = :idParalelo";
     
     // Querys de cursos
     public static String getCursosList = "select e from Curso e where e.estado = TRUE";

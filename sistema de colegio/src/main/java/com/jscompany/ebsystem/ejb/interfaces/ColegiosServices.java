@@ -27,7 +27,7 @@ public interface ColegiosServices {
     
     public AsignacionCurso crearAsignacionCurso(AsignacionCurso asignacionCurso, List<Materia> materias, List<Paralelo> paralelos);
     
-    public Boolean actualizarAsignacionCurso(AsignacionCurso asignacion);
+    public Boolean actualizarAsignacionCurso(AsignacionCurso asignacion, List<Materia> materias, List<Paralelo> paralelos);
     
     public Boolean actualizarAsignacionProfesor(AsignacionProfesor asignacionProfesor, List<Materia> materias);
     

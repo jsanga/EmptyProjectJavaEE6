@@ -8,8 +8,11 @@ package com.jscompany.ebsystem.managedbeans.colegios;
 import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.ejb.interfaces.ColegiosServices;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
+import com.jscompany.ebsystem.entidades.colegios.AsignacionCursoMaterias;
+import com.jscompany.ebsystem.entidades.colegios.AsignacionCursoParalelos;
 import com.jscompany.ebsystem.entidades.colegios.Colegio;
 import com.jscompany.ebsystem.entidades.colegios.Curso;
+import com.jscompany.ebsystem.entidades.colegios.Jornada;
 import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Paralelo;
 import com.jscompany.ebsystem.entidades.colegios.PeriodoLectivo;
@@ -59,8 +62,9 @@ public class AsignacionCursoView implements Serializable{
     private List<PeriodoLectivo> periodosList;
     private AsignacionCurso asignacion;
     private List<AsignacionCurso> asignacionesList;
-    private List<Materia> materiasList;
-    private List<Paralelo> paralelosList;
+    private List<Jornada> jornadasList;
+    private List<Materia> materiasList, matListSelect;
+    private List<Paralelo> paralelosList, parListSelect;
     private MateriasLazy materias;
     private ParalelosLazy paralelos;
     
@@ -74,6 +78,7 @@ public class AsignacionCursoView implements Serializable{
         asignacionesList = services.getListEntitiesByParameters(Querys.getAsignacionesCursoListByColegioIdNoState, new String[]{"colegio"}, new Object[]{colegio});
         //materiasList = services.getListEntitiesByParameters(Querys.getMateriasList, new String[]{}, new Object[]{});
         //paralelosList = services.getListEntitiesByParameters(Querys.getParalelosList, new String[]{}, new Object[]{});
+        jornadasList = services.getListEntitiesByParameters(Querys.getJornadasList, new String[]{}, new Object[]{});
         materias = new MateriasLazy();
         paralelos = new ParalelosLazy();
         if(asignacionesList==null)
@@ -93,6 +98,17 @@ public class AsignacionCursoView implements Serializable{
     
     public void editarAsignacion(AsignacionCurso ac){
         asignacion = ac;
+        
+        List<AsignacionCursoMaterias> temp1 = services.getListEntitiesByParameters(Querys.getAsigCursoMaterias, new String[]{"asigCurso"}, new Object[]{asignacion});
+        List<AsignacionCursoParalelos> temp2 = services.getListEntitiesByParameters(Querys.getAsigCursoParalelos, new String[]{"asigCurso"}, new Object[]{asignacion});
+        parListSelect = new ArrayList<>();
+        matListSelect = new ArrayList<>();
+        for(AsignacionCursoMaterias t : temp1){
+            matListSelect.add(t.getMateria());
+        }
+        for(AsignacionCursoParalelos t : temp2){
+            parListSelect.add(t.getParalelo());
+        }
     }
     
     public void eliminarAsignacion(AsignacionCurso ac){
@@ -130,7 +146,7 @@ public class AsignacionCursoView implements Serializable{
     
     public void guardarEdicion(){
         try{
-            if(colServices.actualizarAsignacionCurso(asignacion))
+            if(colServices.actualizarAsignacionCurso(asignacion, matListSelect, parListSelect))
                 JsfUti.messageInfo(null, "Info", "Se editó la asignacion satisfactoriamente");
             else
                 JsfUti.messageError(null, "Error", "Hubo un problema al editar la asignacion.");
@@ -161,6 +177,14 @@ public class AsignacionCursoView implements Serializable{
 
     public void setCurso(Curso curso) {
         this.curso = curso;
+    }
+
+    public List<Jornada> getJornadasList() {
+        return jornadasList;
+    }
+
+    public void setJornadasList(List<Jornada> jornadasList) {
+        this.jornadasList = jornadasList;
     }
 
     public List<Curso> getCursosList() {
@@ -249,6 +273,22 @@ public class AsignacionCursoView implements Serializable{
 
     public void setUtilSession(UtilSession utilSession) {
         this.utilSession = utilSession;
+    }
+
+    public List<Materia> getMatListSelect() {
+        return matListSelect;
+    }
+
+    public void setMatListSelect(List<Materia> matListSelect) {
+        this.matListSelect = matListSelect;
+    }
+
+    public List<Paralelo> getParListSelect() {
+        return parListSelect;
+    }
+
+    public void setParListSelect(List<Paralelo> parListSelect) {
+        this.parListSelect = parListSelect;
     }
     
 }
