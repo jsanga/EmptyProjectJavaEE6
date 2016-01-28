@@ -12,24 +12,25 @@
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
             <p:commandButton value="Ingresar Estudiante" update="dlgForm" actionListener="#{estudianteView.nuevoEstudiante()}" onclick="PF('dlgCrear').show()"/>
             <center>
-                <p:dataTable id="dtEstudiantesList" value="#{estudianteView.personasList}" emptyMessage="No tiene datos" style="width: 80%;" var="persona">
-                    <p:column headerText="Cédula" filterBy="#{persona.cedula}">
+                <p:dataTable id="dtEstudiantesList" value="#{estudianteView.personasList}" lazy="true" emptyMessage="No tiene datos" 
+                             var="persona" rows="10" paginator="true">
+                    <p:column headerText="Cédula" filterBy="#{persona.cedula}" width="10%">
                         <h:outputText value="#{persona.cedula}" style="text-transform: uppercase;"/>
                     </p:column>
-                    <p:column headerText="Nombres" filterBy="#{persona.nombres}">
+                    <p:column headerText="Nombres" filterBy="#{persona.nombres}" width="20%">
                         <h:outputText value="#{persona.nombres}" style="text-transform: uppercase;"/>
                     </p:column>
-                    <p:column headerText="Apellidos" filterBy="#{persona.apellidos}">
+                    <p:column headerText="Apellidos" filterBy="#{persona.apellidos}" width="20%">
                         <h:outputText value="#{persona.apellidos}" style="text-transform: uppercase;"/>
                     </p:column>
-                    <p:column headerText="Colegio" filterBy="#{persona.colegio.nombre}">
+                    <p:column headerText="Colegio" filterBy="#{persona.colegio.nombre}" width="10%">
                         <h:outputText value="#{persona.colegio.nombre}" style="text-transform: uppercase;"/>
                     </p:column>
-                    <p:column headerText="Estado">
+                    <p:column headerText="Estado" width="10%">
                         <h:outputText value="Activo" rendered="#{persona.estado}" style="text-transform: uppercase;"/>
                         <h:outputText value="Inactivo" rendered="#{!persona.estado}" style="text-transform: uppercase;"/>
                     </p:column>
-                    <p:column headerText="Acción">
+                    <p:column headerText="Acción" width="20%">
                         <center>
                             <p:commandButton value="Editar" actionListener="#{estudianteView.editarEstudiante(persona)}" onclick="PF('dlgEditar').show()" update="dlgFormEdit"/>
                             <p:commandButton value="Eliminar" actionListener="#{estudianteView.eliminarEstudiante(persona)}" update="dtEstudiantesList"/>

@@ -22,11 +22,15 @@ public class RelacionesPersona implements Serializable{
     
     private Persona persona, personaEs;
     private TipoRelacionPersona tipoRelacion;
+    private Boolean estado;
+    private Long idRelacionPersona;
     
-    public RelacionesPersona(Persona p1, Persona p2, TipoRelacionPersona tipo){
+    public RelacionesPersona(Persona p1, Persona p2, TipoRelacionPersona tipo, Boolean est, Long id){
         persona = p1;
         personaEs = p2;
-        tipoRelacion = tipo;
+        tipoRelacion = tipo;        
+        estado = est;
+        idRelacionPersona = id;
     }
 
     public Persona getPersona() {
@@ -51,6 +55,22 @@ public class RelacionesPersona implements Serializable{
 
     public void setTipoRelacion(TipoRelacionPersona tipoRelacion) {
         this.tipoRelacion = tipoRelacion;
+    }
+
+    public Boolean getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Boolean estado) {
+        this.estado = estado;
+    }
+
+    public Long getIdRelacionPersona() {
+        return idRelacionPersona;
+    }
+
+    public void setIdRelacionPersona(Long idRelacionPersona) {
+        this.idRelacionPersona = idRelacionPersona;
     }
     
 }
