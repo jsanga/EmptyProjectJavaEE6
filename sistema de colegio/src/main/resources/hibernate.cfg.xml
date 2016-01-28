@@ -4,11 +4,7 @@
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
     <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-    <!-- 
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/sgm</property>
-        <property name="hibernate.connection.username">sisapp</property>
-        <property name="hibernate.connection.password">sis98</property> -->
-    <!-- -->
+    
     <property name="hibernate.connection.url">jdbc:postgresql://190.57.138.220:5432/joaoPrueba</property>
     <property name="hibernate.connection.username">joao</property>
     <property name="hibernate.connection.password">postgres</property>
@@ -55,7 +51,6 @@
     <mapping class="com.jscompany.ebsystem.entidades.colegios.PeriodoLectivo"/>
     <mapping class="com.jscompany.ebsystem.entidades.colegios.AsignacionCursoMaterias"/>
     <mapping class="com.jscompany.ebsystem.entidades.colegios.AsignacionCursoParalelos"/>
-    <mapping class="com.jscompany.ebsystem.entidades.colegios.AsignacionProfesorMaterias"/>
     <mapping class="com.jscompany.ebsystem.entidades.colegios.TipoColegio"/>
     <mapping class="com.jscompany.ebsystem.entidades.colegios.TipoCalificacion"/>
     <mapping class="com.jscompany.ebsystem.entidades.colegios.Region"/>

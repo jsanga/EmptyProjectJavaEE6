@@ -8,7 +8,6 @@ package com.jscompany.ebsystem.managedbeans.colegios;
 import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
-import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesorMaterias;
 import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Paralelo;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
@@ -69,9 +68,9 @@ public class MasInfoAsigProfView implements Serializable{
             curso = asignacion.getAsignacionCurso();
             paralelo = asignacion.getParalelo();
             materias = new ArrayList<>();
-            for(AsignacionProfesorMaterias temp : (List<AsignacionProfesorMaterias>) services.getListEntitiesByParameters(Querys.getAsignacionProfesorMateriaByAsignacionId, new String[]{"asigProf"}, new Object[]{asignacion})){
+            /*for(AsignacionProfesorMaterias temp : (List<AsignacionProfesorMaterias>) services.getListEntitiesByParameters(Querys.getAsignacionProfesorMateriaByAsignacionId, new String[]{"asigProf"}, new Object[]{asignacion})){
                 materias.add(temp.getMateria());
-            }
+            }*/
         }catch(Exception e){
             e.printStackTrace();
         }

@@ -11,7 +11,6 @@ import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCursoMaterias;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCursoParalelos;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
-import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesorMaterias;
 import com.jscompany.ebsystem.entidades.colegios.Colegio;
 import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Paralelo;
@@ -104,9 +103,9 @@ public class AsignacionProfesorView implements Serializable{
             paralelosList.add(t.getParalelo());
         }
         materiasSeleccionadas = new ArrayList<>();
-        for(AsignacionProfesorMaterias temp : (List<AsignacionProfesorMaterias>) services.getListEntitiesByParameters(Querys.getAsignacionProfesorMateriaByAsignacionId, new String[]{"asigProf"}, new Object[]{asignacion})){
+        /*for(AsignacionProfesorMaterias temp : (List<AsignacionProfesorMaterias>) services.getListEntitiesByParameters(Querys.getAsignacionProfesorMateriaByAsignacionId, new String[]{"asigProf"}, new Object[]{asignacion})){
             materiasSeleccionadas.add(temp.getMateria());
-        }
+        }*/
         JsfUti.messageInfo(null, "Info", "Curso seleccionado.");
     }
     

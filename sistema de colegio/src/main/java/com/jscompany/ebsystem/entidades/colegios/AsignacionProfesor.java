@@ -50,8 +50,6 @@ public class AsignacionProfesor implements Serializable {
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asignacionProfesor", fetch = FetchType.LAZY)
-    private Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection;
     @JoinColumn(name = "paralelo", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Paralelo paralelo;
@@ -96,14 +94,6 @@ public class AsignacionProfesor implements Serializable {
 
     public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
-    }
-
-    public Collection<AsignacionProfesorMaterias> getAsignacionProfesorMateriasCollection() {
-        return asignacionProfesorMateriasCollection;
-    }
-
-    public void setAsignacionProfesorMateriasCollection(Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection) {
-        this.asignacionProfesorMateriasCollection = asignacionProfesorMateriasCollection;
     }
 
     public Paralelo getParalelo() {

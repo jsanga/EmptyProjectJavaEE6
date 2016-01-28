@@ -44,8 +44,6 @@ public class Materia implements Serializable {
     @OneToMany(mappedBy = "materia", fetch = FetchType.LAZY)
     private Collection<DetalleMateria> detalleMateriaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "materia", fetch = FetchType.LAZY)
-    private Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "materia", fetch = FetchType.LAZY)
     private Collection<AsignacionCursoMaterias> asignacionCursoMateriasCollection;
 
     public Materia() {
@@ -85,14 +83,6 @@ public class Materia implements Serializable {
 
     public void setDetalleMateriaCollection(Collection<DetalleMateria> detalleMateriaCollection) {
         this.detalleMateriaCollection = detalleMateriaCollection;
-    }
-
-    public Collection<AsignacionProfesorMaterias> getAsignacionProfesorMateriasCollection() {
-        return asignacionProfesorMateriasCollection;
-    }
-
-    public void setAsignacionProfesorMateriasCollection(Collection<AsignacionProfesorMaterias> asignacionProfesorMateriasCollection) {
-        this.asignacionProfesorMateriasCollection = asignacionProfesorMateriasCollection;
     }
 
     public Collection<AsignacionCursoMaterias> getAsignacionCursoMateriasCollection() {

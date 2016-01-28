@@ -12,7 +12,6 @@ import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCursoMaterias;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCursoParalelos;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
-import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesorMaterias;
 import com.jscompany.ebsystem.entidades.colegios.DetalleMateria;
 import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Matricula;
@@ -90,7 +89,7 @@ public class ColegiosEjb implements ColegiosServices{
                 services.updateAndPersistEntity(acp);
             }
             for(Materia m : materias){
-                asigCM = (AsignacionCursoMaterias) services.getEntityByParameters(Querys.getAsigCursoMateriasByAsigCursoAndMateriaNoState, new String[]{"asignacionCurso", "idMateria"}, new Object[]{asignacionCurso, m});
+                asigCM = (AsignacionCursoMaterias) services.getEntityByParameters(Querys.getAsigCursoMateriasByAsigCursoAndMateriaNoState, new String[]{"asigCurso", "idMateria"}, new Object[]{asignacionCurso, m});
                 if(asigCM == null){
                     asigCM = new AsignacionCursoMaterias();
                     asigCM.setFueTomada(false);
@@ -104,7 +103,7 @@ public class ColegiosEjb implements ColegiosServices{
                 }
             }
             for(Paralelo p : paralelos){
-                asigCP = (AsignacionCursoParalelos) services.getEntityByParameters(Querys.getAsigCursoParalelosByAsigCursoAndParaleloNoState, new String[]{"asignacionCurso", "idParalelo"}, new Object[]{asignacionCurso, p});
+                asigCP = (AsignacionCursoParalelos) services.getEntityByParameters(Querys.getAsigCursoParalelosByAsigCursoAndParaleloNoState, new String[]{"asigCurso", "idParalelo"}, new Object[]{asignacionCurso, p});
                 if(asigCP == null){
                 
 
@@ -129,15 +128,15 @@ public class ColegiosEjb implements ColegiosServices{
     
     @Override
     public AsignacionProfesor crearAsignacionProfesor(AsignacionProfesor asignacionP, AsignacionCurso acurso, List<Materia> materias){
-        AsignacionProfesor asignacion;
+        AsignacionProfesor asignacion = null;
         AsignacionCursoMaterias acm;
         try{
+            /*
             AsignacionProfesorMaterias apm;
             asignacion = asignacionP;
             asignacion.setEstado(Boolean.TRUE);
             asignacion.setFechaCreacion(new Date());
             asignacion = (AsignacionProfesor) services.saveEntity(asignacion);
-            //asignacion.setMateriasCollection(materias);
             for(Materia m : materias){
                 acm = (AsignacionCursoMaterias) services.getEntityByParameters(Querys.getAsigCursoMateriasByAsigCursoAndMateria, new String[]{"asigCurso","idMateria"}, new Object[]{acurso, m});
                 acm.setFueTomada(Boolean.TRUE);
@@ -145,7 +144,9 @@ public class ColegiosEjb implements ColegiosServices{
                 apm.setAsignacionProfesor(asignacion);
                 apm.setMateria(m);
                 services.saveEntity(apm);
+                services.updateAndPersistEntity(acm);
             }
+            */
             //services.updateAndPersistEntity(asignacion);
         }catch(Exception e){
             e.printStackTrace();
@@ -159,13 +160,12 @@ public class ColegiosEjb implements ColegiosServices{
         Boolean b;
         try{
             b = true;
+            /*
             AsignacionProfesorMaterias newAsig;
+            List<AsignacionProfesorMaterias> apmList;
             
             services.updateAndPersistEntity(asignacionProfesor);
-            for(AsignacionProfesorMaterias temp : asignacionProfesor.getAsignacionProfesorMateriasCollection()){
-                temp.setEstado(false);
-                services.updateAndPersistEntity(temp);
-            }
+            
             for(Materia m : materias){
                 AsignacionProfesorMaterias temp = (AsignacionProfesorMaterias) services.getEntityByParameters(Querys.getAsignacionProfesorMateriaByMateriaAndAsignacionIdNoState, new String[]{"asigProf", "materia"}, new Object[]{asignacionProfesor, m});
                 if(temp == null){
@@ -177,7 +177,8 @@ public class ColegiosEjb implements ColegiosServices{
                     temp.setEstado(true);
                     services.updateAndPersistEntity(temp);
                 }                
-            }            
+            }
+            */
         }catch(Exception e){
             e.printStackTrace();
             b = false;

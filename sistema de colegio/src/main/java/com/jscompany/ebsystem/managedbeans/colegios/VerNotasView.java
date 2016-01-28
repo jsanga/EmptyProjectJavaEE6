@@ -7,7 +7,6 @@ package com.jscompany.ebsystem.managedbeans.colegios;
 
 import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
-import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesorMaterias;
 import com.jscompany.ebsystem.entidades.colegios.DetalleMateria;
 import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Matricula;
@@ -67,6 +66,7 @@ public class VerNotasView implements Serializable{
     }
     
     public void llenarDetalleMateriaList(){
+        /*
         List<AsignacionProfesorMaterias> asigMateriasList;
         
         for(AsignacionProfesor temp : asigProfList){
@@ -76,7 +76,7 @@ public class VerNotasView implements Serializable{
                if(detalleMateria!=null)
                    detalleMateriaList.add(detalleMateria);
             }
-        }
+        }*/
     }
     
     public UserSession getuSession() {

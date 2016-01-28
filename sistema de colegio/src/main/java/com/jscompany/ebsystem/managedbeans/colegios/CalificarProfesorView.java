@@ -8,7 +8,6 @@ package com.jscompany.ebsystem.managedbeans.colegios;
 import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.ejb.interfaces.ColegiosServices;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
-import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesorMaterias;
 import com.jscompany.ebsystem.entidades.colegios.Colegio;
 import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
@@ -52,7 +51,7 @@ public class CalificarProfesorView implements Serializable{
     private AsignacionProfesor asignacion;
     private Colegio colegio;
     private Materia materiaACalificar;
-    private List<AsignacionProfesorMaterias> middleList;
+    //private List<AsignacionProfesorMaterias> middleList;
     private List<Materia> materiasList;
     private Rol rol;
     private Persona profesor;
@@ -112,10 +111,10 @@ public class CalificarProfesorView implements Serializable{
     public void setAsignacion(AsignacionProfesor asignacion) {
         this.asignacion = asignacion;
         materiasList = new ArrayList<>();
-        middleList = services.getListEntitiesByParameters(Querys.getAsignacionProfesorMateriaByAsignacionId, new String[]{"asigProf"}, new Object[]{this.asignacion});
+        /*middleList = services.getListEntitiesByParameters(Querys.getAsignacionProfesorMateriaByAsignacionId, new String[]{"asigProf"}, new Object[]{this.asignacion});
         for(AsignacionProfesorMaterias temp : middleList){
             materiasList.add(temp.getMateria());
-        }
+        }*/
     }
 
     public Colegio getColegio() {
