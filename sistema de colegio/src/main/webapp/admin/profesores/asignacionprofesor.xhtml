@@ -11,7 +11,9 @@
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
             <p:commandButton value="Crear asignación" update=":dlgForm" actionListener="#{asignacionProfesorView.nuevaAsignacion()}" onclick="PF('dlgCrear').show()"/>
-            <p:dataTable id="dtAsignaciones" value="#{asignacionProfesorView.asignacionesProfList}" lazy="true" var="asignacion">
+            <p:dataTable id="dtAsignaciones" value="#{asignacionProfesorView.asignacionesProfList}" 
+                         rows="5" paginator="true"
+                         lazy="true" var="asignacion">
                 <p:column headerText="Curso" filterBy="#{asignacion.asignacionCurso.curso.nombre}">
                     <h:outputText value="#{asignacion.asignacionCurso.curso.nombre}" style="text-transform: uppercase;"/>
                 </p:column>
@@ -49,14 +51,14 @@
                                 Selección de profesor
                             </f:facet>
                             <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelectProfesor}" update="dlgForm" />
-                            <p:column headerText="Cédula" filterBy="#{prof.cedula}">
-                                <h:outputText value="#{prof.cedula}" />
+                            <p:column headerText="Cédula" filterBy="#{prof.persona.cedula}">
+                                <h:outputText value="#{prof.persona.cedula}" />
                             </p:column>
-                            <p:column headerText="Nombres" filterBy="#{prof.nombres}">
-                                <h:outputText value="#{prof.nombres}" />
+                            <p:column headerText="Nombres" filterBy="#{prof.persona.nombres}">
+                                <h:outputText value="#{prof.persona.nombres}" style="text-transform: uppercase;"/>
                             </p:column>
-                            <p:column headerText="Apellidos" filterBy="#{prof.apellidos}">
-                                <h:outputText value="#{prof.apellidos}" />
+                            <p:column headerText="Apellidos" filterBy="#{prof.persona.apellidos}">
+                                <h:outputText value="#{prof.persona.apellidos}" style="text-transform: uppercase;"/>
                             </p:column>
                         </p:dataTable>
                     </p:tab>
@@ -65,7 +67,7 @@
                     
                     <p:tab title="Curso">
                         <p:dataTable id="dtCursos" value="#{asignacionProfesorView.asignacionesCursosList}" var="cur" rows="5" paginator="true" selectionMode="single"
-                                     selection="#{asignacionProfesorView.asignacion.asignacionCurso}" rowKey="#{cur.id}" style="width: 420px;">
+                                     selection="#{asignacionProfesorView.asignacion.asignacionCurso}" lazy="true" rowKey="#{cur.id}" style="width: 420px;">
                             <f:facet name="header">
                                 Cursos disponibles
                             </f:facet>
@@ -130,14 +132,14 @@
                                     Selección de profesor
                                 </f:facet>
                                 <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelectProfesor}" update="dlgFormEdit" />
-                                <p:column headerText="Cédula" filterBy="#{prof.cedula}">
-                                    <h:outputText value="#{prof.cedula}" />
+                                <p:column headerText="Cédula" filterBy="#{prof.persona.cedula}">
+                                    <h:outputText value="#{prof.persona.cedula}" />
                                 </p:column>
-                                <p:column headerText="Nombres" filterBy="#{prof.nombres}">
-                                    <h:outputText value="#{prof.nombres}" />
+                                <p:column headerText="Nombres" filterBy="#{prof.persona.nombres}">
+                                    <h:outputText value="#{prof.persona.nombres}" style="text-transform: uppercase;"/>
                                 </p:column>
-                                <p:column headerText="Apellidos" filterBy="#{prof.apellidos}">
-                                    <h:outputText value="#{prof.apellidos}" />
+                                <p:column headerText="Apellidos" filterBy="#{prof.persona.apellidos}">
+                                    <h:outputText value="#{prof.persona.apellidos}" style="text-transform: uppercase;"/>
                                 </p:column>
                             </p:dataTable>
                         </p:panel>

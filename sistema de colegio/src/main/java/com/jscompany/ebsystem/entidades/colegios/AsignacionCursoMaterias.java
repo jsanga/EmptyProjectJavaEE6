@@ -44,6 +44,9 @@ public class AsignacionCursoMaterias implements Serializable {
     @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private AsignacionCurso asignacionCurso;
+    @JoinColumn(name = "asignacion_profesor", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private AsignacionProfesor asignacionProfesor;
 
     public AsignacionCursoMaterias() {
     }
@@ -90,6 +93,14 @@ public class AsignacionCursoMaterias implements Serializable {
 
     public void setAsignacionCurso(AsignacionCurso asignacionCurso) {
         this.asignacionCurso = asignacionCurso;
+    }
+
+    public AsignacionProfesor getAsignacionProfesor() {
+        return asignacionProfesor;
+    }
+
+    public void setAsignacionProfesor(AsignacionProfesor asignacionProfesor) {
+        this.asignacionProfesor = asignacionProfesor;
     }
 
     @Override

@@ -7,6 +7,7 @@ package com.jscompany.ebsystem.managedbeans.colegios;
 
 import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
+import com.jscompany.ebsystem.entidades.colegios.AsignacionCursoMaterias;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
 import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Paralelo;
@@ -47,7 +48,7 @@ public class MasInfoAsigProfView implements Serializable{
     private Persona profesor;
     private AsignacionCurso curso;
     private Paralelo paralelo;
-    private List<Materia> materias;
+    private List<AsignacionCursoMaterias> materias;
     
     private Long idAsigProf;
     
@@ -68,6 +69,7 @@ public class MasInfoAsigProfView implements Serializable{
             curso = asignacion.getAsignacionCurso();
             paralelo = asignacion.getParalelo();
             materias = new ArrayList<>();
+            materias = services.getListEntitiesByParameters(Querys.getAsigCursoMateriasByByAsigProfAndAsigCurso, new String[]{"asigProf", "asigCur"}, new Object[]{asignacion, asignacion.getAsignacionCurso()});
             /*for(AsignacionProfesorMaterias temp : (List<AsignacionProfesorMaterias>) services.getListEntitiesByParameters(Querys.getAsignacionProfesorMateriaByAsignacionId, new String[]{"asigProf"}, new Object[]{asignacion})){
                 materias.add(temp.getMateria());
             }*/
@@ -124,11 +126,11 @@ public class MasInfoAsigProfView implements Serializable{
         this.idAsigProf = idAsigProf;
     }
 
-    public List<Materia> getMaterias() {
+    public List<AsignacionCursoMaterias> getMaterias() {
         return materias;
     }
 
-    public void setMaterias(List<Materia> materias) {
+    public void setMaterias(List<AsignacionCursoMaterias> materias) {
         this.materias = materias;
     }
 

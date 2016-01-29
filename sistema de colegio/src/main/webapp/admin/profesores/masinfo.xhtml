@@ -38,6 +38,10 @@
                             <p:panelGrid columns="2">
                                 <h:outputText value="Nombre curso:"/>
                                 <p:inputText value="#{masInfoAsigProfView.curso.curso.nombre}" style="text-transform: uppercase;" readonly="true"/>
+                                <h:outputText value="Especializaciòn:"/>
+                                <p:inputText value="#{masInfoAsigProfView.curso.curso.especializacion}" style="text-transform: uppercase;" readonly="true"/>
+                                <h:outputText value="Jornada:"/>
+                                <p:inputText value="#{masInfoAsigProfView.curso.jornada.nombreJornada}" style="text-transform: uppercase;" readonly="true"/>
                                 <h:outputText value="Fecha de inicio:"/>
                                 <p:inputText value="#{masInfoAsigProfView.curso.periodoLectivo.fechaInicio}" style="text-transform: uppercase;" readonly="true"/>
                                 <h:outputText value="Fecha de finalización:"/>
@@ -64,7 +68,7 @@
                                     Materias
                                 </f:facet>
                                 <p:column headerText="Materia" >
-                                    <h:outputText value="#{mat.nombre}" />
+                                    <h:outputText value="#{mat.materia.nombre}" />
                                 </p:column>
                             </p:dataTable>
                         </center>

@@ -17,7 +17,6 @@ import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Matricula;
 import com.jscompany.ebsystem.entidades.colegios.Paralelo;
 import com.jscompany.ebsystem.services.AclService;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -79,15 +78,25 @@ public class ColegiosEjb implements ColegiosServices{
             AsignacionCursoMaterias asigCM;
             AsignacionCursoParalelos asigCP;
             
+            List<AsignacionCursoMaterias> asigCMList;
+            List<AsignacionCursoParalelos> asigCPList;
+            
+            asigCMList = services.getListEntitiesByParameters(Querys.getAsigCursoMateriasByAsigCurso, new String[]{"asigCurso"}, new Object[]{asignacionCurso});
+            asigCPList = services.getListEntitiesByParameters(Querys.getAsigCursoParalelos, new String[]{"asigCurso"}, new Object[]{asignacionCurso});
+            
+            for(AsignacionCursoMaterias temp : asigCMList){
+                temp.setEstado(false);
+                temp.setFueTomada(false);
+                services.updateAndPersistEntity(temp);
+            }
+            
+            for(AsignacionCursoParalelos temp : asigCPList){
+                temp.setEstado(false);
+                services.updateAndPersistEntity(temp);
+            }
+            
             services.updateEntity(asignacionCurso);
-            for(AsignacionCursoMaterias acm : asignacionCurso.getAsignacionCursoMateriasCollection()){
-                acm.setEstado(false);
-                services.updateAndPersistEntity(acm);
-            }
-            for(AsignacionCursoParalelos acp : asignacionCurso.getAsignacionCursoParalelosCollection()){
-                acp.setEstado(false);
-                services.updateAndPersistEntity(acp);
-            }
+            
             for(Materia m : materias){
                 asigCM = (AsignacionCursoMaterias) services.getEntityByParameters(Querys.getAsigCursoMateriasByAsigCursoAndMateriaNoState, new String[]{"asigCurso", "idMateria"}, new Object[]{asignacionCurso, m});
                 if(asigCM == null){
@@ -99,6 +108,7 @@ public class ColegiosEjb implements ColegiosServices{
                     services.saveEntity(asigCM);
                 }else{
                     asigCM.setEstado(true);
+                    asigCM.setFueTomada(false);
                     services.updateAndPersistEntity(asigCM);
                 }
             }
@@ -160,6 +170,15 @@ public class ColegiosEjb implements ColegiosServices{
         Boolean b;
         try{
             b = true;
+            AsignacionCursoMaterias acm;
+            services.updateAndPersistEntity(asignacionProfesor);
+            
+            for(Materia m : materias){
+                acm = (AsignacionCursoMaterias) services.getEntityByParameters(Querys.getAsigCursoMateriasByAsigCursoAndMateria, new String[]{"asigCurso", "idMateria"}, new Object[]{asignacionProfesor.getAsignacionCurso(), m});
+                acm.setAsignacionProfesor(asignacionProfesor);
+                acm.setFueTomada(true);
+                services.updateAndPersistEntity(acm);
+            }
             /*
             AsignacionProfesorMaterias newAsig;
             List<AsignacionProfesorMaterias> apmList;

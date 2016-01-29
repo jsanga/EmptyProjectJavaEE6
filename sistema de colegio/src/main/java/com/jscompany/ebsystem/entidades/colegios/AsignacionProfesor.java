@@ -5,13 +5,11 @@
  */
 package com.jscompany.ebsystem.entidades.colegios;
 
-import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import com.jscompany.ebsystem.entidades.usuarios.Profesor;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -56,6 +54,8 @@ public class AsignacionProfesor implements Serializable {
     @JoinColumn(name = "asignacion_curso", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private AsignacionCurso asignacionCurso;
+    @OneToMany(mappedBy = "asignacionProfesor", fetch = FetchType.LAZY)
+    private Collection<AsignacionCursoMaterias> asigCursoMateriasCollection;
 
     public AsignacionProfesor() {
     }
@@ -110,6 +110,14 @@ public class AsignacionProfesor implements Serializable {
 
     public void setAsignacionCurso(AsignacionCurso asignacionCurso) {
         this.asignacionCurso = asignacionCurso;
+    }
+
+    public Collection<AsignacionCursoMaterias> getAsigCursoMateriasCollection() {
+        return asigCursoMateriasCollection;
+    }
+
+    public void setAsigCursoMateriasCollection(Collection<AsignacionCursoMaterias> asigCursoMateriasCollection) {
+        this.asigCursoMateriasCollection = asigCursoMateriasCollection;
     }
 
     @Override
