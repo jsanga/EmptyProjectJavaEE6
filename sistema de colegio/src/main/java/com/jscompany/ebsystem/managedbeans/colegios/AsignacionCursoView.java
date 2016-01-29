@@ -133,7 +133,8 @@ public class AsignacionCursoView implements Serializable{
     
     public void guardarNuevo(){
         try{            
-            if(colServices.crearAsignacionCurso(asignacion, materiasList, paralelosList)!=null){
+            asignacion = colServices.crearAsignacionCurso(asignacion, materiasList, paralelosList);
+            if(asignacion != null){
                 asignacionesList.add(asignacion);
                 JsfUti.messageInfo(null, "Info", "Se creó la asignación satisfactoriamente");
             }

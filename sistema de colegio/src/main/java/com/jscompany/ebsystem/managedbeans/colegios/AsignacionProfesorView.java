@@ -71,6 +71,7 @@ public class AsignacionProfesorView implements Serializable{
     private Rol rol;
     private List<AsignacionCursoMaterias> asigCurMatList, materiasSeleccionadas;
     private AsignacionCursoMaterias asigCurMat;
+    private Boolean asignacionValida;
     
     @PostConstruct
     public void init(){
@@ -170,7 +171,11 @@ public class AsignacionProfesorView implements Serializable{
     
     public void onRowSelect(){
         try{
-            asigCurMatList = services.getListEntitiesByParameters(Querys.getAsigCursoMateriasNoTomadas, new String[]{"asigCurso"}, new Object[]{asignacion.getAsignacionCurso()});
+            AsignacionProfesor apTemp = (AsignacionProfesor)services.getEntityByParameters(Querys.getAsignacionProfesorByProfesorAndAsigCurso, new String[]{"profesor", "asigCur"}, new Object[]{asignacion.getProfesor(), asignacion.getAsignacionCurso()});            
+            if(apTemp!=null){
+                JsfUti.messageError(null, "Error", "El profesor que ha seleccionado ya ha sido asignado a este curso.");
+                return;
+            }
             List<AsignacionCursoParalelos> temp2 = services.getListEntitiesByParameters(Querys.getAsigCursoParalelos, new String[]{"asigCurso"}, new Object[]{asignacion.getAsignacionCurso()});
             paralelosList = new ArrayList<>();
             
@@ -178,33 +183,52 @@ public class AsignacionProfesorView implements Serializable{
                 paralelosList.add(t.getParalelo());
             }
             JsfUti.messageInfo(null, "Info", "Curso seleccionado.");
+            verificarDatosAsignacion();
         }catch(Exception e){
             e.printStackTrace();
         }
     }
     
     public void onRowSelectParalelo(){
+        asigCurMatList = services.getListEntitiesByParameters(Querys.getAsigCursoMateriasNoTomadasByAsigCursoAndParalelo, new String[]{"asigCurso", "paralelo"}, new Object[]{asignacion.getAsignacionCurso(), asignacion.getParalelo()});
         JsfUti.messageInfo(null, "Info", "Paralelo seleccionado.");
+        if(materiasSeleccionadas==null || materiasSeleccionadas.isEmpty()){
+            JsfUti.messageInfo(null, "Info", "Todas las materias de este paralelo ya han sido asignadas.");
+        }
     }
     
     public void onRowSelectMateria(){
         JsfUti.messageInfo(null, "Info", "Materia seleccionada.");
+        verificarDatosAsignacion();
+    }
+    
+    public void verificarDatosAsignacion(){
+        if(materiasSeleccionadas==null){
+            asignacionValida = false;
+            return;
+        }
+        if(materiasSeleccionadas.size()>0){
+            asignacionValida = true;
+            JsfUti.messageInfo(null, "Info", "Ahora puede proceder a guardar la asignación del profesor.");
+        }
     }
     
     public void onRowSelectProfesor(){
         JsfUti.messageInfo(null, "Info", "Profesor seleccionado.");
+        verificarDatosAsignacion();
     }
     
     public void guardarNuevo(){
-        try{        
-            if(materiasSeleccionadas.isEmpty()){
-                JsfUti.messageError(null, "Error", "Debe seleccionar alguna una materia.");
-                return;
-            }
+        try{    
             if(asignacion.getParalelo() == null){
-                JsfUti.messageError(null, "Error", "Debe seleccionar un paralelo.");
+                JsfUti.messageError(null, "Error", "No se guardó la asignación. Debe seleccionar un paralelo.");
                 return;
             }
+            if(materiasSeleccionadas.isEmpty()){
+                JsfUti.messageError(null, "Error", "No se guardó la asignación. Debe seleccionar alguna una materia.");
+                return;
+            }
+            
             if(colServices.crearAsignacionProfesor(asignacion, asigcurso, materiasSeleccionadas)!=null){
                 //asignacionesProfList.add(asignacion);
                 JsfUti.messageInfo(null, "Info", "Se creó la asignación satisfactoriamente");

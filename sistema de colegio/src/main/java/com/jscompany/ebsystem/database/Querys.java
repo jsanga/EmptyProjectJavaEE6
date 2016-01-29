@@ -28,8 +28,7 @@ public class Querys {
     public static String getAsignacionesProfesorList = "select e from AsignacionProfesor e where e.estado = TRUE";
     public static String getAsignacionesProfesorByAsignacionCursoAndParaleloList = "select e from AsignacionProfesor e where e.asignacionCurso = :asigCurso and e.paralelo = :paralelo";
     public static String getAsignacionesProfesorListByProfesorId = "select e from AsignacionProfesor e where e.estado = TRUE and e.profesor = :profesor";
-    public static String getAsignacionProfesorMateriaByMateriaAndAsignacionIdNoState = "select e from AsignacionProfesorMaterias e where e.asignacionProfesor = :asigProf and materia = :materia";
-    public static String getAsignacionProfesorMateriaByAsignacionId = "select e from AsignacionProfesorMaterias e where e.asignacionProfesor = :asigProf and e.estado = TRUE";
+    public static String getAsignacionProfesorByProfesorAndAsigCurso = "select e from AsignacionProfesor e where e.estado = TRUE and e.profesor = :profesor and e.asignacionCurso = :asigCur";
     public static String getAsignacionesProfesorListNoState = "select e from AsignacionProfesor e";
     public static String getMatriculasNoState = "select e from Matricula e";
     public static String getMatriculasByAsigCurAndParalelo = "select e from Matricula e where e.asignacionCurso = :asigCur and e.paralelo = :paralelo";
@@ -39,7 +38,7 @@ public class Querys {
     
     // Querys tablas intermedias
     public static String getAsigCursoMaterias = "select e from AsignacionCursoMaterias e where e.estado = TRUE AND e.asignacionCurso = :asigCurso";
-    public static String getAsigCursoMateriasNoTomadas = "select e from AsignacionCursoMaterias e where e.estado = TRUE AND e.asignacionCurso = :asigCurso and e.fueTomada = FALSE";
+    public static String getAsigCursoMateriasNoTomadasByAsigCursoAndParalelo = "select e from AsignacionCursoMaterias e where e.estado = TRUE AND e.asignacionCurso = :asigCurso and e.fueTomada = FALSE and e.paralelo = :paralelo";
     public static String getAsigCursoMateriasByAsigCurso = "select e from AsignacionCursoMaterias e where e.estado = TRUE AND e.asignacionCurso = :asigCurso ";
     public static String getAsigCursoMateriasByAsigCursoAndMateria = "select e from AsignacionCursoMaterias e where e.estado = TRUE AND e.asignacionCurso = :asigCurso and e.materia = :idMateria";
     public static String getAsigCursoMateriasByAsigCursoAndMateriaNoState = "select e from AsignacionCursoMaterias e where e.asignacionCurso = :asigCurso and e.materia = :idMateria";

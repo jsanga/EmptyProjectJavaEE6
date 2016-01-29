@@ -43,14 +43,14 @@
         
         <p:dialog header="Crear Asignación" id="dlgCrear" widgetVar="dlgCrear" modal="true" height="auto" width="auto" resizable="false">  
             <h:form id="dlgForm" >
-                <p:tabView>
+                <p:tabView id="tabMain">
                     <p:tab title="Profesor">
                         <p:dataTable id="dtProfesores" value="#{asignacionProfesorView.profesoresList}" lazy="true" var="prof" rows="5" paginator="true" selectionMode="single"
                                      selection="#{asignacionProfesorView.asignacion.profesor}" rowKey="#{prof.id}" style="width: 420px;">
                             <f:facet name="header">
                                 Selección de profesor
                             </f:facet>
-                            <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelectProfesor}" update="dlgForm" />
+                            <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelectProfesor}" update="dlgForm:tabMain" />
                             <p:column headerText="Cédula" filterBy="#{prof.persona.cedula}">
                                 <h:outputText value="#{prof.persona.cedula}" />
                             </p:column>
@@ -65,7 +65,7 @@
                     
                     <!-- -->
                     
-                    <p:tab title="Curso">
+                    <p:tab title="Curso" id="tabCurso">
                         <p:dataTable id="dtCursos" value="#{asignacionProfesorView.asignacionesCursosList}" var="cur" rows="5" paginator="true" selectionMode="single"
                                      selection="#{asignacionProfesorView.asignacion.asignacionCurso}" lazy="true" rowKey="#{cur.id}" style="width: 420px;">
                             <f:facet name="header">
@@ -86,7 +86,7 @@
                     
                     <!-- -->
                     
-                    <p:tab title="Paralelos" rendered="#{asignacionProfesorView.asignacion.asignacionCurso!=null}">
+                    <p:tab title="Paralelos" id="tabParalelo" rendered="#{asignacionProfesorView.asignacion.asignacionCurso!=null}">
                         <p:dataTable id="dtParalelos" value="#{asignacionProfesorView.paralelosList}" var="par" rows="5" paginator="true" selectionMode="single"
                                      selection="#{asignacionProfesorView.asignacion.paralelo}" rowKey="#{par.id}" style="width: 420px;">
                             <f:facet name="header">
@@ -101,7 +101,7 @@
                     
                     <!-- -->
                     
-                    <p:tab title="Materias" rendered="#{asignacionProfesorView.asignacion.asignacionCurso!=null}">
+                    <p:tab title="Materias" rendered="#{asignacionProfesorView.asignacion.paralelo!=null}" id="tabMaterias">
                         <p:dataTable id="dtMaterias" value="#{asignacionProfesorView.asigCurMatList}" var="mat" rows="5" paginator="true"
                                      selection="#{asignacionProfesorView.materiasSeleccionadas}" rowKey="#{mat.id}" style="width: 420px;">
                             <f:facet name="header">
@@ -115,7 +115,7 @@
                         </p:dataTable>
                     </p:tab>
                 </p:tabView>
-                <center><p:commandButton value="Guardar asignación" disabled="#{asignacionProfesorView.asignacion==null}" actionListener="#{asignacionProfesorView.guardarNuevo()}" onclick="PF('dlgCrear').hide()" update=":frmMain"/></center>
+                <center><p:commandButton id="btnGuardar" value="Guardar asignación" disabled="#{asignacionProfesorView.asignacion==null}" actionListener="#{asignacionProfesorView.guardarNuevo()}" onclick="PF('dlgCrear').hide()" update=":frmMain"/></center>
             </h:form>
         </p:dialog>
         
