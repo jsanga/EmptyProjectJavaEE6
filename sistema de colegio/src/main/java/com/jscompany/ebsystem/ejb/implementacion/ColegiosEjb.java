@@ -17,6 +17,7 @@ import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Matricula;
 import com.jscompany.ebsystem.entidades.colegios.Paralelo;
 import com.jscompany.ebsystem.services.AclService;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -46,14 +47,6 @@ public class ColegiosEjb implements ColegiosServices{
         try{
             asignacion = asignacionCurso;
             asignacion = (AsignacionCurso) services.saveEntity(asignacion);
-            for(Materia m : materias){
-                acm = new AsignacionCursoMaterias();
-                acm.setAsignacionCurso(asignacion);
-                acm.setMateria(m);
-                acm.setFueTomada(Boolean.FALSE);
-                acm.setEstado(Boolean.TRUE);
-                services.saveEntity(acm);
-            }
             for(Paralelo p : paralelos){
                 acp = new AsignacionCursoParalelos();
                 acp.setAsignacionCurso(asignacion);
@@ -62,6 +55,15 @@ public class ColegiosEjb implements ColegiosServices{
                 acp.setCupoDisponible(30);
                 acp.setEstado(Boolean.TRUE);
                 services.saveEntity(acp);
+                for(Materia m : materias){
+                    acm = new AsignacionCursoMaterias();
+                    acm.setAsignacionCurso(asignacion);
+                    acm.setMateria(m);
+                    acm.setParalelo(p);
+                    acm.setFueTomada(Boolean.FALSE);
+                    acm.setEstado(Boolean.TRUE);
+                    services.saveEntity(acm);
+                }
             }
         }catch(Exception e){
             e.printStackTrace();
@@ -137,72 +139,25 @@ public class ColegiosEjb implements ColegiosServices{
     }
     
     @Override
-    public AsignacionProfesor crearAsignacionProfesor(AsignacionProfesor asignacionP, AsignacionCurso acurso, List<Materia> materias){
-        AsignacionProfesor asignacion = null;
-        AsignacionCursoMaterias acm;
+    public AsignacionProfesor crearAsignacionProfesor(AsignacionProfesor asignacionP, AsignacionCurso acurso, List<AsignacionCursoMaterias> materias){
+        AsignacionProfesor asignacion;
         try{
-            /*
-            AsignacionProfesorMaterias apm;
             asignacion = asignacionP;
             asignacion.setEstado(Boolean.TRUE);
             asignacion.setFechaCreacion(new Date());
             asignacion = (AsignacionProfesor) services.saveEntity(asignacion);
-            for(Materia m : materias){
-                acm = (AsignacionCursoMaterias) services.getEntityByParameters(Querys.getAsigCursoMateriasByAsigCursoAndMateria, new String[]{"asigCurso","idMateria"}, new Object[]{acurso, m});
-                acm.setFueTomada(Boolean.TRUE);
-                apm = new AsignacionProfesorMaterias();
-                apm.setAsignacionProfesor(asignacion);
-                apm.setMateria(m);
-                services.saveEntity(apm);
-                services.updateAndPersistEntity(acm);
+            
+            for(AsignacionCursoMaterias temp : materias){
+                temp.setAsignacionProfesor(asignacion);
+                temp.setFueTomada(Boolean.TRUE);
+                services.updateAndPersistEntity(temp);
             }
-            */
-            //services.updateAndPersistEntity(asignacion);
+            
         }catch(Exception e){
             e.printStackTrace();
             asignacion = null;
         }
         return asignacion;
-    }
-    
-    @Override
-    public Boolean actualizarAsignacionProfesor(AsignacionProfesor asignacionProfesor, List<Materia> materias){
-        Boolean b;
-        try{
-            b = true;
-            AsignacionCursoMaterias acm;
-            services.updateAndPersistEntity(asignacionProfesor);
-            
-            for(Materia m : materias){
-                acm = (AsignacionCursoMaterias) services.getEntityByParameters(Querys.getAsigCursoMateriasByAsigCursoAndMateria, new String[]{"asigCurso", "idMateria"}, new Object[]{asignacionProfesor.getAsignacionCurso(), m});
-                acm.setAsignacionProfesor(asignacionProfesor);
-                acm.setFueTomada(true);
-                services.updateAndPersistEntity(acm);
-            }
-            /*
-            AsignacionProfesorMaterias newAsig;
-            List<AsignacionProfesorMaterias> apmList;
-            
-            services.updateAndPersistEntity(asignacionProfesor);
-            
-            for(Materia m : materias){
-                AsignacionProfesorMaterias temp = (AsignacionProfesorMaterias) services.getEntityByParameters(Querys.getAsignacionProfesorMateriaByMateriaAndAsignacionIdNoState, new String[]{"asigProf", "materia"}, new Object[]{asignacionProfesor, m});
-                if(temp == null){
-                    newAsig = new AsignacionProfesorMaterias();
-                    newAsig.setAsignacionProfesor(asignacionProfesor);
-                    newAsig.setMateria(m);
-                    services.saveEntity(newAsig);
-                }else{
-                    temp.setEstado(true);
-                    services.updateAndPersistEntity(temp);
-                }                
-            }
-            */
-        }catch(Exception e){
-            e.printStackTrace();
-            b = false;
-        }
-        return b;
     }
     
     @Override

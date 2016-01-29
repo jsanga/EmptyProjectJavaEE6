@@ -15,6 +15,7 @@ import com.jscompany.ebsystem.entidades.usuarios.Notificacion;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import com.jscompany.ebsystem.entidades.usuarios.PersonaEmail;
 import com.jscompany.ebsystem.entidades.usuarios.PersonaTelefono;
+import com.jscompany.ebsystem.entidades.usuarios.Profesor;
 import com.jscompany.ebsystem.entidades.usuarios.Rol;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
@@ -80,6 +81,94 @@ public class UsuariosEjb implements UsuariosServices{
     @Override
     public Loguin guardarLoguin(Loguin l){
         return null;
+    }
+    
+    @Override
+    public Boolean guardarEdicionPersona(Persona p, Rol r, Colegio c){
+        Boolean b;
+        try{
+            b=true;
+            persona = p;
+            
+            switch(rol.getId().intValue()){
+                case 1:
+                    break;
+                case 2:
+                    Profesor pr = (Profesor)services.getEntityByParameters(Querys.getProfesorByPersonaID, new String[]{"idPersona"}, new Object[]{persona});
+                    services.delete(pr);
+                    break;
+                case 3:
+                    Estudiante e = (Estudiante)services.getEntityByParameters(Querys.getEstudianteByPersonaID, new String[]{"idPersona"}, new Object[]{persona});
+                    services.delete(e);
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+            }
+            persona.setColegio(c);
+            persona.setRol(r);
+            services.updateAndPersistEntity(persona);
+            
+            switch(rol.getId().intValue()){
+                case 1:
+                    break;
+                case 2:
+                    Profesor pr = new Profesor();
+                    pr.setPersona(persona);
+                    services.saveEntity(pr);
+                    break;
+                case 3:
+                    Estudiante e = new Estudiante();
+                    e.setPersona(persona);
+                    services.saveEntity(e);
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+            }
+            
+        }catch(Exception e){
+            e.printStackTrace();
+            b=false;
+        }
+        return b;
+    }
+    
+    @Override
+    public Boolean guardarNuevaPersona(Persona p, Rol r, Colegio c){
+        Boolean b;
+        try{
+            b=true;
+            
+            persona.setColegio(c);
+            persona.setRol(r);
+            services.saveEntity(persona);
+            
+            switch(rol.getId().intValue()){
+                case 1:
+                    break;
+                case 2:
+                    Profesor pr = new Profesor();
+                    pr.setPersona(persona);
+                    services.saveEntity(pr);
+                    break;
+                case 3:
+                    Estudiante e = new Estudiante();
+                    e.setPersona(persona);
+                    services.saveEntity(e);
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            b=false;
+        }
+        return b;
     }
     
     @Override

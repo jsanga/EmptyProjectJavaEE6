@@ -47,6 +47,9 @@ public class AsignacionCursoMaterias implements Serializable {
     @JoinColumn(name = "asignacion_profesor", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private AsignacionProfesor asignacionProfesor;
+    @JoinColumn(name = "paralelo", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Paralelo paralelo;
 
     public AsignacionCursoMaterias() {
     }
@@ -101,6 +104,14 @@ public class AsignacionCursoMaterias implements Serializable {
 
     public void setAsignacionProfesor(AsignacionProfesor asignacionProfesor) {
         this.asignacionProfesor = asignacionProfesor;
+    }
+
+    public Paralelo getParalelo() {
+        return paralelo;
+    }
+
+    public void setParalelo(Paralelo paralelo) {
+        this.paralelo = paralelo;
     }
 
     @Override

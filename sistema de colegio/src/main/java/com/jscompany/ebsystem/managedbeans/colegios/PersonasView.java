@@ -6,6 +6,7 @@
 package com.jscompany.ebsystem.managedbeans.colegios;
 
 import com.jscompany.ebsystem.database.Querys;
+import com.jscompany.ebsystem.ejb.interfaces.UsuariosServices;
 import com.jscompany.ebsystem.entidades.colegios.Colegio;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import com.jscompany.ebsystem.entidades.usuarios.Rol;
@@ -34,6 +35,9 @@ public class PersonasView implements Serializable{
     
     @EJB(beanName = "aclService")
     private AclService services;
+    
+    @EJB(beanName = "usuariosServices")
+    private UsuariosServices userServices;
     
     @ManagedProperty(value = "#{userSession}")
     private UserSession uSession;
@@ -105,9 +109,12 @@ public class PersonasView implements Serializable{
     }
     
     public void guardarNuevo(){
-        persona.setColegio(colegio);
-        persona.setRol(rol);
-        if((persona = (Persona) services.saveEntity(persona)) != null){
+        Persona pTemp = (Persona)services.getEntityByParameters(Querys.getPersonaByCedula, new String[]{"cedula"}, new Object[]{persona.getCedula()});
+        if(pTemp!=null){
+            JsfUti.messageError(null, "Error", "La persona que trata de ingresar ya existe.");
+        }
+        
+        if(userServices.guardarNuevaPersona(persona, rol, colegio)){
             JsfUti.messageInfo(null, "Info", "Se creó la persona satisfactoriamente");
         }
         else

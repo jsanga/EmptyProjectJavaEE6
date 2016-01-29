@@ -33,7 +33,7 @@
                 <p:column headerText="Acción">
                     <center>
                         <p:commandButton value="Más información" actionListener="#{asignacionProfesorView.masInfo(asignacion)}" />                        
-                        <p:commandButton value="Editar" actionListener="#{asignacionProfesorView.editarAsignacion(asignacion)}" onclick="PF('dlgEditar').show()" update=":dlgFormEdit"/>
+                        <p:commandButton value="Editar" onclick="PF('dlgConfirm').show()" actionListener="#{asignacionProfesorView.setAsignacion(asignacion)}" update=":dlgFrmConfirm"/>
                         <p:commandButton value="Eliminar" rendered="#{asignacion.estado}" actionListener="#{asignacionProfesorView.eliminarAsignacion(asignacion)}" update="frmMain"/>
                         <p:commandButton value="Habilitar" rendered="#{!asignacion.estado}" actionListener="#{asignacionProfesorView.activarAsignacion(asignacion)}" update="frmMain"/>
                     </center>
@@ -73,7 +73,7 @@
                             </f:facet>
                             <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelect}" update="dlgForm" />
                             <p:column headerText="Curso" filterBy="#{cur.curso.nombre}">
-                                <h:outputText value="#{cur.curso.nombre}" />
+                                <h:outputText value="#{cur.curso.nombre}" style="text-transform: uppercase;"/>
                             </p:column>
                             <p:column headerText="Fecha de inicio" filterBy="#{cur.periodoLectivo.fechaInicio}">
                                 <h:outputText value="#{cur.periodoLectivo.fechaInicio}" />
@@ -94,7 +94,7 @@
                             </f:facet>
                             <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelectParalelo}" update="dlgForm" />
                             <p:column headerText="Paralelo" filterBy="#{par.nombre}">
-                                <h:outputText value="#{par.nombre}" />
+                                <h:outputText value="#{par.nombre}" style="text-transform: uppercase;"/>
                             </p:column>
                         </p:dataTable>
                     </p:tab>
@@ -102,15 +102,15 @@
                     <!-- -->
                     
                     <p:tab title="Materias" rendered="#{asignacionProfesorView.asignacion.asignacionCurso!=null}">
-                        <p:dataTable id="dtMaterias" value="#{asignacionProfesorView.materiasList}" var="mat" rows="5" paginator="true"
+                        <p:dataTable id="dtMaterias" value="#{asignacionProfesorView.asigCurMatList}" var="mat" rows="5" paginator="true"
                                      selection="#{asignacionProfesorView.materiasSeleccionadas}" rowKey="#{mat.id}" style="width: 420px;">
                             <f:facet name="header">
                                 Materias
                             </f:facet>
-                            <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelectMateria}" update="dlgForm" />
+                            <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelectMateria}" update="dtMaterias" />
                             <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                            <p:column headerText="Materia" filterBy="#{mat.nombre}">
-                                <h:outputText value="#{mat.nombre}" />
+                            <p:column headerText="Materia" filterBy="#{mat.materia.nombre}">
+                                <h:outputText value="#{mat.materia.nombre}" style="text-transform: uppercase;"/>
                             </p:column>
                         </p:dataTable>
                     </p:tab>
@@ -156,7 +156,7 @@
                                 </f:facet>
                                 <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelect}" update="dlgFormEdit" />
                                 <p:column headerText="Curso" filterBy="#{cur.curso.nombre}">
-                                    <h:outputText value="#{cur.curso.nombre}" />
+                                    <h:outputText value="#{cur.curso.nombre}" style="text-transform: uppercase;"/>
                                 </p:column>
                             </p:dataTable>
                         </p:panel>
@@ -173,7 +173,7 @@
                                 </f:facet>
                                 <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelectParalelo}" update="dlgForm" />
                                 <p:column headerText="Paralelo" filterBy="#{par.nombre}">
-                                    <h:outputText value="#{par.nombre}" />
+                                    <h:outputText value="#{par.nombre}" style="text-transform: uppercase;"/>
                                 </p:column>
                             </p:dataTable>
                         </p:panel>
@@ -182,20 +182,40 @@
                     <!-- -->
                     
                     <p:tab title="Materias" rendered="#{asignacionProfesorView.asignacion.asignacionCurso!=null}">
-                        <p:dataTable id="dtMaterias" value="#{asignacionProfesorView.materiasList}" var="mat" rows="5" paginator="true"
-                                     selection="#{asignacionProfesorView.materiasSeleccionadas}" rowKey="#{mat.id}" style="width: 420px;">
+                        <p:dataTable id="dtMaterias" value="#{asignacionProfesorView.asigCurMatList}" var="mat" rows="5" paginator="true"
+                                     style="width: 420px;">
                             <f:facet name="header">
                                 Materias
                             </f:facet>
-                            <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelectMateria}" update="dlgForm" />
-                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
-                            <p:column headerText="Materia" filterBy="#{mat.nombre}">
-                                <h:outputText value="#{mat.nombre}" />
+                            <p:column headerText="Materia" filterBy="#{mat.materia.nombre}">
+                                <h:outputText value="#{mat.materia.nombre}" style="text-transform: uppercase;"/>
+                            </p:column>
+                            <p:column headerText="Estado" >
+                                <h:outputText value="Ya fue tomada" rendered="#{mat.fueTomada}" style="text-transform: uppercase;"/>
+                                <h:outputText value="No ha sido tomada" rendered="#{!mat.fueTomada}" style="text-transform: uppercase;"/>
+                            </p:column>
+                            <p:column headerText="Acción" >
+                                <p:commandButton value="Asignar" actionListener="#{asignacionProfesorView.reasignarMateriaEdit(mat)}" update="dtMaterias" rendered="#{!mat.fueTomada}" style="text-transform: uppercase;"/>
+                                <p:commandButton value="Borrar Asignacion" actionListener="#{asignacionProfesorView.borrarAsigMat(mat)}" update="dtMaterias" rendered="#{mat.fueTomada}" style="text-transform: uppercase;"/>
                             </p:column>
                         </p:dataTable>
                     </p:tab>
                 </p:tabView>
                 <center><p:commandButton value="Guardar edición" actionListener="#{asignacionProfesorView.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain"/></center>
+            </h:form>
+        </p:dialog>
+        
+        <!-- -->
+        
+        <p:dialog header="Confirmación" id="dlgConfirm" widgetVar="dlgConfirm" modal="true" height="auto" width="auto" resizable="false">  
+            <h:form id="dlgFrmConfirm" >
+                <h:outputText value="Está seguro de que desea modificar el curso?"/>
+                <h:panelGroup>
+                    <center>
+                        <p:commandButton value="Sí" actionListener="#{asignacionProfesorView.editarAsignacion}" onclick="PF('dlgEditar').show()" oncomplete="PF('dlgConfirm').hide()" update=":dlgFormEdit"/>
+                        <p:commandButton value="No" onclick="PF('dlgConfirm').hide()"/>
+                    </center>
+                </h:panelGroup>
             </h:form>
         </p:dialog>
     </h:body>

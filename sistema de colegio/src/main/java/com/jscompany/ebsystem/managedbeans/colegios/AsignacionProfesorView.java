@@ -67,9 +67,10 @@ public class AsignacionProfesorView implements Serializable{
     private ProfesoresLazy profesoresList;
     private AsignacionProfesorLazy asigProfList;
     private List<Paralelo> paralelosList, paralelosSeleccionados;
-    private List<Materia> materiasList, materiasSeleccionadas;
     private Colegio colegio;
     private Rol rol;
+    private List<AsignacionCursoMaterias> asigCurMatList, materiasSeleccionadas;
+    private AsignacionCursoMaterias asigCurMat;
     
     @PostConstruct
     public void init(){
@@ -101,29 +102,47 @@ public class AsignacionProfesorView implements Serializable{
         asignacion = ap;
     }
     
-    public void editarAsignacion(AsignacionProfesor ap){
+    public void reasignarMateriaEdit(AsignacionCursoMaterias mat){
+        mat.setAsignacionProfesor(asignacion);
+        mat.setAsignacionCurso(asignacion.getAsignacionCurso());
+        mat.setFueTomada(Boolean.TRUE);
+        if(services.updateAndPersistEntity(mat)){
+            JsfUti.messageInfo(null, "Info", "Se asignó la materia a "+asignacion.getProfesor().getPersona().getNombres().toUpperCase()+" "+asignacion.getProfesor().getPersona().getApellidos().toUpperCase()+" correcctamente.");
+        }else{
+            JsfUti.messageError(null, "Error", "Hubo un error al actualizar. Refresque la página e inténtelo nuevamente.");        
+        }
+    }
+    
+    public void borrarAsigMat(AsignacionCursoMaterias mat){
+        mat.setAsignacionProfesor(null);
+        mat.setFueTomada(Boolean.FALSE);
+        if(services.updateAndPersistEntity(mat)){
+            JsfUti.messageInfo(null, "Info", "Se actualizó correcctamente.");
+        }else{
+            JsfUti.messageError(null, "Error", "Hubo un error al actualizar. Refresque la página e inténtelo nuevamente.");        
+        }
+    }
+    
+    public void editarAsignacion(){
         try{
-            asignacion = ap;
-            List<AsignacionCursoMaterias> temp1 = services.getListEntitiesByParameters(Querys.getAsigCursoMaterias, new String[]{"asigCurso"}, new Object[]{asignacion.getAsignacionCurso()});
+            //asignacion = ap;
+            asigCurMatList = services.getListEntitiesByParameters(Querys.getAsigCursoMaterias, new String[]{"asigCurso"}, new Object[]{asignacion.getAsignacionCurso()});
             List<AsignacionCursoParalelos> temp2 = services.getListEntitiesByParameters(Querys.getAsigCursoParalelos, new String[]{"asigCurso"}, new Object[]{asignacion.getAsignacionCurso()});
             paralelosList = new ArrayList<>();
-            materiasList = new ArrayList<>();
-            for(AsignacionCursoMaterias t : temp1){
-                materiasList.add(t.getMateria());
-            }
+            
             for(AsignacionCursoParalelos t : temp2){
                 paralelosList.add(t.getParalelo());
             }
             materiasSeleccionadas = new ArrayList<>();
-            List<AsignacionCursoMaterias> materiasProf = services.getListEntitiesByParameters(Querys.getAsigCursoMateriasByByAsigProfAndAsigCurso, new String[]{"asigProf", "asigCur"}, new Object[]{asignacion, asignacion.getAsignacionCurso()});
+            /*List<AsignacionCursoMaterias> materiasProf = services.getListEntitiesByParameters(Querys.getAsigCursoMateriasByByAsigProfAndAsigCurso, new String[]{"asigProf", "asigCur"}, new Object[]{asignacion, asignacion.getAsignacionCurso()});
             if(materiasProf!=null){
                 for(AsignacionCursoMaterias temp : materiasProf){
                     temp.setAsignacionProfesor(null);
                     temp.setFueTomada(Boolean.FALSE);
                     services.updateAndPersistEntity(temp);
                 }
-            }
-            JsfUti.messageInfo(null, "Info", "Curso "+ap.getAsignacionCurso().getCurso().getNombre().toUpperCase()+" seleccionado.");
+            }*/
+            JsfUti.messageInfo(null, "Info", "Curso "+asignacion.getAsignacionCurso().getCurso().getNombre().toUpperCase()+" seleccionado.");
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -151,13 +170,10 @@ public class AsignacionProfesorView implements Serializable{
     
     public void onRowSelect(){
         try{
-            List<AsignacionCursoMaterias> temp1 = services.getListEntitiesByParameters(Querys.getAsigCursoMaterias, new String[]{"asigCurso"}, new Object[]{asignacion.getAsignacionCurso()});
+            asigCurMatList = services.getListEntitiesByParameters(Querys.getAsigCursoMateriasNoTomadas, new String[]{"asigCurso"}, new Object[]{asignacion.getAsignacionCurso()});
             List<AsignacionCursoParalelos> temp2 = services.getListEntitiesByParameters(Querys.getAsigCursoParalelos, new String[]{"asigCurso"}, new Object[]{asignacion.getAsignacionCurso()});
             paralelosList = new ArrayList<>();
-            materiasList = new ArrayList<>();
-            for(AsignacionCursoMaterias t : temp1){
-                materiasList.add(t.getMateria());
-            }
+            
             for(AsignacionCursoParalelos t : temp2){
                 paralelosList.add(t.getParalelo());
             }
@@ -203,7 +219,7 @@ public class AsignacionProfesorView implements Serializable{
     
     public void guardarEdicion(){
         try{
-            if(colServices.actualizarAsignacionProfesor(asignacion, materiasSeleccionadas))
+            if(services.updateAndPersistEntity(asignacion))
                 JsfUti.messageInfo(null, "Info", "Se editó la asignacion satisfactoriamente");
             else
                 JsfUti.messageError(null, "Error", "Hubo un problema al editar la asignacion.");
@@ -269,14 +285,6 @@ public class AsignacionProfesorView implements Serializable{
         this.paralelosList = paralelosList;
     }
 
-    public List<Materia> getMateriasList() {
-        return materiasList;
-    }
-
-    public void setMateriasList(List<Materia> materiasList) {
-        this.materiasList = materiasList;
-    }
-
     public UserSession getuSession() {
         return uSession;
     }
@@ -301,11 +309,11 @@ public class AsignacionProfesorView implements Serializable{
         this.paralelosSeleccionados = paralelosSeleccionados;
     }
 
-    public List<Materia> getMateriasSeleccionadas() {
+    public List<AsignacionCursoMaterias> getMateriasSeleccionadas() {
         return materiasSeleccionadas;
     }
 
-    public void setMateriasSeleccionadas(List<Materia> materiasSeleccionadas) {
+    public void setMateriasSeleccionadas(List<AsignacionCursoMaterias> materiasSeleccionadas) {
         this.materiasSeleccionadas = materiasSeleccionadas;
     }
 
@@ -323,6 +331,22 @@ public class AsignacionProfesorView implements Serializable{
 
     public void setProfesoresList(ProfesoresLazy profesoresList) {
         this.profesoresList = profesoresList;
+    }
+
+    public List<AsignacionCursoMaterias> getAsigCurMatList() {
+        return asigCurMatList;
+    }
+
+    public void setAsigCurMatList(List<AsignacionCursoMaterias> asigCurMatList) {
+        this.asigCurMatList = asigCurMatList;
+    }
+
+    public AsignacionCursoMaterias getAsigCurMat() {
+        return asigCurMat;
+    }
+
+    public void setAsigCurMat(AsignacionCursoMaterias asigCurMat) {
+        this.asigCurMat = asigCurMat;
     }
     
 }

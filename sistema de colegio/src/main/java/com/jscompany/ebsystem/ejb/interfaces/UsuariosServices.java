@@ -34,4 +34,8 @@ public interface UsuariosServices {
     
     public Integer guardarPersonasEstudiantesExcel(List<Persona> personas, Rol rol, Colegio colegio);
     
+    public Boolean guardarNuevaPersona(Persona p, Rol r, Colegio c);
+    
+    public Boolean guardarEdicionPersona(Persona p, Rol r, Colegio c);
+    
 }

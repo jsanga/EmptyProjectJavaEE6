@@ -38,7 +38,8 @@ public class Querys {
     public static String getMatriculasByEstudianteNoState = "select e from Matricula e where e.estudiante = :estudiante";
     
     // Querys tablas intermedias
-    public static String getAsigCursoMaterias = "select e from AsignacionCursoMaterias e where e.estado = TRUE AND e.asignacionCurso = :asigCurso and e.fueTomada = FALSE";
+    public static String getAsigCursoMaterias = "select e from AsignacionCursoMaterias e where e.estado = TRUE AND e.asignacionCurso = :asigCurso";
+    public static String getAsigCursoMateriasNoTomadas = "select e from AsignacionCursoMaterias e where e.estado = TRUE AND e.asignacionCurso = :asigCurso and e.fueTomada = FALSE";
     public static String getAsigCursoMateriasByAsigCurso = "select e from AsignacionCursoMaterias e where e.estado = TRUE AND e.asignacionCurso = :asigCurso ";
     public static String getAsigCursoMateriasByAsigCursoAndMateria = "select e from AsignacionCursoMaterias e where e.estado = TRUE AND e.asignacionCurso = :asigCurso and e.materia = :idMateria";
     public static String getAsigCursoMateriasByAsigCursoAndMateriaNoState = "select e from AsignacionCursoMaterias e where e.asignacionCurso = :asigCurso and e.materia = :idMateria";
@@ -61,6 +62,7 @@ public class Querys {
     public static String getPersonaByCedula = "select e from Persona e where e.cedula = :cedula";
     public static String getPersonaByCedulaAndNOTRol = "select e from Persona e where e.cedula = :cedula and e.rol != :idRol";
     public static String getProfesorByPersonaID = "select e from Profesor e where e.persona = :idPersona";
+    public static String getEstudianteByPersonaID = "select e from Estudiante e where e.persona = :idPersona";
     public static String getPersonalByPersonaID = "select e from Personal e where e.persona = :idPersona";
     public static String getPersonaByID = "select e from Persona e where e.id = :idPersona";
     public static String getRolById = "Select e from Rol e where e.id = :rolId";

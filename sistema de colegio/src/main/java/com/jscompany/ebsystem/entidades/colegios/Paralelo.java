@@ -47,6 +47,8 @@ public class Paralelo implements Serializable {
     private Collection<AsignacionProfesor> asignacionProfesorCollection;
     @OneToMany(mappedBy = "paralelo", fetch = FetchType.LAZY)
     private Collection<Matricula> matriculasCollection;
+    @OneToMany(mappedBy = "paralelo", fetch = FetchType.LAZY)
+    private Collection<AsignacionCursoMaterias> asigCurMateriasCollection;
     
     public Paralelo() {
     }
@@ -101,6 +103,14 @@ public class Paralelo implements Serializable {
 
     public void setMatriculasCollection(Collection<Matricula> matriculasCollection) {
         this.matriculasCollection = matriculasCollection;
+    }
+
+    public Collection<AsignacionCursoMaterias> getAsigCurMateriasCollection() {
+        return asigCurMateriasCollection;
+    }
+
+    public void setAsigCurMateriasCollection(Collection<AsignacionCursoMaterias> asigCurMateriasCollection) {
+        this.asigCurMateriasCollection = asigCurMateriasCollection;
     }
 
     @Override
