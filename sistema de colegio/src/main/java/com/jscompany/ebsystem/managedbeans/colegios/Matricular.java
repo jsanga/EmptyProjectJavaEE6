@@ -12,6 +12,7 @@ import com.jscompany.ebsystem.entidades.colegios.AsignacionCursoParalelos;
 import com.jscompany.ebsystem.entidades.colegios.Colegio;
 import com.jscompany.ebsystem.entidades.colegios.Matricula;
 import com.jscompany.ebsystem.entidades.colegios.Paralelo;
+import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import com.jscompany.ebsystem.entidades.usuarios.Rol;
 import com.jscompany.ebsystem.lazymodels.MatriculasLazy;
 import com.jscompany.ebsystem.lazymodels.PersonasByRolLazy;
@@ -61,6 +62,7 @@ public class Matricular implements Serializable{
     private PersonasByRolLazy estudiantesList; 
     private Colegio colegio;
     private Rol rol;
+    private Persona personEst;
    
     @PostConstruct
     public void init(){
@@ -86,6 +88,7 @@ public class Matricular implements Serializable{
     }
     
     public void onRowSelectEstudiante(){
+        matricula.setEstudiante(personEst.getEstudiante());
         JsfUti.messageInfo(null, "Info", "Estudiante seleccionado.");
     }
     
@@ -230,6 +233,14 @@ public class Matricular implements Serializable{
 
     public void setMatriculas(MatriculasLazy matriculas) {
         this.matriculas = matriculas;
+    }
+
+    public Persona getPersonEst() {
+        return personEst;
+    }
+
+    public void setPersonEst(Persona personEst) {
+        this.personEst = personEst;
     }
     
 }
