@@ -28,7 +28,11 @@ public class AsignacionProfesorLazy extends BaseLazyDataModel<AsignacionProfesor
     @Override
     public void criteriaFilterSetup(Criteria crit, Map<String, Object> filters) throws Exception {
 
+        crit.createCriteria("profesor");
         Criteria c = crit.createCriteria("profesor.persona");
+        crit.createCriteria("asignacionCurso").add(Restrictions.eq("colegio", colegio));
+        
+        //d.add(Restrictions.eq("colegio", colegio));
         
         if (filters.containsKey("asignacionCurso.curso.nombre")) {
             crit.createCriteria("asignacionCurso.curso").add(Restrictions.ilike("nombre", "%"+ filters.get("asignacionCurso.curso.nombre").toString().trim() +"%" ));
@@ -42,14 +46,5 @@ public class AsignacionProfesorLazy extends BaseLazyDataModel<AsignacionProfesor
         if (filters.containsKey("profesor.persona.cedula")) {
             c.add(Restrictions.ilike("cedula", "%"+ filters.get("profesor.persona.cedula").toString().trim() +"%" ));
         }
-        //System.out.println("Curso "+filters.get("curso.nombre").toString().trim());
-        //System.out.println("Persona "+filters.containsValue("persona.cedula"));
-        
-        /*if (filters.containsKey("profesor.persona.nombres")) {
-            crit.createCriteria("profesor.persona").add(Restrictions.ilike("nombres", "%"+ filters.get("profesor.persona.nombres").toString().trim() +"%" ));
-        }*/
-        //crit.add(Restrictions.le("estado", true));
-        //crit.add(Restrictions.eq("colegio", colegio));
-        crit.createCriteria("asignacionCurso").add(Restrictions.eq("colegio", colegio));
     }
 }

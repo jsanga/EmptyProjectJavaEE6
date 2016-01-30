@@ -13,6 +13,7 @@ import com.jscompany.ebsystem.entidades.colegios.Colegio;
 import com.jscompany.ebsystem.entidades.colegios.Matricula;
 import com.jscompany.ebsystem.entidades.colegios.Paralelo;
 import com.jscompany.ebsystem.entidades.usuarios.Rol;
+import com.jscompany.ebsystem.lazymodels.MatriculasLazy;
 import com.jscompany.ebsystem.lazymodels.PersonasByRolLazy;
 import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.managedbeans.session.UtilSession;
@@ -51,7 +52,8 @@ public class Matricular implements Serializable{
     private ColegiosServices colServices;
     
     private Matricula matricula;
-    private List<Matricula> matriculaList;
+    private MatriculasLazy matriculas;
+    //private List<Matricula> matriculaList;
     private List<AsignacionCurso> asignacionesCursosList;
     private List<Paralelo> paralelosList;
     private Paralelo paralelo;
@@ -66,11 +68,11 @@ public class Matricular implements Serializable{
             if(!uSession.getIsLogged())
                 return;
             
-            matriculaList = services.getListEntitiesByParameters(Querys.getMatriculasNoState, new String[]{}, new Object[]{});
+            //matriculaList = services.getListEntitiesByParameters(Querys.getMatriculasNoState, new String[]{}, new Object[]{});
             colegio = (Colegio) services.getEntity(Colegio.class, uSession.getIdColegio());
             rol = (Rol) services.getEntityByParameters(Querys.getRolById, new String[]{"rolId"}, new Object[]{new Long(3)});
             estudiantesList = new PersonasByRolLazy(colegio, rol);
-            matriculaList = services.getListEntitiesByParameters(Querys.getMatriculasNoState, new String[]{}, new Object[]{});
+            matriculas = new MatriculasLazy(colegio);
             asignacionesCursosList = services.getListEntitiesByParameters(Querys.getAsignacionesCursoList, new String[]{"colegio"}, new Object[]{colegio});
         }catch(Exception e){
             e.printStackTrace();
@@ -107,7 +109,6 @@ public class Matricular implements Serializable{
     public void guardarNuevo(){
         try{            
             if(services.saveEntity(matricula)!=null){
-                matriculaList.add(matricula);
                 JsfUti.messageInfo(null, "Info", "Se creó la matrícula satisfactoriamente");
             }
             else
@@ -167,14 +168,6 @@ public class Matricular implements Serializable{
         this.matricula = matricula;
     }
 
-    public List<Matricula> getMatriculaList() {
-        return matriculaList;
-    }
-
-    public void setMatriculaList(List<Matricula> matriculaList) {
-        this.matriculaList = matriculaList;
-    }
-
     public PersonasByRolLazy getEstudiantesList() {
         return estudiantesList;
     }
@@ -229,6 +222,14 @@ public class Matricular implements Serializable{
 
     public void setParalelo(Paralelo paralelo) {
         this.paralelo = paralelo;
+    }
+
+    public MatriculasLazy getMatriculas() {
+        return matriculas;
+    }
+
+    public void setMatriculas(MatriculasLazy matriculas) {
+        this.matriculas = matriculas;
     }
     
 }

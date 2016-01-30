@@ -27,17 +27,15 @@ public class EstudiantesLazy extends BaseLazyDataModel<Estudiante> {
     @Override
     public void criteriaFilterSetup(Criteria crit, Map<String, Object> filters) throws Exception {
         
-        if (filters.containsKey("persona.cedula")) {
-            crit.createCriteria("persona").add(Restrictions.ilike("cedula", "%"+ filters.get("persona.cedula").toString().trim() +"%" ));
-        }
-        if (filters.containsKey("persona.nombres")) {
-            crit.createCriteria("persona").add(Restrictions.ilike("nombres", "%"+ filters.get("persona.nombres").toString().trim() +"%" ));
-        }
-        if (filters.containsKey("persona.apellidos")) {
-            crit.createCriteria("persona").add(Restrictions.ilike("apellidos", "%"+ filters.get("persona.apellidos").toString().trim() +"%" ));
-        }
+        Criteria c = crit.createCriteria("persona");
         
-        crit.createCriteria("persona").add(Restrictions.eq("colegio", colegio));
+        if (filters.containsKey("persona.nombres"))
+            c.add(Restrictions.ilike("nombres", "%"+  filters.get("persona.nombres").toString().trim() +"%" ));
+        if (filters.containsKey("persona.cedula"))
+            c.add(Restrictions.ilike("cedula", "%"+  filters.get("persona.cedula").toString().trim() +"%" ));
+        if (filters.containsKey("persona.apellidos"))
+            c.add(Restrictions.ilike("apellidos", "%"+  filters.get("persona.apellidos").toString().trim() +"%" ));
+        c.add(Restrictions.eq("colegio", colegio));
     }
     
 }

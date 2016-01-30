@@ -37,8 +37,6 @@ import org.hibernate.annotations.FilterDef;
  */
 @Entity
 @Table(name = "persona", schema = "usuarios")
-@FilterDef(name = "activos", 
-    defaultCondition = "estado = 'TRUE'")
 @NamedQueries({
     @NamedQuery(name = "Persona.findAll", query = "SELECT p FROM Persona p")})
 public class Persona implements Serializable {
