@@ -26,6 +26,7 @@ public class Querys {
     public static String getAsignacionesCursoList = "select e from AsignacionCurso e where e.estado = TRUE and e.colegio = :colegio";
     public static String getAsignacionesCursoListByColegioIdNoState = "select e from AsignacionCurso e where e.colegio = :colegio";
     public static String getAsignacionesProfesorList = "select e from AsignacionProfesor e where e.estado = TRUE";
+    public static String getAsignacionesProfesorListByIdProfesor = "select e from AsignacionProfesor e where e.estado = TRUE and e.profesor = :idProf";
     public static String getAsignacionesProfesorByAsignacionCursoAndParaleloList = "select e from AsignacionProfesor e where e.asignacionCurso = :asigCurso and e.paralelo = :paralelo";
     public static String getAsignacionesProfesorListByProfesorId = "select e from AsignacionProfesor e where e.estado = TRUE and e.profesor = :profesor";
     public static String getAsignacionProfesorByProfesorAndAsigCurso = "select e from AsignacionProfesor e where e.estado = TRUE and e.profesor = :profesor and e.asignacionCurso = :asigCur";

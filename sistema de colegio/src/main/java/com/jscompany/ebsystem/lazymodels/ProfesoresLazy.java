@@ -28,13 +28,14 @@ public class ProfesoresLazy extends BaseLazyDataModel<Profesor> {
     public void criteriaFilterSetup(Criteria crit, Map<String, Object> filters) throws Exception {
         
         Criteria c = crit.createCriteria("persona");
-        
+        /*
         if (filters.containsKey("persona.nombres"))
             c.add(Restrictions.ilike("nombres", "%"+  filters.get("persona.nombres").toString().trim() +"%" ));
         if (filters.containsKey("persona.cedula"))
             c.add(Restrictions.ilike("cedula", "%"+  filters.get("persona.cedula").toString().trim() +"%" ));
         if (filters.containsKey("persona.apellidos"))
             c.add(Restrictions.ilike("apellidos", "%"+  filters.get("persona.apellidos").toString().trim() +"%" ));
+                */
         c.add(Restrictions.eq("colegio", colegio));
         
     }

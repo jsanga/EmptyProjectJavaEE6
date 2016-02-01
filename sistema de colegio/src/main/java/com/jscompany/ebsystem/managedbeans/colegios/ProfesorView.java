@@ -11,7 +11,9 @@ import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import com.jscompany.ebsystem.entidades.usuarios.Profesor;
 import com.jscompany.ebsystem.entidades.usuarios.Rol;
 import com.jscompany.ebsystem.lazymodels.PersonasByRolLazy;
+import com.jscompany.ebsystem.lazymodels.ProfesoresLazy;
 import com.jscompany.ebsystem.managedbeans.session.UserSession;
+import com.jscompany.ebsystem.managedbeans.session.UtilSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
 import java.io.Serializable;
@@ -39,6 +41,9 @@ public class ProfesorView implements Serializable{
     @ManagedProperty(value = "#{userSession}")
     private UserSession uSession;
     
+    @ManagedProperty (value = "#{utilSession}")
+    private UtilSession utilSession;
+    
     private Profesor profesor;
     private List<Profesor> profesorList;
     private Persona persona;
@@ -48,16 +53,27 @@ public class ProfesorView implements Serializable{
     private Colegio colegio;
     private String cedula;
     private Rol rol;
+    private ProfesoresLazy profesores;
     
     @PostConstruct
     public void init(){
-        if(!uSession.getIsLogged())
-            return;
-        colegio = (Colegio) services.getEntity(Colegio.class, uSession.getIdColegio());
-        rol = (Rol) services.getEntityByParameters(Querys.getRolById, new String[]{"rolId"}, new Object[]{new Long(2)});
-        personasList = new PersonasByRolLazy(colegio, rol);
-        colegios = services.getListEntitiesByParameters(Querys.getColegiosList, new String[]{}, new Object[]{});
-        
+        try{
+            if(!uSession.getIsLogged())
+                return;
+            colegio = (Colegio) services.getEntity(Colegio.class, uSession.getIdColegio());
+            rol = (Rol) services.getEntityByParameters(Querys.getRolById, new String[]{"rolId"}, new Object[]{new Long(2)});
+            //personasList = new PersonasByRolLazy(colegio, rol);
+            profesores = new ProfesoresLazy(colegio);
+            colegios = services.getListEntitiesByParameters(Querys.getColegiosList, new String[]{}, new Object[]{});
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void masInfo(Profesor prof){
+        JsfUti.redirectNewTab("/colegionetworksystem/faces/admin/profesores/masInfoProf.xhtml");
+        utilSession.instanciarParametros();
+        utilSession.agregarParametro("idProfesor", prof.getId());
     }
     
     public void buscarPersona(){
@@ -82,14 +98,13 @@ public class ProfesorView implements Serializable{
     
     }
     
-    public void editarProfesor(Persona prof){
-        persona = prof;
+    public void editarProfesor(Profesor prof){
+        persona = prof.getPersona();
     }
     
-    public void eliminarProfesor(Persona est){
-        est.setRol(null);
-        services.updateAndPersistEntity(est);
-        personasList = new PersonasByRolLazy(colegio, rol);
+    public void eliminarProfesor(Profesor prof){
+        prof.getPersona().setRol(null);
+        services.updateAndPersistEntity(prof.getPersona());
         JsfUti.messageInfo(null, "Info", "La persona ya no es profesor de la instituciòn.");
     }
     
@@ -202,6 +217,22 @@ public class ProfesorView implements Serializable{
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    public ProfesoresLazy getProfesores() {
+        return profesores;
+    }
+
+    public void setProfesores(ProfesoresLazy profesores) {
+        this.profesores = profesores;
+    }
+
+    public UtilSession getUtilSession() {
+        return utilSession;
+    }
+
+    public void setUtilSession(UtilSession utilSession) {
+        this.utilSession = utilSession;
     }
     
 }

@@ -5,34 +5,33 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <title>Estudiantes</title>
+        <title>Profesores</title>
     </h:head>
     <h:body>
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
             <p:commandButton value="Ingresar Profesor" update="dlgForm" actionListener="#{profesorView.nuevoProfesor()}" onclick="PF('dlgCrear').show()"/>
             <center>
-                <p:dataTable id="dtEstudiantesList" value="#{profesorView.personasList}" emptyMessage="No tiene datos" style="width: 80%;" var="persona">
-                    <p:column headerText="Cédula" filterBy="#{persona.cedula}">
-                        <h:outputText value="#{persona.cedula}" style="text-transform: uppercase;"/>
+                <p:dataTable id="dtEstudiantesList" value="#{profesorView.profesores}" lazy="true" rows="5" paginator="true"
+                             emptyMessage="No tiene datos" style="width: 80%;" var="prof">
+                    <p:column headerText="Cédula" filterBy="#{prof.persona.cedula}">
+                        <h:outputText value="#{prof.persona.cedula}" style="text-transform: uppercase;"/>
                     </p:column>
-                    <p:column headerText="Nombres" filterBy="#{persona.nombres}">
-                        <h:outputText value="#{persona.nombres}" style="text-transform: uppercase;"/>
+                    <p:column headerText="Nombres" filterBy="#{prof.persona.nombres}">
+                        <h:outputText value="#{prof.persona.nombres}" style="text-transform: uppercase;"/>
                     </p:column>
-                    <p:column headerText="Apellidos" filterBy="#{persona.apellidos}">
-                        <h:outputText value="#{persona.apellidos}" style="text-transform: uppercase;"/>
-                    </p:column>
-                    <p:column headerText="Colegio" filterBy="#{persona.colegio.nombre}">
-                        <h:outputText value="#{persona.colegio.nombre}" style="text-transform: uppercase;"/>
+                    <p:column headerText="Apellidos" filterBy="#{prof.persona.apellidos}">
+                        <h:outputText value="#{prof.persona.apellidos}" style="text-transform: uppercase;"/>
                     </p:column>
                     <p:column headerText="Estado">
-                        <h:outputText value="Activo" rendered="#{persona.estado}" style="text-transform: uppercase;"/>
-                        <h:outputText value="Inactivo" rendered="#{!persona.estado}" style="text-transform: uppercase;"/>
+                        <h:outputText value="Activo" rendered="#{prof.persona.estado}" style="text-transform: uppercase;"/>
+                        <h:outputText value="Inactivo" rendered="#{!prof.persona.estado}" style="text-transform: uppercase;"/>
                     </p:column>
                     <p:column headerText="Acción">
                         <center>
-                            <p:commandButton value="Editar" actionListener="#{profesorView.editarProfesor(persona)}" onclick="PF('dlgEditar').show()" update="dlgFormEdit"/>
-                            <p:commandButton value="Eliminar" actionListener="#{profesorView.eliminarProfesor(persona)}" update="dtEstudiantesList"/>
+                            <p:commandButton value="Más información" actionListener="#{profesorView.masInfo(prof)}"/>
+                            <p:commandButton value="Editar" actionListener="#{profesorView.editarProfesor(prof)}" onclick="PF('dlgEditar').show()" update="dlgFormEdit"/>
+                            <p:commandButton value="Eliminar" actionListener="#{profesorView.eliminarProfesor(prof)}" update="dtEstudiantesList"/>
                         </center>
                     </p:column>
                 </p:dataTable>

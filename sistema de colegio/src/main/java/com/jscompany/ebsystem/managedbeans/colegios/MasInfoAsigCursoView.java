@@ -7,13 +7,16 @@ package com.jscompany.ebsystem.managedbeans.colegios;
 
 import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
+import com.jscompany.ebsystem.entidades.colegios.AsignacionCursoMaterias;
+import com.jscompany.ebsystem.entidades.colegios.AsignacionCursoParalelos;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
+import com.jscompany.ebsystem.entidades.colegios.Paralelo;
 import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.managedbeans.session.UtilSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
@@ -41,6 +44,9 @@ public class MasInfoAsigCursoView implements Serializable{
     
     private AsignacionCurso ac;
     private Long idAsigCurso;
+    private List<AsignacionCursoMaterias> materias;
+    private Paralelo par;
+    private List<AsignacionCursoParalelos> parList;
     
     @PostConstruct
     public void init(){
@@ -55,6 +61,14 @@ public class MasInfoAsigCursoView implements Serializable{
             }
             utilSession.borrarDatos();
             ac = (AsignacionCurso) services.getEntity(AsignacionCurso.class, idAsigCurso);
+            parList = (List<AsignacionCursoParalelos>)ac.getAsignacionCursoParalelosCollection();
+            if(parList==null || parList.isEmpty()){
+                return;
+            }
+            par = parList.get(0).getParalelo();
+            materias = services.getListEntitiesByParameters(Querys.getAsigCursoMateriasByByAsigCursoAndParalelo, new String[]{"paralelo", "asigCur"}, new Object[]{par, ac});
+            parList = null;
+            par = null;
         }catch(Exception e){
             e.printStackTrace();
         }
