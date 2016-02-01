@@ -77,21 +77,33 @@ public class EstudianteView implements Serializable{
         
         try{
             personaTemp = (Persona) services.getEntityByParameters(Querys.getPersonaByCedula, new String[]{"cedula"}, new Object[]{cedula});
-            if(persona.equals(personaTemp)){
-                personaTemp = null;
-                JsfUti.messageError(null, "Error", "No se puede agregar a sí mismo.");
+            if(personaTemp == null){
+                JsfUti.messageError(null, "Error", "No se encontró ninguna persona.");
                 return;
+            }else{
+                if(personaTemp.getRol() != null ){
+                    if(personaTemp.getRol().equals(rol)){
+                        JsfUti.messageError(null, "Error", "La persona encontrada ya tiene el rol de estudiante.");
+                    }else{
+                        JsfUti.messageInfo(null, "Info", "La persona encontrada tiene ya asignado un rol.");
+                        personasEncontradasList.add(personaTemp);
+                    }
+                }else{
+                    personasEncontradasList.add(personaTemp);
+                    JsfUti.messageInfo(null, "Info", "Se encontró la persona.");
+                }
             }
-            if(persona != null){
-                personasEncontradasList.add(personaTemp);
-                JsfUti.messageInfo(null, "Info", "Se encontró la persona.");
-            }
-            else
-                JsfUti.messageError(null, "Error", "No se encontró a la persona.");
         }catch(Exception e){
             e.printStackTrace();
         }
         
+    }
+    
+    public void asignarRolEst(){
+        personaTemp.setRol(rol);
+        services.updateAndPersistEntity(personaTemp);
+        JsfUti.messageInfo(null, "Info", "Se le asignó el rol de estudiante a "+personaTemp.getNombres().toUpperCase()+" "+personaTemp.getApellidos().toUpperCase()+".");
+        personaTemp = null;
     }
     
     public void nuevoEstudiante(){
@@ -276,6 +288,14 @@ public class EstudianteView implements Serializable{
 
     public void setuSession(UserSession uSession) {
         this.uSession = uSession;
+    }
+
+    public Persona getPersonaTemp() {
+        return personaTemp;
+    }
+
+    public void setPersonaTemp(Persona personaTemp) {
+        this.personaTemp = personaTemp;
     }
     
 }

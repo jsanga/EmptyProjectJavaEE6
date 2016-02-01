@@ -109,6 +109,12 @@ public class Matricular implements Serializable{
         }
     }
     
+    public void masInfo(Matricula mat){
+        JsfUti.redirectNewTab("/colegionetworksystem/faces/admin/estudiantes/masInfoMatricula.xhtml");
+        utilSession.instanciarParametros();
+        utilSession.agregarParametro("idMatricula", mat.getId());
+    }
+    
     public void guardarNuevo(){
         try{            
             if(services.saveEntity(matricula)!=null){

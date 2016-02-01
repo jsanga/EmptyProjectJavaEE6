@@ -30,6 +30,7 @@
                     </p:column>
                     <p:column headerText="Acción">
                         <center>
+                            <p:commandButton value="Más información" actionListener="#{matricular.masInfo(matricula)}" />
                             <p:commandButton value="Editar" actionListener="#{matricular.editarMatricula(matricula)}" onclick="PF('dlgEditar').show()" update="dlgFormEdit"/>
                             <p:commandButton value="Eliminar" rendered="#{matricula.estado}" actionListener="#{matricular.eliminarMatricula(matricula)}" update="dtMatriculas"/>
                             <p:commandButton value="Habilitar" rendered="#{!matricula.estado}" actionListener="#{matricular.habilitarMatricula(matricula)}" update="dtMatriculas"/>

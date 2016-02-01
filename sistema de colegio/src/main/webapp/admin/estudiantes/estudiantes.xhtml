@@ -64,7 +64,7 @@
                         <h:outputText value="No tiene" rendered="#{persona.rol==null}" style="text-transform: uppercase;"/>
                     </p:column>
                     <p:column headerText="Acción">
-                        <p:commandButton value="Seleccionar" disabled="#{!persona.estado}" update="dlgForm" actionListener="#{estudianteView.ingresarEstudiante(persona)}" style="text-transform: uppercase;"/>
+                        <p:commandButton value="Seleccionar" disabled="#{!persona.estado}" update="dlgForm" onclick="PF('dlgConfirm').show()" oncomplete="PF('dlgCrear').hide()" actionListener="#{estudianteView.setPersonaTemp(persona)}" style="text-transform: uppercase;"/>
                     </p:column>
                 </p:dataTable>
                     
@@ -124,6 +124,18 @@
                     </p:tab>
                 </p:tabView>
                 
+            </h:form>
+        </p:dialog>
+        
+        <p:dialog header="Confirmación" id="dlgConfirm" widgetVar="dlgConfirm" modal="true" height="auto" width="auto" resizable="false">  
+            <h:form id="dlgFrmConfirm" >
+                <h:outputText value="Está seguro de que desea asignarle el rol de estudiante?"/>
+                <h:panelGroup>
+                    <center>
+                        <p:commandButton value="Sí" actionListener="#{estudianteView.asignarRolEst}" oncomplete="PF('dlgConfirm').hide()" />
+                        <p:commandButton value="No" onclick="PF('dlgConfirm').hide()"/>
+                    </center>
+                </h:panelGroup>
             </h:form>
         </p:dialog>
     </h:body>

@@ -45,6 +45,7 @@ public class Querys {
     public static String getAsigCursoParalelos = "select e from AsignacionCursoParalelos e where e.estado = TRUE AND e.asignacionCurso = :asigCurso";
     public static String getAsigCursoParalelosByAsigCursoAndParaleloNoState = "select e from AsignacionCursoParalelos e where e.asignacionCurso = :asigCurso and e.paralelo = :idParalelo";
     public static String getAsigCursoMateriasByByAsigProfAndAsigCurso = "Select e from AsignacionCursoMaterias e where e.asignacionProfesor = :asigProf and e.asignacionCurso = :asigCur";
+    public static String getAsigCursoMateriasByByAsigCursoAndParalelo = "Select e from AsignacionCursoMaterias e where e.paralelo = :paralelo and e.asignacionCurso = :asigCur and e.estado = TRUE";
     //public static String getAsigProfParaleloByAsigProf = "Select e from AsignacionProfesorMaterias e where e.asignacionProfesor = :asigProf";
 
     
