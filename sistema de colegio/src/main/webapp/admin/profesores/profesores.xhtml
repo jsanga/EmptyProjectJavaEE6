@@ -38,7 +38,7 @@
             </center>
         </h:form>
         
-        <p:dialog header="Crear Estudiante" id="dlgCrear" widgetVar="dlgCrear" modal="true" height="auto" width="auto" resizable="false">  
+        <p:dialog header="Crear Profesor" id="dlgCrear" widgetVar="dlgCrear" modal="true" height="auto" width="auto" resizable="false">  
             <h:form id="dlgForm" >
                 <p:panelGrid columns="3">
                     <h:outputText value="Cédula:"/>
@@ -69,7 +69,7 @@
             </h:form>
         </p:dialog>
         
-        <p:dialog header="Editar Estudiante" id="dlgEditar" widgetVar="dlgEditar" modal="true" height="auto" width="auto" resizable="false">  
+        <p:dialog header="Editar Profesor" id="dlgEditar" widgetVar="dlgEditar" modal="true" height="auto" width="auto" resizable="false">  
             <h:form id="dlgFormEdit" >
                 <p:panelGrid columns="2">
                     <h:outputText value="Nombres:"/>
@@ -80,11 +80,6 @@
                     <p:inputText value="#{profesorView.persona.direccion}" style="text-transform: uppercase;"/>
                     <h:outputText value="Fecha de Nacimiento:"/>
                     <p:calendar value="#{profesorView.persona.fechaNacimiento}" navigator="true"/>
-                    <h:outputText value="Colegio:"/>
-                    <p:selectOneMenu value="#{profesorView.colegio}" converter="colegioConverter" style="width: 180px;">
-                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
-                        <f:selectItems value="#{profesorView.colegios}" var="col" itemValue="#{col}" itemLabel="#{col.nombre}"/>
-                    </p:selectOneMenu>
                 </p:panelGrid>
                 
                 <center><p:commandButton value="Terminar Edición" actionListener="#{profesorView.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain"/></center>

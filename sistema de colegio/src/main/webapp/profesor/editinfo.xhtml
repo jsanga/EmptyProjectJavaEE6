@@ -1,0 +1,172 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="frmMain">
+            <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+            <p:tabView id="tabMain">
+                <p:tab title="Datos Personales">
+                    <center>
+                        <p:panelGrid columns="2">
+                            <h:outputText value="Cédula"/>
+                            <p:inputText value="#{editInfoProfesorView.person.cedula}"/>
+                            <h:outputText value="Nombres"/>
+                            <p:inputText value="#{editInfoProfesorView.person.nombres}"/>
+                            <h:outputText value="Apellidos"/>
+                            <p:inputText value="#{editInfoProfesorView.person.apellidos}"/>
+                            <h:outputText value="Dirección"/>
+                            <p:inputText value="#{editInfoProfesorView.person.direccion}"/>
+                            <h:outputText value="Fecha de Nacimiento"/>
+                            <p:calendar value="#{editInfoProfesorView.person.fechaNacimiento}"/>
+                            <h:outputText value="Sexo"/>
+                            <p:selectOneMenu value="#{editInfoProfesorView.person.sexo}" style="width: 180px;">
+                                <f:selectItem itemLabel="Seleccionar" itemValue="" />
+                                <f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+                                <f:selectItem itemLabel="Femenino" itemValue="Femenino" />
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                    </center>
+                </p:tab>
+                
+                <!-- -->
+                
+                <p:tab title="Datos loguin">
+                    <center>
+                        <p:panelGrid columns="2">
+                            <h:outputText value="Username:"/>
+                            <p:inputText value="#{editInfoProfesorView.loguin.username}"/>
+                            <h:outputText value="Contraseña:"/>
+                            <p:inputText value="#{editInfoProfesorView.loguin.pass}" rendered="#{editInfoProfesorView.mostrarPass}"/>
+                            <p:inputText value="******" rendered="#{!editInfoProfesorView.mostrarPass}"/>
+                        </p:panelGrid>
+                        <p:commandButton value="Cambiar contraseña" onclick="PF('dlgChange').show()"/>
+                    </center>
+                </p:tab>
+                
+                <!-- -->
+                
+                <p:tab title="Correo electrónico">
+                    <center>
+                        <p:panelGrid columns="3">
+                            <h:outputText value="Correo nuevo:"/>
+                            <p:inputText value="#{editInfoProfesorView.pemail.email}"/>
+                            <p:commandButton value="Agregar" actionListener="#{editInfoProfesorView.agregarEmail()}" update="frmMain"/>
+                        </p:panelGrid>
+                        <p:dataTable value="#{editInfoProfesorView.pemailList}"
+                                     rows="10" paginator="true" var="email" >
+                            <p:column headerText="Email">
+                                <h:outputText value="#{email.email}"/>
+                            </p:column>
+                            <p:column headerText="Estado">
+                                <h:outputText value="Activo" rendered="#{email.estado}"/>
+                                <h:outputText value="Inactivo" rendered="#{!email.estado}"/>
+                            </p:column>
+                            <p:column headerText="Acción">
+                                <p:commandButton value="Editar" onclick="PF('dlgEmail').show()" update=":dlgFrmEmail" actionListener="#{editInfoProfesorView.setPemailedit(email)}" />
+                                <p:commandButton value="Eliminar" rendered="#{email.estado}"/>
+                                <p:commandButton value="Habilitar" rendered="#{!email.estado}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </center>
+                </p:tab>
+                
+                <!-- -->
+                
+                <p:tab title="Teléfono">
+                    <center>
+                        <p:panelGrid columns="3">
+                            <h:outputText value="Teléfono nuevo:"/>
+                            <p:inputText value="#{editInfoProfesorView.ptelf.telefono}"/>
+                            <p:commandButton value="Agregar" actionListener="#{editInfoProfesorView.agregarTelefono()}" update="frmMain"/>
+                        </p:panelGrid>
+                        <p:dataTable value="#{editInfoProfesorView.ptelfList}"
+                                     rows="10" paginator="true" var="telf" >
+                            <p:column headerText="Email">
+                                <h:outputText value="#{telf.telefono}"/>
+                            </p:column>
+                            <p:column headerText="Estado">
+                                <h:outputText value="Activo" rendered="#{telf.estado}"/>
+                                <h:outputText value="Inactivo" rendered="#{!telf.estado}"/>
+                            </p:column>
+                            <p:column headerText="Acción">
+                                <p:commandButton value="Editar" onclick="PF('dlgTlf').show()" update=":dlgFrmTlf" actionListener="#{editInfoProfesorView.setPtelfedit(telf)}"/>
+                                <p:commandButton value="Eliminar" rendered="#{telf.estado}"/>
+                                <p:commandButton value="Habilitar" rendered="#{!telf.estado}"/>
+                            </p:column>
+                        </p:dataTable>
+                        
+                    </center>
+                </p:tab>
+                
+            </p:tabView>
+            
+        </h:form>
+        
+        <!-- -->
+        
+        <p:dialog header="Confirmación" id="dlgConfirm" widgetVar="dlgConfirm" modal="true" height="auto" width="auto" resizable="false">  
+            <h:form id="dlgFrmConfirm" >
+                <h:outputText value="Está seguro de que desea modificar el curso?"/>
+                <h:panelGroup>
+                    <center>
+                        <p:commandButton value="Sí" oncomplete="PF('dlgConfirm').hide()" />
+                        <p:commandButton value="No" onclick="PF('dlgConfirm').hide()"/>
+                    </center>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+        
+        <!-- -->
+        
+        <p:dialog header="Cambio de contraseña" id="dlgChange" widgetVar="dlgChange" modal="true" height="auto" width="auto" resizable="false">  
+            <h:form id="dlgFrmChange" >
+                <center>
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Ingrese la nueva contraseña:"/>
+                        <p:inputText value="#{editInfoProfesorView.pass1}"/>
+                        <h:outputText value="Reingrese la contraseña:"/>
+                        <p:inputText value="#{editInfoProfesorView.pass2}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="Guardar cambios" actionListener="#{editInfoProfesorView.cambiarPassword()}" update=":frmMain" onclick="PF('dlgChange').hide()"/>
+                </center>
+            </h:form>
+        </p:dialog>
+        
+        <!-- -->
+        
+        <p:dialog header="Edición de email" id="dlgEmail" widgetVar="dlgEmail" modal="true" height="auto" width="auto" resizable="false">  
+            <h:form id="dlgFrmEmail" >
+                <center>
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Ingrese el email:"/>
+                        <p:inputText value="#{editInfoProfesorView.pemailedit.email}"/>
+                        
+                    </p:panelGrid>
+                    <p:commandButton value="Guardar cambios" actionListener="#{editInfoProfesorView.cambiarEmail()}" update=":frmMain" onclick="PF('dlgEmail').hide()"/>
+                </center>
+            </h:form>
+        </p:dialog>
+        
+        <!-- -->
+        
+        <p:dialog header="Edición de teléfono" id="dlgTlf" widgetVar="dlgTlf" modal="true" height="auto" width="auto" resizable="false">  
+            <h:form id="dlgFrmTlf" >
+                <center>
+                    <p:panelGrid columns="2">
+                        <h:outputText value="Ingrese el teléfono:"/>
+                        <p:inputText value="#{editInfoProfesorView.ptelfedit.telefono}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="Guardar cambios" actionListener="#{editInfoProfesorView.cambiarTelefono()}" update=":frmMain" onclick="PF('dlgTlf').hide()"/>
+                </center>
+            </h:form>
+        </p:dialog>
+        
+    </h:body>
+</html>
+

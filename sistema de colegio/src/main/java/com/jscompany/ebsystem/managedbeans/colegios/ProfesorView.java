@@ -12,6 +12,7 @@ import com.jscompany.ebsystem.entidades.usuarios.Profesor;
 import com.jscompany.ebsystem.entidades.usuarios.Rol;
 import com.jscompany.ebsystem.lazymodels.PersonasByRolLazy;
 import com.jscompany.ebsystem.lazymodels.ProfesoresLazy;
+import com.jscompany.ebsystem.managedbeans.Login;
 import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.managedbeans.session.UtilSession;
 import com.jscompany.ebsystem.services.AclService;
@@ -95,7 +96,7 @@ public class ProfesorView implements Serializable{
     }
     
     public void nuevoProfesor(){
-    
+        
     }
     
     public void editarProfesor(Profesor prof){
