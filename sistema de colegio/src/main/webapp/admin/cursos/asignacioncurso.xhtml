@@ -45,12 +45,24 @@
             <h:form id="dlgForm" >
                 <p:tabView>
                     <p:tab title="Asignacion">
+                        <p:dataTable value="#{asignacionCursoView.cursos}" rows="5" lazy="true"
+                                     selectionMode="single" selection="#{asignacionCursoView.curso}" rowKey="#{curso.id}"
+                                    paginator="true" var="curso" style="width: 450px;">
+                            <f:facet name="header">
+                                Cursos
+                            </f:facet>
+                            <p:ajax event="rowSelect" listener="#{asignacionCursoView.onRowSelectCurso}" update="dlgForm" />
+                            <p:column headerText="Nombre" filterBy="#{curso.nombre}" >
+                                <h:outputText value="#{curso.nombre}" style="text-transform: uppercase;"/>
+                            </p:column>
+                            <p:column headerText="Especializacion" filterBy="#{curso.especializacion}" >
+                                <h:outputText value="#{curso.especializacion}" style="text-transform: uppercase;"/>
+                            </p:column>
+                        </p:dataTable>
+                        
+                    </p:tab>
+                    <p:tab title="Detalles">
                         <p:panelGrid columns="2">
-                            <h:outputText value="Curso:"/>
-                            <p:selectOneMenu value="#{asignacionCursoView.asignacion.curso}"  converter="cursoConverter" style="width: 180px;">
-                                <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
-                                <f:selectItems value="#{asignacionCursoView.cursosList}" var="col1" itemValue="#{col1}" itemLabel="#{col1.nombre} #{col1.especializacion}"/>
-                            </p:selectOneMenu>
                             <h:outputText value="Periodo lectivo:"/>
                             <p:selectOneMenu value="#{asignacionCursoView.asignacion.periodoLectivo}" converter="periodoConverter" style="width: 180px;">
                                 <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
@@ -98,12 +110,24 @@
             <h:form id="dlgFormEdit" >
                 <p:tabView>
                     <p:tab title="Asignacion">
+                        <p:dataTable value="#{asignacionCursoView.cursos}" rows="5" lazy="true"
+                                     selectionMode="single" selection="#{asignacionCursoView.curso}" rowKey="#{curso.id}"
+                                    paginator="true" var="curso" style="width: 450px;">
+                            <f:facet name="header">
+                                Cursos
+                            </f:facet>
+                            <p:ajax event="rowSelect" listener="#{asignacionCursoView.onRowSelectCurso}" update="dlgForm" />
+                            <p:column headerText="Nombre" filterBy="#{curso.nombre}" >
+                                <h:outputText value="#{curso.nombre}" style="text-transform: uppercase;"/>
+                            </p:column>
+                            <p:column headerText="Especializacion" filterBy="#{curso.especializacion}" >
+                                <h:outputText value="#{curso.especializacion}" style="text-transform: uppercase;"/>
+                            </p:column>
+                        </p:dataTable>
+                        
+                    </p:tab>
+                    <p:tab title="Detalles">
                         <p:panelGrid columns="2">
-                            <h:outputText value="Curso:"/>
-                            <p:selectOneMenu value="#{asignacionCursoView.asignacion.curso}" converter="cursoConverter" style="width: 180px;  ">
-                                <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
-                                <f:selectItems value="#{asignacionCursoView.cursosList}" var="col1" itemValue="#{col1}" itemLabel="#{col1.nombre} #{col1.especializacion}" />
-                            </p:selectOneMenu>
                             <h:outputText value="Periodo lectivo:"/>
                             <p:selectOneMenu value="#{asignacionCursoView.asignacion.periodoLectivo}" converter="periodoConverter" style="width: 180px;">
                                 <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />

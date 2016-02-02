@@ -16,6 +16,7 @@ import com.jscompany.ebsystem.entidades.colegios.Jornada;
 import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Paralelo;
 import com.jscompany.ebsystem.entidades.colegios.PeriodoLectivo;
+import com.jscompany.ebsystem.lazymodels.CursosLazy;
 import com.jscompany.ebsystem.lazymodels.MateriasLazy;
 import com.jscompany.ebsystem.lazymodels.ParalelosLazy;
 import com.jscompany.ebsystem.managedbeans.session.UserSession;
@@ -57,7 +58,6 @@ public class AsignacionCursoView implements Serializable{
     private Colegio colegio;
     private List<Colegio> colegiosList;
     private Curso curso;
-    private List<Curso> cursosList;
     private PeriodoLectivo periodo;
     private List<PeriodoLectivo> periodosList;
     private AsignacionCurso asignacion;
@@ -67,20 +67,20 @@ public class AsignacionCursoView implements Serializable{
     private List<Paralelo> paralelosList, parListSelect;
     private MateriasLazy materias;
     private ParalelosLazy paralelos;
+    private CursosLazy cursos;
     
     @PostConstruct
     public void init(){
         if(!uSession.getIsLogged())
                 return;
         colegio = (Colegio) services.getEntity(Colegio.class, uSession.getIdColegio());
-        cursosList = services.getListEntitiesByParameters(Querys.getCursosList, new String[]{}, new Object[]{});
         periodosList =  services.getListEntitiesByParameters(Querys.getPeriodosList, new String[]{}, new Object[]{});
         asignacionesList = services.getListEntitiesByParameters(Querys.getAsignacionesCursoListByColegioIdNoState, new String[]{"colegio"}, new Object[]{colegio});
-        //materiasList = services.getListEntitiesByParameters(Querys.getMateriasList, new String[]{}, new Object[]{});
-        //paralelosList = services.getListEntitiesByParameters(Querys.getParalelosList, new String[]{}, new Object[]{});
+        
         jornadasList = services.getListEntitiesByParameters(Querys.getJornadasList, new String[]{}, new Object[]{});
         materias = new MateriasLazy();
         paralelos = new ParalelosLazy();
+        cursos = new CursosLazy();
         if(asignacionesList==null)
             asignacionesList = new ArrayList<>();
     }
@@ -94,6 +94,14 @@ public class AsignacionCursoView implements Serializable{
     
     public void agregarMaterias(AsignacionCurso ac){
         asignacion = ac;
+    }
+    
+    public void onRowSelectCurso(){
+        if(curso.getEspecializacion()!=null)
+            JsfUti.messageInfo(null, "Info", "Se seleccionó el curso: "+curso.getNombre()+" "+curso.getEspecializacion()+".");
+        else
+            JsfUti.messageInfo(null, "Info", "Se seleccionó el curso: "+curso.getNombre()+".");
+        asignacion.setCurso(curso);
     }
     
     public void editarAsignacion(AsignacionCurso ac){
@@ -186,14 +194,6 @@ public class AsignacionCursoView implements Serializable{
 
     public void setJornadasList(List<Jornada> jornadasList) {
         this.jornadasList = jornadasList;
-    }
-
-    public List<Curso> getCursosList() {
-        return cursosList;
-    }
-
-    public void setCursosList(List<Curso> cursosList) {
-        this.cursosList = cursosList;
     }
 
     public PeriodoLectivo getPeriodo() {
@@ -290,6 +290,14 @@ public class AsignacionCursoView implements Serializable{
 
     public void setParListSelect(List<Paralelo> parListSelect) {
         this.parListSelect = parListSelect;
+    }
+
+    public CursosLazy getCursos() {
+        return cursos;
+    }
+
+    public void setCursos(CursosLazy cursos) {
+        this.cursos = cursos;
     }
     
 }

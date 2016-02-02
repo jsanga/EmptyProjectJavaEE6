@@ -41,7 +41,9 @@
                                     <h:outputText value="No ha sido tomada" rendered="#{!mat.fueTomada}" style="text-transform: uppercase;"/>
                                     <h:outputText value="Ya fue tomada" rendered="#{mat.fueTomada}" style="text-transform: uppercase;"/>
                                 </p:column>
-                                
+                                <p:column headerText="Paralelo" >
+                                    <h:outputText value="#{mat.paralelo.nombre}"  style="text-transform: uppercase;"/>
+                                </p:column>
                                 <p:column headerText="Estado">
                                     <h:outputText value="Activo" rendered="#{mat.estado}" style="text-transform: uppercase;"/>
                                     <h:outputText value="Inactivo" rendered="#{!mat.estado}" style="text-transform: uppercase;"/>

@@ -126,8 +126,7 @@ public class AsignacionProfesorView implements Serializable{
     
     public void editarAsignacion(){
         try{
-            //asignacion = ap;
-            asigCurMatList = services.getListEntitiesByParameters(Querys.getAsigCursoMaterias, new String[]{"asigCurso"}, new Object[]{asignacion.getAsignacionCurso()});
+            asigCurMatList = services.getListEntitiesByParameters(Querys.getAsigCursoMateriasNoTomadasByAsigCursoAndParalelo, new String[]{"asigCurso", "paralelo"}, new Object[]{asignacion.getAsignacionCurso(), asignacion.getParalelo()});
             List<AsignacionCursoParalelos> temp2 = services.getListEntitiesByParameters(Querys.getAsigCursoParalelos, new String[]{"asigCurso"}, new Object[]{asignacion.getAsignacionCurso()});
             paralelosList = new ArrayList<>();
             
@@ -135,14 +134,6 @@ public class AsignacionProfesorView implements Serializable{
                 paralelosList.add(t.getParalelo());
             }
             materiasSeleccionadas = new ArrayList<>();
-            /*List<AsignacionCursoMaterias> materiasProf = services.getListEntitiesByParameters(Querys.getAsigCursoMateriasByByAsigProfAndAsigCurso, new String[]{"asigProf", "asigCur"}, new Object[]{asignacion, asignacion.getAsignacionCurso()});
-            if(materiasProf!=null){
-                for(AsignacionCursoMaterias temp : materiasProf){
-                    temp.setAsignacionProfesor(null);
-                    temp.setFueTomada(Boolean.FALSE);
-                    services.updateAndPersistEntity(temp);
-                }
-            }*/
             JsfUti.messageInfo(null, "Info", "Curso "+asignacion.getAsignacionCurso().getCurso().getNombre().toUpperCase()+" seleccionado.");
         }catch(Exception e){
             e.printStackTrace();
@@ -192,7 +183,7 @@ public class AsignacionProfesorView implements Serializable{
     public void onRowSelectParalelo(){
         asigCurMatList = services.getListEntitiesByParameters(Querys.getAsigCursoMateriasNoTomadasByAsigCursoAndParalelo, new String[]{"asigCurso", "paralelo"}, new Object[]{asignacion.getAsignacionCurso(), asignacion.getParalelo()});
         JsfUti.messageInfo(null, "Info", "Paralelo seleccionado.");
-        if(materiasSeleccionadas==null || materiasSeleccionadas.isEmpty()){
+        if(asigCurMatList==null || asigCurMatList.isEmpty()){
             JsfUti.messageInfo(null, "Info", "Todas las materias de este paralelo ya han sido asignadas.");
         }
     }
