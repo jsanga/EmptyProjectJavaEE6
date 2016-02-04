@@ -51,7 +51,7 @@
                 <p:tabView id="tabMain">
                     <p:tab title="Profesor">
                         <p:dataTable id="dtProfesores" value="#{asignacionProfesorView.profesoresList}" lazy="true" var="prof" rows="5" paginator="true" selectionMode="single"
-                                     selection="#{asignacionProfesorView.asignacion.profesor}" rowKey="#{prof.id}" style="width: 420px;">
+                                     selection="#{asignacionProfesorView.asignacion.profesor}" rowKey="#{prof.id}" style="width: 560px;">
                             <f:facet name="header">
                                 Selección de profesor
                             </f:facet>
@@ -72,19 +72,23 @@
                     
                     <p:tab title="Curso" id="tabCurso">
                         <p:dataTable id="dtCursos" value="#{asignacionProfesorView.asignacionesCursosList}" var="cur" rows="5" paginator="true" selectionMode="single"
-                                     selection="#{asignacionProfesorView.asignacion.asignacionCurso}" lazy="true" rowKey="#{cur.id}" style="width: 420px;">
+                                     selection="#{asignacionProfesorView.asignacion.asignacionCurso}" lazy="true" rowKey="#{cur.id}" style="width: 560px;">
                             <f:facet name="header">
                                 Cursos disponibles
                             </f:facet>
                             <p:ajax event="rowSelect" listener="#{asignacionProfesorView.onRowSelect}" update="dlgForm" />
-                            <p:column headerText="Curso" filterBy="#{cur.curso.nombre}">
+                            <p:column headerText="Curso" filterBy="#{cur.curso.nombre}" width="28%">
                                 <h:outputText value="#{cur.curso.nombre}" style="text-transform: uppercase;"/>
                             </p:column>
-                            <p:column headerText="Fecha de inicio" filterBy="#{cur.periodoLectivo.fechaInicio}">
-                                <h:outputText value="#{cur.periodoLectivo.fechaInicio}" />
+                            <p:column headerText="Especialización" filterBy="#{cur.curso.especializacion}" width="30%">
+                                <h:outputText value="#{cur.curso.especializacion}" style="text-transform: uppercase;"/>
                             </p:column>
-                            <p:column headerText="Fecha de fin" filterBy="#{cur.periodoLectivo.fechaFin}">
-                                <h:outputText value="#{cur.periodoLectivo.fechaFin}" />
+                            <p:column headerText="Periodo Lectivo" width="27%">
+                                <h:outputText value="#{cur.periodoLectivo.fechaInicio} : #{cur.periodoLectivo.fechaFin}" />
+                            </p:column>
+                            <p:column headerText="Estado" width="20%">
+                                <h:outputText value="Activo" rendered="#{cur.estado}" style="text-transform: uppercase;"/>
+                                <h:outputText value="Inactivo" rendered="#{!cur.estado}" style="text-transform: uppercase;"/>
                             </p:column>
                         </p:dataTable>
                     </p:tab>

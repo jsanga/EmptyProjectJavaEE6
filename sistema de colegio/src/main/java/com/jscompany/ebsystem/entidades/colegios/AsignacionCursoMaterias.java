@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -38,6 +39,7 @@ public class AsignacionCursoMaterias implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
+    
     @JoinColumn(name = "materia", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Materia materia;
@@ -50,6 +52,7 @@ public class AsignacionCursoMaterias implements Serializable {
     @JoinColumn(name = "paralelo", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Paralelo paralelo;
+    
 
     public AsignacionCursoMaterias() {
     }

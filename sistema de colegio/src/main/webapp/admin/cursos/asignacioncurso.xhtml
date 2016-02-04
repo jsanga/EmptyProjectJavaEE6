@@ -11,7 +11,7 @@
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
             <p:commandButton value="Crear asignación" update=":dlgForm" actionListener="#{asignacionCursoView.nuevaAsignacion()}" onclick="PF('dlgCrear').show()"/>
-            <p:dataTable id="dtAsignaciones" value="#{asignacionCursoView.asignacionesList}"
+            <p:dataTable id="dtAsignaciones" value="#{asignacionCursoView.asignacionesCursoLazy}" lazy="true"
                          rows="10" paginator="true" var="asignacion">
                 <p:column headerText="Curso" filterBy="#{asignacion.curso.nombre}" width="20%">
                     <h:outputText value="#{asignacion.curso.nombre}" style="text-transform: uppercase;"/>
@@ -19,10 +19,10 @@
                 <p:column headerText="Especialización" filterBy="#{asignacion.curso.especializacion}" width="25%">
                     <h:outputText value="#{asignacion.curso.especializacion}" style="text-transform: uppercase;"/>
                 </p:column>
-                <p:column headerText="Fecha de inicio" filterBy="#{asignacion.periodoLectivo.fechaInicio}" width="10%">
+                <p:column headerText="Fecha de inicio" width="10%">
                     <h:outputText value="#{asignacion.periodoLectivo.fechaInicio}" style="text-transform: uppercase;"/>
                 </p:column>
-                <p:column headerText="Fecha de fin" filterBy="#{asignacion.periodoLectivo.fechaFin}" width="10%">
+                <p:column headerText="Fecha de fin" width="10%">
                     <h:outputText value="#{asignacion.periodoLectivo.fechaFin}" style="text-transform: uppercase;"/>
                 </p:column>
                 <p:column headerText="Estado" width="10%">

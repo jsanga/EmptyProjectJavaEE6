@@ -162,6 +162,11 @@ public class AsignacionProfesorView implements Serializable{
     
     public void onRowSelect(){
         try{
+            if(!this.asignacion.getAsignacionCurso().getEstado()){
+                JsfUti.messageError(null, "Error", "El curso seleccionado está INACTIVO, por favor seleccione otro con estado ACTIVO.");
+                asignacion.setAsignacionCurso(null);
+                return;
+            }
             AsignacionProfesor apTemp = (AsignacionProfesor)services.getEntityByParameters(Querys.getAsignacionProfesorByProfesorAndAsigCurso, new String[]{"profesor", "asigCur"}, new Object[]{asignacion.getProfesor(), asignacion.getAsignacionCurso()});            
             if(apTemp!=null){
                 JsfUti.messageError(null, "Error", "El profesor que ha seleccionado ya ha sido asignado a este curso.");

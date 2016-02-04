@@ -99,7 +99,7 @@ public class ColegiosEjb implements ColegiosServices{
                 services.updateAndPersistEntity(temp);
             }
             
-            services.updateEntity(asignacionCurso);
+            services.updateAndPersistEntity(asignacionCurso);
                         
             for(Paralelo p : paralelos){
                 asigCP = (AsignacionCursoParalelos) services.getEntityByParameters(Querys.getAsigCursoParalelosByAsigCursoAndParaleloNoState, new String[]{"asigCurso", "idParalelo"}, new Object[]{asignacionCurso, p});

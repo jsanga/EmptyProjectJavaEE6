@@ -16,6 +16,7 @@ import com.jscompany.ebsystem.entidades.colegios.Jornada;
 import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Paralelo;
 import com.jscompany.ebsystem.entidades.colegios.PeriodoLectivo;
+import com.jscompany.ebsystem.lazymodels.AsignacionCursoLazy;
 import com.jscompany.ebsystem.lazymodels.CursosLazy;
 import com.jscompany.ebsystem.lazymodels.MateriasLazy;
 import com.jscompany.ebsystem.lazymodels.ParalelosLazy;
@@ -58,6 +59,7 @@ public class AsignacionCursoView implements Serializable{
     private Colegio colegio;
     private List<Colegio> colegiosList;
     private Curso curso;
+    private AsignacionCursoLazy asignacionesCursoLazy;
     private PeriodoLectivo periodo;
     private List<PeriodoLectivo> periodosList;
     private AsignacionCurso asignacion;
@@ -76,7 +78,7 @@ public class AsignacionCursoView implements Serializable{
         colegio = (Colegio) services.getEntity(Colegio.class, uSession.getIdColegio());
         periodosList =  services.getListEntitiesByParameters(Querys.getPeriodosList, new String[]{}, new Object[]{});
         asignacionesList = services.getListEntitiesByParameters(Querys.getAsignacionesCursoListByColegioIdNoState, new String[]{"colegio"}, new Object[]{colegio});
-        
+        asignacionesCursoLazy = new AsignacionCursoLazy(colegio);
         jornadasList = services.getListEntitiesByParameters(Querys.getJornadasList, new String[]{}, new Object[]{});
         materias = new MateriasLazy();
         paralelos = new ParalelosLazy();
@@ -162,6 +164,14 @@ public class AsignacionCursoView implements Serializable{
         }catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    public AsignacionCursoLazy getAsignacionesCursoLazy() {
+        return asignacionesCursoLazy;
+    }
+
+    public void setAsignacionesCursoLazy(AsignacionCursoLazy asignacionesCursoLazy) {
+        this.asignacionesCursoLazy = asignacionesCursoLazy;
     }
     
     public Colegio getColegio() {

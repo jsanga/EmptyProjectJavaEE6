@@ -14,6 +14,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -43,6 +45,9 @@ public class Curso implements Serializable {
     private String especializacion;
     @Column(name = "estado")
     private Boolean estado;
+    @JoinColumn(name = "nivel", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private NivelCurso nivelCurso;
     @OneToMany(mappedBy = "curso", fetch = FetchType.LAZY)
     private Collection<AsignacionCurso> asignacionCursoCollection;
 
@@ -78,6 +83,14 @@ public class Curso implements Serializable {
 
     public void setEstado(Boolean estado) {
         this.estado = estado;
+    }
+
+    public NivelCurso getNivelCurso() {
+        return nivelCurso;
+    }
+
+    public void setNivelCurso(NivelCurso nivelCurso) {
+        this.nivelCurso = nivelCurso;
     }
 
     public Collection<AsignacionCurso> getAsignacionCursoCollection() {

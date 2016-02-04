@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -38,8 +39,13 @@
                 <p:panelGrid columns="2">
                     <h:outputText value="Nombre:"/>
                     <p:inputText value="#{crudCursos.curso.nombre}" style="text-transform: uppercase;"/>
-                    <h:outputText value="Especialización"/>
+                    <h:outputText value="Especialización:"/>
                     <p:inputText placeholder="No tiene" value="#{crudCursos.curso.especializacion}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Nivel del curso:"/>
+                    <p:selectOneMenu value="#{crudCursos.curso.nivelCurso}" converter="nivelCursoConverter" style="width: 180px;">
+                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                        <f:selectItems value="#{crudCursos.nivelesList}" var="col" itemValue="#{col}" itemLabel="#{col.nombre}"/>
+                    </p:selectOneMenu>
                 </p:panelGrid>
                 <center><p:commandButton value="Guardar Colegio" actionListener="#{crudCursos.guardarNuevo()}" onclick="PF('dlgCrear').hide()" update=":frmMain"/></center>
             </h:form>
@@ -50,8 +56,13 @@
                 <p:panelGrid columns="2">
                     <h:outputText value="Nombre:"/>
                     <p:inputText value="#{crudCursos.curso.nombre}" style="text-transform: uppercase;"/>
-                    <h:outputText value="Especialización"/>
+                    <h:outputText value="Especialización:"/>
                     <p:inputText placeholder="No tiene" value="#{crudCursos.curso.especializacion}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Nivel del curso:"/>
+                    <p:selectOneMenu value="#{crudCursos.curso.nivelCurso}" converter="nivelCursoConverter" style="width: 180px;">
+                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                        <f:selectItems value="#{crudCursos.nivelesList}" var="col" itemValue="#{col}" itemLabel="#{col.nombre}"/>
+                    </p:selectOneMenu>
                 </p:panelGrid>
                 <center><p:commandButton value="Terminar Edición" actionListener="#{crudCursos.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain"/></center>
             </h:form>

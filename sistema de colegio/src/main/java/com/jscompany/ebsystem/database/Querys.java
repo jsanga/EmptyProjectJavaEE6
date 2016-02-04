@@ -53,6 +53,7 @@ public class Querys {
     // Querys de cursos
     public static String getCursosList = "select e from Curso e where e.estado = TRUE";
     public static String getCursosListNoState = "select e from Curso e";
+    public static String getNivelCursosList = "select e from NivelCurso e";
     
     // Querys de personas
     public static String getPersonaList = "select e from Persona e where e.estado = TRUE";

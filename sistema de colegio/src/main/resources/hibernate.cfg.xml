@@ -55,6 +55,7 @@
     <mapping class="com.jscompany.ebsystem.entidades.colegios.TipoCalificacion"/>
     <mapping class="com.jscompany.ebsystem.entidades.colegios.Region"/>
     <mapping class="com.jscompany.ebsystem.entidades.colegios.Jornada"/>
+    <mapping class="com.jscompany.ebsystem.entidades.colegios.NivelCurso"/>
     
     <!-- Schema Certificados -->
     <mapping class="com.jscompany.ebsystem.entidades.certificados.Certificado"/>

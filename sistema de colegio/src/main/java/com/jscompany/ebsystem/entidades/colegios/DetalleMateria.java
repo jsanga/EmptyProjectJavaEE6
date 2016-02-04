@@ -23,6 +23,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -69,7 +70,10 @@ public class DetalleMateria implements Serializable {
     @JoinColumn(name = "materia", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Materia materia;
-
+    @Size(max = 200)
+    @Column(name = "total_prom_string")
+    private String totalPromString;
+    
     public DetalleMateria() {
     }
 
@@ -155,6 +159,7 @@ public class DetalleMateria implements Serializable {
 
     public void setTotalProm(Float totalProm) {
         this.totalProm = totalProm;
+        this.setTotalPromString(this.convertirNumerosALetras(totalProm+""));
     }
 
     public Collection<DesgloseNota> getDesgloseNotaCollection() {
@@ -171,6 +176,14 @@ public class DetalleMateria implements Serializable {
 
     public void setMateria(Materia materia) {
         this.materia = materia;
+    }
+
+    public String getTotalPromString() {
+        return totalPromString;
+    }
+
+    public void setTotalPromString(String totalPromString) {
+        this.totalPromString = totalPromString;
     }
 
     @Override
@@ -214,4 +227,89 @@ public class DetalleMateria implements Serializable {
         this.estudiante = estudiante;
     }
     
+    public String convertirNumerosALetras(String num){
+    
+        final String[] SIMPLES = {"CERO", "UNO", "DOS", "TRES", "CUATRO", "CINCO", "SEIS", "SIETE", "OCHO", "NUEVE", "DIEZ", "ONCE", "DOCE", "TRECE", "CATORCE", "QUINCE"};
+        final String[] DECENAS = {"","","VEINTE", "TREINTA", "CUARENTA", "CINCUENTA", "SESENTA", "SETENTA", "OCHENTA", "NOVENTA"};
+        
+        String input = num, s="";
+        String result = "";
+        
+        if(input.length()>4){
+            for(int i=0; i<4; i++){
+                s = s + input.charAt(i);
+            }
+            input = s;
+        }
+            
+        
+        if(input.length()==4){
+            
+            if(Integer.parseInt(input.charAt(0)+"")==1 && Integer.parseInt(input.charAt(1)+"") == 0)
+                return "DIEZ";
+            
+            result = result + SIMPLES[Integer.parseInt(""+input.charAt(0))];
+            result = result + " COMA ";
+            
+            if(input.charAt(2)=='0' && Integer.parseInt(input.charAt(3)+"") > 0){
+                
+                result = result + " CERO "+SIMPLES[Integer.parseInt(""+input.charAt(2))];
+            }
+            if(input.charAt(2)=='0' && Integer.parseInt(input.charAt(3)+"") == 0){
+                
+                result = result + " CERO";
+            }
+            if(Integer.parseInt(input.charAt(2)+"") > 0)
+                result = result +  DECENAS[Integer.parseInt(""+input.charAt(2))];
+            
+            if(Integer.parseInt(input.charAt(3)+"") > 0){
+                result = result + " Y ";
+                result = result + SIMPLES[Integer.parseInt(""+input.charAt(3))];
+            }
+            
+            System.out.print(""+SIMPLES[Integer.parseInt(""+input.charAt(0))]);
+            System.out.print(" COMA ");
+            System.out.print(""+DECENAS[Integer.parseInt(""+input.charAt(2))]);
+            if(input.charAt(3)!='0'){
+                System.out.print(" Y ");
+                System.out.println(""+SIMPLES[Integer.parseInt(""+input.charAt(3))]);
+            }
+        
+        }
+        if(input.length()==3){
+            if(Integer.parseInt(input.charAt(2)+"") > 0){
+                result = result + SIMPLES[Integer.parseInt(""+input.charAt(0))];
+                result = result + " COMA ";
+                result = result + DECENAS[Integer.parseInt(""+input.charAt(2))];
+                
+                System.out.print(""+SIMPLES[Integer.parseInt(""+input.charAt(0))]);
+                System.out.print(" COMA ");
+                System.out.print(""+DECENAS[Integer.parseInt(""+input.charAt(2))]);
+            }
+            else{
+                result = result + SIMPLES[Integer.parseInt(""+input.charAt(0))];
+                result = result + " COMA CERO";
+                
+                System.out.print(""+SIMPLES[Integer.parseInt(""+input.charAt(0))]);
+                System.out.print(" COMA CERO");
+            }
+        }
+        if(input.length()==2){
+            if(input.charAt(0) == 1 && input.charAt(1) == 0){
+                result = result + "DIEZ";
+                
+                System.out.print("DIEZ");
+            }
+            
+        }
+        if(input.length()==1){
+            result = result + SIMPLES[Integer.parseInt(""+input.charAt(0))];
+            result = result + " COMA CERO";
+            
+            System.out.print(""+SIMPLES[Integer.parseInt(""+input.charAt(0))]);
+            System.out.print(" COMA CERO");
+        }
+        
+        return result;
+    }
 }

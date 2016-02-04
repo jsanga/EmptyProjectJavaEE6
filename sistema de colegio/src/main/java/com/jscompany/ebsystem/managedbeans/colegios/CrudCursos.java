@@ -7,6 +7,7 @@ package com.jscompany.ebsystem.managedbeans.colegios;
 
 import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.entidades.colegios.Curso;
+import com.jscompany.ebsystem.entidades.colegios.NivelCurso;
 import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
@@ -37,6 +38,7 @@ public class CrudCursos implements Serializable{
     
     private Curso curso;
     private List<Curso> cursosList;
+    private List<NivelCurso> nivelesList;
     
     @PostConstruct
     public void init(){
@@ -45,6 +47,7 @@ public class CrudCursos implements Serializable{
         cursosList = services.getListEntitiesByParameters(Querys.getCursosListNoState, new String[]{}, new Object[]{});
         if(cursosList == null)
             cursosList = new ArrayList();
+        nivelesList = services.getListEntitiesByParameters(Querys.getNivelCursosList, new String[]{}, new Object[]{});
     }
     
     public void nuevoCurso(){
@@ -98,6 +101,14 @@ public class CrudCursos implements Serializable{
             JsfUti.messageInfo(null, "Info", "Se editó el curso satisfactoriamente");
         else
             JsfUti.messageError(null, "Error", "Hubo un problema al editar el curso.");
+    }
+
+    public List<NivelCurso> getNivelesList() {
+        return nivelesList;
+    }
+
+    public void setNivelesList(List<NivelCurso> nivelesList) {
+        this.nivelesList = nivelesList;
     }
 
     public Curso getCurso() {

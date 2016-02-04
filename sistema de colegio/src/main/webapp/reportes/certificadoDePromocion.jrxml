@@ -2,12 +2,34 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificadoDePromocion" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="810a2e96-4b56-4256-8887-70a54b429b2c">
 	<property name="ireport.zoom" value="1.771561000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="383"/>
+	<property name="ireport.y" value="286"/>
 	<parameter name="jornada" class="java.lang.String"/>
 	<parameter name="periodoLectivo" class="java.lang.String"/>
 	<parameter name="nombreEstudiante" class="java.lang.String"/>
 	<parameter name="nombreCurso" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String"/>
+	<parameter name="idEst" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idAsigCurso" class="java.lang.Long"/>
+	<parameter name="idParalelo" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select det_mat.id, mat.nombre, det_mat.total_prom, det_mat.total_prom_string
+from colegios.materia as mat
+inner join colegios.detalle_materia as det_mat
+on mat.id = det_mat.materia
+inner join colegios.asignacion_curso_materias as acm
+on mat.id = acm.materia
+where det_mat.estudiante = $P{idEst}
+and acm.asignacion_curso = $P{idAsigCurso}
+and acm.paralelo = $P{idParalelo}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="total_prom" class="java.lang.Float"/>
+	<field name="total_prom_string" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -83,7 +105,7 @@
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="357" splitType="Stretch">
+		<band height="61" splitType="Stretch">
 			<staticText>
 				<reportElement x="336" y="19" width="146" height="20" uuid="b0413f8e-4a0e-41cf-b0a5-d065c42d345b"/>
 				<box>
@@ -95,11 +117,6 @@
 				</textElement>
 				<text><![CDATA[LETRAS]]></text>
 			</staticText>
-			<subreport>
-				<reportElement x="75" y="39" width="407" height="148" uuid="eb213b21-c136-4073-a050-51ab33e1c909"/>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "//matriculaPorEstudiante_subreport1.jasper"]]></subreportExpression>
-			</subreport>
 			<staticText>
 				<reportElement x="271" y="19" width="65" height="20" uuid="0c38962a-adec-4af5-9897-675e6298c1d8"/>
 				<box>
@@ -139,6 +156,29 @@
 				</textElement>
 				<text><![CDATA[CALIFICACIONES]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="75" y="39" width="196" height="20" uuid="b52f4edb-865d-4d7b-b0ee-2eb21d454183"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="271" y="39" width="65" height="20" uuid="68585299-9db8-4d93-b0ec-fbb4afe6dd3d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{total_prom}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="336" y="39" width="146" height="20" uuid="80a63212-3524-40b0-a71d-fd801d6c1514"/>
+				<box>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{total_prom_string}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
@@ -148,35 +188,35 @@
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="178" splitType="Stretch">
+		<band height="446" splitType="Stretch">
 			<staticText>
-				<reportElement x="295" y="80" width="211" height="20" uuid="d61f4c69-2214-4d83-940d-0d4270066d09"/>
+				<reportElement x="295" y="362" width="211" height="20" uuid="d61f4c69-2214-4d83-940d-0d4270066d09"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[LIC. TERESA LATORRE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="48" y="100" width="211" height="20" uuid="4ceade6e-93b7-41a3-9617-4ad0eb2de086"/>
+				<reportElement x="48" y="382" width="211" height="20" uuid="4ceade6e-93b7-41a3-9617-4ad0eb2de086"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Rector]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="48" y="80" width="211" height="20" uuid="f20730a8-2850-476b-9ac3-d0733bd71f1b"/>
+				<reportElement x="48" y="362" width="211" height="20" uuid="f20730a8-2850-476b-9ac3-d0733bd71f1b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[DR. ROBERTO AVALOS T.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="295" y="100" width="211" height="20" uuid="4812f47c-3eba-4216-8563-2adbf460b03e"/>
+				<reportElement x="295" y="382" width="211" height="20" uuid="4812f47c-3eba-4216-8563-2adbf460b03e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[Secretaria]]></text>
 			</staticText>
 			<line>
-				<reportElement x="48" y="78" width="211" height="1" uuid="86c3829e-46b0-4326-835c-b1eecd3fc9d4"/>
+				<reportElement x="48" y="360" width="211" height="1" uuid="86c3829e-46b0-4326-835c-b1eecd3fc9d4"/>
 			</line>
 			<line>
-				<reportElement x="295" y="79" width="211" height="1" uuid="b9756545-7a56-49ef-96fa-bbc71192e620"/>
+				<reportElement x="295" y="361" width="211" height="1" uuid="b9756545-7a56-49ef-96fa-bbc71192e620"/>
 			</line>
 			<staticText>
-				<reportElement x="0" y="0" width="555" height="20" uuid="235fa5df-64e1-4343-b331-d2fad0b45067"/>
+				<reportElement x="0" y="282" width="555" height="20" uuid="235fa5df-64e1-4343-b331-d2fad0b45067"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA["Riobamba, "+${fecha}]]></text>
 			</staticText>
