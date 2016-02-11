@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="nominaPorCurso" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="375fbd7b-ed6e-4cae-8488-360008f47a71">
+	<property name="ireport.zoom" value="1.771561000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="130"/>
+	<parameter name="periodoLectivo" class="java.lang.String"/>
+	<parameter name="fecha" class="java.lang.String"/>
+	<parameter name="nombreCurso" class="java.lang.String"/>
+	<parameter name="idAsigCur" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[select ROW_NUMBER() OVER(ORDER BY par.id DESC) AS rownum, p.nombres as nombresEst, p.apellidos as apellidosEst, par.nombre as nombreParalelo, par.id as idPar, m.id as nummat, p.cedula as cedula, p.fecha_nacimiento as fechanac, p.sexo as sexo
+
+from usuarios.persona as p
+inner join usuarios.estudiante e
+on p.id = e.persona
+inner join colegios.matricula m
+on e.id = m.estudiante
+inner join colegios.paralelo par
+on par.id = m.paralelo
+where m.asignacion_curso = $P{idAsigCur}
+order by par.id asc]]>
+	</queryString>
+	<field name="rownum" class="java.lang.Long"/>
+	<field name="nombresest" class="java.lang.String"/>
+	<field name="apellidosest" class="java.lang.String"/>
+	<field name="nombreparalelo" class="java.lang.String"/>
+	<field name="idpar" class="java.lang.Long"/>
+	<field name="nummat" class="java.lang.Long"/>
+	<field name="cedula" class="java.lang.String"/>
+	<field name="fechanac" class="java.sql.Date"/>
+	<field name="sexo" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="134" splitType="Stretch">
+			<staticText>
+				<reportElement x="65" y="0" width="412" height="30" uuid="d37d3d3e-3c70-4dcf-8e99-c5f9985124c0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIDAD EDUCATIVA "CHIMBORAZO" PCEI]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="65" y="47" width="412" height="20" uuid="b8cc9079-0931-46bb-aac7-4cf6a3ce75d5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="65" y="81" width="412" height="20" uuid="660f5cda-16f5-4e4e-b0d7-821dd2a8889c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LISTA DE ESTUDIANTES]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="15" y="114" width="100" height="20" uuid="cad1229c-393c-44bc-b401-331d7037d1a5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombreCurso}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="802" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="42" width="32" height="20" uuid="fd74f017-5444-48cb-983d-04c42e1d283a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{rownum}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="32" y="42" width="253" height="20" uuid="087df592-ce9d-499e-835f-cf057d880a81"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombresest}+" "+$F{apellidosest}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="285" y="42" width="52" height="20" uuid="50d6d511-0db5-4baa-9ef2-d388a45def8e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nummat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="337" y="42" width="87" height="20" uuid="b526f33c-874a-46aa-9e44-4bee0fa947bc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="424" y="42" width="62" height="20" uuid="3600d0ee-842e-468e-b4da-b84f0427bfa9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fechanac}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="486" y="42" width="69" height="20" uuid="fcdf126b-1576-4bc4-81f0-3d65ecf7f06d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{sexo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="15" y="11" width="100" height="20" uuid="69db4184-7bef-4e23-a1e4-9f79f498dbe4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreparalelo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

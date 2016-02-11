@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Más Info</title>
+    </h:head>
+    <h:body>
+        <h:form id="frmMain">
+            <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+            <p:panel header="Matrícula del estudiante: #{masInfoMatriculaView.est.persona.apellidos.toUpperCase()} #{masInfoMatriculaView.est.persona.nombres.toUpperCase()}">
+                <p:tabView>
+                    <p:tab title="Curso">
+                        <center>
+                            <p:panelGrid columns="2">
+                                <h:outputText value="Nombre curso:"/>
+                                <p:inputText value="#{masInfoMatriculaView.ac.curso.nombre}" style="text-transform: uppercase;" readonly="true"/>
+                                <h:outputText value="Especializaciòn:"/>
+                                <p:inputText value="#{masInfoMatriculaView.ac.curso.especializacion}" style="text-transform: uppercase;" readonly="true"/>
+                                <h:outputText value="Jornada:"/>
+                                <p:inputText value="#{masInfoMatriculaView.ac.jornada.nombreJornada}" style="text-transform: uppercase;" readonly="true"/>
+                                <h:outputText value="Fecha de inicio:"/>
+                                <p:inputText value="#{masInfoMatriculaView.ac.periodoLectivo.fechaInicio}" style="text-transform: uppercase;" readonly="true"/>
+                                <h:outputText value="Fecha de finalización:"/>
+                                <p:inputText value="#{masInfoMatriculaView.ac.periodoLectivo.fechaFin}" style="text-transform: uppercase;" readonly="true"/>
+                            </p:panelGrid>
+                        </center>
+                    </p:tab>
+                    
+                    <!-- -->
+                    
+                    <p:tab title="Materias">
+                        <center>
+                            <p:dataTable id="dtMaterias" value="#{masInfoMatriculaView.materias}" var="mat">
+                                <p:column headerText="Nombre" filterBy="#{mat.materia.nombre}">
+                                    <h:outputText value="#{mat.materia.nombre}" style="text-transform: uppercase;"/>
+                                </p:column>
+                                <p:column headerText="Asignada a profesor" >
+                                    <h:outputText value="#{mat.asignacionProfesor.profesor.persona.apellidos} #{mat.asignacionProfesor.profesor.persona.nombres}" style="text-transform: uppercase;"/>
+                                </p:column>
+                                
+                                <p:column headerText="Estado">
+                                    <h:outputText value="Activo" rendered="#{mat.estado}" style="text-transform: uppercase;"/>
+                                    <h:outputText value="Inactivo" rendered="#{!mat.estado}" style="text-transform: uppercase;"/>
+                                </p:column>
+                            </p:dataTable>
+                        </center>
+                    </p:tab>
+                    
+                    <!-- -->
+                    
+                    <p:tab title="Paralelo">
+                        <center>
+                            <p:panelGrid columns="2">
+                                <h:outputText value="Nombre paralelo:"/>
+                                <p:inputText value="#{masInfoMatriculaView.par.nombre}" style="text-transform: uppercase;" readonly="true"/>
+                                
+                            </p:panelGrid>
+                        </center>
+                    </p:tab>
+                    
+                    <!-- -->
+                    
+                    <p:tab title="Estudiante">
+                        <center>
+                            <p:panelGrid columns="2">
+                                <h:outputText value="Cédula:"/>
+                                <p:inputText value="#{masInfoMatriculaView.est.persona.cedula}" style="text-transform: uppercase;"/>
+                                <h:outputText value="Nombres:"/>
+                                <p:inputText value="#{masInfoMatriculaView.est.persona.apellidos}" style="text-transform: uppercase;" readonly="true"/>
+                                <h:outputText value="Apellidos:"/>
+                                <p:inputText value="#{masInfoMatriculaView.est.persona.nombres}" style="text-transform: uppercase;" readonly="true"/>
+                                <h:outputText value="Dirección:"/>
+                                <p:inputText value="#{masInfoMatriculaView.est.persona.direccion}" style="text-transform: uppercase;" readonly="true"/>
+                            </p:panelGrid>
+                        </center>
+                    </p:tab>
+                </p:tabView>
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>

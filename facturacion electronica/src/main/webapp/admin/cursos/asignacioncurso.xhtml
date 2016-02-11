@@ -1,0 +1,173 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form id="frmMain">
+            <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+            <p:commandButton value="Crear asignación" update=":dlgForm" actionListener="#{asignacionCursoView.nuevaAsignacion()}" onclick="PF('dlgCrear').show()"/>
+            <p:dataTable id="dtAsignaciones" value="#{asignacionCursoView.asignacionesCursoLazy}" lazy="true"
+                         rows="10" paginator="true" var="asignacion">
+                <p:column headerText="Curso" filterBy="#{asignacion.curso.nombre}" width="20%">
+                    <h:outputText value="#{asignacion.curso.nombre}" style="text-transform: uppercase;"/>
+                </p:column>
+                <p:column headerText="Especialización" filterBy="#{asignacion.curso.especializacion}" width="25%">
+                    <h:outputText value="#{asignacion.curso.especializacion}" style="text-transform: uppercase;"/>
+                </p:column>
+                <p:column headerText="Fecha de inicio" width="10%">
+                    <h:outputText value="#{asignacion.periodoLectivo.fechaInicio}" style="text-transform: uppercase;"/>
+                </p:column>
+                <p:column headerText="Fecha de fin" width="10%">
+                    <h:outputText value="#{asignacion.periodoLectivo.fechaFin}" style="text-transform: uppercase;"/>
+                </p:column>
+                <p:column headerText="Estado" width="10%">
+                    <h:outputText value="Activo" rendered="#{asignacion.estado}" style="text-transform: uppercase;"/>
+                    <h:outputText value="Inactivo" rendered="#{!asignacion.estado}" style="text-transform: uppercase;"/>
+                </p:column>
+                <p:column headerText="Acción" width="25%">
+                    <center>
+                        <p:commandButton value="Más información" actionListener="#{asignacionCursoView.masInfo(asignacion)}" />                        
+                        <p:commandButton value="Editar" actionListener="#{asignacionCursoView.editarAsignacion(asignacion)}" onclick="PF('dlgEditar').show()" update=":dlgFormEdit"/>
+                        <p:commandButton value="Eliminar" rendered="#{asignacion.estado}" actionListener="#{asignacionCursoView.eliminarAsignacion(asignacion)}" update="frmMain"/>
+                        <p:commandButton value="Habilitar" rendered="#{!asignacion.estado}" actionListener="#{asignacionCursoView.activarAsignacion(asignacion)}" update="frmMain"/>
+                    </center>
+                </p:column>
+            </p:dataTable>
+            
+            
+        </h:form>
+        <p:dialog header="Crear Asignación" id="dlgCrear" widgetVar="dlgCrear" modal="true" height="auto" width="auto" resizable="false">  
+            <h:form id="dlgForm" >
+                <p:tabView>
+                    <p:tab title="Asignacion">
+                        <p:dataTable value="#{asignacionCursoView.cursos}" rows="5" lazy="true"
+                                     selectionMode="single" selection="#{asignacionCursoView.curso}" rowKey="#{curso.id}"
+                                    paginator="true" var="curso" style="width: 450px;">
+                            <f:facet name="header">
+                                Cursos
+                            </f:facet>
+                            <p:ajax event="rowSelect" listener="#{asignacionCursoView.onRowSelectCurso}" update="dlgForm" />
+                            <p:column headerText="Nombre" filterBy="#{curso.nombre}" >
+                                <h:outputText value="#{curso.nombre}" style="text-transform: uppercase;"/>
+                            </p:column>
+                            <p:column headerText="Especializacion" filterBy="#{curso.especializacion}" >
+                                <h:outputText value="#{curso.especializacion}" style="text-transform: uppercase;"/>
+                            </p:column>
+                        </p:dataTable>
+                        
+                    </p:tab>
+                    <p:tab title="Detalles">
+                        <p:panelGrid columns="2">
+                            <h:outputText value="Periodo lectivo:"/>
+                            <p:selectOneMenu value="#{asignacionCursoView.asignacion.periodoLectivo}" converter="periodoConverter" style="width: 180px;">
+                                <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                                <f:selectItems value="#{asignacionCursoView.periodosList}" var="col2" itemValue="#{col2}" itemLabel="#{col2.fechaInicio} - #{col2.fechaFin}"/>
+                            </p:selectOneMenu>
+                            <h:outputText value="Jornada:"/>
+                            <p:selectOneMenu value="#{asignacionCursoView.asignacion.jornada}" converter="jornadaConverter" style="width: 180px;">
+                                <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                                <f:selectItems value="#{asignacionCursoView.jornadasList}" var="col3" itemValue="#{col3}" itemLabel="#{col3.nombreJornada}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                    </p:tab>
+                    <p:tab title="Materias">
+                        <p:dataTable id="dtMaterias" value="#{asignacionCursoView.materias}" lazy="true" var="mat" rows="5" paginator="true"
+                                     selection="#{asignacionCursoView.materiasList}" rowKey="#{mat.id}" style="width: 420px;">
+                            <f:facet name="header">
+                                Materias
+                            </f:facet>
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                            <p:column headerText="Nombre" filterBy="#{mat.nombre}">
+                                <h:outputText value="#{mat.nombre}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+                    <p:tab title="Paralelos">
+                        <p:dataTable id="dtParalelos" value="#{asignacionCursoView.paralelos}" lazy="true" var="par" rows="5" paginator="true"
+                                     selection="#{asignacionCursoView.paralelosList}" rowKey="#{par.id}" style="width: 420px;">
+                            <f:facet name="header">
+                                Paralelos
+                            </f:facet>
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                            <p:column headerText="Nombre" filterBy="#{par.nombre}">
+                                <h:outputText value="#{par.nombre}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+                </p:tabView>
+                <center><p:commandButton value="Guardar asignación" actionListener="#{asignacionCursoView.guardarNuevo()}" onclick="PF('dlgCrear').hide()" update=":frmMain"/></center>
+            </h:form>
+        </p:dialog>
+        
+        
+        
+        <p:dialog header="Editar Asignación" id="dlgEditar" widgetVar="dlgEditar" modal="true" height="auto" width="auto" resizable="false">  
+            <h:form id="dlgFormEdit" >
+                <p:tabView>
+                    <p:tab title="Asignacion">
+                        <p:dataTable value="#{asignacionCursoView.cursos}" rows="5" lazy="true"
+                                     selectionMode="single" selection="#{asignacionCursoView.curso}" rowKey="#{curso.id}"
+                                    paginator="true" var="curso" style="width: 450px;">
+                            <f:facet name="header">
+                                Cursos
+                            </f:facet>
+                            <p:ajax event="rowSelect" listener="#{asignacionCursoView.onRowSelectCurso}" update="dlgForm" />
+                            <p:column headerText="Nombre" filterBy="#{curso.nombre}" >
+                                <h:outputText value="#{curso.nombre}" style="text-transform: uppercase;"/>
+                            </p:column>
+                            <p:column headerText="Especializacion" filterBy="#{curso.especializacion}" >
+                                <h:outputText value="#{curso.especializacion}" style="text-transform: uppercase;"/>
+                            </p:column>
+                        </p:dataTable>
+                        
+                    </p:tab>
+                    <p:tab title="Detalles">
+                        <p:panelGrid columns="2">
+                            <h:outputText value="Periodo lectivo:"/>
+                            <p:selectOneMenu value="#{asignacionCursoView.asignacion.periodoLectivo}" converter="periodoConverter" style="width: 180px;">
+                                <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                                <f:selectItems value="#{asignacionCursoView.periodosList}" var="col2" itemValue="#{col2}" itemLabel="#{col2.fechaInicio} - #{col2.fechaFin}"/>
+                            </p:selectOneMenu>
+                            <h:outputText value="Jornada:"/>
+                            <p:selectOneMenu value="#{asignacionCursoView.asignacion.jornada}" converter="jornadaConverter" style="width: 180px;">
+                                <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                                <f:selectItems value="#{asignacionCursoView.jornadasList}" var="col3" itemValue="#{col3}" itemLabel="#{col3.nombreJornada}"/>
+                            </p:selectOneMenu>
+                        </p:panelGrid>
+                    </p:tab>
+                    <p:tab title="Materias">
+                        <p:dataTable id="dtMateriasEdit" value="#{asignacionCursoView.materias}" lazy="true" var="mat" rows="5" paginator="true"
+                                     selection="#{asignacionCursoView.matListSelect}" rowKey="#{mat.id}" style="width: 420px;">
+                            <f:facet name="header">
+                                Materias
+                            </f:facet>
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                            <p:column headerText="Nombre" filterBy="#{mat.nombre}">
+                                <h:outputText value="#{mat.nombre}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+                    <p:tab title="Paralelos">
+                        <p:dataTable id="dtParalelosEdit" value="#{asignacionCursoView.paralelos}" lazy="true" var="par" rows="5" paginator="true"
+                                     selection="#{asignacionCursoView.parListSelect}" rowKey="#{par.id}" style="width: 420px;">
+                            <f:facet name="header">
+                                Paralelos
+                            </f:facet>
+                            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                            <p:column headerText="Nombre" filterBy="#{par.nombre}">
+                                <h:outputText value="#{par.nombre}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+                </p:tabView>
+                <center><p:commandButton value="Guardar edición" actionListener="#{asignacionCursoView.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain"/></center>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>
+

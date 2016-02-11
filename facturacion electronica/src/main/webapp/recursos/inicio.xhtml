@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="description" content=""/>
+        <meta name="author" content="Joao Sanga"/>
+        
+        <link href="/colegionetworksystem/staticFilesLogin/bootstrap.min.css" rel="stylesheet"/>
+        
+        
+        <title>Sistema Web UECH</title>
+    </h:head>
+    
+    <h:body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Proyecto UECH</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right">
+              
+            <h:form>
+                <div class="form-group">
+                    <p:inputText type="text" placeholder="Cédula" class="form-control" value="#{loginView.cedula}"/>
+                </div>
+                <div class="form-group">
+                  <p:commandButton class="btn btn-success" value="Entrar"  actionListener="#{loginView.doLoginEstudiante()}"/>
+                </div>
+                
+            </h:form>>
+            
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+    
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <h:form>
+            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+        </h:form>
+      <div class="container">
+        <h1>Sistema de Administración de Información</h1>
+        <p>El sistema provee a la Unidad Educativa a distancia Chimborazo una herramienta web mediante el cual pueda gestionar la información del personal, tanto laboral como estudiantil que intervienen en la institución.</p>
+        
+      </div>
+	  
+    </div>
+
+	
+	<div class="container">
+		<h2>Los objetivos específicos del proyecto son:</h2>
+		<div class="row">
+			<div class="col-md-3">
+			  <p>Permitir un manejo adecuado de los registros de los estudiantes a un curso dictado en una extensión específica.</p>
+			</div>
+			<div class="col-md-3">
+			  <p>Disponer de consultas rápidas y reportes en todo momento.</p>
+		   </div>
+			<div class="col-md-3">
+			  <p>Presentar de manera clara las calificaciones de los estudiantes.</p>
+			</div>
+			<div class="col-md-3">
+			  <p>Llevar un registro de los cursos que se han abierto y cómo se lo manejó en ese periodo.</p>
+			</div>
+		</div>
+		<br/>
+		<br/>
+		<footer>
+        
+		<p>© Joao Sanga 2014</p>
+		
+		</footer>
+	</div>
+		
+	
+	  
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    </h:body>
+</html>

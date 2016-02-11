@@ -6,4 +6,10 @@ password=postgres
 userName=postgres
 jdbcUrl=jdbc\:postgresql\://localhost\:5432/ebsystem
 </Resource>
+  <Resource id="facturacion" type="javax.sql.DataSource">#Thu Feb 11 15:41:40 COT 2016
+jdbcDriver=org.postgresql.Driver
+password=postgres
+userName=joao
+jdbcUrl=jdbc\:postgresql\://190.57.138.220\:5432/joaoPrueba
+</Resource>
 </resources>
