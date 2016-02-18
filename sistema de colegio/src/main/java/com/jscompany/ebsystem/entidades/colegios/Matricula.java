@@ -8,8 +8,10 @@ package com.jscompany.ebsystem.entidades.colegios;
 import com.jscompany.ebsystem.entidades.usuarios.Estudiante;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,6 +22,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -53,6 +56,8 @@ public class Matricula implements Serializable {
     @JoinColumn(name = "paralelo", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Paralelo paralelo;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricula", fetch = FetchType.LAZY)
+    private Collection<DetalleMateria> detalleMateriaCollection;
     
     public Matricula() {
     }
@@ -83,6 +88,14 @@ public class Matricula implements Serializable {
 
     public void setEstado(Boolean estado) {
         this.estado = estado;
+    }
+
+    public Collection<DetalleMateria> getDetalleMateriaCollection() {
+        return detalleMateriaCollection;
+    }
+
+    public void setDetalleMateriaCollection(Collection<DetalleMateria> detalleMateriaCollection) {
+        this.detalleMateriaCollection = detalleMateriaCollection;
     }
 
     public Date getFechaCreacion() {

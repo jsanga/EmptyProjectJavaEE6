@@ -62,9 +62,9 @@ public class DetalleMateria implements Serializable {
     @JoinColumn(name = "profesor", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Profesor profesor;
-    @JoinColumn(name = "estudiante", referencedColumnName = "id")
+    @JoinColumn(name = "matricula", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Estudiante estudiante;
+    private Matricula matricula;
     @OneToMany(mappedBy = "detalleMateria", fetch = FetchType.LAZY)
     private Collection<DesgloseNota> desgloseNotaCollection;
     @JoinColumn(name = "materia", referencedColumnName = "id")
@@ -219,12 +219,12 @@ public class DetalleMateria implements Serializable {
         this.profesor = profesor;
     }
 
-    public Estudiante getEstudiante() {
-        return estudiante;
+    public Matricula getMatricula() {
+        return matricula;
     }
 
-    public void setEstudiante(Estudiante estudiante) {
-        this.estudiante = estudiante;
+    public void setMatricula(Matricula matricula) {
+        this.matricula = matricula;
     }
     
     public String convertirNumerosALetras(String num){

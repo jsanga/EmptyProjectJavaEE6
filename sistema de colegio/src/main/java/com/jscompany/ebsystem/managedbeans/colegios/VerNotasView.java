@@ -6,9 +6,9 @@
 package com.jscompany.ebsystem.managedbeans.colegios;
 
 import com.jscompany.ebsystem.database.Querys;
+import com.jscompany.ebsystem.entidades.colegios.AsignacionCursoMaterias;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
 import com.jscompany.ebsystem.entidades.colegios.DetalleMateria;
-import com.jscompany.ebsystem.entidades.colegios.Materia;
 import com.jscompany.ebsystem.entidades.colegios.Matricula;
 import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.managedbeans.session.UtilSession;
@@ -60,23 +60,8 @@ public class VerNotasView implements Serializable{
         
         matricula = (Matricula) services.getEntity(Matricula.class, idMatricula);
         asigProfList = services.getListEntitiesByParameters(Querys.getAsignacionesProfesorByAsignacionCursoAndParaleloList, new String[]{"asigCurso", "paralelo"}, new Object[]{matricula.getAsignacionCurso(), matricula.getParalelo()});
-        detalleMateriaList = new ArrayList<>();
-        this.llenarDetalleMateriaList();
+        detalleMateriaList = (List<DetalleMateria>) matricula.getDetalleMateriaCollection();
         utilSession.borrarDatos();
-    }
-    
-    public void llenarDetalleMateriaList(){
-        /*
-        List<AsignacionProfesorMaterias> asigMateriasList;
-        
-        for(AsignacionProfesor temp : asigProfList){
-            asigMateriasList = (List<AsignacionProfesorMaterias>) temp.getAsignacionProfesorMateriasCollection();
-            for(AsignacionProfesorMaterias temp2 : asigMateriasList){
-               detalleMateria = (DetalleMateria) services.getEntityByParameters(Querys.getDetalleMateriaByProfEstMat, new String[]{"materia", "profesor", "estudiante"}, new Object[]{temp2.getMateria(), temp.getProfesor(), matricula.getEstudiante()});
-               if(detalleMateria!=null)
-                   detalleMateriaList.add(detalleMateria);
-            }
-        }*/
     }
     
     public UserSession getuSession() {
@@ -117,6 +102,14 @@ public class VerNotasView implements Serializable{
 
     public void setDetalleMateriaList(List<DetalleMateria> detalleMateriaList) {
         this.detalleMateriaList = detalleMateriaList;
+    }
+
+    public DetalleMateria getDetalleMateria() {
+        return detalleMateria;
+    }
+
+    public void setDetalleMateria(DetalleMateria detalleMateria) {
+        this.detalleMateria = detalleMateria;
     }
     
 }

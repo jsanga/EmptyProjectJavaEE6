@@ -43,8 +43,7 @@ public class Estudiante implements Serializable {
     @JoinColumn(name = "persona", referencedColumnName = "id")
     @OneToOne(fetch = FetchType.LAZY)
     private Persona persona;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "estudiante", fetch = FetchType.LAZY)
-    private Collection<DetalleMateria> detalleMateriaCollection;
+    
     @OneToMany(mappedBy = "estudiante", fetch = FetchType.LAZY)
     @Filter(name="activos")
     private Collection<Matricula> matriculaCollection;
@@ -103,14 +102,6 @@ public class Estudiante implements Serializable {
     @Override
     public String toString() {
         return "com.jscompany.ebsystem.entidades.usuarios.Estudiante[ id=" + id + " ]";
-    }
-
-    public Collection<DetalleMateria> getDetalleMateriaCollection() {
-        return detalleMateriaCollection;
-    }
-
-    public void setDetalleMateriaCollection(Collection<DetalleMateria> detalleMateriaCollection) {
-        this.detalleMateriaCollection = detalleMateriaCollection;
     }
     
 }

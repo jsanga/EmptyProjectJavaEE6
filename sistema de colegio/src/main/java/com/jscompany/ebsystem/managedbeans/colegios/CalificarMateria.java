@@ -89,7 +89,7 @@ public class CalificarMateria implements Serializable{
             detMateria = (DetalleMateria) services.getEntityByParameters(Querys.getDetalleMateriaByProfEstMat, new String[]{"materia", "profesor", "estudiante"}, new Object[]{materia, asignacionProfesor.getProfesor(), temp.getEstudiante()});
             if(detMateria==null){
                 detMateria = new DetalleMateria();
-                detMateria.setEstudiante(temp.getEstudiante());
+                detMateria.setMatricula(temp);
                 detMateria.setProfesor(asignacionProfesor.getProfesor());
                 detMateria.setMateria(materia);
             }
