@@ -115,10 +115,10 @@ public class PruebaLecturaExcel implements Serializable{
                         temp.setEstado(Boolean.TRUE);
                         cell = row.getCell(15);
                         cell.setCellType(Cell.CELL_TYPE_STRING);
-                        if(cell.getStringCellValue().equals("1"))
+                        /*if(cell.getStringCellValue().equals("1"))
                             temp.setSexo("Masculino");
                         else
-                            temp.setSexo("Femenino");
+                            temp.setSexo("Femenino");*/
                         
                         personasList.add(temp);
                     }

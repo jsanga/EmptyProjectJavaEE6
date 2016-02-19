@@ -150,6 +150,7 @@ public class CrudColegios implements Serializable{
 
     public void setColegio(Colegio colegio) {
         this.colegio = colegio;
+        colegioMatriz = (Colegio) services.getEntity(Colegio.class, Long.valueOf(""+this.colegio.getColegioMatriz()));
     }
 
     public UserSession getuSession() {

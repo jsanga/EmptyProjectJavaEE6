@@ -35,6 +35,7 @@
     <mapping class="com.jscompany.ebsystem.entidades.usuarios.Profesor"/>
     <mapping class="com.jscompany.ebsystem.entidades.usuarios.RelacionPersona"/>
     <mapping class="com.jscompany.ebsystem.entidades.usuarios.Rol"/>
+    <mapping class="com.jscompany.ebsystem.entidades.usuarios.Sexo"/>
     <mapping class="com.jscompany.ebsystem.entidades.usuarios.TipoContrato"/>
     <mapping class="com.jscompany.ebsystem.entidades.usuarios.TipoRelacionPersona"/>
     

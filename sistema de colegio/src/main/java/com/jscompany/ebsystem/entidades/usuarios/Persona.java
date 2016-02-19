@@ -61,9 +61,7 @@ public class Persona implements Serializable {
     @Column(name = "fecha_entrada")
     @Temporal(TemporalType.DATE)
     private Date fechaEntrada;
-    @Size(max = 100)
-    @Column(name = "sexo")
-    private String sexo;
+    
     @Column(name = "estado")
     private Boolean estado;
     @Column(name = "fecha_nacimiento")
@@ -78,6 +76,9 @@ public class Persona implements Serializable {
     @JoinColumn(name = "rol", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Rol rol;
+    @JoinColumn(name = "sexo", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Sexo sexo;
     @JoinColumn(name = "loguin", referencedColumnName = "id")
     @OneToOne(fetch = FetchType.LAZY)
     private Loguin loguin;
@@ -202,11 +203,11 @@ public class Persona implements Serializable {
         this.loguin = loguin;
     }
 
-    public String getSexo() {
+    public Sexo getSexo() {
         return sexo;
     }
 
-    public void setSexo(String sexo) {
+    public void setSexo(Sexo sexo) {
         this.sexo = sexo;
     }
 
