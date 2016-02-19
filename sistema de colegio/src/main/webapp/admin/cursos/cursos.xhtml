@@ -13,6 +13,9 @@
             <p:commandButton value="Ingresar Curso" update=":dlgForm" actionListener="#{crudCursos.nuevoCurso()}" onclick="PF('dlgCrear').show()"/>
             <p:dataTable id="dtCursos" value="#{crudCursos.cursosList}"
                           rows="10" paginator="true" var="curso" >
+                <f:facet name="header">
+                    Lista de cursos
+                </f:facet>
                 <p:column headerText="Nombres" filterBy="#{curso.nombre}" width="25%">
                     <h:outputText value="#{curso.nombre}" style="text-transform: uppercase;"/>
                 </p:column>

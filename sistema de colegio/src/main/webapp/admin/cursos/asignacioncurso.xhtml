@@ -13,6 +13,9 @@
             <p:commandButton value="Crear asignación" update=":dlgForm" actionListener="#{asignacionCursoView.nuevaAsignacion()}" onclick="PF('dlgCrear').show()"/>
             <p:dataTable id="dtAsignaciones" value="#{asignacionCursoView.asignacionesCursoLazy}" lazy="true"
                          rows="10" paginator="true" var="asignacion">
+                <f:facet name="header">
+                    Lista de asignaciones de cursos
+                </f:facet>
                 <p:column headerText="Curso" filterBy="#{asignacion.curso.nombre}" width="20%">
                     <h:outputText value="#{asignacion.curso.nombre}" style="text-transform: uppercase;"/>
                 </p:column>

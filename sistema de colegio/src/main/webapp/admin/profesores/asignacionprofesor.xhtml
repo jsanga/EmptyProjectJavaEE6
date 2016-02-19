@@ -14,6 +14,9 @@
             <p:dataTable id="dtAsignaciones" value="#{asignacionProfesorView.asignacionesProfList}" 
                          rows="5" paginator="true"
                          lazy="true" var="asignacion">
+                <f:facet name="header">
+                    Lista de asignaciones de profesores
+                </f:facet>
                 <p:column headerText="Curso" filterBy="#{asignacion.asignacionCurso.curso.nombre}" width="20%">
                     <h:outputText value="#{asignacion.asignacionCurso.curso.nombre} #{asignacion.asignacionCurso.curso.especializacion}" style="text-transform: uppercase;"/>
                 </p:column>

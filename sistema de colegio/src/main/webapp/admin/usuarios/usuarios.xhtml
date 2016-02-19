@@ -13,6 +13,9 @@
             <p:commandButton value="Ingresar Usuario" update=":dlgForm" actionListener="#{personasView.nuevaPersona()}" onclick="PF('dlgCrear').show()"/>
             <p:dataTable id="dtCursos" value="#{personasView.personasList}" paginator="true" emptyMessage="No tiene datos"
                          rows="10" lazy="true" var="persona" >
+                <f:facet name="header">
+                    Lista de usuarios
+                </f:facet>
                 <p:column headerText="Cédula" filterBy="#{persona.cedula}">
                     <h:outputText value="#{persona.cedula}" style="text-transform: uppercase;"/>
                 </p:column>

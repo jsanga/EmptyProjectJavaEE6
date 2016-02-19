@@ -12,6 +12,9 @@
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
             <p:dataTable id="dtAsignaciones" value="#{calificarProfesorView.asignacionesProfList}" rows="5" 
                          emptyMessage="No tiene datos" paginator="true" var="asignacion">
+                <f:facet name="header">
+                    Lista de asignaciones del profesor
+                </f:facet>
                 <p:column headerText="Curso">
                     <h:outputText value="#{asignacion.asignacionCurso.curso.nombre}" style="text-transform: uppercase;"/>
                 </p:column>

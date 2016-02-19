@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -11,6 +12,9 @@
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
             <p:commandButton value="Ingresar Paralelo" update=":dlgForm" actionListener="#{crudParalelos.nuevoParalelo()}" onclick="PF('dlgCrear').show()"/>
             <p:dataTable id="dtCursos" value="#{crudParalelos.paraleloList}" var="par">
+                <f:facet name="header">
+                    Lista de paralelos
+                </f:facet>
                 <p:column headerText="Nombre" filterBy="#{par.nombre}">
                     <h:outputText value="#{par.nombre}" style="text-transform: uppercase;"/>
                 </p:column>

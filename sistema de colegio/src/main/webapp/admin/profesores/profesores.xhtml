@@ -14,6 +14,9 @@
             <center>
                 <p:dataTable id="dtEstudiantesList" value="#{profesorView.profesores}" lazy="true" rows="5" paginator="true"
                              emptyMessage="No tiene datos" style="width: 80%;" var="prof">
+                    <f:facet name="header">
+                        Lista de profesores
+                    </f:facet>
                     <p:column headerText="Cédula" filterBy="#{prof.persona.cedula}">
                         <h:outputText value="#{prof.persona.cedula}" style="text-transform: uppercase;"/>
                     </p:column>

@@ -15,6 +15,9 @@
                 <p:dataTable id="dtMatriculas" value="#{matricular.matriculas}" lazy="true"
                              rows="10" paginator="true"
                              emptyMessage="No tiene datos" style="width: 80%;" var="matricula">
+                    <f:facet name="header">
+                        Lista de matrículas
+                    </f:facet>
                     <p:column headerText="Cédula" filterBy="#{matricula.estudiante.persona.cedula}">
                         <h:outputText value="#{matricula.estudiante.persona.cedula}" style="text-transform: uppercase;"/>
                     </p:column>

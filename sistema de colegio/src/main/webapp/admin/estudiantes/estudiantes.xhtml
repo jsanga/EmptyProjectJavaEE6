@@ -14,6 +14,9 @@
             <center>
                 <p:dataTable id="dtEstudiantesList" value="#{estudianteView.personasList}" lazy="true" emptyMessage="No tiene datos" 
                              var="persona" rows="10" paginator="true">
+                    <f:facet name="header">
+                        Lista de estudiantes
+                    </f:facet>
                     <p:column headerText="Cédula" filterBy="#{persona.cedula}" width="10%">
                         <h:outputText value="#{persona.cedula}" style="text-transform: uppercase;"/>
                     </p:column>
@@ -22,9 +25,6 @@
                     </p:column>
                     <p:column headerText="Apellidos" filterBy="#{persona.apellidos}" width="20%">
                         <h:outputText value="#{persona.apellidos}" style="text-transform: uppercase;"/>
-                    </p:column>
-                    <p:column headerText="Colegio" filterBy="#{persona.colegio.nombre}" width="10%">
-                        <h:outputText value="#{persona.colegio.nombre}" style="text-transform: uppercase;"/>
                     </p:column>
                     <p:column headerText="Estado" width="10%">
                         <h:outputText value="Activo" rendered="#{persona.estado}" style="text-transform: uppercase;"/>

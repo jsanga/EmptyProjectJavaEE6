@@ -2,68 +2,93 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <meta charset="UTF-8"></meta>
-        <style>
-            body {
-                width:auto;
-                    height:auto;
-              background: -webkit-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* Chrome 10+, Saf5.1+ */
-              background:    -moz-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* FF3.6+ */
-              background:     -ms-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* IE10 */
-              background:      -o-linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* Opera 11.10+ */
-              background:         linear-gradient(90deg, #16222A 10%, #3A6073 90%); /* W3C */
-            font-family: 'Raleway', sans-serif;
-            }
-            .ui-panelgrid>*>tr,
-            .ui-panelgrid .ui-panelgrid-cell {
-                border: none;
-            }
-        </style>
-    </h:head>
-    <h:body>
-        
-        <h:form id="frmMain"> 
-            <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
-            <h:panelGroup>
-                <p:growl id="growl" showDetail="true" sticky="true" redisplay="true" showSummary="true"/> 
-                <center>
-                    <h:panelGroup style="margin-top: auto; margin-bottom: auto;">
-                        <h1>
-                            <h:outputText value="Sistema Red de Colegios" style="color: #DDD6D6;"/>
-                        </h1>
-                        <p:panel header="Ventana de Ingreso" style="width: 660px;">
-                            <p:panelGrid columns="2" >
-                                <h:panelGroup>                                
-                                    <a href="#"><img src="images/tw.png" /></a><br/>
-                                    <a href="#"><img src="images/fb.png" /></a><br/>
-                                </h:panelGroup>
-                                <h:panelGroup>
-                                    <p:panelGrid columns="1">
-                                        <p:inputText placeholder="Username" value="#{login.loguin.username}" style="width: 300px;"/>
-                                        <p:inputText placeholder="Password" value="#{login.loguin.pass}" style="width: 300px;"/>
-                                        <p:panelGrid columns="2" style="width: 100%">
-                                            <h:panelGroup >
-                                                <p:selectBooleanCheckbox />
-                                                <h:outputText value=" Recordar datos" id="lblDatos" style="font-size: 12px;"/>
-                                            </h:panelGroup>
-                                            <p:commandButton value="Entrar" actionListener="#{login.validarUsuario()}" style="float: right; font-size: 14px; width: 100px;"/>
-                                        </p:panelGrid>
-                                        <p:commandLink value="Olvidó su contraseña?" style="font-size: 10px; float: right;"/>
-                                    </p:panelGrid>
-                                </h:panelGroup>
-                            </p:panelGrid>
-                        </p:panel>
-                    </h:panelGroup>
-                </center>
-            </h:panelGroup>
-        </h:form>
-        
-        <p:ajaxStatus onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"  />
+        <meta charset="utf-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta name="description" content=""/>
+        <meta name="author" content="Joao Sanga"/>
 
-        <p:dialog widgetVar="statusDialog" modal="true" draggable="false"  closable="false" resizable="false" showHeader="false" style="opacity: 0.6;">
-            <img src="images/spinner.gif" />
-        </p:dialog>
+        <link href="/colegionetworksystem/staticFilesLogin/bootstrap.min.css" rel="stylesheet"/>
+        
+        <title>Sistema Web UECH</title>
+    </h:head>
+
+    <h:body>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Proyecto UECH</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <h:form class="navbar-form navbar-right">
+                        <div class="form-group">
+                            <p:inputText type="text" placeholder="Usuario" styleClass ="form-control" value="#{login.loguin.username}"/>
+                        </div>
+                        <div class="form-group">
+                            <p:inputText type="password" placeholder="Password" styleClass ="form-control" value="#{login.loguin.pass}"/>
+                        </div>
+                        <div class="form-group">
+                            <p:commandButton styleClass ="btn btn-success" value="Entrar" actionListener="#{login.validarUsuario()}"/>
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        <div class="jumbotron">
+            <h:form>
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+            </h:form>
+            <div class="container">
+                <h1>Sistema de Administración de Información</h1>
+                <p>El sistema provee a la Unidad Educativa a distancia Chimborazo una herramienta web mediante el cual pueda gestionar la información del personal, tanto laboral como estudiantil que intervienen en la institución.</p>
+                <h:form>
+                    <p:commandLink >
+                        <h3>Ingresa aquí como estudiante</h3>
+                    </p:commandLink>
+
+                </h:form>
+            </div>
+
+        </div>
+
+
+        <div class="container">
+            <h2>Los objetivos específicos del proyecto son:</h2>
+            <div class="row">
+                <div class="col-md-3">
+                    <p>Permitir un manejo adecuado de los registros de los estudiantes a un curso dictado en una extensión específica.</p>
+                </div>
+                <div class="col-md-3">
+                    <p>Disponer de consultas rápidas y reportes en todo momento.</p>
+                </div>
+                <div class="col-md-3">
+                    <p>Presentar de manera clara las calificaciones de los estudiantes.</p>
+                </div>
+                <div class="col-md-3">
+                    <p>Llevar un registro de los cursos que se han abierto y cómo se lo manejó en ese periodo.</p>
+                </div>
+            </div>
+            <br/>
+            <br/>
+            <footer>
+
+                <p>© Joao Sanga 2016</p>
+
+            </footer>
+        </div>
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
     </h:body>
 </html>
