@@ -19,10 +19,17 @@ import org.hibernate.criterion.Restrictions;
 public class AsignacionCursoLazy extends BaseLazyDataModel<AsignacionCurso> {
     
     private Colegio colegio;
+    private Boolean estado;
     
     public AsignacionCursoLazy(Colegio idColegio) {
         super(AsignacionCurso.class);
         this.colegio = idColegio;
+    }
+    
+    public AsignacionCursoLazy(Colegio idColegio, Boolean estado) {
+        super(AsignacionCurso.class);
+        this.colegio = idColegio;
+        this.estado = estado;
     }
     
     @Override
@@ -38,5 +45,8 @@ public class AsignacionCursoLazy extends BaseLazyDataModel<AsignacionCurso> {
         }
                 
         crit.add(Restrictions.eq("colegio", colegio));
+        
+        if(estado!=null)
+            crit.add(Restrictions.eq("estado", estado));
     }
 }

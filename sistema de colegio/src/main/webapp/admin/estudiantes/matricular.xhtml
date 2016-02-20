@@ -1,20 +1,20 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        <title>Estudiantes</title>
-    </h:head>
-    <h:body>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/admin/principal.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    
+
+    <ui:define name="content">
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
-            <p:commandButton value="Ingresar Matrícula" update="dlgForm" actionListener="#{matricular.nuevaMatricula()}" onclick="PF('dlgCrear').show()"/>
+            <p:commandButton value="Ingresar Matrícula" update="dlgForm" actionListener="#{matricular.nuevaMatricula()}" icon="ui-icon-circle-arrow-e" onclick="PF('dlgCrear').show()" style="margin-top: 15px; margin-bottom: 15px;"/>
             <center>
                 <p:dataTable id="dtMatriculas" value="#{matricular.matriculas}" lazy="true"
                              rows="10" paginator="true"
-                             emptyMessage="No tiene datos" style="width: 80%;" var="matricula">
+                             emptyMessage="No tiene datos" var="matricula">
                     <f:facet name="header">
                         Lista de matrículas
                     </f:facet>
@@ -33,10 +33,10 @@
                     </p:column>
                     <p:column headerText="Acción">
                         <center>
-                            <p:commandButton value="Más información" actionListener="#{matricular.masInfo(matricula)}" />
-                            <p:commandButton value="Editar" actionListener="#{matricular.editarMatricula(matricula)}" onclick="PF('dlgEditar').show()" update="dlgFormEdit"/>
-                            <p:commandButton value="Eliminar" rendered="#{matricula.estado}" actionListener="#{matricular.eliminarMatricula(matricula)}" update="dtMatriculas"/>
-                            <p:commandButton value="Habilitar" rendered="#{!matricula.estado}" actionListener="#{matricular.habilitarMatricula(matricula)}" update="dtMatriculas"/>
+                            <p:commandButton value="Más información" actionListener="#{matricular.masInfo(matricula)}" icon="ui-icon-zoomout"/>
+                            <p:commandButton value="Editar" actionListener="#{matricular.editarMatricula(matricula)}" onclick="PF('dlgEditar').show()" update="dlgFormEdit" icon="ui-icon-pencil"/>
+                            <p:commandButton value="Eliminar" rendered="#{matricula.estado}" actionListener="#{matricular.eliminarMatricula(matricula)}" update="dtMatriculas" icon="ui-icon-circle-close"/>
+                            <p:commandButton value="Habilitar" rendered="#{!matricula.estado}" actionListener="#{matricular.habilitarMatricula(matricula)}" update="dtMatriculas" icon="ui-icon-circle-check"/>
                         </center>
                     </p:column>
                 </p:dataTable>
@@ -174,9 +174,8 @@
                     </p:tab>
                 </p:tabView>
                 
-                <center><p:commandButton value="Terminar Edición" actionListener="#{matricular.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain"/></center>
+                <center><p:commandButton value="Terminar Edición" actionListener="#{matricular.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain" icon="ui-icon-check"/></center>
             </h:form>
         </p:dialog>
-    </h:body>
-</html>
-
+    </ui:define>
+</ui:composition>

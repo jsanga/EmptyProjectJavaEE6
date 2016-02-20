@@ -34,10 +34,10 @@
                 </p:column>
                 <p:column headerText="Acción" width="25%">
                     <center>
-                        <p:commandButton value="Más información" actionListener="#{asignacionCursoView.masInfo(asignacion)}" />                        
-                        <p:commandButton value="Editar" actionListener="#{asignacionCursoView.editarAsignacion(asignacion)}" onclick="PF('dlgEditar').show()" update=":dlgFormEdit"/>
-                        <p:commandButton value="Eliminar" rendered="#{asignacion.estado}" actionListener="#{asignacionCursoView.eliminarAsignacion(asignacion)}" update="frmMain"/>
-                        <p:commandButton value="Habilitar" rendered="#{!asignacion.estado}" actionListener="#{asignacionCursoView.activarAsignacion(asignacion)}" update="frmMain"/>
+                        <p:commandButton value="Más información" actionListener="#{asignacionCursoView.masInfo(asignacion)}" icon="ui-icon-zoomout"/>                        
+                        <p:commandButton value="Editar" actionListener="#{asignacionCursoView.editarAsignacion(asignacion)}" onclick="PF('dlgEditar').show()" update=":dlgFormEdit" icon="ui-icon-pencil"/>
+                        <p:commandButton value="Eliminar" rendered="#{asignacion.estado}" actionListener="#{asignacionCursoView.eliminarAsignacion(asignacion)}" update="frmMain" icon="ui-icon-circle-close"/>
+                        <p:commandButton value="Habilitar" rendered="#{!asignacion.estado}" actionListener="#{asignacionCursoView.activarAsignacion(asignacion)}" update="frmMain" icon="ui-icon-circle-check"/>
                     </center>
                 </p:column>
             </p:dataTable>
@@ -168,7 +168,7 @@
                         </p:dataTable>
                     </p:tab>
                 </p:tabView>
-                <center><p:commandButton value="Guardar edición" actionListener="#{asignacionCursoView.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain"/></center>
+                <center><p:commandButton value="Guardar edición" actionListener="#{asignacionCursoView.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain" icon="ui-icon-check"/></center>
             </h:form>
         </p:dialog>
     </ui:define>

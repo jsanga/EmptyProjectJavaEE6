@@ -10,7 +10,7 @@
     <ui:define name="content">
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
-            <p:commandButton value="Ingresar Colegio" update=":dlgForm" actionListener="#{crudColegios.nuevoColegio()}" onclick="PF('dlgCrear').show()" style="margin-top: 15px; margin-bottom: 15px;"/>
+            <p:commandButton value="Ingresar Colegio" update=":dlgForm" actionListener="#{crudColegios.nuevoColegio()}" onclick="PF('dlgCrear').show()" style="margin-top: 15px; margin-bottom: 15px;" icon="ui-icon-circle-arrow-e"/>
             <p:dataTable id="dtColegios" value="#{crudColegios.colegiosList}" style="margin-bottom: 15px;"
                          var="colegio" rows="10" paginator="true">
                 <f:facet name="header">
@@ -35,10 +35,10 @@
                 </p:column>
                 <p:column headerText="Acción">
                     <center>
-                        <p:commandButton value="Editar" actionListener="#{crudColegios.editarColegio(colegio)}" onclick="PF('dlgEditar').show()" update=":dlgFormEdit"/>
-                        <p:commandButton value="Eliminar" actionListener="#{crudColegios.eliminarColegio(colegio)}" update="frmMain" rendered="#{colegio.estado}"/>
-                        <p:commandButton value="Habilitar" actionListener="#{crudColegios.habilitarColegio(colegio)}" update="frmMain" rendered="#{!colegio.estado}"/>
-                        <p:commandButton value="Más Info" actionListener="#{crudColegios.setColegio(colegio)}" onclick="PF('dlgInfo').show()" update=":dlgFormInfo"/>
+                        <p:commandButton value="Editar" actionListener="#{crudColegios.editarColegio(colegio)}" onclick="PF('dlgEditar').show()" update=":dlgFormEdit" icon="ui-icon-pencil"/>
+                        <p:commandButton value="Eliminar" actionListener="#{crudColegios.eliminarColegio(colegio)}" update="frmMain" rendered="#{colegio.estado}" icon="ui-icon-circle-close"/>
+                        <p:commandButton value="Habilitar" actionListener="#{crudColegios.habilitarColegio(colegio)}" update="frmMain" rendered="#{!colegio.estado}" icon="ui-icon-circle-check"/>
+                        <p:commandButton value="Más Info" actionListener="#{crudColegios.setColegio(colegio)}" onclick="PF('dlgInfo').show()" update=":dlgFormInfo" icon="ui-icon-zoomout"/>
                     </center>
                 </p:column>
             </p:dataTable>
@@ -86,7 +86,7 @@
                         <f:selectItems value="#{crudColegios.colegiosMatrizList}" var="cole" itemValue="#{cole}" itemLabel="#{cole.nombre}"/>
                     </p:selectOneMenu>
                 </p:panelGrid>
-                <center><p:commandButton value="Terminar Edición" actionListener="#{crudColegios.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain"/></center>
+                <center><p:commandButton value="Terminar Edición" actionListener="#{crudColegios.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain" icon="ui-icon-check"/></center>
             </h:form>
         </p:dialog>
         

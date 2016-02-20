@@ -1,16 +1,16 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/admin/principal.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    
+
+    <ui:define name="content">
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
-            <p:commandButton value="Ingresar Curso" update=":dlgForm" actionListener="#{crudCursos.nuevoCurso()}" onclick="PF('dlgCrear').show()"/>
+            <p:commandButton value="Ingresar Curso" update=":dlgForm" actionListener="#{crudCursos.nuevoCurso()}" icon="ui-icon-circle-arrow-e" onclick="PF('dlgCrear').show()"/>
             <p:dataTable id="dtCursos" value="#{crudCursos.cursosList}"
                           rows="10" paginator="true" var="curso" >
                 <f:facet name="header">
@@ -29,9 +29,9 @@
                 </p:column>
                 <p:column headerText="Acción" width="25%">
                     <center>
-                        <p:commandButton value="Editar" actionListener="#{crudCursos.editarCurso(curso)}" onclick="PF('dlgEditar').show()" update=":dlgFormEdit"/>
-                        <p:commandButton value="Eliminar" actionListener="#{crudCursos.eliminarCurso(curso)}" update="frmMain" rendered="#{curso.estado}"/>
-                        <p:commandButton value="Habilitar" actionListener="#{crudCursos.habilitarCurso(curso)}" update="frmMain" rendered="#{!curso.estado}"/>
+                        <p:commandButton value="Editar" actionListener="#{crudCursos.editarCurso(curso)}" onclick="PF('dlgEditar').show()" update=":dlgFormEdit" icon="ui-icon-pencil"/>
+                        <p:commandButton value="Eliminar" actionListener="#{crudCursos.eliminarCurso(curso)}" update="frmMain" rendered="#{curso.estado}" icon="ui-icon-circle-close"/>
+                        <p:commandButton value="Habilitar" actionListener="#{crudCursos.habilitarCurso(curso)}" update="frmMain" rendered="#{!curso.estado}" icon="ui-icon-circle-check"/>
                     </center>
                 </p:column>
             </p:dataTable>
@@ -67,9 +67,9 @@
                         <f:selectItems value="#{crudCursos.nivelesList}" var="col" itemValue="#{col}" itemLabel="#{col.nombre}"/>
                     </p:selectOneMenu>
                 </p:panelGrid>
-                <center><p:commandButton value="Terminar Edición" actionListener="#{crudCursos.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain"/></center>
+                <center><p:commandButton value="Terminar Edición" actionListener="#{crudCursos.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain" icon="ui-icon-check"/></center>
             </h:form>
         </p:dialog>
-    </h:body>
-</html>
+    </ui:define>
+</ui:composition>
 

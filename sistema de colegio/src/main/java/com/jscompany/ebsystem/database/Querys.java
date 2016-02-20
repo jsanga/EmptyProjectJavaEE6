@@ -69,6 +69,7 @@ public class Querys {
     public static String getPersonaByID = "select e from Persona e where e.id = :idPersona";
     public static String getRolById = "Select e from Rol e where e.id = :rolId";
     public static String getRolList = "select e from Rol e";
+    public static String getSexoList = "select e from Sexo e";
     public static String getRelacionesList = "select e from TipoRelacionPersona e";
     public static String getRelacionesByPersona = "select e from RelacionPersona e where e.persona = :idPersona";
     public static String getRelacionByPersonaPersonaEsAndTipoRelacion = "select e from RelacionPersona e where e.persona = :idPersona and e.personaEs = :personaEs and e.tipoRelacion = :tipoRelacion";

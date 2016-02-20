@@ -1,16 +1,16 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/admin/principal.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    
+
+    <ui:define name="content">
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
-            <p:commandButton value="Ingresar Periodo Lectivo" update=":dlgForm" actionListener="#{crudPeriodoLectivo.nuevoPeriodoLectivo()}" onclick="PF('dlgCrear').show()"/>
+            <p:commandButton value="Ingresar Periodo Lectivo" update=":dlgForm" actionListener="#{crudPeriodoLectivo.nuevoPeriodoLectivo()}" onclick="PF('dlgCrear').show()" style="margin-top: 15px; margin-bottom: 15px;" icon="ui-icon-circle-arrow-e"/>
             <p:dataTable id="dtCursos" value="#{crudPeriodoLectivo.periodoList}" var="per">
                 <f:facet name="header">
                     Lista de periodos lectivos
@@ -27,8 +27,8 @@
                 </p:column>
                 <p:column headerText="Acción">
                     <center>
-                        <p:commandButton value="Editar" actionListener="#{crudPeriodoLectivo.editarPeriodoLectivo(per)}" onclick="PF('dlgEditar').show()" update=":dlgFormEdit"/>
-                        <p:commandButton value="Eliminar" actionListener="#{crudPeriodoLectivo.eliminarPeriodoLectivo(per)}" update="frmMain"/>
+                        <p:commandButton value="Editar" actionListener="#{crudPeriodoLectivo.editarPeriodoLectivo(per)}" onclick="PF('dlgEditar').show()" update=":dlgFormEdit" icon="ui-icon-pencil"/>
+                        <p:commandButton value="Eliminar" actionListener="#{crudPeriodoLectivo.eliminarPeriodoLectivo(per)}" update="frmMain" icon="ui-icon-circle-close"/>
                     </center>
                 </p:column>
             </p:dataTable>
@@ -54,9 +54,9 @@
                     <h:outputText value="Fecha de fin:"/>
                     <p:calendar value="#{crudPeriodoLectivo.periodo.fechaFin}" navigator="true" style="text-transform: uppercase;"/>
                 </p:panelGrid>
-                <center><p:commandButton value="Terminar Edición" actionListener="#{crudPeriodoLectivo.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain"/></center>
+                <center><p:commandButton value="Terminar Edición" actionListener="#{crudPeriodoLectivo.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain" icon="ui-icon-check"/></center>
             </h:form>
         </p:dialog>
-    </h:body>
-</html>
+    </ui:define>
+</ui:composition>
 

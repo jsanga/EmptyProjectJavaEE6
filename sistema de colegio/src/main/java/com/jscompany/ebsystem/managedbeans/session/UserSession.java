@@ -7,6 +7,7 @@ package com.jscompany.ebsystem.managedbeans.session;
 
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import com.jscompany.ebsystem.entidades.usuarios.Rol;
+import com.jscompany.ebsystem.util.JsfUti;
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -33,6 +34,7 @@ public class UserSession implements Serializable {
         isLogged = null;
         idColegio = null;
         idPersona = null;
+        JsfUti.redirectFaces("/faces/recursos/logout.xhtml");
     }
 
     public String getUsername() {

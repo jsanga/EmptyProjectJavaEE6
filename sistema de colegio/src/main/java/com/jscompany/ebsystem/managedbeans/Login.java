@@ -77,6 +77,14 @@ public class Login implements Serializable{
             JsfUti.messageError(null, "Error", "Usuario no encontrado.");
     }
     
+    public void salir(){
+        uSession.cerrarSesion();
+    }
+    
+    public void irIndex(){
+        JsfUti.redirectFaces("/");
+    }
+    
     public void guardarLoguin(){
         aclServices.saveEntity(loguin);
     }

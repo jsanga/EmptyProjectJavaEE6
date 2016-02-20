@@ -52,12 +52,7 @@
             <div class="container">
                 <h1>Sistema de Administración de Información</h1>
                 <p>El sistema provee a la Unidad Educativa a distancia Chimborazo una herramienta web mediante el cual pueda gestionar la información del personal, tanto laboral como estudiantil que intervienen en la institución.</p>
-                <h:form>
-                    <p:commandLink >
-                        <h3>Ingresa aquí como estudiante</h3>
-                    </p:commandLink>
-
-                </h:form>
+                
             </div>
 
         </div>
@@ -87,6 +82,7 @@
 
             </footer>
         </div>
+        <p:ajaxStatus onstart="PF('statusDialog').show()" oncomplete="PF('statusDialog').hide()"  />
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->

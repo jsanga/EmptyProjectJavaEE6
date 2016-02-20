@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/admin/principal.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    
+
+    <ui:define name="content">
+        <h:form id="frmMain">
+            <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+            <center>
+                
+                <h:outputText id="titulo" value="Edición del Perfil" style="font-weight:bold; font-size: 32px; font-family: inherit;"/>
+                
+                <p:panelGrid columns="2" style="margin-top: 15px;">
+                    <h:outputText value="Cédula:"/>
+                    <p:inputText value="#{perfilView.persona.cedula}" style="text-transform: uppercase;" />
+                    <h:outputText value="Nombres:"/>
+                    <p:inputText value="#{perfilView.persona.nombres}" style="text-transform: uppercase;" />
+                    <h:outputText value="Apellidos:"/>
+                    <p:inputText value="#{perfilView.persona.apellidos}" style="text-transform: uppercase;" />
+                    <h:outputText value="Dirección:"/>
+                    <p:inputText value="#{perfilView.persona.direccion}" style="text-transform: uppercase;" />
+                    <h:outputText value="Fecha de nacimiento:"/>
+                    <p:calendar value="#{perfilView.persona.fechaNacimiento}" />
+                    <h:outputText value="Sexo:"/>
+                    <p:selectOneMenu value="#{perfilView.persona.sexo}" converter="sexoConverter" style="width: 180px;">
+                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                        <f:selectItems value="#{perfilView.sexoList}" var="sex" itemValue="#{sex}" itemLabel="#{sex.nombreSexo}"/>
+                    </p:selectOneMenu>
+                    <h:outputText value="Rol:"/>
+                    <p:inputText value="#{perfilView.persona.rol.rolName}" style="text-transform: uppercase;" readonly="true"/>
+                </p:panelGrid>
+                <p:commandButton value="Guardar cambios" actionListener="#{perfilView.actualizarPersona()}" update="frmMain" icon="ui-icon-check"/>
+                <p:commandButton value="Cancelar" actionListener="#{perfilView.irPerfil()}" icon="ui-icon-cancel"/>
+            </center>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

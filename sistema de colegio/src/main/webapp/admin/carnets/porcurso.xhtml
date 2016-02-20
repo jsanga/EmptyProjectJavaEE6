@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/admin/principal.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    
+
+    <ui:define name="content">
+        <h:form id="frmMain">
+            <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+            <center >
+                <h:outputText id="titulo" value="Generación de carnéts por curso" style="margin-top: 15px; font-weight:bold; font-size: 32px; font-family: inherit; "/>
+
+                <p:dataTable id="dtAsignaciones" value="#{carnetsView.asignacionesCursoLazy}" lazy="true"
+                             rows="10" paginator="true" var="asignacion" style="margin-bottom: 15px; margin-top: 15px;">
+                    <f:facet name="header">
+                        Lista de asignaciones de cursos
+                    </f:facet>
+                    <p:column headerText="Curso" filterBy="#{asignacion.curso.nombre}" width="20%">
+                        <h:outputText value="#{asignacion.curso.nombre}" style="text-transform: uppercase;"/>
+                    </p:column>
+                    <p:column headerText="Especialización" filterBy="#{asignacion.curso.especializacion}" width="25%">
+                        <h:outputText value="#{asignacion.curso.especializacion}" style="text-transform: uppercase;"/>
+                    </p:column>
+                    <p:column headerText="Fecha de inicio" width="10%">
+                        <h:outputText value="#{asignacion.periodoLectivo.fechaInicio}" style="text-transform: uppercase;"/>
+                    </p:column>
+                    <p:column headerText="Fecha de fin" width="10%">
+                        <h:outputText value="#{asignacion.periodoLectivo.fechaFin}" style="text-transform: uppercase;"/>
+                    </p:column>
+                    <p:column headerText="Estado" width="10%">
+                        <h:outputText value="Activo" rendered="#{asignacion.estado}" style="text-transform: uppercase;"/>
+                        <h:outputText value="Inactivo" rendered="#{!asignacion.estado}" style="text-transform: uppercase;"/>
+                    </p:column>
+                    <p:column headerText="Acción" width="25%">
+                        <center>
+                            <p:commandButton value="Generar carnéts" icon="ui-icon-arrowthickstop-1-s"/>                        
+                        </center>
+                    </p:column>
+                </p:dataTable>
+            </center>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

@@ -1,16 +1,16 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/admin/principal.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    
+
+    <ui:define name="content">
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
-            <p:commandButton value="Crear asignación" update=":dlgForm" actionListener="#{asignacionProfesorView.nuevaAsignacion()}" onclick="PF('dlgCrear').show()"/>
+            <p:commandButton value="Crear asignación" update=":dlgForm" actionListener="#{asignacionProfesorView.nuevaAsignacion()}" onclick="PF('dlgCrear').show()" style="margin-top: 15px; margin-bottom: 15px;"/>
             <p:dataTable id="dtAsignaciones" value="#{asignacionProfesorView.asignacionesProfList}" 
                          rows="5" paginator="true"
                          lazy="true" var="asignacion">
@@ -40,10 +40,10 @@
                 </p:column>
                 <p:column headerText="Acción" width="13%">
                     <center>
-                        <p:commandButton value="Más información" actionListener="#{asignacionProfesorView.masInfo(asignacion)}" />                        
-                        <p:commandButton value="Editar" onclick="PF('dlgConfirm').show()" actionListener="#{asignacionProfesorView.setAsignacion(asignacion)}" update=":dlgFrmConfirm"/>
-                        <p:commandButton value="Eliminar" rendered="#{asignacion.estado}" actionListener="#{asignacionProfesorView.eliminarAsignacion(asignacion)}" update="frmMain"/>
-                        <p:commandButton value="Habilitar" rendered="#{!asignacion.estado}" actionListener="#{asignacionProfesorView.activarAsignacion(asignacion)}" update="frmMain"/>
+                        <p:commandButton value="Más información" actionListener="#{asignacionProfesorView.masInfo(asignacion)}" icon="ui-icon-zoomout"/>                        
+                        <p:commandButton value="Editar" onclick="PF('dlgConfirm').show()" actionListener="#{asignacionProfesorView.setAsignacion(asignacion)}" update=":dlgFrmConfirm" icon="ui-icon-pencil"/>
+                        <p:commandButton value="Eliminar" rendered="#{asignacion.estado}" actionListener="#{asignacionProfesorView.eliminarAsignacion(asignacion)}" update="frmMain" icon="ui-icon-circle-close"/>
+                        <p:commandButton value="Habilitar" rendered="#{!asignacion.estado}" actionListener="#{asignacionProfesorView.activarAsignacion(asignacion)}" icon="ui-icon-circle-check" update="frmMain"/>
                     </center>
                 </p:column>
             </p:dataTable>
@@ -224,12 +224,11 @@
                 <h:outputText value="Está seguro de que desea modificar el curso?"/>
                 <h:panelGroup>
                     <center>
-                        <p:commandButton value="Sí" actionListener="#{asignacionProfesorView.editarAsignacion}" onclick="PF('dlgEditar').show()" oncomplete="PF('dlgConfirm').hide()" update=":dlgFormEdit"/>
-                        <p:commandButton value="No" onclick="PF('dlgConfirm').hide()"/>
+                        <p:commandButton value="Sí" actionListener="#{asignacionProfesorView.editarAsignacion}" onclick="PF('dlgEditar').show()" oncomplete="PF('dlgConfirm').hide()" update=":dlgFormEdit" icon="ui-icon-check"/>
+                        <p:commandButton value="No" onclick="PF('dlgConfirm').hide()" icon="ui-icon-cancel"/>
                     </center>
                 </h:panelGroup>
             </h:form>
         </p:dialog>
-    </h:body>
-</html>
-
+    </ui:define>
+</ui:composition>

@@ -11,6 +11,7 @@ import com.jscompany.ebsystem.entidades.colegios.Colegio;
 import com.jscompany.ebsystem.entidades.usuarios.Loguin;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import com.jscompany.ebsystem.entidades.usuarios.Rol;
+import com.jscompany.ebsystem.entidades.usuarios.Sexo;
 import com.jscompany.ebsystem.lazymodels.PersonasLazy;
 import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.services.AclService;
@@ -52,6 +53,7 @@ public class PersonasView implements Serializable{
     private Rol rol;
     private List<Rol> rolList;
     
+    
     @PostConstruct
     public void init(){
         if(!uSession.getIsLogged())
@@ -60,6 +62,7 @@ public class PersonasView implements Serializable{
         personasList = new PersonasLazy(colegio);
         colegios  = services.getListEntitiesByParameters(Querys.getColegiosList, new String[]{}, new Object[]{});
         rolList = services.getListEntitiesByParameters(Querys.getRolList, new String[]{}, new Object[]{});
+        
     }
     
     public void buscarPersona(){
