@@ -10,6 +10,9 @@
     <ui:define name="content">
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+            <center>
+                <h:outputText id="titulo" value="Materias" style="font-weight:bold; font-size: 32px; font-family: inherit;"/>
+            </center>
             <p:commandButton value="Ingresar Materia" update=":dlgForm" actionListener="#{crudMaterias.nuevaMateria()}" icon="ui-icon-circle-arrow-e" onclick="PF('dlgCrear').show()" style="margin-top: 15px; margin-bottom: 15px;"/>
             <p:dataTable id="dtCursos" value="#{crudMaterias.materiaList}" var="materia">
                 <f:facet name="header">

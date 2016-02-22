@@ -26,12 +26,12 @@
 
         <!-- Custom CSS -->
         <link href="/colegionetworksystem/staticFilesLogin/sb-admin-2.css" rel="stylesheet"/>
+        <link href="/colegionetworksystem/staticFilesLogin/MyCSS.css" rel="stylesheet"/>
 
         <!-- Morris Charts CSS -->
 
         <!-- Custom Fonts -->
-        <link href="/colegionetworksystem/staticFilesLogin/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-        
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
         
         <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
         <h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />
@@ -56,17 +56,20 @@
                     
                     <!-- /.dropdown -->
                     <li class="dropdown">
+                        
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                             #{userSession.username} <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                            </li>
-                            <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                            </li>
+                            <h:form>
+                                <li><a href="/colegionetworksystem/faces/estudiante/perfil.xhtml"><i class="fa fa-user fa-fw"></i> Perfil</a>
+                                </li>
+                                <li><a href="/colegionetworksystem/faces/estudiante/editarperfil.xhtml"><i class="fa fa-gear fa-fw"></i> Editar perfil</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li><p:commandLink actionListener="#{login.salir()}"><i class="fa fa-sign-out fa-fw"></i> Salir</p:commandLink>
+                                </li>
+                            </h:form>
                         </ul>
                         <!-- /.dropdown-user -->
                     </li>
@@ -79,78 +82,31 @@
                         <ul class="nav" id="side-menu">
                             
                             <li>
-                                <a href="/colegionetworksystem/faces/admin/perfil.xhtml"><i class="fa fa-dashboard fa-fw"></i> Mi Perfil</a>
+                                <a href="/colegionetworksystem/faces/estudiante/perfil.xhtml"><i class="fa fa-user"></i> Mi Perfil</a>
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Cursos<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="/colegionetworksystem/faces/admin/cursos/asignacioncurso.xhtml">Asignar curso</a>
-                                    </li>
-                                    <li>
-                                        <a href="/colegionetworksystem/faces/admin/cursos/cursos.xhtml">Ver cursos</a>
-                                    </li>
-                                </ul>
-                                <!-- /.nav-second-level -->
+                                <a href="/colegionetworksystem/faces/estudiante/cursos/cursos.xhtml"><i class="fa fa-list-ul"></i> Ver cursos</a>
                             </li>
                             <li>
-                                <a href="#"><i class="fa fa-table fa-fw"></i> Estudiantes</a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="/colegionetworksystem/faces/admin/estudiantes/matricular.xhtml">Matricular</a>
-                                    </li>
-                                    <li>
-                                        <a href="/colegionetworksystem/faces/admin/estudiantes/estudiantes.xhtml">Ver estudiantes</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="/colegionetworksystem/faces/admin/paralelos/paralelos.xhtml"><i class="fa fa-edit fa-fw"></i> Paralelos</a>
-                            </li>
-                            <li>
-                                <a href="/colegionetworksystem/faces/admin/periodoLectivo/periodolectivo.xhtml"><i class="fa fa-wrench fa-fw"></i> Periodos Lectivos<span class="fa arrow"></span></a>
-                                
-                                <!-- /.nav-second-level -->
-                            </li>
-                            <li>
-                                <a href="/colegionetworksystem/faces/admin/materias/materias.xhtml"><i class="fa fa-sitemap fa-fw"></i> Materias<span class="fa arrow"></span></a>
-                                
-                                <!-- /.nav-second-level -->
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-files-o fa-fw"></i> Profesores<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="/colegionetworksystem/faces/admin/profesores/asignacionprofesor.xhtml">Asignar rofesor</a>
-                                    </li>
-                                    <li>
-                                        <a href="/colegionetworksystem/faces/admin/profesores/profesores.xhtml">Ver profesores</a>
-                                    </li>
-                                </ul>
-                                <!-- /.nav-second-level -->
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-files-o fa-fw"></i> Reportes<span class="fa arrow"></span></a>
-                                
-                                <!-- /.nav-second-level -->
+                                <a href="/colegionetworksystem/faces/estudiante/profesores/profesores.xhtml"><i class="fa fa-user-plus"></i> Profesores</a>
                             </li>
                             
-                            <li>
-                                <a href="#"><i class="fa fa-files-o fa-fw"></i> Certificados<span class="fa arrow"></span></a>
-                                
-                                <!-- /.nav-second-level -->
-                            </li>
+                            
                             
                             <li>
-                                <a href="#"><i class="fa fa-files-o fa-fw"></i> Carné estudiantil<span class="fa arrow"></span></a>
-                                
+                                <a href="#"><i class="fa fa-book"></i> Notas<span class="fa arrow"></span></a>
+                                <ul class="nav nav-second-level">
+                                    
+                                    <li>
+                                        <a href="/colegionetworksystem/faces/estudiante/notas/verNotasQuimestral.xhtml">Ver notas</a>
+                                    </li>
+                                    <li>
+                                        <a href="/colegionetworksystem/faces/estudiante/notas/matriculas.xhtml">Ver matriculas</a>
+                                    </li>
+                                </ul>
                                 <!-- /.nav-second-level -->
                             </li>
-                            <li>
-                                <a href="/colegionetworksystem/faces/admin/colegios/colegios.xhtml"><i class="fa fa-files-o fa-fw"></i> Centros de Apoyo Tutorial<span class="fa arrow"></span></a>
-                                
-                                <!-- /.nav-second-level -->
-                            </li>
+                                                      
                             
                         </ul>
                     </div>

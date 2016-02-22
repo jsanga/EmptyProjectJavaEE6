@@ -52,6 +52,7 @@ public class PersonasView implements Serializable{
     private String cedula;
     private Rol rol;
     private List<Rol> rolList;
+    private List<Sexo> sexoList;
     
     
     @PostConstruct
@@ -62,7 +63,7 @@ public class PersonasView implements Serializable{
         personasList = new PersonasLazy(colegio);
         colegios  = services.getListEntitiesByParameters(Querys.getColegiosList, new String[]{}, new Object[]{});
         rolList = services.getListEntitiesByParameters(Querys.getRolList, new String[]{}, new Object[]{});
-        
+        sexoList = services.getListEntitiesByParameters(Querys.getSexoList, new String[]{}, new Object[]{});
     }
     
     public void buscarPersona(){

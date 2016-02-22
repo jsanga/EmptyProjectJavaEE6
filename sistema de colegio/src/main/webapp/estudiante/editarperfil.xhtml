@@ -1,19 +1,20 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/estudiante/principal.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    
+
+    <ui:define name="content">
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+            <center><h:outputText id="titulo" value="Editar mi Perfil" style="font-weight:bold; font-size: 32px; font-family: inherit;"/></center>
             <p:tabView id="tabMain">
                 <p:tab title="Datos Personales">
                     <center>
-                        <p:panelGrid columns="2">
+                        <p:panelGrid columns="2" style="margin-bottom: 15px;">
                             <h:outputText value="Cédula"/>
                             <p:inputText value="#{editInfoEstudianteView.person.cedula}"/>
                             <h:outputText value="Nombres"/>
@@ -25,12 +26,13 @@
                             <h:outputText value="Fecha de Nacimiento"/>
                             <p:calendar value="#{editInfoEstudianteView.person.fechaNacimiento}"/>
                             <h:outputText value="Sexo"/>
-                            <p:selectOneMenu value="#{editInfoEstudianteView.person.sexo}" style="width: 180px;">
-                                <f:selectItem itemLabel="Seleccionar" itemValue="" />
-                                <f:selectItem itemLabel="Masculino" itemValue="Masculino" />
-                                <f:selectItem itemLabel="Femenino" itemValue="Femenino" />
+                            <p:selectOneMenu value="#{editInfoEstudianteView.person.sexo}" converter="sexoConverter" style="width: 180px;">
+                                <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                                <f:selectItems value="#{editInfoEstudianteView.sexoList}" var="sex" itemValue="#{sex}" itemLabel="#{sex.nombreSexo}"/>
                             </p:selectOneMenu>
                         </p:panelGrid>
+                        <p:commandButton value="Guardar cambios" actionListener="#{editInfoEstudianteView.actualizarPersona()}" update="frmMain" icon="ui-icon-check"/>
+                        <p:commandButton value="Cancelar" actionListener="#{editInfoEstudianteView.irPerfil()}" icon="ui-icon-cancel"/>
                     </center>
                 </p:tab>
                 
@@ -167,6 +169,5 @@
             </h:form>
         </p:dialog>
         
-    </h:body>
-</html>
-
+    </ui:define>
+</ui:composition>

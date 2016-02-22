@@ -10,6 +10,9 @@
     <ui:define name="content">
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+            <center>
+                <h:outputText id="titulo" value="Periodos Lectivos" style="font-weight:bold; font-size: 32px; font-family: inherit;"/>
+            </center>
             <p:commandButton value="Ingresar Periodo Lectivo" update=":dlgForm" actionListener="#{crudPeriodoLectivo.nuevoPeriodoLectivo()}" onclick="PF('dlgCrear').show()" style="margin-top: 15px; margin-bottom: 15px;" icon="ui-icon-circle-arrow-e"/>
             <p:dataTable id="dtCursos" value="#{crudPeriodoLectivo.periodoList}" var="per">
                 <f:facet name="header">

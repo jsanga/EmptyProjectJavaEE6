@@ -10,10 +10,13 @@
     <ui:define name="content">
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+            <center>
+                <h:outputText id="titulo" value="Estudiantes" style="font-weight:bold; font-size: 32px; font-family: inherit;"/>
+            </center>
             <p:commandButton value="Ingresar Estudiante" update="dlgForm" actionListener="#{estudianteView.nuevoEstudiante()}" icon="ui-icon-circle-arrow-e" onclick="PF('dlgCrear').show()" style="margin-top: 15px; margin-bottom: 15px;"/>
             <center>
                 <p:dataTable id="dtEstudiantesList" value="#{estudianteView.personasList}" lazy="true" emptyMessage="No tiene datos" 
-                             var="persona" rows="10" paginator="true">
+                             var="persona" rows="10" paginator="true" style="margin-bottom: 15px;">
                     <f:facet name="header">
                         Lista de estudiantes
                     </f:facet>
@@ -43,12 +46,12 @@
         
         <p:dialog header="Crear Estudiante" id="dlgCrear" widgetVar="dlgCrear" modal="true" height="auto" width="auto" resizable="false">  
             <h:form id="dlgForm" >
-                <p:panelGrid columns="3">
+                <p:panelGrid columns="3" style="width: 100%;">
                     <h:outputText value="Cédula:"/>
-                    <p:inputText value="#{estudianteView.cedula}" style="text-transform: uppercase;"/>
+                    <p:inputText value="#{estudianteView.cedula}" style="text-transform: uppercase; width: 100%;"/>
                     <p:commandButton value="Buscar" actionListener="#{estudianteView.buscarPersona()}" update="dtEstudiantes"/>
                 </p:panelGrid>
-                <p:dataTable id="dtEstudiantes" value="#{estudianteView.personasEncontradasList}" emptyMessage="No tiene datos" style="width: 487px;" var="persona">
+                <p:dataTable id="dtEstudiantes" value="#{estudianteView.personasEncontradasList}" emptyMessage="No hay datos" style="width: 487px;" var="persona">
                     <p:column headerText="Nombres" >
                     <h:outputText value="#{persona.nombres}" style="text-transform: uppercase;"/>
                     </p:column>
@@ -94,7 +97,7 @@
                         <center><p:commandButton value="Terminar Edición" actionListener="#{estudianteView.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain" icon="ui-icon-check"/></center>
                     </p:tab>
                     <p:tab title="Agregar relación personal">
-                        <p:panelGrid columns="3">
+                        <p:panelGrid columns="3" style="width: 100%;">
                             <h:outputText value="Cédula:"/>
                             <p:inputText value="#{estudianteView.cedula}" style="text-transform: uppercase;"/>
                             <p:commandButton value="Buscar" actionListener="#{estudianteView.buscarPersona()}" update="dlgFormEdit"/>

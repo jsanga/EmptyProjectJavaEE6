@@ -52,16 +52,16 @@ public class UsuariosEjb implements UsuariosServices{
                 
                 switch(rol.getRolName()){
                     case "admin":
-                        JsfUti.redirectFaces("/faces/admin/principal.xhtml");
+                        JsfUti.redirectFaces("/faces/admin/perfil.xhtml");
                         break;
                     case "profesor":
-                        JsfUti.redirectFaces("/faces/profesor/principal.xhtml");
+                        JsfUti.redirectFaces("/faces/profesor/perfil.xhtml");
                         break;
                     case "estudiante":
-                        JsfUti.redirectFaces("/faces/estudiante/principal.xhtml");
+                        JsfUti.redirectFaces("/faces/estudiante/perfil.xhtml");
                         break;
                     case "invitado":
-                        JsfUti.redirectFaces("/faces/general/principal.xhtml");
+                        JsfUti.redirectFaces("/faces/general/perfil.xhtml");
                         break;
                     default:
                         System.out.println("Error!");

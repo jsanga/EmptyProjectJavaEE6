@@ -10,7 +10,10 @@
     <ui:define name="content">
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
-            <p:commandButton value="Ingresar Curso" update=":dlgForm" actionListener="#{crudCursos.nuevoCurso()}" icon="ui-icon-circle-arrow-e" onclick="PF('dlgCrear').show()"/>
+            <center>
+                <h:outputText id="titulo" value="Cursos" style="font-weight:bold; font-size: 32px; font-family: inherit;"/>
+            </center>
+            <p:commandButton value="Ingresar Curso" update=":dlgForm" actionListener="#{crudCursos.nuevoCurso()}" icon="ui-icon-circle-arrow-e" onclick="PF('dlgCrear').show()" style="margin-top: 15px; margin-bottom: 15px;"/>
             <p:dataTable id="dtCursos" value="#{crudCursos.cursosList}"
                           rows="10" paginator="true" var="curso" >
                 <f:facet name="header">

@@ -60,7 +60,14 @@ public class PerfilView implements Serializable{
     }
 
     public void irPerfil(){
-        JsfUti.redirectFaces("/admin/perfil.xhtml");
+        if(uSession.getRolPersona().equals("admin"))
+            JsfUti.redirectFaces("/faces/admin/perfil.xhtml");
+        if(uSession.getRolPersona().equals("estudiante"))
+            JsfUti.redirectFaces("/faces/estudiante/perfil.xhtml");
+        if(uSession.getRolPersona().equals("profesor"))
+            JsfUti.redirectFaces("/faces/profesor/perfil.xhtml");
+        if(uSession.getRolPersona().equals("invitado"))
+            JsfUti.redirectFaces("/faces/invitado/perfil.xhtml");
     }
     
     public UtilSession getUtilSession() {

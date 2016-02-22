@@ -10,6 +10,9 @@
     <ui:define name="content">
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+            <center>
+                <h:outputText id="titulo" value="Paralelos" style="font-weight:bold; font-size: 32px; font-family: inherit;"/>
+            </center>
             <p:commandButton value="Ingresar Paralelo" update=":dlgForm" actionListener="#{crudParalelos.nuevoParalelo()}" onclick="PF('dlgCrear').show()" icon="ui-icon-circle-arrow-e" style="margin-top: 15px; margin-bottom: 15px;"/>
             <p:dataTable id="dtCursos" value="#{crudParalelos.paraleloList}" var="par">
                 <f:facet name="header">

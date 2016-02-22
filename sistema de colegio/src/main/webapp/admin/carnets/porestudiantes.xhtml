@@ -14,6 +14,33 @@
             <center >
                 <h:outputText id="titulo" value="Generación de carnéts por estudiantes" style="margin-top: 15px; font-weight:bold; font-size: 32px; font-family: inherit; "/>
             </center>
+            <center>
+                <p:dataTable id="dtMatriculas" value="#{carnetsView.matriculas}" lazy="true"
+                             rows="10" paginator="true"
+                             emptyMessage="No tiene datos" var="matricula">
+                    <f:facet name="header">
+                        Lista de matrículas
+                    </f:facet>
+                    <p:column headerText="Cédula" filterBy="#{matricula.estudiante.persona.cedula}">
+                        <h:outputText value="#{matricula.estudiante.persona.cedula}" style="text-transform: uppercase;"/>
+                    </p:column>
+                    <p:column headerText="Nombres" filterBy="#{matricula.estudiante.persona.nombres}">
+                        <h:outputText value="#{matricula.estudiante.persona.nombres}" style="text-transform: uppercase;"/>
+                    </p:column>
+                    <p:column headerText="Apellidos" filterBy="#{matricula.estudiante.persona.apellidos}">
+                        <h:outputText value="#{matricula.estudiante.persona.apellidos}" style="text-transform: uppercase;"/>
+                    </p:column>
+                    <p:column headerText="Estado">
+                        <h:outputText value="Activo" rendered="#{matricula.estado}" style="text-transform: uppercase;"/>
+                        <h:outputText value="Inactivo" rendered="#{!matricula.estado}" style="text-transform: uppercase;"/>
+                    </p:column>
+                    <p:column headerText="Acción">
+                        <center>
+                            <p:commandButton value="Generar Carné" ajax="false" actionListener="#{carnetsView.downloadByEst(matricula)}" icon="ui-icon-arrowstop-1-s"/>
+                        </center>
+                    </p:column>
+                </p:dataTable>
+            </center>
         </h:form>
     </ui:define>
 </ui:composition>

@@ -5,10 +5,10 @@
  */
 package com.jscompany.ebsystem.managedbeans.carnets;
 
-import com.jscompany.ebsystem.database.Querys;
 import com.jscompany.ebsystem.entidades.colegios.Colegio;
-import com.jscompany.ebsystem.entidades.usuarios.Persona;
+import com.jscompany.ebsystem.entidades.colegios.Matricula;
 import com.jscompany.ebsystem.lazymodels.AsignacionCursoLazy;
+import com.jscompany.ebsystem.lazymodels.MatriculasLazy;
 import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.managedbeans.session.UtilSession;
 import com.jscompany.ebsystem.services.AclService;
@@ -40,6 +40,7 @@ public class CarnetsView implements Serializable{
     
     private Colegio colegio;
     private AsignacionCursoLazy asignacionesCursoLazy;
+    private MatriculasLazy matriculas;
     
     @PostConstruct
     public void init(){
@@ -48,6 +49,11 @@ public class CarnetsView implements Serializable{
         
         colegio = (Colegio) services.getEntity(Colegio.class, uSession.getIdColegio());
         asignacionesCursoLazy = new AsignacionCursoLazy(colegio, true);
+        matriculas = new MatriculasLazy(colegio);
+    }
+    
+    public void downloadByEst(Matricula mat){
+        
     }
 
     public UtilSession getUtilSession() {
@@ -72,6 +78,14 @@ public class CarnetsView implements Serializable{
 
     public void setAsignacionesCursoLazy(AsignacionCursoLazy asignacionesCursoLazy) {
         this.asignacionesCursoLazy = asignacionesCursoLazy;
+    }
+
+    public MatriculasLazy getMatriculas() {
+        return matriculas;
+    }
+
+    public void setMatriculas(MatriculasLazy matriculas) {
+        this.matriculas = matriculas;
     }
     
 }

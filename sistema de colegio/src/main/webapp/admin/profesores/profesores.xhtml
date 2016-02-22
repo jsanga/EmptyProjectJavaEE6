@@ -10,6 +10,9 @@
     <ui:define name="content">
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+            <center>
+                <h:outputText id="titulo" value="Lista de Profesores" style="font-weight:bold; font-size: 32px; font-family: inherit;"/>
+            </center>
             <p:commandButton value="Ingresar Profesor" update="dlgForm" icon="ui-icon-circle-arrow-e" actionListener="#{profesorView.nuevoProfesor()}" onclick="PF('dlgCrear').show()" style="margin-top: 15px; margin-bottom: 15px;"/>
             <center>
                 <p:dataTable id="dtEstudiantesList" value="#{profesorView.profesores}" lazy="true" rows="5" paginator="true"

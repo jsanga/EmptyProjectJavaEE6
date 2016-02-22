@@ -78,7 +78,10 @@ public class AsignacionCursoView implements Serializable{
         colegio = (Colegio) services.getEntity(Colegio.class, uSession.getIdColegio());
         periodosList =  services.getListEntitiesByParameters(Querys.getPeriodosList, new String[]{}, new Object[]{});
         asignacionesList = services.getListEntitiesByParameters(Querys.getAsignacionesCursoListByColegioIdNoState, new String[]{"colegio"}, new Object[]{colegio});
-        asignacionesCursoLazy = new AsignacionCursoLazy(colegio);
+        if(uSession.getRolPersona().equals("admin"))
+            asignacionesCursoLazy = new AsignacionCursoLazy(colegio);
+        else
+            asignacionesCursoLazy = new AsignacionCursoLazy(colegio, true);
         jornadasList = services.getListEntitiesByParameters(Querys.getJornadasList, new String[]{}, new Object[]{});
         materias = new MateriasLazy();
         paralelos = new ParalelosLazy();
@@ -129,7 +132,7 @@ public class AsignacionCursoView implements Serializable{
     }
     
     public void masInfo(AsignacionCurso ac){
-        JsfUti.redirectNewTab("/colegionetworksystem/faces/admin/cursos/masinfo.xhtml");
+        JsfUti.redirectNewTab("/colegionetworksystem/faces/recursos/cursos/masinfo.xhtml");
         utilSession.instanciarParametros();
         utilSession.agregarParametro("idAsigCurso", ac.getId());
     }

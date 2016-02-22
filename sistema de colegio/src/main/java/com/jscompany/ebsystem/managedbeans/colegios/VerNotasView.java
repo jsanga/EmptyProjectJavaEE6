@@ -6,16 +6,15 @@
 package com.jscompany.ebsystem.managedbeans.colegios;
 
 import com.jscompany.ebsystem.database.Querys;
-import com.jscompany.ebsystem.entidades.colegios.AsignacionCursoMaterias;
 import com.jscompany.ebsystem.entidades.colegios.AsignacionProfesor;
 import com.jscompany.ebsystem.entidades.colegios.DetalleMateria;
 import com.jscompany.ebsystem.entidades.colegios.Matricula;
+import com.jscompany.ebsystem.entidades.colegios.PeriodoLectivo;
 import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.managedbeans.session.UtilSession;
 import com.jscompany.ebsystem.services.AclService;
 import com.jscompany.ebsystem.util.JsfUti;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -47,6 +46,8 @@ public class VerNotasView implements Serializable{
     private List<AsignacionProfesor> asigProfList;
     private List<DetalleMateria> detalleMateriaList;
     private DetalleMateria detalleMateria;
+    private PeriodoLectivo periodo;
+    private List<PeriodoLectivo> periodoList;
     
     @PostConstruct
     public void init(){
@@ -61,6 +62,7 @@ public class VerNotasView implements Serializable{
         matricula = (Matricula) services.getEntity(Matricula.class, idMatricula);
         asigProfList = services.getListEntitiesByParameters(Querys.getAsignacionesProfesorByAsignacionCursoAndParaleloList, new String[]{"asigCurso", "paralelo"}, new Object[]{matricula.getAsignacionCurso(), matricula.getParalelo()});
         detalleMateriaList = (List<DetalleMateria>) matricula.getDetalleMateriaCollection();
+        periodoList = services.getListEntitiesByParameters(Querys.getPeriodosList, new String[]{}, new Object[]{});
         utilSession.borrarDatos();
     }
     
@@ -110,6 +112,22 @@ public class VerNotasView implements Serializable{
 
     public void setDetalleMateria(DetalleMateria detalleMateria) {
         this.detalleMateria = detalleMateria;
+    }
+
+    public PeriodoLectivo getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(PeriodoLectivo periodo) {
+        this.periodo = periodo;
+    }
+
+    public List<PeriodoLectivo> getPeriodoList() {
+        return periodoList;
+    }
+
+    public void setPeriodoList(List<PeriodoLectivo> periodoList) {
+        this.periodoList = periodoList;
     }
     
 }

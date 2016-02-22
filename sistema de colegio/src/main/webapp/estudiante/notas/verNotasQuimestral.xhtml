@@ -1,16 +1,27 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/estudiante/principal.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    
+
+    <ui:define name="content">
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
             <center>
+                
+                <h:outputText id="titulo" value="Notas del Quimestre" style="font-weight:bold; font-size: 32px; font-family: inherit;"/>
+            </center>
+            <center>
+                <p:panelGrid style="width:100%;" columns="2">
+                    <h:outputText value="Seleccione el periodo lectivo: " />
+                    <p:selectOneMenu value="#{verNotasView.periodo}" converter="periodoConverter" style="width: 180px;">
+                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                        <f:selectItems value="#{verNotasView.periodoList}" var="per" itemValue="#{per}" itemLabel="#{per.fechaInicio} : #{per.fechaFin}"/>
+                    </p:selectOneMenu>
+                </p:panelGrid>
                 <p:panelGrid style="width:100%;">
                     <f:facet name="header">
                         <p:row>
@@ -60,11 +71,10 @@
                         </div>                        
                     </p:panelGrid>
                 </p:dataGrid>
-                <p:commandButton value="Regresar" />
+                
                 
             </center>
         </h:form>
         
-    </h:body>
-</html>
-
+    </ui:define>
+</ui:composition>

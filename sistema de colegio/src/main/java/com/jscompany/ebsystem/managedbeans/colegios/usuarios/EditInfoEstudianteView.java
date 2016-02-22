@@ -12,6 +12,7 @@ import com.jscompany.ebsystem.entidades.usuarios.Loguin;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import com.jscompany.ebsystem.entidades.usuarios.PersonaEmail;
 import com.jscompany.ebsystem.entidades.usuarios.PersonaTelefono;
+import com.jscompany.ebsystem.entidades.usuarios.Sexo;
 import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.managedbeans.session.UtilSession;
 import com.jscompany.ebsystem.services.AclService;
@@ -56,6 +57,7 @@ public class EditInfoEstudianteView implements Serializable{
     private PersonaTelefono ptelf, ptelfedit;
     private List<PersonaTelefono> ptelfList;
     private String pass1, pass2;
+    private List<Sexo> sexoList;
     
     private Boolean mostrarPass;
     
@@ -91,6 +93,7 @@ public class EditInfoEstudianteView implements Serializable{
         pemail.setEstado(true);
         ptelf = new PersonaTelefono();
         ptelf.setEstado(true);
+        sexoList = services.getListEntitiesByParameters(Querys.getSexoList, new String[]{}, new Object[]{});
     }
 
     public void cambiarPassword(){
@@ -102,6 +105,18 @@ public class EditInfoEstudianteView implements Serializable{
             JsfUti.messageInfo(null, "Info", "La contraseña no coincide.");
         }
         pass1 = pass2 = null;
+    }
+    
+    public void actualizarPersona(){
+        if(services.updateAndPersistEntity(person))
+            JsfUti.messageInfo(null, "Info", "Se editó la persona satisfactoriamente");
+        else
+            JsfUti.messageError(null, "Error", "Hubo un problema al editar la persona.");
+    }
+    
+    public void irPerfil(){
+        if(uSession.getRolPersona().equals("estudiante"))
+            JsfUti.redirectFaces("/faces/estudiante/perfil.xhtml");
     }
     
     public void cambiarEmail(){
@@ -236,6 +251,14 @@ public class EditInfoEstudianteView implements Serializable{
 
     public void setMostrarPass(Boolean mostrarPass) {
         this.mostrarPass = mostrarPass;
+    }
+
+    public List<Sexo> getSexoList() {
+        return sexoList;
+    }
+
+    public void setSexoList(List<Sexo> sexoList) {
+        this.sexoList = sexoList;
     }
     
 }

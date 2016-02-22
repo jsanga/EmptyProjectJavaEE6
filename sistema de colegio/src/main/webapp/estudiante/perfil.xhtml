@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/estudiante/principal.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    
+
+    <ui:define name="content">
+        <h:form id="frmMain">
+            <center>
+                
+                <h:outputText id="titulo" value="Mi Perfil" style="font-weight:bold; font-size: 32px; font-family: inherit;"/>
+                
+                <p:panelGrid columns="2" style="margin-top: 15px;">
+                    <h:outputText value="Cédula:"/>
+                    <p:inputText value="#{perfilView.persona.cedula}" style="text-transform: uppercase;" readonly="true"/>
+                    <h:outputText value="Nombres:"/>
+                    <p:inputText value="#{perfilView.persona.nombres}" style="text-transform: uppercase;" readonly="true"/>
+                    <h:outputText value="Apellidos:"/>
+                    <p:inputText value="#{perfilView.persona.apellidos}" style="text-transform: uppercase;" readonly="true"/>
+                    <h:outputText value="Dirección:"/>
+                    <p:inputText value="#{perfilView.persona.direccion}" style="text-transform: uppercase;" readonly="true"/>
+                    <h:outputText value="Fecha de nacimiento:"/>
+                    <p:inputText value="#{perfilView.persona.fechaNacimiento}" readonly="true"/>
+                    <h:outputText value="Sexo:"/>
+                    <p:inputText value="#{perfilView.persona.sexo.nombreSexo}" style="text-transform: uppercase;" readonly="true"/>
+                    <h:outputText value="Rol:"/>
+                    <p:inputText value="#{perfilView.persona.rol.rolName}" style="text-transform: uppercase;" readonly="true"/>
+                </p:panelGrid>
+            </center>
+        </h:form>
+    </ui:define>
+</ui:composition>

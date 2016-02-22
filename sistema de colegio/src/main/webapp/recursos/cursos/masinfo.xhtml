@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/recursos/masinfotemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    
+
+    <ui:define name="content">
+        <h:form id="frmMain">
+            <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+            <center>
+                
+                <h:outputText id="titulo" value="Mi Perfil" style="font-weight:bold; font-size: 32px; font-family: inherit;"/>
+                
+                <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+                <p:panel header="Asignaciones del curso: #{masInfoAsigCursoView.ac.curso.nombre}">
+                    <p:tabView>
+                        <p:tab title="Curso">
+                            <center>
+                                <p:panelGrid columns="2">
+                                    <h:outputText value="Nombre curso:"/>
+                                    <p:inputText value="#{masInfoAsigCursoView.ac.curso.nombre}" style="text-transform: uppercase;" readonly="true"/>
+                                    <h:outputText value="Especializaciòn:"/>
+                                    <p:inputText value="#{masInfoAsigCursoView.ac.curso.especializacion}" style="text-transform: uppercase;" readonly="true"/>
+                                    <h:outputText value="Jornada:"/>
+                                    <p:inputText value="#{masInfoAsigCursoView.ac.jornada.nombreJornada}" style="text-transform: uppercase;" readonly="true"/>
+                                    <h:outputText value="Fecha de inicio:"/>
+                                    <p:inputText value="#{masInfoAsigCursoView.ac.periodoLectivo.fechaInicio}" style="text-transform: uppercase;" readonly="true"/>
+                                    <h:outputText value="Fecha de finalización:"/>
+                                    <p:inputText value="#{masInfoAsigCursoView.ac.periodoLectivo.fechaFin}" style="text-transform: uppercase;" readonly="true"/>
+                                </p:panelGrid>
+                            </center>
+                        </p:tab>
+
+                        <!-- -->
+
+                        <p:tab title="Materias">
+                            <center>
+                                <p:dataTable id="dtMaterias" value="#{masInfoAsigCursoView.ac.asignacionCursoMateriasCollection}" var="mat">
+                                    <p:column headerText="Nombre" filterBy="#{mat.materia.nombre}">
+                                        <h:outputText value="#{mat.materia.nombre}" style="text-transform: uppercase;"/>
+                                    </p:column>
+                                    <p:column headerText="Asignada a profesor" >
+                                        <h:outputText value="No ha sido tomada" rendered="#{!mat.fueTomada}" style="text-transform: uppercase;"/>
+                                        <h:outputText value="Ya fue tomada" rendered="#{mat.fueTomada}" style="text-transform: uppercase;"/>
+                                    </p:column>
+                                    <p:column headerText="Paralelo" >
+                                        <h:outputText value="#{mat.paralelo.nombre}"  style="text-transform: uppercase;"/>
+                                    </p:column>
+                                    <p:column headerText="Estado">
+                                        <h:outputText value="Activo" rendered="#{mat.estado}" style="text-transform: uppercase;"/>
+                                        <h:outputText value="Inactivo" rendered="#{!mat.estado}" style="text-transform: uppercase;"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </center>
+                        </p:tab>
+
+                        <!-- -->
+
+                        <p:tab title="Paralelos">
+                            <center>
+                                <p:dataTable id="dtParalelos" value="#{masInfoAsigCursoView.ac.asignacionCursoParalelosCollection}" var="par">
+                                    <p:column headerText="Nombre" filterBy="#{par.paralelo.nombre}">
+                                        <h:outputText value="#{par.paralelo.nombre}" style="text-transform: uppercase;"/>
+                                    </p:column>
+                                    <p:column headerText="Cupo disponible">
+                                        <h:outputText value="#{par.cupoDisponible}" style="text-transform: uppercase;"/>
+                                    </p:column>
+                                    <p:column headerText="Cupo màximo">
+                                        <h:outputText value="#{par.maxCupo}" style="text-transform: uppercase;"/>
+                                    </p:column>
+                                    <p:column headerText="Estado">
+                                        <h:outputText value="Activo" rendered="#{par.estado}" style="text-transform: uppercase;"/>
+                                        <h:outputText value="Inactivo" rendered="#{!par.estado}" style="text-transform: uppercase;"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </center>
+                        </p:tab>
+
+                        <!-- -->
+
+                        <p:tab title="Asignaciones a profesores">
+                            <center>
+                                <p:dataTable id="dtAsignaciones" value="#{masInfoAsigCursoView.ac.asignacionProfesorCollection}" var="asignacion">
+                                    <p:column headerText="Curso" filterBy="#{asignacion.asignacionCurso.curso.nombre}">
+                                        <h:outputText value="#{asignacion.asignacionCurso.curso.nombre}" style="text-transform: uppercase;"/>
+                                    </p:column>
+                                    <p:column headerText="Cédula Profesor" filterBy="#{asignacion.profesor.persona.cedula}">
+                                        <h:outputText value="#{asignacion.profesor.persona.cedula}" style="text-transform: uppercase;"/>
+                                    </p:column>
+                                    <p:column headerText="Nombres Profesor" filterBy="#{asignacion.profesor.persona.nombres}">
+                                        <h:outputText value="#{asignacion.profesor.persona.nombres}" style="text-transform: uppercase;"/>
+                                    </p:column>
+                                    <p:column headerText="Apellidos Profesor" filterBy="#{asignacion.profesor.persona.apellidos}">
+                                        <h:outputText value="#{asignacion.profesor.persona.apellidos}" style="text-transform: uppercase;"/>
+                                    </p:column>
+                                    <p:column headerText="Estado">
+                                        <h:outputText value="Activo" rendered="#{asignacion.estado}" style="text-transform: uppercase;"/>
+                                        <h:outputText value="Inactivo" rendered="#{!asignacion.estado}" style="text-transform: uppercase;"/>
+                                    </p:column>
+                                    <p:column headerText="Acción">
+                                        <center>
+                                            <p:commandButton value="Más información" actionListener="#{masInfoAsigCursoView.masInfoProf(asignacion)}" icon="ui-icon-zoomout"/>
+                                        </center>
+                                    </p:column>
+                                </p:dataTable>
+                            </center>
+                        </p:tab>
+                    </p:tabView>
+                </p:panel>
+            </center>
+        </h:form>
+    </ui:define>
+</ui:composition>

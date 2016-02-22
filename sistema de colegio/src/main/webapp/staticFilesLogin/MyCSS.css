@@ -1,0 +1,33 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Feb 22, 2016, 1:51:12 PM
+    Author     : Joao Sanga
+*/
+
+.ui-widget-content{
+    font-size: 12px;    
+} 
+
+.ui-datatable-even{
+    font-size: 12px;    
+}
+
+.ui-button ui-widget {
+    font-size: 10px;        
+}
+
+.ui-state-default{
+    font-size: 10px;        
+}
+
+.ui-corner-all{
+    font-size: 10px;        
+}
+
+.ui-button-text-icon-left{
+    font-size: 12px;        
+}

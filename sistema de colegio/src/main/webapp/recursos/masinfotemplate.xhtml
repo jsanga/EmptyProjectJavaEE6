@@ -26,7 +26,6 @@
 
         <!-- Custom CSS -->
         <link href="/colegionetworksystem/staticFilesLogin/sb-admin-2.css" rel="stylesheet"/>
-        <link href="/colegionetworksystem/staticFilesLogin/MyCSS.css" rel="stylesheet"/>
 
         <!-- Morris Charts CSS -->
 
@@ -48,7 +47,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/colegionetworksystem/faces/profesor/perfil.xhtml">Proyecto UECH</a>
+                    <a class="navbar-brand" href="#">Proyecto UECH</a>
                 </div>
                 <!-- /.navbar-header -->
 
@@ -61,15 +60,7 @@
                              #{userSession.username} <i class="fa fa-caret-down"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
-                            <h:form>
-                                <li><a href="/colegionetworksystem/faces/estudiante/perfil.xhtml"><i class="fa fa-user fa-fw"></i> Perfil</a>
-                                </li>
-                                <li><a href="/colegionetworksystem/faces/estudiante/editarperfil.xhtml"><i class="fa fa-gear fa-fw"></i> Editar perfil</a>
-                                </li>
-                                <li class="divider"></li>
-                                <li><p:commandLink actionListener="#{login.salir()}"><i class="fa fa-sign-out fa-fw"></i> Salir</p:commandLink>
-                                </li>
-                            </h:form>
+                            
                         </ul>
                         <!-- /.dropdown-user -->
                     </li>
@@ -79,36 +70,7 @@
 
                 <div class="navbar-default sidebar" role="navigation">
                     <div class="sidebar-nav navbar-collapse">
-                        <ul class="nav" id="side-menu">
-                            
-                            <li>
-                                <a href="/colegionetworksystem/faces/profesor/perfil.xhtml"><i class="fa fa-user"></i> Mi Perfil</a>
-                            </li>
-                            <li>
-                                <a href="/colegionetworksystem/faces/profesor/cursos/cursos.xhtml"><i class="fa fa-list-ul"></i> Ver cursos</a>
-                            </li>
-                            <li>
-                                <a href="/colegionetworksystem/faces/profesor/profesores/profesores.xhtml"><i class="fa fa-user-plus"></i> Profesores</a>
-                            </li>
-                            
-                            
-                            
-                            <li>
-                                <a href="#"><i class="fa fa-book"></i> Notas<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    
-                                    <li>
-                                        <a href="/colegionetworksystem/faces/profesor/notas/calificarMateriaQuimestral.xhtml">Calificar</a>
-                                    </li>
-                                    <li>
-                                        <a href="/colegionetworksystem/faces/profesor/notas/asignaciones.xhtml">Ver asignaciones</a>
-                                    </li>
-                                </ul>
-                                <!-- /.nav-second-level -->
-                            </li>
-                                                      
-                            
-                        </ul>
+                        
                     </div>
                     <!-- /.sidebar-collapse -->
                 </div>

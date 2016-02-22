@@ -10,7 +10,10 @@
     <ui:define name="content">
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
-            <p:commandButton value="Crear asignación" update=":dlgForm" actionListener="#{asignacionCursoView.nuevaAsignacion()}" onclick="PF('dlgCrear').show()" style="margin-top: 15px; margin-bottom: 15px;"/>
+            <center>
+                <h:outputText id="titulo" value="Asignar Curso" style="font-weight:bold; font-size: 32px; font-family: inherit;"/>
+            </center>
+            <p:commandButton value="Crear asignación" update=":dlgForm" actionListener="#{asignacionCursoView.nuevaAsignacion()}" icon="ui-icon-circle-arrow-e" onclick="PF('dlgCrear').show()" style="margin-top: 15px; margin-bottom: 15px;"/>
             <p:dataTable id="dtAsignaciones" value="#{asignacionCursoView.asignacionesCursoLazy}" lazy="true"
                          rows="10" paginator="true" var="asignacion" style="margin-bottom: 15px;">
                 <f:facet name="header">

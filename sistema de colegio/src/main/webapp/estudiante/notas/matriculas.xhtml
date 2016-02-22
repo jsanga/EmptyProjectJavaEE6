@@ -1,15 +1,19 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://java.sun.com/jsf/core">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/estudiante/principal.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    
+
+    <ui:define name="content">
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+            <center>
+                
+                <h:outputText id="titulo" value="Historial de matrículas" style="font-weight:bold; font-size: 32px; font-family: inherit;"/>
+            </center>
             <p:dataTable id="dtAsignaciones" value="#{verMatriculasView.matriculasList}" rows="5" 
                          emptyMessage="No tiene datos" paginator="true" var="matricula">
                 <f:facet name="header">
@@ -28,6 +32,6 @@
                 </p:column>
             </p:dataTable>
         </h:form>
-    </h:body>
-</html>
-
+    
+    </ui:define>
+</ui:composition>

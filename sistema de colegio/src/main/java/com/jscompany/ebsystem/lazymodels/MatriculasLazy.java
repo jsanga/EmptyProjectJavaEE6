@@ -18,10 +18,17 @@ import org.hibernate.criterion.Restrictions;
 public class MatriculasLazy extends BaseLazyDataModel<Matricula> {
     
     private Colegio colegio;
+    private Boolean estado;
     
     public MatriculasLazy(Colegio colegio) {
         super(Matricula.class);
         this.colegio = colegio;
+    }
+    
+    public MatriculasLazy(Colegio colegio, Boolean estado) {
+        super(Matricula.class);
+        this.colegio = colegio;
+        this.estado = estado;
     }
 
     @Override
@@ -43,6 +50,9 @@ public class MatriculasLazy extends BaseLazyDataModel<Matricula> {
             c.add(Restrictions.ilike("nombre", "%"+ filters.get("curso.nombre").toString().trim() +"%" ));
         }
         c.add(Restrictions.eq("colegio", this.colegio));
+        
+        if(this.estado != null)
+            crit.add(Restrictions.eq("estado", true));
     }
     
 }
