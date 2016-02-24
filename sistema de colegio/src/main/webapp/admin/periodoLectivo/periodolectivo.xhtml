@@ -19,10 +19,14 @@
                     Lista de periodos lectivos
                 </f:facet>
                 <p:column headerText="Fecha de inicio" filterBy="#{per.fechaInicio}">
-                    <h:outputText value="#{per.fechaInicio}" style="text-transform: uppercase;"/>
+                    <h:outputText value="#{per.fechaInicio}" style="text-transform: uppercase;">
+                        <f:convertDateTime type="date" pattern="dd/MMMM/yyyy"/>
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Fecha de fin" filterBy="#{per.fechaFin}">
-                    <h:outputText value="#{per.fechaFin}" style="text-transform: uppercase;"/>
+                    <h:outputText value="#{per.fechaFin}" style="text-transform: uppercase;">
+                        <f:convertDateTime type="date" pattern="dd/MMMM/yyyy"/>
+                    </h:outputText>
                 </p:column>
                 <p:column headerText="Estado">
                     <h:outputText value="Activo" rendered="#{per.estado}" style="text-transform: uppercase;"/>
@@ -31,7 +35,7 @@
                 <p:column headerText="Acción">
                     <center>
                         <p:commandButton value="Editar" actionListener="#{crudPeriodoLectivo.editarPeriodoLectivo(per)}" onclick="PF('dlgEditar').show()" update=":dlgFormEdit" icon="ui-icon-pencil"/>
-                        <p:commandButton value="Eliminar" actionListener="#{crudPeriodoLectivo.eliminarPeriodoLectivo(per)}" update="frmMain" icon="ui-icon-circle-close"/>
+                        <p:commandButton value="Eliminar" actionListener="#{crudPeriodoLectivo.setPeriodo(perr)}" update="frmMain" onclick="PF('dlgConfirm').show()" icon="ui-icon-circle-close"/>
                     </center>
                 </p:column>
             </p:dataTable>
@@ -58,6 +62,20 @@
                     <p:calendar value="#{crudPeriodoLectivo.periodo.fechaFin}" navigator="true" style="text-transform: uppercase;"/>
                 </p:panelGrid>
                 <center><p:commandButton value="Terminar Edición" actionListener="#{crudPeriodoLectivo.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain" icon="ui-icon-check"/></center>
+            </h:form>
+        </p:dialog>
+        
+        <p:dialog header="Confirmación" id="dlgConfirm" widgetVar="dlgConfirm" modal="true" height="auto" width="auto" resizable="false">  
+            <h:form id="dlgFrmConfirm" >
+                <h:outputText value="Está seguro de que desea eliminar el periodo lectivo?"/>
+                <br/>
+                <h:outputText value="Si elimina el periodo lectivo no lo podrá volver a habilitar."/>
+                <h:panelGroup >
+                    <center style="margin-top: 15px;">
+                        <p:commandButton value="Sí" actionListener="#{crudPeriodoLectivo.eliminarPeriodoLectivo}" oncomplete="PF('dlgConfirm').hide()" update=":frmMain" icon="ui-icon-check"/>
+                        <p:commandButton value="No" onclick="PF('dlgConfirm').hide()" icon="ui-icon-cancel"/>
+                    </center>
+                </h:panelGroup>
             </h:form>
         </p:dialog>
     </ui:define>

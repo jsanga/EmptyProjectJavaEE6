@@ -8,7 +8,10 @@
         <param-name>primefaces.THEME</param-name>
         <param-value>smoothness</param-value>
     </context-param>
-    <!-- 
+    <error-page>
+        <exception-type>404</exception-type>
+        <location>/recursos/notexists.xhtml</location>
+     </error-page>
     <filter>
         <filter-name>LoginFilter</filter-name>
         <filter-class>com.jscompany.ebsystem.security.LoginFilter</filter-class>
@@ -20,7 +23,7 @@
         <url-pattern>/faces/profesor/*</url-pattern>
         <url-pattern>/faces/invitado/*</url-pattern>
         <url-pattern>/faces/general/*</url-pattern>
-    </filter-mapping>-->
+    </filter-mapping>
     
     <filter>
         <filter-name>PrimeFaces FileUpload Filter</filter-name>
@@ -87,4 +90,13 @@
         <param-name>facelets.BUFFER_SIZE</param-name>
         <param-value>409600</param-value>
     </context-param>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/applicationContext.xml</param-value>
+    </context-param>
+    <listener>
+        <listener-class>
+            org.springframework.web.context.ContextLoaderListener
+        </listener-class>
+    </listener>
 </web-app>

@@ -34,7 +34,7 @@ public class UserSession implements Serializable {
         isLogged = null;
         idColegio = null;
         idPersona = null;
-        JsfUti.redirectFaces("/faces/recursos/logout.xhtml");
+        //JsfUti.redirectFaces("/faces/recursos/logout.xhtml");
     }
 
     public String getUsername() {

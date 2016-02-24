@@ -148,7 +148,7 @@ public class AsignacionProfesorView implements Serializable{
     }
     
     public void masInfo(AsignacionProfesor ap){
-        JsfUti.redirectNewTab("/colegionetworksystem/faces/admin/profesores/masinfo.xhtml");
+        JsfUti.redirectNewTab("/colegionetworksystem/faces/recursos/profesor/masinfo.xhtml");
         utilSession.instanciarParametros();
         utilSession.agregarParametro("idAsigProf", ap.getId());
     }

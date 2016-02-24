@@ -144,7 +144,7 @@ public class EstudianteView implements Serializable{
     }
     
     public void verMasDatos(Persona est){
-        JsfUti.redirectNewTab("/colegionetworksystem/faces/admin/estudiantes/masinfo.xhtml");
+        JsfUti.redirectNewTab("/colegionetworksystem/faces/recursos/estudiante/masinfo.xhtml");
         utilSession.instanciarParametros();
         utilSession.agregarParametro("idEstudiante", new Long(est.getId()));
     }

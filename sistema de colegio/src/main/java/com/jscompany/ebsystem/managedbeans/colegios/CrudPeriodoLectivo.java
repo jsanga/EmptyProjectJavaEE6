@@ -10,6 +10,7 @@ import com.jscompany.ebsystem.entidades.colegios.Paralelo;
 import com.jscompany.ebsystem.entidades.colegios.PeriodoLectivo;
 import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.services.AclService;
+import com.jscompany.ebsystem.util.HiberUtil;
 import com.jscompany.ebsystem.util.JsfUti;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import org.hibernate.SQLQuery;
 
 /**
  *
@@ -57,27 +59,28 @@ public class CrudPeriodoLectivo implements Serializable{
         this.periodo = c;
     }
     
-    public void eliminarPeriodoLectivo(PeriodoLectivo c){
-        int i=0;
-        for(PeriodoLectivo cl : periodoList){
-            if(cl.getFechaInicio().equals(c.getFechaInicio()) && cl.getFechaFin().equals(c.getFechaFin())){
-                if(c.getId() != null){
-                    c.setEstado(Boolean.FALSE);
-                    services.updateAndPersistEntity(c); 
-                }
-                break;
-            }
-            i++;
-        }
+    public void eliminarPeriodoLectivo(){
+        periodo.setEstado(Boolean.FALSE);
+        if(periodo.getId() != null){
+            services.updateAndPersistEntity(periodo); 
+        }        
     }
     
     public void guardarNuevo(){
-        if((periodo = (PeriodoLectivo) services.saveEntity(periodo)) != null){
-            periodoList.add(periodo);
-            JsfUti.messageInfo(null, "Info", "Se creó el periodo lectivo satisfactoriamente.");
-        }
-        else
+        SQLQuery query;
+        try{
+            if((periodo = (PeriodoLectivo) services.saveEntity(periodo)) != null){
+                periodoList.add(periodo);
+                query = HiberUtil.getSession().createSQLQuery("update colegios.matricula set estado=false");
+                query.executeUpdate();
+                JsfUti.messageInfo(null, "Info", "Se creó el periodo lectivo satisfactoriamente.");
+            }
+            else
+                JsfUti.messageError(null, "Error", "Hubo un problema al crear el periodo lectivo.");
+        }catch(Exception e){
+            e.printStackTrace();
             JsfUti.messageError(null, "Error", "Hubo un problema al crear el periodo lectivo.");
+        }
     }
     
     public void guardarEdicion(){

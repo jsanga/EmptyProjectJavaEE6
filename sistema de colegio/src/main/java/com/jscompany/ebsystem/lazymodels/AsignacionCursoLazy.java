@@ -26,6 +26,10 @@ public class AsignacionCursoLazy extends BaseLazyDataModel<AsignacionCurso> {
         this.colegio = idColegio;
     }
     
+    public AsignacionCursoLazy() {
+        super(AsignacionCurso.class);
+    }
+    
     public AsignacionCursoLazy(Colegio idColegio, Boolean estado) {
         super(AsignacionCurso.class);
         this.colegio = idColegio;
@@ -43,8 +47,9 @@ public class AsignacionCursoLazy extends BaseLazyDataModel<AsignacionCurso> {
         if (filters.containsKey("curso.especializacion")){
             d.add(Restrictions.ilike("especializacion", "%"+  filters.get("curso.especializacion").toString().trim() +"%" ));
         }
-                
-        crit.add(Restrictions.eq("colegio", colegio));
+        
+        if(colegio!=null)
+            crit.add(Restrictions.eq("colegio", colegio));
         
         if(estado!=null)
             crit.add(Restrictions.eq("estado", estado));

@@ -10,6 +10,33 @@
     <ui:define name="content">
         <h:form id="frmMain">
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+            
+            <center>
+                <h:outputText id="titulo" value="Certificado de Promoción por estudiante" style="margin-top: 15px; font-weight:bold; font-size: 32px; font-family: inherit; "/>
+                
+                <p:dataTable id="dtMatriculas" value="#{reportesView.catList}" lazy="true"
+                             rows="10" paginator="true"
+                             emptyMessage="No tiene datos" var="cat">
+                    <f:facet name="header">
+                        Lista de C.A.T.s
+                    </f:facet>
+                    <p:column headerText="Cédula" filterBy="#{matricula.estudiante.persona.cedula}">
+                        <h:outputText value="#{cat.nombre}" style="text-transform: uppercase;"/>
+                    </p:column>
+                    <p:column headerText="Nombres" filterBy="#{matricula.estudiante.persona.nombres}">
+                        <h:outputText value="#{cat.region.nombre}" style="text-transform: uppercase;"/>
+                    </p:column>
+                    <p:column headerText="Apellidos" filterBy="#{matricula.estudiante.persona.apellidos}">
+                        <h:outputText value="#{cat.direccion}" style="text-transform: uppercase;"/>
+                    </p:column>
+                    
+                    <p:column headerText="Acción">
+                        <center>
+                            <p:commandButton value="Generar Reporte" ajax="false" actionListener="#{carnetsView.downloadByEst(matricula)}" icon="ui-icon-arrowstop-1-s"/>
+                        </center>
+                    </p:column>
+                </p:dataTable>
+            </center>
         </h:form>
     </ui:define>
 </ui:composition>

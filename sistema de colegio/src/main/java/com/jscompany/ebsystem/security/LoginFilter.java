@@ -35,6 +35,12 @@ public class LoginFilter implements Filter{
         UserSession sesion = (UserSession)((HttpServletRequest)request).getSession().getAttribute("userSession");
         String contextPath;
         
+        if(sesion == null){
+            contextPath = ((HttpServletRequest)request).getContextPath();
+            ((HttpServletResponse)response).sendRedirect(contextPath+"/faces/recursos/sinpermisos.xhtml");
+            return;
+        }
+        
         if(!sesion.getIsLogged()){
             contextPath = ((HttpServletRequest)request).getContextPath();
             ((HttpServletResponse)response).sendRedirect(contextPath+"/faces/recursos/sinpermisos.xhtml");
@@ -45,8 +51,9 @@ public class LoginFilter implements Filter{
             
             if(sesion.getRolPersona().equals("admin")){
                 if (path.startsWith("/faces/general/") || path.startsWith("/faces/estudiante/") || path.startsWith("/faces/profesor/")) {
-                    sesion.cerrarSesion();
+                    
                     ((HttpServletResponse)response).sendRedirect(contextPath+"/faces/recursos/sinpermisos.xhtml");
+                    sesion.cerrarSesion();
                     return;
                 }else{
                     if(path.startsWith("/faces/admin/")){
@@ -58,8 +65,9 @@ public class LoginFilter implements Filter{
             
             if(sesion.getRolPersona().equals("estudiante")){
                 if (path.startsWith("/faces/general/") || path.startsWith("/faces/admin/") || path.startsWith("/faces/profesor/")) {  
-                    sesion.cerrarSesion();
+                    
                     ((HttpServletResponse)response).sendRedirect(contextPath+"/faces/recursos/sinpermisos.xhtml");
+                    sesion.cerrarSesion();
                     return;
                 }else{
                     if(path.startsWith("/faces/estudiante/")){
@@ -71,8 +79,9 @@ public class LoginFilter implements Filter{
             
             if(sesion.getRolPersona().equals("profesor")){    
                 if (path.startsWith("/faces/general/") || path.startsWith("/faces/estudiante/") || path.startsWith("/faces/admin/")) {  
-                    sesion.cerrarSesion();
+                    
                     ((HttpServletResponse)response).sendRedirect(contextPath+"/faces/recursos/sinpermisos.xhtml");
+                    sesion.cerrarSesion();
                     return;
                 }else{
                     if(path.startsWith("/faces/profesor/")){
@@ -84,8 +93,9 @@ public class LoginFilter implements Filter{
             
             if(sesion.getRolPersona().equals("invitado")){
                 if (path.startsWith("/faces/admin/") || path.startsWith("/faces/estudiante/") || path.startsWith("/faces/profesor/")) {
-                    sesion.cerrarSesion();
+                    
                     ((HttpServletResponse)response).sendRedirect(contextPath+"/faces/recursos/sinpermisos.xhtml");
+                    sesion.cerrarSesion();
                     return;
                 }else{
                     if(path.startsWith("/faces/general/")){

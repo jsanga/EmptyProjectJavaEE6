@@ -12,16 +12,30 @@
             <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
             
             <center>
-                <p:dataTable id="dtEstudiantesList" value="#{certificadoView.certificadosList}" emptyMessage="No tiene datos" style="width: 80%;" var="certificado">
-                    <p:column headerText="Nombre" filterBy="#{persona.cedula}">
-                        <h:outputText value="#{certificado.nombre}" style="text-transform: uppercase;"/>
+                <h:outputText id="titulo" value="Certificado de Promoción por estudiante" style="margin-top: 15px; font-weight:bold; font-size: 32px; font-family: inherit; "/>
+                
+                <p:dataTable id="dtMatriculas" value="#{certificadoView.matriculas}" lazy="true"
+                             rows="10" paginator="true"
+                             emptyMessage="No tiene datos" var="matricula">
+                    <f:facet name="header">
+                        Lista de matrículas
+                    </f:facet>
+                    <p:column headerText="Cédula" filterBy="#{matricula.estudiante.persona.cedula}">
+                        <h:outputText value="#{matricula.estudiante.persona.cedula}" style="text-transform: uppercase;"/>
                     </p:column>
-                    <p:column headerText="Descripcion" filterBy="#{persona.nombres}">
-                        <h:outputText value="#{certificado.descripcion}" style="text-transform: uppercase;"/>
+                    <p:column headerText="Nombres" filterBy="#{matricula.estudiante.persona.nombres}">
+                        <h:outputText value="#{matricula.estudiante.persona.nombres}" style="text-transform: uppercase;"/>
+                    </p:column>
+                    <p:column headerText="Apellidos" filterBy="#{matricula.estudiante.persona.apellidos}">
+                        <h:outputText value="#{matricula.estudiante.persona.apellidos}" style="text-transform: uppercase;"/>
+                    </p:column>
+                    <p:column headerText="Estado">
+                        <h:outputText value="Activo" rendered="#{matricula.estado}" style="text-transform: uppercase;"/>
+                        <h:outputText value="Inactivo" rendered="#{!matricula.estado}" style="text-transform: uppercase;"/>
                     </p:column>
                     <p:column headerText="Acción">
                         <center>
-                            <p:commandButton value="Crear Certificado" actionListener="#{certificadoView.crearCertificado(certificado)}" onclick="PF('dlgEditar').show()" update="dlgFormEdit"/>
+                            <p:commandButton value="Generar Certificado" ajax="false" actionListener="#{carnetsView.downloadByEst(matricula)}" icon="ui-icon-arrowstop-1-s"/>
                         </center>
                     </p:column>
                 </p:dataTable>

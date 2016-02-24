@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                template="/recursos/masinfotemplate.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    
+
+    <ui:define name="content">
+        <h:form id="frmMain">
+            <p:growl autoUpdate="true" showDetail="true" sticky="true"/>
+            <center>
+                <h:outputText id="titulo" value="Más Información del Estudiante" style="font-weight:bold; font-size: 32px; font-family: inherit;"/>
+            </center>
+            <p:tabView>
+                    <p:tab title="Profesor">
+                        <center>
+                            <p:panelGrid columns="2">
+                                <h:outputText value="Cédula:"/>
+                                <p:inputText value="#{masInfoEstView.persona.cedula}" style="text-transform: uppercase;" readonly="true"/>
+                                <h:outputText value="Nombres:"/>
+                                <p:inputText value="#{masInfoEstView.persona.nombres}" style="text-transform: uppercase;" readonly="true"/>
+                                <h:outputText value="Apellidos:"/>
+                                <p:inputText value="#{masInfoEstView.persona.apellidos}" style="text-transform: uppercase;" readonly="true"/>
+                                <h:outputText value="Dirección:"/>
+                                <p:inputText value="#{masInfoEstView.persona.direccion}" style="text-transform: uppercase;" readonly="true"/>
+                                <h:outputText value="Fecha de nacimiento:"/>
+                                <p:inputText value="#{masInfoEstView.persona.fechaNacimiento}" readonly="true"/>
+                                <h:outputText value="Rol:"/>
+                                <p:inputText value="#{masInfoEstView.persona.rol.rolName}" style="text-transform: uppercase;" readonly="true"/>
+                            </p:panelGrid>
+                        </center>
+                    </p:tab>
+                    
+                    <!-- -->
+                    
+                    <p:tab title="Relaciones">
+                        <p:dataTable id="dtEstudianteInfo" value="#{masInfoEstView.relacionesList}" var="rel">
+                            <p:column headerText="Nombres" >
+                                <h:outputText value="#{rel.personaEs.nombres} #{rel.personaEs.apellidos}" style="text-transform: uppercase;"/>
+                            </p:column>
+                            <p:column headerText="Relación" >
+                                <h:outputText value="#{rel.tipoRelacion.nombreRelacion}" style="text-transform: uppercase;"/>
+                            </p:column>
+                            <p:column headerText="Estado" >
+                                <h:outputText value="Habilitado" rendered="#{rel.tipoRelacion.estado}" style="text-transform: uppercase;"/>
+                                <h:outputText value="Deshabilitado" rendered="#{!rel.tipoRelacion.estado}" style="text-transform: uppercase;"/>
+                            </p:column>
+                            <p:column headerText="Acciòn" >
+                                <p:commandButton value="Editar relaciòn" onclick="PF('dlgEditar').show()" update="dlgFormEdit" actionListener="#{masInfoEstView.setRelacion(rel)}" style="text-transform: uppercase;" icon="ui-icon-pencil"/>
+                                <p:commandButton value="Habilitar" actionListener="#{masInfoEstView.habilitarRelacion(rel)}" rendered="#{!rel.tipoRelacion.estado}" style="text-transform: uppercase;" update="frmMain" icon="ui-icon-circle-check"/>
+                                <p:commandButton value="Deshabilitar" actionListener="#{masInfoEstView.deshabilitarRelacion(rel)}" rendered="#{rel.tipoRelacion.estado}" style="text-transform: uppercase;" update="frmMain" icon="ui-icon-circle-close"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+                    
+                    <!-- -->
+                    
+                    <p:tab title="Cursos tomados">
+                        <p:dataTable id="dtMatriculas" value="#{masInfoEstView.matriculasList}" var="mat"
+                                     rows="10" paginator="true"
+                                     emptyMessage="No tiene datos">
+                            <f:facet name="header">
+                                Lista de cursos tomados
+                            </f:facet>
+                            <p:column headerText="Curso" >
+                                <h:outputText value="#{mat.asignacionCurso.curso.nombre}" style="text-transform: uppercase;"/>
+                            </p:column>
+                            <p:column headerText="Especialización" >
+                                <h:outputText value="#{mat.asignacionCurso.curso.especializacion}" style="text-transform: uppercase;"/>
+                            </p:column>
+                            <p:column headerText="Periodo Lectivo" >
+                                <h:outputText value="#{mat.asignacionCurso.periodoLectivo.fechaInicio} : #{mat.asignacionCurso.periodoLectivo.fechaFin}" style="text-transform: uppercase;"/>
+                            </p:column>                            
+                            <p:column headerText="Estado">
+                                <h:outputText value="Activo" rendered="#{mat.estado}" style="text-transform: uppercase;"/>
+                                <h:outputText value="Inactivo" rendered="#{!mat.estado}" style="text-transform: uppercase;"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+            </p:tabView>
+            
+        </h:form>
+        
+        <p:dialog header="Editar Relaciòn" id="dlgEditar" widgetVar="dlgEditar" modal="true" height="auto" width="auto" resizable="false">  
+            <h:form id="dlgFormEdit" >
+                <p:panelGrid columns="2">
+                    <h:outputText value="Tipo de relación"/>
+                    <p:selectOneMenu value="#{estudianteView.relacion.tipoRelacion}" converter="tipoRelacionConverter" style="width: 180px;">
+                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                        <f:selectItems value="#{masInfoEstView.tipoRelacionList}" var="col" itemValue="#{col}" itemLabel="#{col.nombreRelacion}"/>
+                    </p:selectOneMenu>
+                </p:panelGrid>
+                <center><p:commandButton value="Terminar Edición" actionListener="#{masInfoEstView.guardarEdicion()}" onclick="PF('dlgEditar').hide()" update=":frmMain" icon="ui-icon-check"/></center>
+                
+            </h:form>
+        </p:dialog>
+    </ui:define>
+</ui:composition>

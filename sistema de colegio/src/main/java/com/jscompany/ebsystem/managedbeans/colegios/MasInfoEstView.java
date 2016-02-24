@@ -6,6 +6,7 @@
 package com.jscompany.ebsystem.managedbeans.colegios;
 
 import com.jscompany.ebsystem.database.Querys;
+import com.jscompany.ebsystem.entidades.colegios.Matricula;
 import com.jscompany.ebsystem.entidades.modelosdedatos.RelacionesPersona;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import com.jscompany.ebsystem.entidades.usuarios.RelacionPersona;
@@ -49,6 +50,7 @@ public class MasInfoEstView implements Serializable{
     private RelacionesPersona relacion;
     private Persona persona, personaEs;
     private List<TipoRelacionPersona> tipoRelacionList;
+    private List<Matricula> matriculasList;
     
     @PostConstruct
     public void init(){
@@ -65,6 +67,7 @@ public class MasInfoEstView implements Serializable{
             relacionList = services.getListEntitiesByParameters(Querys.getRelacionesByPersona, new String[]{"idPersona"}, new Object[]{idEstudiante});
             relacionesList = new ArrayList<>();
             this.llenarInformacion();
+            matriculasList = services.getListEntitiesByParameters(Querys.getMatriculasByEstudianteNoState, new String[]{"estudiante"}, new Object[]{persona.getEstudiante()});
             tipoRelacionList = services.getListEntitiesByParameters(Querys.getRelacionesList, new String[]{}, new Object[]{});
         }catch(Exception e){
             e.printStackTrace();
@@ -169,6 +172,14 @@ public class MasInfoEstView implements Serializable{
 
     public void setTipoRelacionList(List<TipoRelacionPersona> tipoRelacionList) {
         this.tipoRelacionList = tipoRelacionList;
+    }
+
+    public List<Matricula> getMatriculasList() {
+        return matriculasList;
+    }
+
+    public void setMatriculasList(List<Matricula> matriculasList) {
+        this.matriculasList = matriculasList;
     }
     
 }

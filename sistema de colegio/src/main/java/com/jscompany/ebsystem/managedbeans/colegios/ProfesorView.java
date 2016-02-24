@@ -72,7 +72,7 @@ public class ProfesorView implements Serializable{
     }
     
     public void masInfo(Profesor prof){
-        JsfUti.redirectNewTab("/colegionetworksystem/faces/admin/profesores/masInfoProf.xhtml");
+        JsfUti.redirectNewTab("/colegionetworksystem/faces/recursos/profesor/masInfoProf.xhtml");
         utilSession.instanciarParametros();
         utilSession.agregarParametro("idProfesor", prof.getId());
     }

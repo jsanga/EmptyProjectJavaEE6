@@ -25,6 +25,10 @@ public class MatriculasLazy extends BaseLazyDataModel<Matricula> {
         this.colegio = colegio;
     }
     
+    public MatriculasLazy() {
+        super(Matricula.class);
+    }
+    
     public MatriculasLazy(Colegio colegio, Boolean estado) {
         super(Matricula.class);
         this.colegio = colegio;
@@ -49,7 +53,9 @@ public class MatriculasLazy extends BaseLazyDataModel<Matricula> {
         if (filters.containsKey("curso.nombre")) {
             c.add(Restrictions.ilike("nombre", "%"+ filters.get("curso.nombre").toString().trim() +"%" ));
         }
-        c.add(Restrictions.eq("colegio", this.colegio));
+        
+        if(this.colegio!=null)
+            c.add(Restrictions.eq("colegio", this.colegio));
         
         if(this.estado != null)
             crit.add(Restrictions.eq("estado", true));
