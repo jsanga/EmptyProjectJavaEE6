@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jscompany.ebsystem.entidades.facturacion;
+package com.jscompany.ebsystem.entidades.usuarios;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +13,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -25,31 +25,33 @@ import javax.validation.constraints.Size;
  * @author Joao Sanga
  */
 @Entity
-@Table(name = "producto")
+@Table(name = "persona_email_fct", schema = "facturacion_usuarios")
 @NamedQueries({
-    @NamedQuery(name = "Producto.findAll", query = "SELECT p FROM Producto p"),
-    @NamedQuery(name = "Producto.findById", query = "SELECT p FROM Producto p WHERE p.id = :id"),
-    @NamedQuery(name = "Producto.findByNombre", query = "SELECT p FROM Producto p WHERE p.nombre = :nombre"),
-    @NamedQuery(name = "Producto.findByEstado", query = "SELECT p FROM Producto p WHERE p.estado = :estado")})
-public class Producto implements Serializable {
+    @NamedQuery(name = "PersonaEmailFct.findAll", query = "SELECT p FROM PersonaEmailFct p"),
+    @NamedQuery(name = "PersonaEmailFct.findById", query = "SELECT p FROM PersonaEmailFct p WHERE p.id = :id"),
+    @NamedQuery(name = "PersonaEmailFct.findByEmail", query = "SELECT p FROM PersonaEmailFct p WHERE p.email = :email"),
+    @NamedQuery(name = "PersonaEmailFct.findByEstado", query = "SELECT p FROM PersonaEmailFct p WHERE p.estado = :estado")})
+public class PersonaEmailFct implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Size(max = 200)
-    @Column(name = "nombre")
-    private String nombre;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 150)
+    @Column(name = "email")
+    private String email;
     @Column(name = "estado")
     private Boolean estado;
-    @ManyToMany(mappedBy = "productoCollection", fetch = FetchType.LAZY)
-    private Collection<CaracteristicasProducto> caracteristicasProductoCollection;
+    @JoinColumn(name = "persona", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private PersonaFct persona;
 
-    public Producto() {
+    public PersonaEmailFct() {
     }
 
-    public Producto(Long id) {
+    public PersonaEmailFct(Long id) {
         this.id = id;
     }
 
@@ -61,12 +63,12 @@ public class Producto implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getEmail() {
+        return email;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Boolean getEstado() {
@@ -77,12 +79,12 @@ public class Producto implements Serializable {
         this.estado = estado;
     }
 
-    public Collection<CaracteristicasProducto> getCaracteristicasProductoCollection() {
-        return caracteristicasProductoCollection;
+    public PersonaFct getPersona() {
+        return persona;
     }
 
-    public void setCaracteristicasProductoCollection(Collection<CaracteristicasProducto> caracteristicasProductoCollection) {
-        this.caracteristicasProductoCollection = caracteristicasProductoCollection;
+    public void setPersona(PersonaFct persona) {
+        this.persona = persona;
     }
 
     @Override
@@ -95,10 +97,10 @@ public class Producto implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Producto)) {
+        if (!(object instanceof PersonaEmailFct)) {
             return false;
         }
-        Producto other = (Producto) object;
+        PersonaEmailFct other = (PersonaEmailFct) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -107,7 +109,7 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.facturacion.Producto[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.usuarios.PersonaEmailFct[ id=" + id + " ]";
     }
     
 }

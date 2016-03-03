@@ -6,16 +6,18 @@
 package com.jscompany.ebsystem.managedbeans.colegios;
 
 import com.jscompany.ebsystem.database.Querys;
+import com.jscompany.ebsystem.entidades.colegios.AsignacionCurso;
 import com.jscompany.ebsystem.entidades.colegios.Colegio;
-import com.jscompany.ebsystem.entidades.colegios.Matricula;
 import com.jscompany.ebsystem.entidades.colegios.TipoColegio;
 import com.jscompany.ebsystem.entidades.usuarios.Persona;
 import com.jscompany.ebsystem.lazymodels.AsignacionCursoLazy;
 import com.jscompany.ebsystem.lazymodels.MatriculasLazy;
+import com.jscompany.ebsystem.managedbeans.session.ServletSession;
 import com.jscompany.ebsystem.managedbeans.session.UserSession;
 import com.jscompany.ebsystem.managedbeans.session.UtilSession;
 import com.jscompany.ebsystem.services.AclService;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -42,6 +44,9 @@ public class ReportesView implements Serializable{
     @ManagedProperty (value = "#{utilSession}")
     private UtilSession utilSession;
     
+    @ManagedProperty("#{servletSession}")
+    private ServletSession servletSession;
+    
     private Colegio colegio;
     private Persona person;
     private List<Colegio> catList;
@@ -59,6 +64,31 @@ public class ReportesView implements Serializable{
         catList = services.getListEntitiesByParameters(Querys.getColegiosByTipoList, new String[]{"tipo"}, new Object[]{tipoCol});
         asignacionesCursoLazy = new AsignacionCursoLazy(colegio);
         matriculas = new MatriculasLazy();
+    }
+    
+    public void downloadByCat(Colegio c){
+        try{
+            servletSession.instanciarParametros();
+            servletSession.agregarParametro("idCat", c.getId());
+            servletSession.agregarParametro("nombreCat", c.getNombre());
+            servletSession.agregarParametro("fecha", new Date());
+            servletSession.borrarDatos();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    public void downloadByCurso(AsignacionCurso ac){
+        try{
+            servletSession.instanciarParametros();
+            servletSession.agregarParametro("idAsigCur", ac.getId());
+            servletSession.agregarParametro("nombreCurso", ac.getCurso().getNombre());
+            servletSession.agregarParametro("fecha", new Date());
+            servletSession.agregarParametro("periodoLectivo", ac.getPeriodoLectivo().getFechaInicio()+" - "+ac.getPeriodoLectivo().getFechaFin());
+            servletSession.borrarDatos();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     public UserSession getuSession() {

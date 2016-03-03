@@ -43,7 +43,6 @@ public class TransactionManager implements Entitymanager {
         T ob = null;
         try {
             sess = HiberUtil.getSession();
-            sess.enableFilter("activos");
             ob = (T) sess.get(entity, (Serializable) id);
             Hibernate.initialize(ob);
         } catch (Exception e) {
@@ -72,7 +71,6 @@ public class TransactionManager implements Entitymanager {
         Object ob = null;
         try {
             sess = HiberUtil.getSession();
-            sess.enableFilter("activos");
             q = sess.createQuery(query).setMaxResults(1);
             for (int i = 0; i < par.length; i++) {
                 q.setParameter(par[i], val[i]);
@@ -90,7 +88,6 @@ public class TransactionManager implements Entitymanager {
         Object ob = null;
         try {
             sess = HiberUtil.getSession();
-            sess.enableFilter("activos");
             q = sess.createQuery(query).setMaxResults(1);
             for (int i = 0; i < par.length; i++) {
                 q.setParameter(par[i], val[i]);
@@ -109,7 +106,6 @@ public class TransactionManager implements Entitymanager {
         Object ob = null;
         try {
             sess = HiberUtil.getSession();
-            sess.enableFilter("activos");
             q = sess.createQuery(query).setMaxResults(1);
             q.setMaxResults(1);
             for (int i = 0; i < par.length; i++) {
@@ -128,7 +124,6 @@ public class TransactionManager implements Entitymanager {
         List result = null;
         try {
             sess = HiberUtil.getSession();
-            sess.enableFilter("activos");
             q = sess.createQuery(query);
             if (max != null) {
                 q.setMaxResults(max);
@@ -150,7 +145,6 @@ public class TransactionManager implements Entitymanager {
         List result = null;
         try {
             sess = HiberUtil.getSession();
-            sess.enableFilter("activos");
             q = sess.createQuery(query);
             if (max != null) {
                 q.setMaxResults(max);
@@ -175,7 +169,6 @@ public class TransactionManager implements Entitymanager {
         List l = null;
         try {
             sess = HiberUtil.getSession();
-            sess.enableFilter("activos");
             q = sess.createQuery(query);
             l = (List) q.list();
             l.size();
@@ -191,7 +184,6 @@ public class TransactionManager implements Entitymanager {
         List l = null;
         try {
             sess = HiberUtil.getSession();
-            sess.enableFilter("activos");
             q = sess.createQuery(query);
             for (int i = 0; i < par.length; i++) {
                 q.setParameter(par[i], val[i]);
@@ -210,7 +202,6 @@ public class TransactionManager implements Entitymanager {
         List<T> list = null;
         try {
             sess = HiberUtil.getSession();
-            sess.enableFilter("activos");
             cq = sess.createCriteria(entity);
             list = (List) EntityBeanCopy.clone(cq.list());
             list.size();
@@ -225,7 +216,6 @@ public class TransactionManager implements Entitymanager {
         List list = null;
         try {
             sess = HiberUtil.getSession();
-            sess.enableFilter("activos");
             q = sess.createQuery(query);
             for (int i = 0; i < par.length; i++) {
                 q.setParameter(par[i], val[i]);
@@ -242,7 +232,6 @@ public class TransactionManager implements Entitymanager {
         List l = null;
         try {
             sess = HiberUtil.getSession();
-            sess.enableFilter("activos");
             q = sess.createQuery(query);
             l = (List) EntityBeanCopy.clone(q.list());
         } catch (Exception e) {
@@ -440,7 +429,6 @@ public class TransactionManager implements Entitymanager {
         List result = null;
         try {
             sess = HiberUtil.getSession();
-            sess.enableFilter("activos");
             q = sess.createQuery(query);
             for (int i = 0; i < entitiesNames.length; i++) {
                 q.setEntity(entitiesNames[i], entities[i]);
@@ -474,7 +462,6 @@ public class TransactionManager implements Entitymanager {
         Object result = null;
         try {
             sess = HiberUtil.getSession();
-            sess.enableFilter("activos");
             q = sess.createQuery(query);
             result = q.uniqueResult();
             Hibernate.initialize(result);
@@ -489,7 +476,6 @@ public class TransactionManager implements Entitymanager {
         List result = null;
         try {
             sess = HiberUtil.getSession();
-            sess.enableFilter("activos");
             cq = sess.createCriteria(entity);
             for (int i = 0; i < order.length; i++) {
                 if (prior[i] == true) {
@@ -511,7 +497,6 @@ public class TransactionManager implements Entitymanager {
         List<T> list = null;
         try {
             sess = HiberUtil.getSession();
-            sess.enableFilter("activos");
             cq = sess.createCriteria(entity);
             for (int i = 0; i < order.length; i++) {
                 if (prior[i] == true) {
@@ -533,7 +518,6 @@ public class TransactionManager implements Entitymanager {
         T ob = null;
         try {
             sess = HiberUtil.getSession();
-            sess.enableFilter("activos");
             ob = (T) sess.get(ReflexionEntity.entityClass(entity), (Serializable) id);
             Hibernate.initialize(ob);
         } catch (HibernateException e) {
@@ -547,7 +531,6 @@ public class TransactionManager implements Entitymanager {
         T ob = null;
         try {
             sess = HiberUtil.getSession();
-            sess.enableFilter("activos");
             cq = sess.createCriteria(entity);
             cq.add(Restrictions.allEq(paramt));
             ob = (T) cq.uniqueResult();
@@ -563,7 +546,6 @@ public class TransactionManager implements Entitymanager {
         List<T> ob = null;
         try {
             sess = HiberUtil.getSession();
-            sess.enableFilter("activos");
             cq = sess.createCriteria(entity);
             cq.add(Restrictions.allEq(paramt));
             ob = (List<T>) cq.list();
@@ -580,7 +562,6 @@ public class TransactionManager implements Entitymanager {
         List<T> list = null;
         try {
             sess = HiberUtil.getSession();
-            sess.enableFilter("activos");
             cq = sess.createCriteria(entity);
             for (String ord : order) {
                if(ascDes == null || !ascDes){

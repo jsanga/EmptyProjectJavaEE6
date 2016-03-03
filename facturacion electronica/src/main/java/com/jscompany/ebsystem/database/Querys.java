@@ -12,8 +12,8 @@ package com.jscompany.ebsystem.database;
 public class Querys {
     
     // Querys de usuarios
-    public static String getUsuariobyUserPass = "select e from Loguin e where e.username = :user and e.pass = :pass";
-    public static String getUsuarioByUser = "select e from Persona e where e.loguin.username = :username";
+    public static String getUsuariobyUserPass = "select e from LoguinFct e where e.username = :user and e.pass = :pass";
+    public static String getUsuarioByUser = "select e from PersonaFct e where e.loguin.username = :username";
     
     // Querys de colegios
     public static String getColegiosList = "select e from Colegio e where e.estado = TRUE";
@@ -56,13 +56,13 @@ public class Querys {
     public static String getNivelCursosList = "select e from NivelCurso e";
     
     // Querys de personas
-    public static String getPersonaList = "select e from Persona e where e.estado = TRUE";
-    public static String getPersonaListNoState = "select e from Persona e";
-    public static String getPersonaListByRol = "select e from Persona e where e.rol = :rol and e.estado = TRUE";
-    public static String getPersonaListByRolAndColegio = "select e from Persona e where e.rol = :rol and e.estado = TRUE and e.colegio = :colegio";
-    public static String getPersonaListByRolNoState = "select e from Persona e where e.rol = :rol";
-    public static String getPersonaByCedula = "select e from Persona e where e.cedula = :cedula";
-    public static String getPersonaByCedulaAndNOTRol = "select e from Persona e where e.cedula = :cedula and e.rol != :idRol";
+    public static String getPersonaList = "select e from PersonaFct e where e.estado = TRUE";
+    public static String getPersonaListNoState = "select e from PersonaFct e";
+    public static String getPersonaListByRol = "select e from PersonaFct e where e.rol = :rol and e.estado = TRUE";
+    public static String getPersonaListByRolAndColegio = "select e from PersonaFct e where e.rol = :rol and e.estado = TRUE and e.colegio = :colegio";
+    public static String getPersonaListByRolNoState = "select e from PersonaFct e where e.rol = :rol";
+    public static String getPersonaByCedula = "select e from PersonaFct e where e.cedula = :cedula";
+    public static String getPersonaByCedulaAndNOTRol = "select e from PersonaFct e where e.cedula = :cedula and e.rol != :idRol";
     public static String getProfesorByPersonaID = "select e from Profesor e where e.persona = :idPersona";
     public static String getEstudianteByPersonaID = "select e from Estudiante e where e.persona = :idPersona";
     public static String getPersonalByPersonaID = "select e from Personal e where e.persona = :idPersona";

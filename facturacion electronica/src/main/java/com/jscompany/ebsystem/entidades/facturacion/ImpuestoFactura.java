@@ -24,7 +24,7 @@ import javax.persistence.Table;
  * @author Joao Sanga
  */
 @Entity
-@Table(name = "impuesto_factura")
+@Table(name = "impuesto_factura", schema = "facturacion")
 @NamedQueries({
     @NamedQuery(name = "ImpuestoFactura.findAll", query = "SELECT i FROM ImpuestoFactura i")})
 public class ImpuestoFactura implements Serializable {

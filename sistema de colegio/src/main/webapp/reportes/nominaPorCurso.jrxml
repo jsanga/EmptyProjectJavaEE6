@@ -2,17 +2,19 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="nominaPorCurso" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="375fbd7b-ed6e-4cae-8488-360008f47a71">
 	<property name="ireport.zoom" value="1.771561000000001"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="130"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="periodoLectivo" class="java.lang.String"/>
 	<parameter name="fecha" class="java.lang.String"/>
 	<parameter name="nombreCurso" class="java.lang.String"/>
 	<parameter name="idAsigCur" class="java.lang.Long"/>
 	<queryString>
-		<![CDATA[select ROW_NUMBER() OVER(ORDER BY par.id DESC) AS rownum, p.nombres as nombresEst, p.apellidos as apellidosEst, par.nombre as nombreParalelo, par.id as idPar, m.id as nummat, p.cedula as cedula, p.fecha_nacimiento as fechanac, p.sexo as sexo
+		<![CDATA[select ROW_NUMBER() OVER(ORDER BY par.id DESC) AS rownum, p.nombres as nombresEst, p.apellidos as apellidosEst, par.nombre as nombreParalelo, par.id as idPar, m.id as nummat, p.cedula as cedula, p.fecha_nacimiento as fechanac, s.nombre_sexo as sexo
 
 from usuarios.persona as p
 inner join usuarios.estudiante e
 on p.id = e.persona
+inner join usuarios.sexo s
+on s.id = p.sexo
 inner join colegios.matricula m
 on e.id = m.estudiante
 inner join colegios.paralelo par
@@ -93,7 +95,7 @@ order by par.id asc]]>
 			<textField>
 				<reportElement x="424" y="42" width="62" height="20" uuid="3600d0ee-842e-468e-b4da-b84f0427bfa9"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{fechanac}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("MM/dd/yyyy").format($F{fechanac})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="486" y="42" width="69" height="20" uuid="fcdf126b-1576-4bc4-81f0-3d65ecf7f06d"/>

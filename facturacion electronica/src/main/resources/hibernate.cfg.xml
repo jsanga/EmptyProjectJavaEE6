@@ -36,6 +36,14 @@
         <mapping class="com.jscompany.ebsystem.entidades.facturacion.Producto"/>
         <mapping class="com.jscompany.ebsystem.entidades.facturacion.TipoEstablecimiento"/>
         
+        <!-- Schema FacturacionUsuarios -->
+        <mapping class="com.jscompany.ebsystem.entidades.usuarios.LoguinFct"/>
+        <mapping class="com.jscompany.ebsystem.entidades.usuarios.PersonaEmailFct"/>
+        <mapping class="com.jscompany.ebsystem.entidades.usuarios.PersonaFct"/>
+        <mapping class="com.jscompany.ebsystem.entidades.usuarios.PersonaTelefonoFct"/>
+        <mapping class="com.jscompany.ebsystem.entidades.usuarios.RolFct"/>
+        <mapping class="com.jscompany.ebsystem.entidades.usuarios.SexoFct"/>
+        
     </session-factory>
 </hibernate-configuration>
 

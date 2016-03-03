@@ -6,6 +6,7 @@
 package com.jscompany.ebsystem.entidades.facturacion;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +15,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -27,7 +29,10 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "caracteristicas_producto")
 @NamedQueries({
-    @NamedQuery(name = "CaracteristicasProducto.findAll", query = "SELECT c FROM CaracteristicasProducto c")})
+    @NamedQuery(name = "CaracteristicasProducto.findAll", query = "SELECT c FROM CaracteristicasProducto c"),
+    @NamedQuery(name = "CaracteristicasProducto.findById", query = "SELECT c FROM CaracteristicasProducto c WHERE c.id = :id"),
+    @NamedQuery(name = "CaracteristicasProducto.findByNombre", query = "SELECT c FROM CaracteristicasProducto c WHERE c.nombre = :nombre"),
+    @NamedQuery(name = "CaracteristicasProducto.findByDetalle", query = "SELECT c FROM CaracteristicasProducto c WHERE c.detalle = :detalle")})
 public class CaracteristicasProducto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,9 +46,11 @@ public class CaracteristicasProducto implements Serializable {
     @Size(max = 300)
     @Column(name = "detalle")
     private String detalle;
-    @JoinColumn(name = "producto", referencedColumnName = "id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Producto producto;
+    @JoinTable(name = "producto_has_caracteristicas", joinColumns = {
+        @JoinColumn(name = "caracteristica", referencedColumnName = "id")}, inverseJoinColumns = {
+        @JoinColumn(name = "producto", referencedColumnName = "id")})
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Collection<Producto> productoCollection;
 
     public CaracteristicasProducto() {
     }
@@ -76,12 +83,12 @@ public class CaracteristicasProducto implements Serializable {
         this.detalle = detalle;
     }
 
-    public Producto getProducto() {
-        return producto;
+    public Collection<Producto> getProductoCollection() {
+        return productoCollection;
     }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    public void setProductoCollection(Collection<Producto> productoCollection) {
+        this.productoCollection = productoCollection;
     }
 
     @Override

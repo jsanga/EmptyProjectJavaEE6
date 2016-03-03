@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jscompany.ebsystem.entidades.facturacion;
+package com.jscompany.ebsystem.entidades.usuarios;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,7 +13,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -25,31 +25,32 @@ import javax.validation.constraints.Size;
  * @author Joao Sanga
  */
 @Entity
-@Table(name = "producto")
+@Table(name = "persona_telefono_fct", schema = "facturacion_usuarios")
 @NamedQueries({
-    @NamedQuery(name = "Producto.findAll", query = "SELECT p FROM Producto p"),
-    @NamedQuery(name = "Producto.findById", query = "SELECT p FROM Producto p WHERE p.id = :id"),
-    @NamedQuery(name = "Producto.findByNombre", query = "SELECT p FROM Producto p WHERE p.nombre = :nombre"),
-    @NamedQuery(name = "Producto.findByEstado", query = "SELECT p FROM Producto p WHERE p.estado = :estado")})
-public class Producto implements Serializable {
+    @NamedQuery(name = "PersonaTelefonoFct.findAll", query = "SELECT p FROM PersonaTelefonoFct p"),
+    @NamedQuery(name = "PersonaTelefonoFct.findById", query = "SELECT p FROM PersonaTelefonoFct p WHERE p.id = :id"),
+    @NamedQuery(name = "PersonaTelefonoFct.findByTelefono", query = "SELECT p FROM PersonaTelefonoFct p WHERE p.telefono = :telefono"),
+    @NamedQuery(name = "PersonaTelefonoFct.findByEstado", query = "SELECT p FROM PersonaTelefonoFct p WHERE p.estado = :estado")})
+public class PersonaTelefonoFct implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Size(max = 200)
-    @Column(name = "nombre")
-    private String nombre;
+    @Size(max = 15)
+    @Column(name = "telefono")
+    private String telefono;
     @Column(name = "estado")
     private Boolean estado;
-    @ManyToMany(mappedBy = "productoCollection", fetch = FetchType.LAZY)
-    private Collection<CaracteristicasProducto> caracteristicasProductoCollection;
+    @JoinColumn(name = "persona", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private PersonaFct persona;
 
-    public Producto() {
+    public PersonaTelefonoFct() {
     }
 
-    public Producto(Long id) {
+    public PersonaTelefonoFct(Long id) {
         this.id = id;
     }
 
@@ -61,12 +62,12 @@ public class Producto implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getTelefono() {
+        return telefono;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
     public Boolean getEstado() {
@@ -77,12 +78,12 @@ public class Producto implements Serializable {
         this.estado = estado;
     }
 
-    public Collection<CaracteristicasProducto> getCaracteristicasProductoCollection() {
-        return caracteristicasProductoCollection;
+    public PersonaFct getPersona() {
+        return persona;
     }
 
-    public void setCaracteristicasProductoCollection(Collection<CaracteristicasProducto> caracteristicasProductoCollection) {
-        this.caracteristicasProductoCollection = caracteristicasProductoCollection;
+    public void setPersona(PersonaFct persona) {
+        this.persona = persona;
     }
 
     @Override
@@ -95,10 +96,10 @@ public class Producto implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Producto)) {
+        if (!(object instanceof PersonaTelefonoFct)) {
             return false;
         }
-        Producto other = (Producto) object;
+        PersonaTelefonoFct other = (PersonaTelefonoFct) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -107,7 +108,7 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.facturacion.Producto[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.usuarios.PersonaTelefonoFct[ id=" + id + " ]";
     }
     
 }

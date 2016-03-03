@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jscompany.ebsystem.entidades.facturacion;
+package com.jscompany.ebsystem.entidades.usuarios;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -14,9 +14,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -25,31 +25,31 @@ import javax.validation.constraints.Size;
  * @author Joao Sanga
  */
 @Entity
-@Table(name = "producto")
+@Table(name = "sexo_fct", schema = "facturacion_usuarios")
 @NamedQueries({
-    @NamedQuery(name = "Producto.findAll", query = "SELECT p FROM Producto p"),
-    @NamedQuery(name = "Producto.findById", query = "SELECT p FROM Producto p WHERE p.id = :id"),
-    @NamedQuery(name = "Producto.findByNombre", query = "SELECT p FROM Producto p WHERE p.nombre = :nombre"),
-    @NamedQuery(name = "Producto.findByEstado", query = "SELECT p FROM Producto p WHERE p.estado = :estado")})
-public class Producto implements Serializable {
+    @NamedQuery(name = "SexoFct.findAll", query = "SELECT s FROM SexoFct s"),
+    @NamedQuery(name = "SexoFct.findById", query = "SELECT s FROM SexoFct s WHERE s.id = :id"),
+    @NamedQuery(name = "SexoFct.findByNombreSexo", query = "SELECT s FROM SexoFct s WHERE s.nombreSexo = :nombreSexo"),
+    @NamedQuery(name = "SexoFct.findByEstado", query = "SELECT s FROM SexoFct s WHERE s.estado = :estado")})
+public class SexoFct implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    @Size(max = 200)
-    @Column(name = "nombre")
-    private String nombre;
+    @Size(max = 100)
+    @Column(name = "nombre_sexo")
+    private String nombreSexo;
     @Column(name = "estado")
     private Boolean estado;
-    @ManyToMany(mappedBy = "productoCollection", fetch = FetchType.LAZY)
-    private Collection<CaracteristicasProducto> caracteristicasProductoCollection;
+    @OneToMany(mappedBy = "sexo", fetch = FetchType.LAZY)
+    private Collection<PersonaFct> personaFctCollection;
 
-    public Producto() {
+    public SexoFct() {
     }
 
-    public Producto(Long id) {
+    public SexoFct(Long id) {
         this.id = id;
     }
 
@@ -61,12 +61,12 @@ public class Producto implements Serializable {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreSexo() {
+        return nombreSexo;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreSexo(String nombreSexo) {
+        this.nombreSexo = nombreSexo;
     }
 
     public Boolean getEstado() {
@@ -77,12 +77,12 @@ public class Producto implements Serializable {
         this.estado = estado;
     }
 
-    public Collection<CaracteristicasProducto> getCaracteristicasProductoCollection() {
-        return caracteristicasProductoCollection;
+    public Collection<PersonaFct> getPersonaFctCollection() {
+        return personaFctCollection;
     }
 
-    public void setCaracteristicasProductoCollection(Collection<CaracteristicasProducto> caracteristicasProductoCollection) {
-        this.caracteristicasProductoCollection = caracteristicasProductoCollection;
+    public void setPersonaFctCollection(Collection<PersonaFct> personaFctCollection) {
+        this.personaFctCollection = personaFctCollection;
     }
 
     @Override
@@ -95,10 +95,10 @@ public class Producto implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Producto)) {
+        if (!(object instanceof SexoFct)) {
             return false;
         }
-        Producto other = (Producto) object;
+        SexoFct other = (SexoFct) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -107,7 +107,7 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return "com.jscompany.ebsystem.entidades.facturacion.Producto[ id=" + id + " ]";
+        return "com.jscompany.ebsystem.entidades.usuarios.SexoFct[ id=" + id + " ]";
     }
     
 }
